@@ -1,35 +1,45 @@
 # Tile-join Wave 2 — specification (the corpus re-score)
 
-> **Last revised**: 2026-11-19 (original publication: first draft, for
-> Astra's review). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (revised after Astra's review, W2-1 to
+> W2-5; the GS sheet check meets P4; seam counts corrected). See
+> [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), drafting for session S169 on amd-tower. Every path,
   count, line number, and timing below was read from the file named beside
-  it, at these commits: `main` at `92064b134` (the decision record, the
-  Wave 1 specification, D72 and D73, `scripts/`); branch
-  `tile-join-wave-1-w10` at `89cab15ee` (W1.0's reports, worklist, and
-  replay record); branch `tile-join-wave-1` at `a7989c47f` (the W1.1 code,
-  in progress: read for orientation only; this document specifies against
-  the Wave 1 specification's contract, not against unfinished code).
+  it, at these commits:
+  - `main` at `92064b134` (first draft) and `d9f5d6096` (this revision):
+    the decision record, the Wave 1 specification, D72 and D73, and
+    `scripts/`;
+  - branch `tile-join-wave-1-w10` at `89cab15ee` (W1.0's worklist and
+    replay record) and `568a80689` (the corrected seam counts of
+    `21cd6ef97`, and the GS-frame sheet check, `dry-run.md` § 2.3);
+  - branch `tile-join-wave-1` at `a7989c47f` (first draft) and
+    `f6f5ffe54` (this revision): the W1.1 code, still in progress. It is
+    read for orientation and to verify review findings. This document
+    specifies against the Wave 1 specification's contract, not against
+    unfinished code.
+
   Astra's consumer audit was read at its audited base `e92d1c5d7`. New
   counts come from the read-only, standard-library planning script
   `planning/tile-join-wave-2-spec-2026-11-19-scripts/wave2_scope_and_cost.py`
   (output beside it as `wave2_scope_and_cost.txt`), run on amd-tower
-  against the tracked evaluation files; nothing was scored.
+  against the tracked evaluation files. Nothing was scored.
 - **Parent**: `planning/tile-join-resolution-2026-11-01.md` (the decision
   record; this document specifies the Wave 2 row of its § 5). Sibling:
   `planning/tile-join-wave-1-spec-2026-11-01.md`, whose § 7 lists what must
   hold before Wave 2 may be called ready. Rulings: D72 and D73 in
   `planning/pi-decisions-2026-09-20.md`.
-- **Status**: **DRAFT, for Astra's review; not approved; Wave 1 stopped on
-  the seam ruling (Wave 2 cannot launch until M1).** The 55-map seam
-  handling is an open parameter (§ 4); this draft takes no position among
-  the options.
+- **Status**: **DRAFT, revised after Astra's review
+  (`~/agent-mail/codex/outbox/claude/20261118T133843Z-astra-wave2-spec-review.md`,
+  "revise before launch approval"; dispositions in § 13); not approved;
+  Wave 1 stopped on the seam ruling (Wave 2 cannot launch until M1).** The
+  55-map seam handling is an open parameter (§ 4), and this draft takes no
+  position among the options.
 - **Target**: all data and results settled, and the write-up begun, by
   **Sunday 2026-11-29** (PI, 2026-11-18).
 - **Runs on**: zbook, unattended from launch to M2, stopping only on a
-  problem (§ 6), as Wave 1 does under D73 (7) if the principal
+  problem (§ 6), as Wave 1 does under D73 (7), if the principal
   investigator (PI) extends that ruling to Wave 2 (open question P1).
   **Zero API calls.**
 
@@ -41,16 +51,18 @@ Each file is first replayed under the rules it recorded, which must
 reproduce its committed confusion and intervals (or its recorded refusal).
 Every target field is then computed under the new rules: sheet-specific
 containment for classification, and nearest-centre within the point's own
-sheet for count tables. Only those fields are spliced into the committed
-file, and every other field must stay identical. Live files under
-`results/` are re-scored in place. Files under `archive/` (and any other
-directory the PI rules frozen) get labelled corrected counterparts
-elsewhere and are not modified. Paper-cited files go first, then the rest,
-in the same run. The gold-standard (GS) frames can run as soon as M1
-allows. The 55-map files wait for the PI's seam ruling, because that
-ruling changes how the new rule treats their sheet seams. A new driver,
-written for this wave, does the work and records every file's outcome in
-a ledger that reconciles to the W1.0 worklist.
+sheet for count tables. Only those fields, at structurally defined paths,
+are spliced into the committed file. Every other field must stay identical,
+and the file and its Markdown and comma-separated values (CSV) siblings
+are checked and published as one bundle. Live files under `results/` are
+re-scored in place. Files under `archive/` (and any other directory the PI
+rules frozen) get labelled corrected counterparts elsewhere and are not
+modified. Paper-cited files go first, then the rest, in the same run. The
+gold-standard (GS) frames can run as soon as M1 allows. The 55-map files
+wait for the PI's seam ruling and a complete seam-policy specification. A
+new driver, written for this wave, does the work and records every file's
+outcome, against its full computation identity, in a ledger that
+reconciles to the W1.0 worklist.
 
 ## 1. Preconditions (launch is blocked until all hold)
 
@@ -59,11 +71,12 @@ a ledger that reconciles to the W1.0 worklist.
 | P1 | **M1 passed** and the Wave 1 pull request (PR) merged, with gate G1 green (Wave 1 specification § 4, § 9). Today Wave 1 is stopped on the 55-map seam ruling (`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`, on `tile-join-wave-1-w10`) | the PI's M1 decision; the merge commit on `main` |
 | P2 | The Wave 1 specification's § 7 holds: a complete target and non-target schema (met: `dry-run.md` § 3); a small reference case checked independently of the scorer; an idempotent rerun; a reconciled worklist with every paper-cited file resolved (met: `dry-run.md` § 4.3, 0 paper-cited `unresolved-recipe`) | W1.5's smoke ledger; `worklist.json` |
 | P3 | **W1.5 has re-measured the cost** with the new joins: wall-clock, CPU time, and peak resident set size (RSS) per smoke cell, replay and new-rule legs separately. § 7's projection uses legacy-replay timings only and is replaced by the re-measurement | `smoke-ledger.json` (Wave 1 § 8) |
-| P4 | **Every GS frame in scope has had the sheet check.** The parent record's § 2.6 check ran on the Era-2 frame only (`planning/tile-join-resolution-2026-11-01-scripts/sheet_boundary_check.py:43`). Phase A also scores six other GS frame families (§ 3.2). Each needs the same check, with the same stop rule: a cross-sheet contact on map content stops that frame's files, as it stopped Wave 1 (W2.0) | `reports/tile-join-wave-2/gs-sheet-check.md` |
-| P5 | **The Wave 1 consumer-disposition record is committed** and reconciled with Astra's inventory (116 calls in 70 files outside the metrics library). Commit `e34a7e581` on `tile-join-wave-1` names `reports/tile-join-wave-1/consumer-dispositions.md` as its per-site record, but no branch carried that file when this draft was written | the file exists on `main` after the Wave 1 merge; § 8 |
-| P6 | **The PI has answered the open questions that the driver needs as inputs** (§ 12.1): the counterpart location (P6), the frozen-directory list (P5), and the replay-mismatch threshold (P9) | the answers recorded in this document's changelog |
-| P7 | **For phase B only (the 55-map files): the seam ruling** (§ 4) has been made, its parameter written into the driver's configuration, and Astra has reviewed it before any 55-map compute. Every option changes how a 55-map metric is computed, and the project requires cross-model review of such a change before compute (`docs/agent-guidance.md`, "Cross-model review of definition changes") | the ruling in `planning/pi-decisions-2026-09-20.md`; Astra's review by mail or committed file |
+| P4 | **Every GS frame in scope has had the sheet check. Met 2026-11-19.** `dry-run.md` § 2.3 (`tile-join-wave-1-w10` at `568a80689`; run at `cf15e9906`) checked all twelve GS frames that a tile-bearing evaluation uses. It found 243 cross-sheet contacts (237 padding, 0 ambiguous, 0 map content), and no cross-sheet reference pair within 500 m. The other 6 contacts are on H13 arm C tiles that are not on disk; the source scan puts those points 2,135.9–2,183.0 m beyond its right edge. 86 contacts on the H13 arms B and C were measured on substitute images of the same sheet, all padding. Every contact is the Era-2 pattern: Elenovo references in K-35-052-4's last column of tiles | `dry-run.md` § 2.3; `reports/tile-join-wave-1/scripts/out/sheet_check_gs_frames.txt` and `.json` |
+| P5 | **The Wave 1 consumer-disposition record is committed** and reconciled with Astra's inventory (116 calls in 70 files outside the metrics library). It now exists on `tile-join-wave-1` at `f6f5ffe54`, as `reports/tile-join-wave-1/consumer-dispositions.md`. Its reconciliation with the inventory is part of Wave 1's review | the file on `main` after the Wave 1 merge; § 8 |
+| P6 | **The PI has answered the open questions that the driver needs as inputs** (§ 12.1): the frozen-directory list (P5), the counterpart location (P6), and whether the stop rule is amended (P9) | the answers recorded in this document's changelog |
+| P7 | **For phase B only (the 55-map files):** the seam ruling (§ 4) has been made, and its policy has been specified in full: the five components of § 4.2, and the schema amendment of § 4.3 if the ruling changes a reference or the frame. The ruling's parameters are written into the driver's configuration. Astra has reviewed the specification before any 55-map compute. Every option changes how a 55-map metric is computed, and the project requires cross-model review of such a change before compute (`docs/agent-guidance.md`, "Cross-model review of definition changes") | the ruling in `planning/pi-decisions-2026-09-20.md`; the policy specification; Astra's review by mail or committed file |
 | P8 | zbook's `.venv` still matches the reference environment, and zbook's checkout is on `origin/main`, clean, 0 behind (as Wave 1's P3 and P4) | `uv pip freeze` against `requirements-lock.txt`; tier 1 at the post-merge count; `git status -sb` |
+| P9 | **The missing-input list is enumerated and committed before launch**: the 13 files of § 5.3, after W2.0's search. Only these may be held for a missing input (§ 6) | `reports/tile-join-wave-2/missing-inputs.json` |
 
 **The order of events matters.** Wave 2 cannot launch before M1, and M1
 needs the W1.5 smoke run, which includes the 55-map smoke cell 2. The stop
@@ -82,8 +95,10 @@ P2).
    149 live files have intervals and no tile block. 21 more are under
    `archive/`. Five `known-withheld` files carry neither, because the
    recorded refusal withheld both. They become scoreable under the new
-   rules (`wave2_scope_and_cost.txt` § 1b). This draft puts all of them in
-   scope (§ 3.1); open question A1 asks Astra to confirm.
+   rules (`wave2_scope_and_cost.txt` § 1b). All of them are in scope
+   (§ 3.1). Astra recounted the 149, 21, and 5 independently and agreed
+   (§ 13). Scoring a withheld file does not admit it to any inferential
+   family: that stays with the fixed eligibility rule (D73 (4)).
 2. **W1.0's determinism replays covered two schema strata out of several.**
    The eight smoke cells have `_metadata.metadata_version` 1.3 or 1.4
    (`wave2_scope_and_cost.txt` § 5). The files in scope also include
@@ -103,8 +118,10 @@ P2).
    ways. All 8 are 55-map files not written by the scorer: three with no
    recorded writer and five written by
    `scripts/compute_corrected_f1_multi_buffer.py`
-   (`wave2_scope_and_cost.txt` § 4). So for all but 8 files, a byte
-   comparison of untouched lines is a meaningful guard.
+   (`wave2_scope_and_cost.txt` § 4). For the other 2,821 files,
+   re-serialising the parsed document reproduces the file, so the
+   structural splice of W2.1 changes only the text it is meant to change
+   (W2-5; § 9 item 1).
 4. **`write_outputs` overwrites two non-target fields.** It stamps
    `version` and `timestamp` afresh (`evaluate_detections.py:1882–1883`),
    and E81's re-emission went through it (`rescore_tile_mcc_e81.py:392–397`).
@@ -134,12 +151,24 @@ P2).
    legacy name rule applied at construction time. Wave 2 can regenerate and
    re-score those inputs as built. Whether the filter itself should change
    is a separate question (open question P7).
-7. **The single seam hook exists in the Wave 1 code.** On
-   `tile-join-wave-1` (`32ebe3762`), every sheet-join booking reads one
-   function, `sheet_join_candidate_tiles`, whose docstring says a seam
-   exception or exclusion "is a change here alone". This draft relies on
-   that design (§ 4) and asks Astra to check it holds at merge (open
-   question A3).
+7. **The shared booking hook is not a seam policy** (Astra W2-1, verified
+   at `f6f5ffe54`). `sheet_join_candidate_tiles`
+   (`scripts/lib_advanced_metrics.py:3202`) takes no argument for purpose
+   (classification or count table) or side (reference or detection). The
+   classification path calls it for both sides (`:3429`, inside a loop over
+   detections and references), and the count-table path calls it for both
+   sides again (`:3843`, `:3846`). A change meant for reference-positive
+   classification would therefore also move detection booking and the
+   count tables. Widening the candidates can also book an outcome to
+   another sheet's tile, against the per-sheet conservation check. The
+   populations are fixed earlier, by `iter_sheet_scopes` (`:2723`), which
+   scopes each sheet's points before the hook runs. The hook cannot
+   restore a point that scoping excluded. Giving a retained point no
+   candidate does not remove a tile from the classification denominator;
+   it leaves the population unchanged and can trigger a booking shortfall.
+   The hook's docstring at `f6f5ffe54` still says that a seam ruling "is a
+   change here alone" (`:3216–3220`). The main session will have it
+   corrected. This document makes no such claim (§ 4.2).
 
 ## 3. Scope and order
 
@@ -152,7 +181,7 @@ by the rules in `wave2_scope_and_cost.py` `disposition()`:
 | Disposition | GS | 55-map | No frame | Of which paper-cited | Basis |
 |---|---:|---:|---:|---:|---|
 | `rescore-in-place` | 2,184 | 309 | — | 761 (608 GS, 153 55-map) | `reproducible-legacy` with a tile block or intervals (2,444), plus all 49 `known-withheld` |
-| `counterpart` | 43 | 11 | — | 0 | `historical-only` (`archive/`), all 54 carry intervals, 33 also a tile block |
+| `counterpart` | 43 | 11 | — | 0 | `historical-only` (`archive/`); all 54 carry intervals, and 33 also a tile block |
 | `regenerate-then-rescore` | 232 | — | — | 0 | the null-exemplar `unresolved-recipe` cells (§ 5.1) |
 | `hold:input-absent` | 1 | 12 | — | 0 | `unresolved-recipe`: detection input absent on zbook (§ 5.3) |
 | `skip:no-recipe` | — | — | 36 | 0 | `unresolved-recipe`: `results/verifier-t-pilot/` 24 and `results/retest/` 12 record no recipe (§ 5.1) |
@@ -160,8 +189,8 @@ by the rules in `wave2_scope_and_cost.py` `disposition()`:
 | **Total** | 2,461 | 332 | 36 | 761 | 2,829 |
 
 Source: `wave2_scope_and_cost.txt` § 1. The 2,779 files that the driver
-rescores or counterparts are 2,459 GS and 320 55-map files (§ 3 of the same
-output).
+re-scores or counterparts are 2,459 GS and 320 55-map files (§ 3 of the
+same output).
 
 ### 3.2 Order
 
@@ -170,8 +199,8 @@ if the run can carry on. The seam ruling splits the run into two phases:
 
 | Phase | Files | Needs | Order inside |
 |---|---|---|---|
-| **A** (GS frames) | 2,459: 608 paper-cited, 1,851 not (including 43 counterparts and 232 regenerated null-exemplar cells) | P1–P6 and P8 | paper-cited first; then the rest; counterparts last |
-| **B** (55-map frame) | 320: 153 paper-cited, 167 not (including 11 counterparts) | P1–P8, so the seam ruling (P7) | the same |
+| **A** (GS frames) | 2,459: 608 paper-cited, 1,851 not (including 43 counterparts and 232 regenerated null-exemplar cells) | P1–P6, P8, and P9 | paper-cited first; then the rest; counterparts last |
+| **B** (55-map frame) | 320: 153 paper-cited, 167 not (including 11 counterparts) | P1–P9, so the seam ruling and its specification (P7) | the same |
 
 Phase A's frames are the 384 px full frame (1,105 files), the 512 px full
 frame (739), the Era-2 B intersection (254), the two null-exemplar reduced
@@ -179,20 +208,21 @@ frames (153 and 82), the grid common frame (64), the H10 test frame (40),
 the 256 px full frame (16), and the H13 common frame and arms (6). Their
 tile counts are 487, 340, 487, 467 and 315, 487, 327, 1,032, and 340 to
 999. Every phase A file uses `inputs/vectors/references/mounds-reference.geojson`
-(`wave2_scope_and_cost.txt` § 2). P4's sheet check is therefore one check
-per frame.
+(`wave2_scope_and_cost.txt` § 2). These are the twelve frames
+`dry-run.md` § 2.3 checked (P4).
 
 **Before the seam ruling, phase B computes nothing under the new rules.**
 What it may do in the meantime, once M1 has passed, is the legacy-replay
 leg alone. That leg replays each 55-map file under its recorded rules,
 does not depend on the ruling, and computes no corrected score, so it is
 outside the stop record's pause (§ 3 there). Each file is then ledgered
-`skip`, `held:seam-ruling`, with its replay outcome, so replay mismatches
-surface early. The replay is repeated when phase B runs, because the rule
-set then differs. That costs 10.89 CPU-hours more, about 0.9 h at 12
-workers (§ 7). This draft also proposes that no 55-map score under any
-seam option be computed before the ruling, so that the ruling is not
-made with its results in view (open question P3).
+`skip`, `held:seam-ruling`, with its replay outcome, so replay failures
+surface early. Under § 6 the first replay failure stops even this leg.
+The replay is repeated when phase B runs, because the computation
+identity then differs (§ 5.6). That costs 10.89 CPU-hours more, about
+0.9 h at 12 workers (§ 7). This draft also proposes that no 55-map score
+under any seam option be computed before the ruling, so that the ruling is
+not made with its results in view (open question P3).
 
 ### 3.3 Merging
 
@@ -206,14 +236,51 @@ ones (§ 8; open question P4).
 
 ## 4. The seam parameter (open; the PI rules)
 
-On the 55-map frame, adjacent sheets print some mounds twice, and only one
-copy was digitised. W1.0 found 32 contacts on map content (26 references)
-in `best-available-gt-55maps-r2.geojson`, and 32–35 in each of the other
-four tracked 55-map reference files (`dry-run.md` § 2). Sheet-specific
-scoring would count a correct detection of the undigitised copy as a false
-positive (stop record § 1). The stop record § 4 lists four options. **This
-document takes no position among them.** It specifies how each would
-enter the driver, and states facts that bear on them.
+### 4.1 What is measured, what has been seen, and what is not adjudicated
+
+This follows the distinctions that the revised E93 draft adopted and Astra
+accepted
+(`~/agent-mail/codex/outbox/claude/20261118T132653Z-astra-e93-seam-revision-accepted.md`).
+
+- **Measured: projections onto map content.** On the 55-map frame, some
+  references recorded on one sheet project onto the map content of an
+  adjacent sheet's tile. The pixel test is a padding or content
+  diagnostic, not a mound detector. In `best-available-gt-55maps-r2.geojson`
+  there are 32 such contacts, from 26 distinct (reference, recipient sheet)
+  pairs. With the 18 ambiguous contacts, there are 50 contacts from 40
+  pairs. Each of the other four tracked 55-map reference files shows 32–35
+  map-content contacts (`dry-run.md` §§ 2 and 2.2 at `568a80689`,
+  corrected at `21cd6ef97`). No reference on the recipient sheet lies
+  within 50 m of any r2 non-padding contact. That shows there is no local
+  annotation on the recipient sheet. It does not show what is printed
+  there, because the seams are misregistered (`dry-run.md` § 2).
+- **Seen: confirmed examples.** In crops of r2 `student:01862` and
+  `student:02387`, a printed mound symbol lies at the projected point. The
+  W1.0 agent and the main session both viewed these two. The W1.0 agent
+  also viewed `student:02782`, where the point lies on a symbol beside a
+  printed mound symbol (`dry-run.md` § 2; stop record § 2). Astra viewed
+  one crop for each of the 26 r2 map-content pairs. It found "no
+  counterexample to the *map-content* classification", and said this "is
+  not a completed adjudication of symbol identity"
+  (`~/agent-mail/codex/outbox/claude/20261118T132837Z-astra-55map-seam-stop-review.md`).
+- **Not adjudicated: the candidates.** The 26 (or 40) r2 pairs, and their
+  counterparts in the other files, are candidate second printed instances.
+  They still await adjudication of symbol identity, completeness, and
+  correspondence between the two sheets. The two ambiguous contacts of
+  `student:04282` change verdict under a nearest-pixel-centre sensitivity
+  test and are held for manual judgement (`dry-run.md` § 2.2). The
+  canonical r50 file's `phantom:*` references sit beside 29 of its 33
+  map-content contacts. That is a lead, not independent confirmation.
+
+Where a candidate is a second printed instance, a correct detection of it,
+attributed by D50 to the sheet whose tile showed it, has no reference on
+that sheet. At symbol level it can be scored as a false positive. At tile
+level, a tile changes only if it holds none of its own sheet's references
+(`dry-run.md` § 2). The stop record § 4 lists four options. **This
+document takes no position among them.** Astra's stop review prefers (a)
+conditionally, as a recommendation and not a ruling (same message). The
+sections below say what any ruling must specify (§ 4.2), what a reference
+or frame change adds (§ 4.3), and the measured facts (§ 4.4).
 
 **The parameter is keyed by (frame, reference file),** because the
 contacts are measured per reference file and differ between them. The
@@ -221,22 +288,101 @@ paper-cited 55-map files use four references: r2 104, the earlier
 best-available file 28, the reviewed student file 13, and canonical r50 8.
 The non-cited files also use the unreviewed student file
 (`wave2_scope_and_cost.txt` § 2). The driver reads a committed
-configuration file, `reports/tile-join-wave-2/seam-policy.json`. Its
-default for every 55-map key is `pending`, under which the driver holds
-the file (§ 5.4, status `skip`, reason `held:seam-ruling`).
+configuration, `reports/tile-join-wave-2/seam-policy.json`. Its default
+for every 55-map key is `pending`, under which the driver holds the file
+(§ 5.4: status `skip`, reason `held:seam-ruling`).
 
-| Option (stop record § 4) | How it enters the driver | Facts that bear on it |
-|---|---|---|
-| **(a)** add the second copy as a reference on the neighbouring sheet | **An input change, not a driver code path.** A new, versioned reference file per affected reference, committed with its construction recorded. The driver maps each recorded reference to it for the new-rule computation only; the legacy replay still uses the recorded file | It changes the symbol-level matching inputs, so point F1, precision, and recall can move on affected 55-map files. G2 item 2 (points identical) cannot hold for them without an amendment; the record says the point estimates are untouched (parent record § 0). On r2, 11 tiles turn positive (`dry-run.md` § 2.2). Astra found that § 2.2's "references added" column counts contacts, not distinct references: on r2 the 32 map-content contacts are 26 distinct reference and recipient-sheet combinations (`~/agent-mail/codex/outbox/claude/20261118T130529Z-astra-seam-measurement-counting-finding.md`). Canonical r50 already carries such a copy (`phantom:*`) for 29 of its 33 map-content contacts, and (a) moves no tile on it (`dry-run.md` § 2.2) |
-| **(b)** a seam exception | Two readings, which enter differently. **Tile-only** (the contacted tile also counts as positive, as `dry-run.md` § 2.2 measured it): a rule inside `sheet_join_candidate_tiles` that adds the contacted neighbour tile for the listed contacts, read from a committed contact list per (frame, reference). **Matching** (the stop record's wording: "a detection matches a reference from either sheet"): a change to symbol matching, which Wave 1 does not change | The tile-only reading moves the same tiles as (a) on r2 (11; 17 with the ambiguous contacts) and changes no point estimate. The matching reading changes point estimates, with the same G2 consequence as (a), and needs code outside Wave 1's scope |
-| **(c)** a frame-wide join for the 55-map corpus only | **A per-frame join choice, no new code.** The driver's configuration names classification `geometric-contains` and count table `geometric-primary` for the 55-map frame. Both are kept selectable (Wave 1 specification, W1.1) | It turns 333 tiles positive on r2 relative to sheet-specific containment. Only 11 of them are confirmed map-content contacts; the rest arise from references in other sheets' tiles (`dry-run.md` § 2.2). Astra notes that the complement of the 11 is not established as all padding, since 17 tiles change once ambiguous contacts are included (same message). The outputs would carry frame-wide join names, which the parent record keeps as historical comparisons (§ 3) |
-| **(d)** exclude the contacted seam tiles from classification | A committed exclusion list per (frame, reference), applied in `sheet_join_candidate_tiles` and in the classification tile population | On r2 it removes 52 tiles, 41 of them positive (`dry-run.md` § 2.2). It is a sub-decision whether the excluded tiles also leave the count tables. If they do, `coverage.n_tiles` changes, and W1.0 classes that field as non-target (`dry-run.md` § 3.3), so G2 item 1 would need a stated exception |
+### 4.2 What a seam policy must specify (Astra W2-1)
 
-**Sub-parameter, whichever option is chosen:** whether the 18 ambiguous
-contacts on r2 (points on the black edge of the map face) count with the
-map-content contacts (stop record § 4, item 3; `dry-run.md` § 10, question
-3). Astra's pixel audit leaves the two contacts of `student:04282`
-unresolved for manual judgement (same message).
+A ruling is not implementable by changing the shared booking hook alone
+(§ 2 item 7). Before phase B, the policy states each of these five
+components on its own. It also states, for each one, whether it applies
+to references, to detections, or to both:
+
+1. **The symbol-matching population**: which references and detections
+   each sheet's matcher sees (today, `iter_sheet_scopes`, the D50 scope).
+2. **Reference-positive tiles**: which tiles a reference makes positive.
+3. **Detection-positive tiles**: which tiles a detection makes positive.
+4. **The classification denominator**: which tiles are classified at all.
+5. **The count-table population and booking**: which outcomes enter the
+   per-tile tables, and to which tile each is booked.
+
+**Separation rules.** A policy that touches classification only (items
+2–4) must not reach count-table booking (item 5). The implementation must
+therefore pass purpose and side to whatever decides candidates, or use
+separate functions. A tier 1 test shows that the count tables are
+byte-identical to the unmodified sheet-join tables under such a policy.
+A policy that excludes tiles or points from the count tables must also
+state its consequences for coverage (`coverage.n_tiles` and the zero
+fraction), for the matching scope, and for the per-sheet conservation
+check (G2 item 5). Each of those then becomes a target field under the
+schema amendment of § 4.3. The current D73 implementation does not
+acquire any speculative exception in advance.
+
+What each option implies for the five components, as it is worded today.
+The ruling's specification fixes every cell, including those marked "to
+state":
+
+| Component | (a) second-copy references | (b) seam exception | (c) frame-wide on the 55-map frame | (d) seam-tile exclusion |
+|---|---|---|---|---|
+| 1. Matching population | changes: references gain the adjudicated copies (a new reference version, § 4.3) | matching reading: changes (a detection may match a reference from either sheet on the overlap); tile-only reading: unchanged | unchanged; it does not repair symbol-level matching of an unannotated copy (Astra) | unchanged, unless the mask also enters matching (to state) |
+| 2. Reference-positive tiles | follow from the new references under `sheet-contains` | tile-only: the contacted tile is also positive for the listed contacts | frame-wide containment (`geometric-contains`) | the masked tiles are not classified |
+| 3. Detection-positive tiles | unchanged rule | to state: whether a detection on the overlap also books to the other sheet's tile | frame-wide containment | the masked tiles are not classified |
+| 4. Classification denominator | unchanged (8,541 tiles) | unchanged | unchanged | reduced by the mask |
+| 5. Count-table population and booking | `sheet-primary` over the new references; per-sheet conservation holds | to state; a tile-only exception must not reach it | to state (frame-wide `geometric-primary` is the existing counterpart) | to state; if the mask enters, coverage, matching scope, and conservation consequences are stated |
+
+### 4.3 A reference or frame change needs a schema amendment (Astra W2-3)
+
+Options (a), (b) read as a matching change, and (d) if its mask enters
+matching or the count tables, change what the evaluation measures, not
+only how tiles are joined. The policy then also states:
+
+- **The affected targets.** Beyond W1.0's target set, these include
+  everything that symbol matching determines: the point F1, precision, and
+  recall; the reference counts; the per-sheet confusions; and anything
+  derived from them. For (d), they also include the coverage fields that
+  W1.0 classes as non-target (`dry-run.md` § 3.3).
+- **The recorded inputs.** `_metadata.cli_args` (`ground_truth`, `bounds`,
+  and any mask), `_metadata.input_files`, and `_metadata.input_git_state`
+  describe the effective new inputs, with their hashes. The originals are
+  kept in the re-emission history (§ 5.6).
+- **The comparison baselines.** The two effects stay separate, as the
+  accepted E93 draft requires:
+  1. **The join-only effect.** The recorded references and frame are held
+     fixed and only the joins change. This is the in-place re-emission of
+     W2.1, and G2 applies to it unchanged, point estimates included.
+  2. **The reference or frame correction.** This is a separate
+     computation, whose baseline is the join-only result. It has its own
+     timing, inputs, identity, ledger legs, and gate items. Its point
+     estimates may move, and the gate states how each move is explained.
+     It is written as a separate, labelled evaluation, beside the
+     join-only one, never over it. The proposed location is
+     `results/tile-join-wave-2/reference-corrected/<reference version>/<original path>`.
+     Which of the two the paper cites is part of the ruling (open question
+     P15).
+- **An effective recipe that can be reconstructed from the new artefact.**
+  Recipe recovery (`recover_recipe`) reads `_metadata.cli_args` and
+  `input_files`. These are rewritten to the effective recipe: the actual
+  reference, frame or mask, both joins, and input hashes. A later replay of
+  the new artefact therefore uses its effective inputs, and never remaps
+  the historical ones again. The ledger labels each leg's inputs
+  separately (`replay_inputs`, `compute_inputs`; § 5.5).
+
+### 4.4 Measured facts that bear on the options
+
+| Option | Measured on r2, relative to sheet-specific containment (`dry-run.md` § 2.2 at `568a80689`) |
+|---|---|
+| (a) | 26 references would be added for the map-content contacts, turning 11 tiles positive; 40 references and 17 tiles if the ambiguous contacts are included. Canonical r50 already carries a `phantom:*` reference beside 29 of its 33 map-content contacts, so it would gain 4 references and no tile would move |
+| (b), tile-only | the same tiles as (a): 11, or 17 with the ambiguous contacts |
+| (c) | 333 tiles turn positive: 11 hold map-content contacts, 6 hold only ambiguous contacts, and 316 hold only padding contacts, with no remainder |
+| (d) | 52 tiles removed (41 positive, 11 negative), or 85 (68 and 17) with the ambiguous contacts |
+
+These are measurements of hypothetical rules, not approved reference
+additions (Astra's stop review).
+
+**Sub-parameter, whichever option is chosen:** whether the ambiguous
+contacts (18 on r2, points on the black edge of the map face) count with
+the map-content contacts (stop record § 4, item 3).
 
 **Interim:** phase A runs, and phase B waits (§ 3.2). The driver refuses
 to compute any 55-map file under the new rules while its key is
@@ -245,27 +391,17 @@ configuration was bypassed.
 
 ## 5. Work items
 
-### W2.0 Preconditions and the GS sheet check (read-only, first)
+### W2.0 Preconditions and the independent recount (read-only, first)
 
-- Confirm P1–P8, and record the evidence in the run directory.
-- **The GS sheet check (P4).** Run the parent record's
-  `sheet_boundary_check.py` method on every phase A frame other than
-  Era-2: the 384 px, 512 px, and 256 px full frames, the grid common
-  frame, the H10 frame, and the H13 common frame and its three arms. The
-  two null-exemplar reduced frames (`era2-b-487_minus_null_overlap`,
-  `era1-full-340_minus_null_overlap`) are named as full frames less their
-  null-overlap tiles. W2.0 confirms that every tile in each, name and
-  polygon, is in its parent frame. A confirmed subset inherits its
-  parent's result; an unconfirmed one is checked in its own right. Report every cross-sheet tile
-  contact with its pixel position and a padding, map-content, or
-  ambiguous verdict, using W1.0's rule (`dry-run.md` § 2, "Method").
-  **A contact on map content stops that frame's files** and goes to the
-  PI, as the 55-map contacts did.
+- Confirm P1–P9, and record the evidence in the run directory. The GS
+  sheet check (P4) is done (`dry-run.md` § 2.3).
 - **The independent reference recount** (as G1 item 4), once per (frame,
   reference) pair rather than once per file: the number of tiles holding
   at least one of their own sheet's references, computed without the
   scorer. Every re-scored file's reference-positive count must equal it
   (G2 item 6).
+- **The missing-input search** of § 5.3, which ends in the committed list
+  of P9.
 - Re-run `wave2_scope_and_cost.py` against the merged worklist, and stop
   if any count in § 3.1 has moved without an explanation.
 
@@ -280,20 +416,20 @@ the pure recipe recovery `recover_recipe`
 (`scripts/rescore_tile_mcc_e81.py:142–179`; it reads `_metadata` and
 returns the recipe, with no join and no scoring), and the scorer's
 `find_detection_files`. It must not call E81's `recompute_cell` or
-`rewrite_cell`. Those call classification without a join at this base
-(`:310–314`, the dependence Astra's C2 names), guard on confusion counts
-alone (`:317–328`), and rewrite through `write_outputs` (`:392–397`). The
-Wave 1 code has since pinned E81 to each record's own join. Wave 2 still
-does not depend on it, and E81 stays a historical tool. Every library call
-the driver makes passes the classification join and the count-table join
-explicitly. It reads no default, so a later change of default cannot
-change its meaning.
+`rewrite_cell`. At the audited base those call classification without a
+join (`:310–314`, the dependence Astra's C2 names), guard on confusion
+counts alone (`:317–328`), and rewrite through `write_outputs`
+(`:392–397`). The Wave 1 code has since pinned E81 to each record's own
+join. Wave 2 still does not depend on it, and E81 stays a historical tool.
+Every library call the driver makes passes the classification join and the
+count-table join explicitly. It reads no default, so a later change of
+default cannot change its meaning.
 
 **Inputs:**
 
 - the W1.0 worklist (pinned by commit and SHA-256);
-- `seam-policy.json` (§ 4) and a frozen-prefix list (default `archive/`;
-  open question P5);
+- `seam-policy.json` (§ 4), a frozen-prefix list (default `archive/`;
+  open question P5), and `missing-inputs.json` (P9);
 - the data root, zbook's main checkout, read-only, for gitignored inputs;
 - the target worktree, the `tile-join-wave-2` checkout on zbook;
 - a run directory in zbook scratch, `~/scratch/wave2/<run-id>/`.
@@ -301,10 +437,10 @@ change its meaning.
 **Per file, in order** (the Wave 1 specification's "two computations, in
 order", W1.1):
 
-1. **Identity.** Hash the committed file (SHA-256). Recover the recipe.
-   Hash every input and compare it with any recorded git blob hash. Record
-   the run order of replicated passes, the seed, the iteration count, the
-   buffers, and the environment.
+1. **Identity.** Hash every member of the committed bundle (SHA-256 of
+   `evaluation.json` and of each sibling present). Recover the recipe, hash
+   every input, and compare each with any recorded git blob hash. Compute
+   the file's computation identity (§ 5.6).
 2. **Legacy replay.** Score under the file's recorded rules: the recorded
    classification join, else `id`; the recorded count-table join, else the
    legacy name rule. Compare every committed field, treating a key absent
@@ -313,51 +449,102 @@ order", W1.1):
    refusal with its recorded counts.
 3. **New-rule compute.** Compute every target field (`dry-run.md` § 3.2)
    under classification `sheet-contains` and count table `sheet-primary`,
-   or under the frame's seam policy for phase B.
-4. **Splice.** Copy the committed document, replace only the target
-   fields, and add the provenance below. Keep `version`, `timestamp`, and
-   every non-target `_metadata` field. A non-target key that the committed
-   file lacks (for example `summary.detection_scope` on older files) stays
-   absent. The scope used is recorded in the re-emission block instead.
-5. **Guards** (G2 items 1–6, per file), on the staged output.
-6. **Siblings.** Regenerate `evaluation.md` and `evaluation.csv` from the
-   spliced document, but only where the committed directory has them. The
-   driver creates no file that did not exist. Compare the CSV's non-target
-   columns (`dry-run.md` § 3.3) with the committed ones. Ledger any
-   non-target difference in the Markdown as `sibling-renderer-drift`
-   (open question A2).
-7. **Write.** Write into the target worktree (rescore) or the counterpart
-   tree, then append the ledger record.
+   or under the frame's specified seam policy for phase B.
+4. **Splice** (Astra W2-5). The driver edits a parsed copy of the
+   committed document at **structural target paths** only. These are JSON
+   Pointer patterns, committed before launch in
+   `reports/tile-join-wave-2/target-paths.json`. They are generated from
+   W1.0's target set (`dry-run.md` § 3.2) and the provenance paths below,
+   and each writer adapter (§ 5.2) has its own set. Examples are
+   `/summary/tile_classification`, `/summary/buffers/*/f1_ci_lower`,
+   `/per_run/*/buffers/*/coverage/coverage_status`, and
+   `/_metadata/metadata_version`. Everything else keeps its parsed value.
+   `version` and `timestamp` are kept. A non-target key that the committed
+   file lacks (for example `summary.detection_scope`) stays absent. Only the
+   specified provenance and schema-migration fields are added (§ 13, A5).
+   **Representation rule.** The edited document is serialised exactly as
+   the scorer serialises: `json.dumps(document, indent=2)`, plus one
+   trailing newline if and only if the committed file had one. New numbers
+   therefore take Python's shortest round-trip `repr`, as every scorer
+   output does. This rule applies only to the 2,821 files that round-trip
+   (§ 2 item 3). For those files, re-serialising the unedited parse is
+   byte-identical, so this is a token-preserving edit. The 8 files that do
+   not round-trip go through their writer adapter's own token-preserving
+   edit (§ 5.2), or they are held.
+5. **Guards** (G2 items 1–6, per file) on the staged bundle, including the
+   textual guard of G2 item 1.
+6. **Siblings** (Astra W2-5; § 13, A2). The driver regenerates
+   `evaluation.md` and `evaluation.csv` from the spliced document, but only
+   where the committed directory has them; it creates no file that did not
+   exist. It then compares old and new siblings for **scientific content**.
+   In the CSV, every non-target column (`dry-run.md` § 3.3) must be
+   value-identical, row for row, over the same row set. In the Markdown,
+   with target cells and target footnotes removed (`dry-run.md` § 3.2),
+   three things must be equal: the row labels; the multiset of numeric
+   tokens in non-target cells; and the set of results reported. A changed
+   non-target number, a changed population (rows, counts, buffers), or a
+   missing result is a guard failure, `guard:sibling-content`. A
+   difference in layout or wording alone is ledgered as
+   `sibling-layout-drift`, with its diff. The pilot reviews every distinct
+   wording change before the corpus run, because a wording change could
+   alter an interpretation. **The JSON and its siblings are one bundle**:
+   they are checked, published, and recovered together (§ 5.6).
+7. **Publish** the bundle through the staged manifest (§ 5.6), into the
+   target worktree (in-place re-score) or the counterpart tree. Then
+   append the ledger record.
 
-**Provenance written into each re-scored file.** The fields W1.1 defines:
-`tile_join` in every tile block, `count_table_join` on every block whose
-intervals or coverage come from a count table, and both in `_metadata`
-with the D72 and D73 pointer. `_metadata.cli_args.tile_join` is a target
-field (`dry-run.md` § 3.2). It is updated to describe the values now in
-the file, so the file no longer pairs old invocation metadata with
-new-rule blocks (Astra C2's concern). The original `cli_args` is kept,
-unchanged, as `_metadata.tile_join_reemission.original_cli_args`. One block records the re-emission:
-`_metadata.tile_join_reemission`, holding the driver path and commit, the
-library commit, the date, the rulings, the seam policy key and value (for
-phase B), the SHA-256 of the committed file it replaced, the recorded
-rules it replayed under, and the D50 scope summary. Whether a re-emitted
-file also takes the new `metadata_version` (1.5 on the Wave 1 branch,
-where it marks a writer that records both rules) is open question A4.
+**Provenance and schema migration written into each re-scored file.**
+
+- The fields W1.1 defines: `tile_join` in every tile block,
+  `count_table_join` on every block whose intervals or coverage come from
+  a count table, and both in `_metadata` with the D72 and D73 pointer.
+- `_metadata.cli_args` describes the effective recipe: `tile_join` (a
+  W1.0 target field) and `count_table_join` updated; every other argument
+  unchanged for a join-only re-emission, or amended under § 4.3. This
+  avoids pairing old invocation metadata with new-rule blocks (Astra C2's
+  concern).
+- **`_metadata.metadata_version` migrates to `"1.5"`** (§ 13, A4). This is
+  added to the authorised target schema. It is the version from which the
+  Wave 1 writer records both rules (`evaluate_detections.py:820` at
+  `f6f5ffe54`), and from which `recorded_tile_joins` demands both records
+  (`lib_advanced_metrics.py:513–514`). The re-emission writes both. The
+  migration claims nothing else: the history entry records the prior
+  version and states that only tile-join provenance was migrated. Other
+  legacy schema fields are not upgraded, and keys the file lacked stay
+  absent. One other reader keys on the version. `rerun_bca_corpus.py`
+  treats `"1.3"` and `"1.4"` as done vintages (`:106–110`, `:146–150`), so
+  a migrated file would fall into its `other_vintage` census. Wave 2's code
+  adds `"1.5"` to `DONE_VINTAGES`, with a test.
+- **`_metadata.tile_join_reemission`**, the re-emission history. It holds
+  a list of entries, one per distinct computation identity, in order. Each
+  entry records:
+  - the identity hash and its components (§ 5.6);
+  - the driver path and commit, and the library commit;
+  - the date of first publication;
+  - the rulings, and for phase B the seam-policy key and value;
+  - the SHA-256 of the committed file it replaced;
+  - the prior `metadata_version`;
+  - the replaced `cli_args`, `input_files`, and `input_git_state`;
+  - the recorded rules it replayed under;
+  - the D50 scope summary;
+  - for a counterpart, `counterpart_of` (path and SHA-256);
+  - for every entry after the first, `supersedes` (the previous identity
+    hash) and a stated `reason`.
 
 **Counterparts** (D73 (5)). The original stays byte-identical. The
-corrected file is written at
-`results/tile-join-wave-2/counterparts/<original path>`, with siblings,
-and carries `_metadata.tile_join_reemission.counterpart_of` (path and
-SHA-256). The location is a proposal (open question P6).
+corrected bundle is written at
+`results/tile-join-wave-2/counterparts/<original path>`. This location is
+a proposal (open question P6).
 
 **Batch roll-ups.** Seven live directories carry a `batch_summary.json`:
 `results/paper-eval/mcc/{384px,512px}/`,
-`results/paper-eval/n1/384px-14buf-mcc/` and its `pro-rerun/`,
+`results/paper-eval/n1/384px-14buf-mcc/` and its `pro-rerun/`, and
 `results/paper-eval/n1/{384px-all-buffers,512px-all-buffers,512px}/`.
 Each one whose cells are re-scored is rebuilt from them afterwards, as
 E81 did (`rebuild_batch_summary`, `rescore_tile_mcc_e81.py:400–434`). The
-rebuild keeps the original `version` and `timestamp`, as in step 4. The
-two roll-ups under `archive/` get counterparts.
+rebuild keeps the original `version` and `timestamp`, as in step 4, and is
+published as its own bundle (`batch_summary.{json,csv,md}`). The two
+roll-ups under `archive/` get counterparts.
 
 ### W2.2 Pilot (before the corpus run)
 
@@ -365,25 +552,34 @@ The W1.5 smoke run proves the code on eight cells. The pilot proves the
 driver on the corpus's strata. It writes into a disposable copy of the
 branch, not the branch itself. It takes at least one file from every
 populated cell of frame × `metadata_version` × interval method ×
-coverage block × replication × route × status, from § 2 item 2 and
-`wave2_scope_and_cost.txt` § 5. That includes the 1.0 and 1.1 counterparts,
-a 30-pass file, a `known-withheld` file, a null-exemplar regenerated cell,
-and a batch root. It records each leg's timing and peak RSS, and it runs
-the full driver twice over the pilot to show idempotence and resumption
-(kill the first run part-way). It passes only if every G2 item holds on
-every pilot file. Its timings replace § 7's projection before phase A
-launches.
+coverage block × replication × route × status (§ 2 item 2;
+`wave2_scope_and_cost.txt` § 5). That includes the 1.0 and 1.1
+counterparts, a 30-pass file, a `known-withheld` file, a regenerated
+null-exemplar cell, and a batch root. The pilot:
+
+- records each leg's timing and peak RSS **at the intended worker count**,
+  so that concurrency is sized from memory measured under that load;
+- runs the interruption tests of § 5.6 on real bundles;
+- runs the full driver twice, forcing recomputation on the second run
+  (§ 5.6), and shows byte-identical bundles and a reproduced ledger;
+- reviews every distinct `sibling-layout-drift` class (W2.1 step 6).
+
+It passes only if every G2 item holds on every pilot file. Its timings
+replace § 7's projection before phase A launches.
 
 ### W2.3 Phase A (GS frames)
 
 The driver runs over the phase A files in § 3.2's order, with the worker
-count from § 7, and writes into the zbook `tile-join-wave-2` worktree. It
-commits per top-level directory and pushes after each commit.
+count from § 7 (re-measured by the pilot), and writes into the zbook
+`tile-join-wave-2` worktree. It commits per top-level directory and pushes
+after each commit.
 
 ### W2.4 Phase B (55-map; after the seam ruling)
 
 The same as W2.3, once P7 holds. It also covers the 24 files from
-non-scorer writers (§ 5.2).
+non-scorer writers (§ 5.2). If the ruling changes a reference or the
+frame, the separate reference-corrected computation of § 4.3 runs after
+the join-only one, under its own identity and gate items.
 
 ### W2.5 Reports
 
@@ -394,7 +590,7 @@ policy.
 
 | Group | Files | Handling |
 |---|---:|---|
-| Null-exemplar sensitivity cells (`results/null-exemplar-sensitivity-2026-09-13/`) | 232 | **Regenerate, then re-score.** Run `analyse_null_exemplar_sensitivity.py --stage filter` in a disposable clone (it also rewrites the committed `detections_manifest.json`, `:636`). Accept the regenerated inputs only if the regenerated manifest equals the committed one (every `n_features`, `n_dropped`, `n_kept`, and path), and if the legacy replay then reproduces each cell's committed confusion and intervals. A matching count is a tripwire, not proof (Wave 1 specification, W1.0). Any cell that fails is ledgered `failure: regeneration-mismatch` and left untouched. None is paper-cited |
+| Null-exemplar sensitivity cells (`results/null-exemplar-sensitivity-2026-09-13/`) | 232 | **Regenerate, then re-score.** Run `analyse_null_exemplar_sensitivity.py --stage filter` in a disposable clone, because it also rewrites the committed `detections_manifest.json` (`:636`). Accept the regenerated inputs only if the regenerated manifest equals the committed one (every `n_features`, `n_dropped`, `n_kept`, and path), and if the legacy replay then reproduces each cell's committed confusion and intervals. A matching count is a tripwire, not proof (Wave 1 specification, W1.0). A mismatch is a replay-guard failure and stops the run (§ 6). None of these files is paper-cited |
 | `results/verifier-t-pilot/` | 24 | `skip: no-recipe`. No references, bounds, or detection input recorded (`worklist.json` reasons). Left untouched and listed as not migrated (§ 8) |
 | `results/retest/*-evaluation.json` | 12 | `skip: no-recipe`. No `_metadata` at all. They carry neither a tile block nor intervals. Left untouched and listed |
 | `results/deployment-oracle-2026-06-06/preverifier-eval/` and `results/rescore-2026-05-31/` | 12 + 1 | § 5.3 |
@@ -407,33 +603,37 @@ no-recipe files of § 5.1, which are skipped. The other 19 and the 5 make
 24 live, paper-cited, 55-map files (§ 2 item 5). Before phase B:
 
 - **Trace each writer's schema** field by field, as W1.0 § 3 did for the
-  scorer. The output is a target and non-target schema per writer, added
-  to `reports/tile-join-wave-2/`.
+  scorer. The output is a target and non-target schema per writer, with
+  its structural target paths, added to `reports/tile-join-wave-2/`.
 - **The five `compute_corrected_f1_multi_buffer.py` files** are re-scored
   through that engine's own path. Astra's C3 found that the engine does
   not route through `evaluate_detections.py`. The Wave 1 branch threads
-  both rules through it (`55737337a`). The same two computations and G2
-  guards apply, on its native schema.
+  both rules through it (`55737337a`). The same two computations, bundle
+  checks, and G2 guards apply, on its native schema.
 - **The 19 files with no recorded writer** are re-scored by the driver only
   if their key structure matches the scorer's schema. A file that does not
   match is ledgered `skip`, `held:foreign-schema`, and goes to the PI at
-  M2.
-- **The eight files that do not round-trip** (§ 2 item 3) get a textual
-  diff check against their own formatting. A re-serialisation that would
-  reformat untouched lines is ledgered and reported, never silently
-  accepted.
+  M2. Because every one is paper-cited, any such hold blocks G2 (item 8).
+- **The eight files that do not round-trip** (§ 2 item 3) need a
+  token-preserving edit from their adapter. The adapter locates each
+  target value's text span with an offset-recording parser, replaces only
+  those spans, and writes new values under the representation rule of
+  W2.1 step 4. A file the adapter cannot edit this way is held, never
+  reformatted.
 
 ### 5.3 The 13 files whose detection input is absent on zbook
 
-Twelve under `results/deployment-oracle-2026-06-06/preverifier-eval/`
+Twelve are under `results/deployment-oracle-2026-06-06/preverifier-eval/`
 (55-map) and one under `results/rescore-2026-05-31/` (GS). None is
 paper-cited. W2.0 searches for each missing input: git history
 (`git log --all -- <path>`), amd-tower's checkout, and the generating run's
 output directory. An input that is found, and whose hash matches any
-recorded hash, is used, and the file proceeds. Its replay is the identity
-check. Otherwise the file is ledgered `skip`, `held:input-absent`, left
-untouched, and listed as not migrated (§ 8). Sapphire is unreachable and
-is not searched (Wave 1 specification, changelog of 2026-11-18).
+recorded hash, is used, and the file proceeds; its replay is the identity
+check. The files still missing are committed as the pre-enumerated list of
+P9, and each is ledgered `skip`, `held:input-absent`, left untouched, and
+listed as not migrated (§ 8). A missing input that is not on the list is a
+§ 6 stop. Sapphire is unreachable and is not searched (Wave 1
+specification, changelog of 2026-11-18).
 
 ### 5.4 Statuses
 
@@ -442,39 +642,42 @@ leg's outcome is recorded separately (§ 5.5).
 
 | Status | Reasons |
 |---|---|
-| **success** | `rescored-in-place`; `counterpart-written`; `withheld-now-scored` (a `known-withheld` file whose replay ended in its recorded refusal and which scores under the new rules) |
-| **expected refusal** | `new-rule-refusal:<reason>`: the new-rule leg ends in a refusal the library names (`tile_join_unattributed_detection`, `no_tiles_in_bounds`, `detections_have_no_source_tile`, or the shortfall reasons), with its diagnostics. The file is re-emitted in the scorer's withheld form, a target-set shape (`dry-run.md` § 3.2). For a `known-withheld` file, the reason is `still-withheld:<reason>` |
-| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (on resume: the file's current SHA-256 equals the ledger's `sha256_after` under the same rule set); `held:seam-ruling`; `held:input-absent`; `held:foreign-schema`; `held:frame-sheet-check` (P4 stopped its frame) |
-| **failure** | `replay-mismatch:<fields>`; `input-hash-mismatch`; `regeneration-mismatch`; `recipe-error:<message>`; `guard:<item>`; `unnamed-refusal`; `unexpected-content` (the current SHA-256 matches neither `sha256_before` nor `sha256_after`); `exception:<type>` |
+| **success** | `rescored-in-place`; `counterpart-written`; `withheld-now-scored` (a `known-withheld` file whose replay ended in its recorded refusal and which scores under the new rules); `rescored-superseding` (an intentional re-emission under a new identity, § 5.6) |
+| **expected refusal** | `new-rule-refusal:<reason>`: the new-rule leg ends in a refusal the library names (`tile_join_unattributed_detection`, `no_tiles_in_bounds`, `detections_have_no_source_tile`, or the shortfall reasons), with its diagnostics. The file is re-emitted in the scorer's withheld form, a target-set shape (`dry-run.md` § 3.2). For a `known-withheld` file the reason is `still-withheld:<reason>` |
+| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (§ 5.6: identity equal and every bundle member's hash equal to the ledger's published hash); `held:seam-ruling`; `held:input-absent` (pre-enumerated files only, P9); `held:foreign-schema` |
+| **failure** | `replay-mismatch:<fields>`; `interval-mismatch:<fields>`; `input-hash-mismatch`; `regeneration-mismatch`; `recipe-error:<message>`; `guard:<item>` (including `guard:sibling-content` and `guard:textual`); `unnamed-refusal`; `unexpected-content` (a bundle member's hash matches neither its before nor its staged hash); `identity-changed` (§ 5.6); `exception:<type>` |
 
-A failed file is never written. A `skip` changes nothing. Whether a failure
-also stops the run is decided by § 6.
+A failed file is never published, and a `skip` changes nothing. Under the
+current stop rule, almost every failure also stops the run (§ 6).
 
 ### 5.5 Ledger schema
 
 The ledger is append-only JSON Lines (JSONL), one record per file per
-attempt, at `~/scratch/wave2/<run-id>/ledger.jsonl`. Each line is written
-with `fsync`. The ledger is copied to `reports/tile-join-wave-2/ledger.jsonl`
-at each commit. Fields:
+attempt, at `~/scratch/wave2/<run-id>/ledger.jsonl`. It is copied to
+`reports/tile-join-wave-2/ledger.jsonl` at each commit. Fields:
 
-- **identity**: `ledger_version`, `run_id`, `host`, `driver_commit`,
-  `library_commit`, `rule_set` (classification join, count-table join,
-  seam policy key and value or `null`; its hash is the `rule_set_id`);
+- **identity**: `ledger_version`, `run_id`, `host`, and the file's
+  `computation_identity` (its hash and every component, § 5.6);
 - **worklist facts**: `path`, `worklist_status`, `disposition`,
   `paper_cited`, `corpus`, `frame`, `reference`, `construction_route`,
   `passes`, `buffers`, `metadata_version`;
-- **inputs**: `sha256_before`, and `inputs[]` with `path`, `sha256`,
-  `git_blob`, `recorded_git_blob`, and `matches`;
+- **inputs, labelled by leg**: `replay_inputs[]` and `compute_inputs[]`,
+  each with `role` (detections, reference, frame, mask), `path`,
+  `sha256`, `git_blob`, `recorded_git_blob`, and `matches`;
+- **bundle**: `bundle_before[]` and `bundle_after[]`, one entry per member
+  (JSON, `.md`, `.csv`) with `path` and `sha256`, and the staged-manifest
+  path;
 - **legs**: `replay` (outcome `reproduced`, `reproduced-recorded-refusal`,
   `mismatch`, or `error`; `recorded_rules`; `differences[]`); `compute`
   (outcome `scored` or `refused`; `reason`; `diagnostics`); `guards` (each
-  G2 item `pass`, `fail`, or `n/a`, with details); `siblings`;
-- **changes**: `targets_changed` (count by field), with the full per-field
-  before and after in `diffs/<sha256 of path>.json`; `delta` (tile
-  confusion and MCC before and after; flips of `coverage_status`,
+  G2 item `pass`, `fail`, or `n/a`, with details); `siblings` (content
+  check and any layout drift);
+- **changes**: `targets_changed` (count by structural path), with the full
+  per-field before and after in `diffs/<sha256 of path>.json`; `delta`
+  (tile confusion and MCC before and after; flips of `coverage_status`,
   `ci_unreliable`, `ci_excludes_point`, and `sparse_coverage`; intervals
-  before and after per buffer); `cross_sheet_tiles[]` (G2 item 4);
-- **result**: `outputs[]` (path and `sha256_after`), `status`, `reason`;
+  before and after, per buffer); `cross_sheet_tiles[]` (G2 item 4);
+- **result**: `status` and `reason`;
 - **cost**: `started_utc`, `finished_utc`, `wall_s`, `cpu_s` and
   `max_rss_mb` per leg, and `worker`.
 
@@ -482,86 +685,172 @@ at each commit. Fields:
 record per worklist path, and counts by status and reason that sum to
 2,829.
 
-### 5.6 Idempotence and resumability
+### 5.6 Computation identity, bundle publication, recovery, and idempotence (Astra W2-2)
 
-- **Staged writes.** Each file is computed and checked in
-  `<run-dir>/staging/<sha256 of path>/`. The siblings are moved into place
-  first and `evaluation.json` last, each by an atomic `os.replace`. Then
-  the ledger line is appended. The staging directory is kept until the run
-  ends.
-- **Resume.** On start, the driver reads the ledger. A file with a
-  terminal record under the current `rule_set_id`, whose current SHA-256
-  equals the recorded `sha256_after`, is `skip: already-done`. A file
-  whose SHA-256 equals `sha256_before` is processed. A crash between the
-  replace and the ledger line leaves a file whose SHA-256 equals its staged
-  output: that is completed and recorded as success. Anything else is
-  `failure: unexpected-content`, and the run stops (§ 6).
-- **Idempotence.** Re-running the new-rule leg on a re-scored file yields
-  byte-identical output: the replay leg now reads the file's own sheet-join
-  records, and the compute leg reproduces them. The pilot shows this on
-  every stratum. During the corpus run it is checked on a stratified
-  sample of at least 5 % of files per phase, chosen by a seeded draw fixed
-  before launch. A full second pass costs about half as much again
-  (§ 7) and is the PI's choice (open question P8).
-- **Never twice.** A held file is re-evaluated when its condition changes:
-  a ruling recorded, or an input found. A succeeded file is never
-  re-written under the same `rule_set_id`.
+**Computation identity.** Each file's identity is the SHA-256 of a
+canonical JSON object that holds:
+
+- the committed artefact: the SHA-256 of every bundle member before
+  re-emission;
+- the worklist: its commit and SHA-256;
+- the replay leg's input hashes, and the compute leg's input hashes;
+- the recipe: buffers, passes and their order, seed, and iteration count;
+- the code: driver, library, and scorer commits, each from a clean tree;
+- the environment: Python version, and the SHA-256 of the
+  `uv pip freeze` output;
+- the schema adapter: its identifier, version, and target-paths SHA-256;
+- the seam policy: key, value, and the hashes of any mask and reference
+  it introduces.
+
+Resume compares the whole identity, not selected fields. If any component
+differs, the file is not treated as done. The driver stops with
+`identity-changed`, unless the operator has started an explicit new
+computation (`--supersede <reason>`), which is recorded as below.
+
+**Bundle publication** through a durable staged manifest, at
+`<run-dir>/staging/<sha256 of path>/manifest.json`. The steps are:
+
+1. Write every new member, and a copy of every original member, into the
+   staging directory. Call `fsync` on each file and on the directory.
+   Write the manifest with state `staged`, listing each member's path,
+   original hash, and staged hash, and `fsync` it.
+2. Set the state to `publishing` (`fsync`).
+3. Replace each target member by `os.replace`: siblings first, then
+   `evaluation.json`. Then `fsync` each target directory.
+4. Set the state to `published` (`fsync`).
+5. Append the ledger record, ending in a newline, and `fsync` the ledger.
+6. Set the state to `committed` (`fsync`).
+
+**Recovery**, at every start and before any new work. For each manifest
+not in state `committed`:
+
+- **`staged`**: every target must still hash to its original. The staging
+  directory is set aside under `<run-dir>/abandoned/` (archive, not
+  delete) and the file is reprocessed.
+- **`publishing`**: every member must hash either to its original or to
+  its staged version. The driver completes the publication from the
+  verified staged copies. If a staged copy fails verification, it restores
+  every member from the original copies instead. The whole bundle ends in
+  one state or the other, never mixed.
+- **`published`, no durable ledger record**: verify every member against
+  its staged hash, then append the record and commit.
+- **Any member matching neither hash**: `unexpected-content`, and the run
+  stops.
+
+**`already-done`** requires an equal identity, a `committed` manifest, and
+every bundle member's current hash equal to the ledger's `bundle_after`.
+Checking `evaluation.json` alone is not enough.
+
+**A truncated JSONL tail.** On start, the driver reads the ledger line by
+line. A final line without its terminating newline, or one that does not
+parse, is copied to `ledger.jsonl.torn-<UTC timestamp>`, and the ledger is
+cut back to its last complete line. The file it described is then
+recovered through its manifest, as above. A malformed line anywhere but
+the end is corruption and stops the run.
+
+**Durability claimed.** The design claims consistency after the process
+is killed at any point, and the tests below show it. It also claims
+durability after power loss to the extent that the `fsync` calls on files
+and parent directories above provide it, on zbook's file system. Power
+loss itself is not tested.
+
+**Interruption tests** (tier 1, by a fault-injection hook that ends the
+process at a named point). Each test asserts that recovery reaches the
+same final bytes for every bundle member, and a reconciled ledger:
+
+- after staging, before publishing;
+- after each sibling replace;
+- after the JSON replace;
+- during the ledger append, leaving a partial line;
+- after the durable ledger record, before `committed`;
+- after `committed`.
+
+The pilot repeats the "after each sibling replace" and "partial line"
+cases on real bundles.
+
+**Idempotence.** The idempotence check forces recomputation
+(`--verify-idempotence`). It ignores `already-done`, recomputes from the
+artefact's effective recipe into scratch, and compares bytes with the
+committed bundle. An unchanged rerun, under the same identity, reuses the
+existing history entry verbatim: its first-publication date, its replaced
+`cli_args` and other inputs, and its original-file hash. The output is
+therefore byte-identical. Fresh provenance would otherwise break byte
+identity on its own.
+
+**An intentional, different re-emission** (a new identity, such as a later
+ruling or a corrected input) needs `--supersede <reason>`. It appends a new
+history entry carrying `supersedes` and the reason, never rewrites an
+earlier entry, and is ledgered `rescored-superseding`.
+
+**The idempotence sample** during the corpus run (§ 13, A7): 5 % of each
+stratum, rounded up, so every populated stratum has at least one file.
+The strata are those of W2.2. The sample is drawn with a seed fixed and
+recorded before launch. Together with the pilot's full double run it is a
+regression check, not proof for every file. A full second pass is the PI's
+choice and is costed (open question P8).
 
 ### 5.7 Launch discipline
 
 The project's rules apply (`docs/agent-guidance.md`, "Compute Location"):
 
-- launched detached on zbook as
+- The driver is launched detached on zbook as
   `ssh zbook 'cd <worktree>; nohup <python> scripts/tile_join_wave2_rescore.py ... > <run-dir>/run.log 2>&1 < /dev/null & echo $! > <run-dir>/run.pid'`,
   with all three descriptors redirected, setup separated by `;`, and
-  nothing after the launch on the same line;
-- the driver writes its own pid file as well, and a heartbeat line to its
-  log at least every 60 s, so that log staleness works during long files;
-- it ends with exactly one of `^WAVE2 COMPLETE`, `^WAVE2 PARTIAL`, or
+  nothing after the launch on the same line.
+- The driver also writes its own pid file, and a heartbeat line to its log
+  at least every 60 s, so that log staleness works during long files.
+- It ends with exactly one of `^WAVE2 COMPLETE`, `^WAVE2 PARTIAL`, or
   `^WAVE2 STOPPED`, followed by the summary counts. The watcher is
   `scripts/wait_for_run.py --pidfile ... --marker success='^WAVE2 COMPLETE'
   --marker partial='^WAVE2 (PARTIAL|STOPPED)'`, which keys on terminal
-  state and log staleness. A chain proceeds only on exit 0;
-- liveness is `kill -0 $(cat run.pid)` plus log age, never `pgrep -f` over
+  state and log staleness. A chain proceeds only on exit 0.
+- Liveness is `kill -0 $(cat run.pid)` plus log age, never `pgrep -f` over
   `ssh`. Failure filters are case-insensitive
-  (`grep -iE 'error|traceback|failed|partial|stopped'`);
-- worker processes are separate operating-system processes (the scorer is
+  (`grep -iE 'error|traceback|failed|partial|stopped'`).
+- Worker processes are separate operating-system processes (the scorer is
   single-threaded: CPU time ≈ wall time, `dry-run.md` § 8). The 55-map
   phase admits a new job only while the free-memory estimate allows it
   (§ 7).
 
-## 6. Running unattended, and what stops it
+## 6. Running unattended, and what stops it (Astra W2-4)
 
-D72 (3) says an overnight run "should just continue" past its priority
-subset. A problem in one file is therefore ledgered and the run moves on,
-unless the problem points to the code or the configuration rather than to
-the file. **These stop the run** (and send the PI a push notification and
-a written stop record):
+The parent record's M2 rule is "any interval or guard failure = stop"
+(`planning/tile-join-resolution-2026-11-01.md:312`). D72 (3) says an
+overnight run "should just continue" past its priority subset, but that
+means not stopping at the end of the subset. It does not mean tolerating
+failures. Until the PI amends the rule (open question P9), **the first
+of these stops the run**, in any file, cited or not:
 
+- an interval or replay-guard failure: a `replay-mismatch`, an
+  `interval-mismatch`, or a `regeneration-mismatch`, or a legacy replay
+  that does not end in a `known-withheld` file's recorded refusal;
+- an **input-hash mismatch** that was not explained and recorded before
+  launch. A changed input never becomes a file-local exception;
+- a missing input that is not on the pre-enumerated list (P9);
 - a non-target field changed, or a point F1, precision, or recall moved
-  (G2 items 1–2), in any file: this is a code defect, not a file defect;
+  (G2 items 1–2), including `guard:textual` and `guard:sibling-content`;
 - a count-table sum mismatch, overall or per sheet (G2 item 5), or a
   reference-positive count that disagrees with the W2.0 recount (item 6);
 - a sheet-specific difference from a historical contains reading on a tile
   that no other sheet's evidence reaches (item 4);
 - an idempotence-sample mismatch (item 7);
-- `unexpected-content`, an `unnamed-refusal`, or a write outside the target
-  worktree, the counterpart tree, `reports/tile-join-wave-2/`, or the run
+- `identity-changed` without `--supersede`, `unexpected-content`, a
+  malformed ledger line that is not the last, an `unnamed-refusal`, or a
+  write outside the target worktree, the counterpart and
+  reference-corrected trees, `reports/tile-join-wave-2/`, or the run
   directory;
 - any 55-map file reaching the new-rule leg while its seam key is
   `pending`;
-- a `replay-mismatch` on a **paper-cited** file, or more than a threshold
-  of replay mismatches on other files. This draft proposes 10 in total
-  (open question P9), because a burst suggests drift in the environment
-  rather than in the files;
 - a worker killed for memory, or swap in use on zbook;
-- a map-content contact in a W2.0 sheet check (that frame only; the other
-  frames continue);
 - any decision this specification does not cover.
 
-Not stops, but ledgered and reported at M2: a replay mismatch on a
-non-cited file under the threshold; `skip` of any kind; an expected
-refusal; `sibling-renderer-drift`.
+**After a stop**, the failure is diagnosed, and its disposition is written
+into the stop record before the run resumes. Resumption goes through
+§ 5.6's recovery, so no completed bundle is redone.
+
+Not stops, but ledgered and reported at M2: a pre-enumerated
+`held:input-absent`; any other `skip`; an expected refusal; a
+`sibling-layout-drift`.
 
 ## 7. Cost (measured, not guessed)
 
@@ -615,19 +904,20 @@ The "other GS classes" row is the GS total less the rows above it
 (41.05 − 34.84 = 6.21 CPU-h; 2,459 − 2,132 = 327 files).
 
 **Workers.** zbook has 32 cores, 2 kept free, and 31 GB. In the 55-map
-phase memory binds: (31 − 6) GB headroom-adjusted ÷ 2.046 GB per job
-= 12.2, so **12 workers** (about 24.6 GB). The 6 GB margin covers the
-operating system, the driver, and the new joins' unmeasured extra memory.
-In the GS phase cores bind, not memory: 30 jobs would need about 8.7 GB.
-The Wave 1 operating brief caps heavy jobs at **14 workers**, which this
-draft uses. Raising it to 30 would cut phase A's wall-clock from 2.93 h to
-1.37 h (open question P10).
+phase memory binds: (31 − 6) GB ÷ 2.046 GB per job = 12.2, so
+**12 workers** (about 24.6 GB). The 6 GB margin covers the operating
+system, the driver, and the new joins' unmeasured extra memory. In the GS
+phase cores bind, not memory: 30 jobs would need about 8.7 GB. The Wave 1
+operating brief caps heavy jobs at **14 workers**, which this draft uses.
+Raising it to 30 would cut phase A's wall-clock from 2.93 h to 1.37 h
+(open question P10). These worker counts are provisional. The pilot sizes
+concurrency from peak memory measured at the intended load (W2.2).
 
-**Wall-clock** (CPU-hours ÷ workers, assuming even packing; the longest
-single file is 28.5 CPU-minutes, a 30-pass file, well inside each
-phase):
+**Wall-clock**, idealised: CPU-hours ÷ workers, assuming even packing and
+no contention. The longest single file is 28.5 CPU-minutes, a 30-pass
+file, well inside each phase.
 
-| Phase | CPU-h | Workers | Wall-clock |
+| Phase | CPU-h | Workers | Idealised wall-clock |
 |---|---:|---:|---:|
 | A, paper-cited only | 12.40 | 14 | 0.89 h |
 | A, all | 41.05 | 14 | **2.93 h** (1.37 h at 30) |
@@ -635,15 +925,21 @@ phase):
 | A + B | 63.84 | | **4.83 h** |
 | A + B with a full idempotence pass instead of a sample | 61.59 + 34.69 = 96.28 | 14 / 12 | 4.40 + 2.89 = 7.29 h |
 
-Not costed, because unmeasured: the W2.0 sheet checks, the null-exemplar
-regeneration (its filter stage reads and writes GeoJSON), the five
-`compute_corrected_f1_multi_buffer.py` re-scores, and contention at 12–14
-concurrent jobs (the timings were taken at 8). The estimate leans high on
-three counts: the GS rate is the costliest smoke cell's, short-buffer
-55-map files are charged 14 buffers, and the 256 px frame is charged at
-the 55-map rate. It leans low on one count: the new-rule leg may cost more
-than a replay. On this projection, compute is hours, not days. The
-schedule to 2026-11-29 is set by the rulings and reviews, not by compute.
+**Not costed, because unmeasured:**
+
+- the null-exemplar regeneration (its filter stage reads and writes
+  GeoJSON);
+- the five `compute_corrected_f1_multi_buffer.py` re-scores;
+- any reference-corrected computation under § 4.3;
+- the bundle `fsync` calls;
+- contention at 12–14 concurrent jobs (the timings were taken at 8).
+
+The estimate leans high on three counts: the GS rate is the costliest
+smoke cell's, short-buffer 55-map files are charged 14 buffers, and the
+256 px frame is charged at the 55-map rate. It leans low on one count: the
+new-rule leg may cost more than a replay. On this projection, compute
+takes hours, not days. The schedule to 2026-11-29 is set by the rulings
+and reviews, not by compute.
 
 ## 8. Downstream dispositions (Astra's C1–C4, as they bear on Wave 2)
 
@@ -655,9 +951,9 @@ bears on Wave 2 as follows.
 
 | Finding | What Wave 2 does | Wave 3 |
 |---|---|---|
-| **C1**: the public resampling helpers (`bootstrap_ci`, the effect-size, multi-run, and interaction bootstraps, and `generate_report`) reached the count table without a join option at the audited base | Wave 2 uses only the scorer's path (`bootstrap_ci`, classification and its bootstrap), with both joins explicit. W1.1 threads all five helpers (`bf7186b71`) | The effect-size and interaction consumers Astra names (`analyse_phase2_results.py`, `analyse_study_effects.py`, `analyse_secondary_effects{,_text}.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `evaluate_retest_all.py`) re-run in Wave 3 only where a cited artefact depends on them, after the integration check Astra asks for (one single-run, one multi-run, and one interaction route under each rule) |
+| **C1**: the public resampling helpers (`bootstrap_ci`, the effect-size, multi-run, and interaction bootstraps, and `generate_report`) reached the count table without a join option at the audited base | Wave 2 uses only the scorer's path (`bootstrap_ci`, and classification with its bootstrap), with both joins explicit. W1.1 threads all five helpers (`bf7186b71`) | The effect-size and interaction consumers Astra names (`analyse_phase2_results.py`, `analyse_study_effects.py`, `analyse_secondary_effects{,_text}.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `evaluate_retest_all.py`) re-run in Wave 3 only where a cited artefact depends on them. They first pass the integration check Astra asks for: one single-run, one multi-run, and one interaction route under each rule |
 | **C2**: the E81 driver could acquire the new semantics through a changed default | Not used to write (W2.1); only its pure `recover_recipe` is imported | E81 stays a historical tool, pinned to each record's own join on the Wave 1 branch |
-| **C3**: `compute_corrected_f1_multi_buffer.py` and `score_detection_set` lose join provenance | The five stride55 files are re-scored through that engine with both rules recorded in its native schema (§ 5.2) | `score_detection_set` sweep consumers: disposition per call in the consumer-disposition record (P5); re-run only where cited |
+| **C3**: `compute_corrected_f1_multi_buffer.py` and `score_detection_set` lose join provenance | The five stride55 files are re-scored through that engine, with both rules recorded in its native schema (§ 5.2) | `score_detection_set` sweep consumers: disposition per call in the consumer-disposition record (P5); re-run only where cited |
 | **C4**: `paired_mcc_permutation.py`, `pairwise_permutation_test.py`, and `build_pareto_v2.py` compute classification arrays on the default, and committed-record gates read confusion without provenance | Nothing: these read evaluations Wave 2 writes | Each re-runs in Wave 3 under the two-computation contract, validating every record under its own recorded rule, which after Wave 2 is the sheet joins |
 
 **Which generators re-run in Wave 3.** These do: the wrappers W1.1 names
@@ -669,8 +965,8 @@ record marks as feeding a cited artefact. The rest stay pinned to the
 legacy rules (`e34a7e581`) as historical tools. Wave 2 hands Wave 3 one
 input for this: `reports/tile-join-wave-2/downstream-inputs.json`, which
 lists every re-scored evaluation path beside the committed artefacts that
-name it (a text search of tracked files, indicative, as W1.0's searches
-were).
+name it. That list comes from a text search of tracked files, so it is
+indicative, as W1.0's searches were.
 
 **What stops an un-migrated generator from publishing an apparently
 migrated result before Wave 3 regenerates it.** Four mechanisms. The
@@ -686,13 +982,13 @@ first two are in the Wave 1 code; the last two are proposed here.
    branch). It rejects contradictory provenance, and it rejects a new
    output that lacks provenance. A legacy-pinned generator that reads a
    re-scored evaluation therefore sees a sheet-join record. The
-   consumer-disposition record must say, per generator, whether it refuses
-   that mix or labels its output as legacy. A generator that does neither
-   is a P5 finding.
+   consumer-disposition record must say, for each generator, whether it
+   refuses that mix or labels its output as legacy. A generator that does
+   neither is a P5 finding.
 3. **No merge before M3** (§ 3.3, proposed). `main` never holds re-scored
    evaluations beside downstream artefacts built from the old ones.
 4. **A not-migrated register.** `reports/tile-join-wave-2/not-migrated.json`
-   lists every in-scope file Wave 2 left on its legacy rules (skipped,
+   lists every in-scope file that Wave 2 left on its legacy rules (skipped,
    held, or failed), with the reason. Wave 3 and Wave 4 check every cited
    path against it, and any hit blocks the "all settled" verdict (G4).
    Unmigrated files are not edited to carry a marker: they are not
@@ -702,19 +998,30 @@ first two are in the Wave 1 code; the last two are proposed here.
 
 From the parent record's § 5 Wave 2 row and Wave 1's G1.
 
-1. **Non-target fields identical.** In every re-scored or counterpart file,
-   every field outside W1.0's target set (`dry-run.md` § 3.2) and the
-   provenance of W2.1 is value-identical to the committed file after
-   parsing. For the 2,821 files that round-trip (§ 2 item 3), the file's
-   text outside target lines is also byte-identical, trailing newline
-   included. `version` and `timestamp` are unchanged.
+1. **Non-target content identical** (Astra W2-5). In every re-scored or
+   counterpart bundle:
+   - every JSON field outside the structural target paths of
+     `target-paths.json` is value-identical to the committed file after
+     parsing;
+   - **textual guard**: for the 2,821 files that round-trip (§ 2 item 3),
+     every line that differs between the committed and the new text lies
+     inside the text span of a target path, with one exception. The
+     permitted delimiter change is a comma added to or removed from the
+     last line of the preceding sibling member in the same object or
+     array, when a key is inserted or removed after it. No other change is
+     permitted, and unrestricted reformatting fails the guard. The trailing
+     newline is unchanged, and `version` and `timestamp` are unchanged;
+   - for the 8 that do not round-trip, the adapter's token-preserving edit
+     changes only target spans (§ 5.2);
+   - the siblings pass the scientific-content check of W2.1 step 6.
 2. **Point F1, precision, and recall identical** in every buffer and every
-   pass (this is part of item 1, and is stated on its own because it is
-   the registered primary outcome).
+   pass of every join-only re-emission. This is part of item 1, and is
+   stated on its own because it is the registered primary outcome. A
+   reference-corrected computation (§ 4.3) is gated by its own amended
+   items, never by this one.
 3. **Legacy replay first**, under each file's recorded rules, reproducing
    its committed confusion and intervals, or its recorded refusal, before
-   any new value is written. A file that does not reproduce is left
-   untouched and ledgered.
+   any new value is published.
 4. **Differences from the historical contains readings confined to
    cross-sheet tiles.** For every cell with a committed frame-wide contains
    reading (the board's 150 gates in
@@ -722,49 +1029,57 @@ From the parent record's § 5 Wave 2 row and Wave 1's G1.
    and the K-ladder's in `results/k-ladder-2026-09-12/mcc-join-2026-10-30/`),
    `sheet-contains` differs only on tiles that another sheet's evidence
    reaches. Every such tile is listed with its explanation. On the 55-map
-   frame the expected differences depend on the seam ruling, and the
+   frame the expected differences depend on the seam policy, and the
    comparison is made under it.
 5. **Count tables sum** to the symbol-level totals, overall and per sheet,
    for every buffer and every pass.
 6. **Reference-positive tiles** equal W2.0's independent recount for the
    file's (frame, reference) pair.
-7. **Idempotent**: the stratified sample (§ 5.6), and the pilot's full
-   double run, give byte-identical output. A resumed run reproduces the
-   ledger.
+7. **Idempotent**: the forced-recomputation sample (§ 5.6) and the pilot's
+   full double run give byte-identical bundles, and every interruption
+   test recovers to the same bytes. A resumed run reproduces the ledger.
 8. **A reconciled ledger**: exactly one terminal record per worklist entry
    (2,829). Counts by status and reason sum to the worklist. Every file
-   changed on `tile-join-wave-2` is a ledgered success output or a rebuilt
-   roll-up (`git diff --name-only` against the merge base). Every
-   paper-cited file in the phases M2 covers is a success or an expected
-   refusal. A paper-cited skip or failure there blocks G2.
-9. **Batch roll-ups** rebuilt and equal to a rebuild from their cells.
+   changed on `tile-join-wave-2` is a published member of a committed
+   bundle, or a rebuilt roll-up (`git diff --name-only` against the merge
+   base). Every paper-cited file in the phases M2 covers is a success or an
+   expected refusal; a paper-cited skip or failure there blocks G2.
+9. **Batch roll-ups** rebuilt, and equal to a rebuild from their cells.
 10. **Tests and lint**: tier 1 green on zbook at the post-merge reference
-    count plus the driver's tests; `ruff check` and `npx markdownlint-cli2`
-    clean on touched files.
+    count, plus the driver's tests (interruption tests included); `ruff
+    check` and `npx markdownlint-cli2` clean on touched files.
 11. **Audit**: a fresh-context `/audit` of the driver, with every finding
     resolved or given a written disposition (as G1 item 9), and Astra's
-    review of this specification.
+    review of this specification and of the seam-policy specification
+    (P7).
 
 ## 10. Outputs
 
-- The driver and its tests on branch `tile-join-wave-2`; the re-scored
-  files, siblings, and roll-ups on the same branch; counterparts under
-  `results/tile-join-wave-2/counterparts/` (proposed).
+- The driver and its tests on branch `tile-join-wave-2`, with the
+  re-scored bundles and roll-ups on the same branch. Counterparts go under
+  `results/tile-join-wave-2/counterparts/`, and any reference-corrected
+  evaluations under `results/tile-join-wave-2/reference-corrected/` (both
+  proposed).
 - `reports/tile-join-wave-2/`, following the document revision policy:
-  - `gs-sheet-check.md` (W2.0);
-  - `pilot.md` and `pilot-ledger.jsonl` (W2.2), with the re-measured cost;
+  - `target-paths.json` (W2.1 step 4), `missing-inputs.json` (P9), and
+    `seam-policy.json` with the policy specification it encodes (§ 4);
+  - `pilot.md` and `pilot-ledger.jsonl` (W2.2), with the re-measured cost
+    and the reviewed layout-drift classes;
   - `ledger.jsonl`, `ledger-summary.json`, and `diffs/`;
-  - `ledger-summary.md`: counts by status and reason; the tile-MCC change
-    (ΔMCC) distribution by frame, corpus, construction route,
-    replication, and paper citation; every interval, coverage-status,
-    `ci_unreliable`, `ci_excludes_point`, and `sparse_coverage` flip;
-    every expected refusal; the cross-sheet tile list of G2 item 4;
-  - `seam-policy.json` and, for phase B, the ruling it encodes;
-  - `not-migrated.json` (§ 8) and `downstream-inputs.json` (§ 8);
+  - `ledger-summary.md`, containing:
+    - counts by status and reason;
+    - the distribution of tile-MCC changes (ΔMCC) by frame, corpus,
+      construction route, replication, and paper citation;
+    - every interval, coverage-status, `ci_unreliable`,
+      `ci_excludes_point`, and `sparse_coverage` flip;
+    - every expected refusal;
+    - the cross-sheet tile list of G2 item 4;
+  - `not-migrated.json` and `downstream-inputs.json` (§ 8);
   - `foreign-writer-schemas.md` (§ 5.2);
   - `e93-before-after.json`: the paper-cited before and after values that
-    erratum E93's table needs (parent record § 4 item 4). The erratum text
-    itself remains Wave 4's, with the PI's approval.
+    erratum E93's table needs (parent record § 4 item 4), with the join-only
+    and any reference-correction effects kept separate (§ 4.3). The
+    erratum text itself remains Wave 4's, with the PI's approval.
 
 ## 11. Milestone M2: what the PI receives, and decides
 
@@ -777,6 +1092,7 @@ The PI receives:
 - the G2 checklist with the evidence for each item;
 - `ledger-summary.md`: the ΔMCC distribution, every flip, every refusal,
   every skip and failure with its reason, and the not-migrated list;
+- every stop record, with its diagnosis and disposition (§ 6);
 - the cross-sheet tile explanations (G2 item 4);
 - the re-measured cost against § 7's projection;
 - the E93 before-and-after data;
@@ -816,20 +1132,29 @@ The PI decides:
   instead rebuild the filter under the sheet joins? The sensitivity
   analysis also read pre-D50 evaluations (`withheld-37.md` § 3.3), so
   Wave 3 revisits it in any case.
-- **P8.** Idempotence on a 5 % stratified sample (proposed), or a full
-  second pass (+32.44 CPU-h, about +2.5 h wall-clock, § 7)?
-- **P9.** The replay-mismatch threshold for non-cited files: 10 in total
-  (proposed), or another number?
+- **P8.** Idempotence on a 5 % stratified sample with forced recomputation
+  (proposed; Astra finds it a reasonable regression check, § 13), or a full
+  second pass (+32.44 CPU-h, about +2.5 h idealised wall-clock, § 7)?
+- **P9.** **An amendment to the stop rule, or not.** The parent record's
+  M2 rule is "any interval or guard failure = stop" (§ 5 there). Under
+  it, the first replay or interval failure in any file stops the run, as
+  § 6 now specifies. The first draft proposed tolerating up to 10 replay
+  mismatches on non-cited files before stopping. That is not an
+  interpretation of the current rule. It would need your explicit
+  amendment (Astra W2-4). Do you want such an amendment? If so, what
+  threshold, and does an input-hash mismatch on a non-cited file count
+  towards it? Without an amendment, Wave 2 stops on the first.
 - **P10.** Raise phase A's worker count from the brief's 14 to 30? Memory
-  allows it (§ 7). It would cut phase A's wall-clock from 2.93 h to
-  1.37 h.
+  allows it (§ 7). It would cut phase A's idealised wall-clock from
+  2.93 h to 1.37 h.
 - **P11.** M2 whole, or in two parts (§ 11)?
 - **P12.** The 46 `known-withheld` files outside W1.4 (W1.0 open question
-  5): Wave 2 re-scores all 49 in place either way. Is the D73 (4)
-  eligibility rule applied to the 46 when Wave 3 rebuilds their families,
-  or do they simply re-score? 29 of them are 55-map files under
-  `results/uplift-supplement/` (`wave2_scope_and_cost.txt` § 1; `dry-run.md`
-  § 4.3).
+  5): Wave 2 re-scores all 49 in place either way, and scoring does not
+  admit any of them to a family (§ 2 item 1). Is the D73 (4) eligibility
+  rule applied to the 46 when Wave 3 rebuilds their families, or do they
+  simply re-score? 29 of them are 55-map files under
+  `results/uplift-supplement/` (`wave2_scope_and_cost.txt` § 1;
+  `dry-run.md` § 4.3).
 - **P13.** The construction route is unknown for 79 paper-cited files (54
   materialisations that carry only `source_tile`, and 25 Era-1
   proposer-verifier accepted sets; W1.0 open question 4). The route does
@@ -846,37 +1171,80 @@ The PI decides:
   `/home/shawn/Code/map-reader-llm/` to the repository root for reading
   only, record the normalisation in the ledger, and leave the original
   untouched. Agree?
+- **P15.** If the seam ruling changes a reference or the frame (§ 4.3),
+  which evaluation does the paper cite for the 55-map results: the
+  join-only re-emission with the recorded references, or the separate
+  reference-corrected one? Both exist under this design, and E93 reports
+  the two effects separately.
 
 ### 12.2 For Astra
 
-- **A1.** Scope (§ 2 item 1): is it right to include the 149 live and 21
-  archived files that carry intervals but no tile block, and the 5
-  withheld files that carry neither, beyond the parent record's 2,646?
-- **A2.** Siblings (W2.1 step 6): is regenerating `evaluation.md` with the
-  current renderer, ledgering non-target Markdown drift rather than
-  stopping on it, acceptable? The alternative is to patch target cells in
-  place, as hand edits.
-- **A3.** Is `sheet_join_candidate_tiles` (`32ebe3762`) a sufficient
-  single hook for seam options (b, tile-only) and (d)? Or would either also
-  need changes to the count-table population or the D50 scope?
-- **A4.** Should a re-emitted file take the new `metadata_version` (1.5 on
-  the Wave 1 branch)? If it does, `recorded_tile_joins` reads it as a new
-  output and demands both records, which the re-emission writes. If it
-  does not, the version understates the provenance the file carries.
-  `metadata_version` is non-target in W1.0's schema.
-- **A5.** Non-target keys that an older file lacks (for example
-  `summary.detection_scope`): is leaving them absent, and recording the
-  scope in the re-emission block instead (W2.1 step 4), the right reading
-  of "surgical"?
-- **A6.** Do the stop list (§ 6) and its split between run-stopping
-  defects and ledgered file problems meet the M2 rule "any interval or
-  guard failure = stop" (parent record § 5)? This draft reads a guard
-  failure as a stop, and a replay mismatch on an uncited file as a
-  ledgered file problem below a threshold.
-- **A7.** Is a 5 % stratified idempotence sample, plus the pilot's full
-  double run, enough for G2 item 7?
+The first draft's A1–A7 are answered and closed (§ 13). Three new
+questions arise from the revision:
+
+- **A8.** Is the textual guard of G2 item 1 sound? It allows changed lines
+  only inside target spans, plus the adjacent-comma delimiter change, for
+  the 2,821 round-tripping files. The 8 others use an offset-based
+  token-preserving edit (§ 5.2).
+- **A9.** Do the bundle states, the recovery rules, and the interruption
+  points of § 5.6 cover W2-2? This includes completing a `publishing`
+  bundle from verified staged copies, and restoring it from originals
+  otherwise.
+- **A10.** The migration to `metadata_version` 1.5 also moves migrated
+  files out of `rerun_bca_corpus.py`'s done vintages unless `"1.5"` is
+  added there (W2.1). Is adding it, with a test, the right handling, and
+  is any other reader of the version known to you?
+
+## 13. Review dispositions
+
+Astra's review of the first draft (`f5f3824bb`):
+`~/agent-mail/codex/outbox/claude/20261118T133843Z-astra-wave2-spec-review.md`.
+Its verdict was "revise before launch approval". Each finding that cites
+code was checked against `tile-join-wave-1` at `f6f5ffe54` before it was
+adopted.
+
+| Finding | Verified | Disposition |
+|---|---|---|
+| **W2-1**: the shared hook is not a seam policy | Yes: `sheet_join_candidate_tiles` (`lib_advanced_metrics.py:3202`) has no purpose or side argument, and is called for both sides in classification (`:3429`) and in count tables (`:3843`, `:3846`); `iter_sheet_scopes` (`:2723`) scopes populations first | Adopted. The "change here alone" claim is removed (§ 2 item 7, § 4.2; the docstring at `:3216–3220` is to be fixed on the code branch). § 4.2 requires the five components to be specified separately, forbids a classification-only policy from reaching count tables, and requires stated coverage, matching-scope, and conservation consequences for count-table exclusions |
+| **W2-2**: resume, bundle, and idempotence | Yes: the first draft's resume compared `rule_set_id` and one file hash only | Adopted. § 5.6: the full computation identity; a durable staged manifest with `staged`, `publishing`, `published`, and `committed` states and whole-bundle recovery; truncated-tail handling; a durability claim matched by `fsync`; interruption tests at every step; forced-recomputation idempotence; provenance reused verbatim on an unchanged rerun; `--supersede` for an intentional new re-emission |
+| **W2-3**: a reference or frame change needs a schema amendment | Yes | Adopted. § 4.3: the affected targets, the recorded inputs, the separate join-only and correction baselines, an effective recipe in `cli_args` and `input_files`, and inputs labelled by leg. § 4.1 now uses the accepted E93 distinctions: measured projections, confirmed examples, and candidates awaiting adjudication |
+| **W2-4**: the replay threshold changes the stop rule | Yes: `planning/tile-join-resolution-2026-11-01.md:312`, "any interval or guard failure = stop" | Adopted. § 6 stops on the first interval or replay-guard failure, and on an unexplained input-hash mismatch. Only the pre-enumerated missing inputs may be held (P9 precondition). The tolerance is now a request for a PI amendment (open question P9) |
+| **W2-5**: a precise surgical-write guard | Yes: inserting a key adds a comma to the previous line | Adopted. Structural target paths in `target-paths.json`; the representation rule; the textual guard with its one permitted delimiter change; a token-preserving adapter for the 8 non-round-tripping files; the siblings' scientific-content guard (`guard:sibling-content`), with layout and wording drift only ledgered; JSON and siblings as one bundle (W2.1 steps 4 and 6; G2 item 1) |
+| **A1** additional scope | Astra recounted 149, 21, and 5 | Closed: in scope. Scoring a withheld file does not admit it to a family (§ 2 item 1, P12) |
+| **A2** regenerated Markdown | — | Closed: acceptable with the scientific-content guard and the bundle checks (W2-5) |
+| **A3** seam hook | — | Closed: not sufficient; see W2-1 |
+| **A4** `metadata_version` | Writer and reader at `f6f5ffe54` (`evaluate_detections.py:820`; `lib_advanced_metrics.py:513–514`; `rerun_bca_corpus.py:106–110`) | Closed: a documented migration to 1.5, added to the target schema, with the prior version kept in the history and no claim that other fields were upgraded (W2.1). The `rerun_bca_corpus.py` consequence is open question A10 |
+| **A5** absent legacy keys | — | Closed: they stay absent; only the specified provenance, effective-recipe, and migration fields are added (W2.1 step 4) |
+| **A6** stop list | — | Closed: see W2-4 |
+| **A7** idempotence sample | — | Closed as Astra states: a reasonable regression check, not proof for every file, conditional on forced recomputation, the identity and bundle checks, and the interruption tests. Rounding is up, with at least one file per populated stratum (§ 5.6) |
+| Seam counting correction (Astra, `20261118T130529Z`; W1.0 `21cd6ef97`) | Read in `dry-run.md` § 2.2 at `568a80689` | Adopted: on r2, 26 references (40 with the ambiguous contacts); option (c)'s 333 tiles split into 11 map content, 6 ambiguous, and 316 padding (§ 4.4) |
 
 ## Changelog
+
+### 2026-11-19 — Revised after Astra's review (S169, amd-tower)
+
+Trigger: Astra's review of the first draft (§ 13), the main session's
+instructions on it, and W1.0's GS-frame sheet check and corrected seam
+counts (`tile-join-wave-1-w10` at `568a80689`). Code findings were checked
+against `tile-join-wave-1` at `f6f5ffe54`.
+
+| Item | Before | After |
+|---|---|---|
+| P4 (GS sheet check) | owed | met: 12 frames, 243 contacts, 237 padding, 0 ambiguous, 0 map content, 6 unmeasurable (beyond the scan's edge) |
+| Seam hook | "a change here alone" | not a policy; five components specified separately (§ 4.2) |
+| Seam facts | (a) 32 references added on r2; (c)'s complement treated as padding | (a) 26 references (40 with ambiguous); (c) 11 map content, 6 ambiguous, 316 padding |
+| § 4 framing | contacts treated as undigitised printed copies | measured projections, confirmed examples, and candidates awaiting adjudication |
+| Reference or frame change | a G2 amendment only | a full schema amendment, separate join-only and correction effects, an effective recipe (§ 4.3) |
+| Resume | `rule_set_id` plus one file hash | full computation identity; staged bundle manifest; recovery; interruption tests (§ 5.6) |
+| Stop rule | 10 replay mismatches tolerated on non-cited files | stop on the first; tolerance only by PI amendment (P9) |
+| Write guard | "text outside target lines byte-identical" | structural target paths; representation rule; one permitted delimiter change; sibling content guard |
+| `metadata_version` | open (A4) | migrated to 1.5, documented, in the target schema |
+| P5 record | not on any branch | on `tile-join-wave-1` at `f6f5ffe54` |
+| Open questions | P1–P14, A1–A7 | P1–P15 (P9 reworded, P15 new), A8–A10; A1–A7 closed in § 13 |
+
+Unchanged: the scope and its counts (§ 3.1), the order, the cost
+projection and its basis (§ 7, now labelled idealised), the downstream
+dispositions (§ 8), and the planning script and its output.
 
 ### 2026-11-19 — Original publication
 
@@ -884,8 +1252,8 @@ First draft, written in S169 on amd-tower while Wave 1 is stopped on the
 55-map seam ruling, from W1.0's census, worklist, replays, and timings
 (`tile-join-wave-1-w10` at `89cab15ee`), Astra's consumer audit, and the
 decision record and Wave 1 specification on `main` at `92064b134`. It
-specifies the corpus re-score with the seam handling as an open parameter
-and no position among the options, and projects the cost from
+specified the corpus re-score with the seam handling as an open parameter
+and no position among the options, and projected the cost from
 legacy-replay timings only. The new counts come from
 `tile-join-wave-2-spec-2026-11-19-scripts/wave2_scope_and_cost.py`. Not
-approved. For Astra's review.
+approved. For Astra's review (commit `f5f3824bb`).
