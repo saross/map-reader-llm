@@ -6128,3 +6128,328 @@ record. Record what was sent per unit (here, the example order), not the
 configuration that should have produced it.
 
 ---
+
+### E93 (DRAFT): Tile-level classification booked merged detections by tile name, a rule that scores a perfect merged detector below 1.0 — tile classification and the per-tile count tables move to containment and nearest-centre booking within each map sheet, a clarification of § 4.2 made after results were known
+
+> **DRAFT, not final. Wave 2 fills the table; Wave 4 finalises.** This
+> entry reserves the number E93 and records the framing ruled in D73 (1). It
+> was written on the Wave 1 branch (`tile-join-wave-1-w13`, work item W1.3 of
+> `planning/tile-join-wave-1-spec-2026-11-01.md`) before any evaluation had
+> been re-scored under the new sheet-specific joins. No value in it is a
+> measured outcome of the change. The before/after table below is a
+> placeholder; Wave 2 fills it, and Wave 4 checks every figure, completes the
+> Resolution, and removes this notice. The 55-map seam ruling it records as
+> pending is also a placeholder. The matching Open Science Framework (OSF)
+> record is drafted in
+> `reports/tile-join-wave-1/osf-transparent-changes-draft.md` and has not
+> been posted.
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-11-18 (draft). The defect was identified on 2026-11-01 (Session 167, the perfect-detector test; PI ruling D72); the sheet-specific definition was ruled on 2026-11-18 (D73 (1)–(2)) |
+| Type | Clarification of an ambiguous point (§ 4.2 does not say how merged detections are booked to overlapping tiles), **made after results were known**. The registered text is unchanged |
+| Commit | Draft: this entry's commit on `tile-join-wave-1-w13`. Final: to be filled in Wave 4 (the Wave 1 code, the Wave 2 re-score, and the Wave 3 regeneration) |
+| Files | Registration: `docs/methodology/preregistration/osf/preregistration.md:379–394` (§ 4.2; blob `fa221b30f395`, the blob `results/commitments.json` pins) and `:293` (§ 3.5, "95% bootstrapped CIs"). Code: `scripts/lib_consensus.py:307–309`, `:394–395` (a merged point's `source_tile`); `scripts/lib_advanced_metrics.py` (`calculate_tile_classification`; `compute_per_tile_tp_fp_fn`; the frame-wide geometric routines at `:2960–2975`, `:3005–3011`, `:5010–5013`), line numbers read at `e92d1c5d7`. Records: `planning/tile-join-resolution-2026-11-01.md` (§§ 0–3), its evidence scripts and outputs in `planning/tile-join-resolution-2026-11-01-scripts/` (`perfect_detector.txt`, `frame_census.txt`, `sheet_boundary_check.txt`), `planning/tile-join-wave-1-spec-2026-11-01.md`, D72 and D73 in `planning/pi-decisions-2026-09-20.md`, `reports/tile-mcc-geometric-join-2026-09-12.md`, `reports/s166-agent-records/mcc-join-tiering.md`, `reports/s166-agent-records/k-ladder-mcc-join.md` |
+| Impact | **Symbol-level F1, precision, and recall point estimates (the primary outcome): untouched by the join change, with the reference inputs fixed.** A reference correction, if the PI's 55-map seam ruling makes one, is a separate component with its own effect on these estimates and its own timing; both baselines are preserved. **Tile-level Matthews correlation coefficient (tile-MCC), tile-F1, sensitivity, and specificity (the secondary outcome): the published rule is invalid for merged output; each cell's effect must be measured.** **F1, precision, and recall bootstrap intervals and means, tile-swap permutation p-values, tiers, and F1 Hsu sets: unknown until re-computed**, because they read the per-tile count tables. **Coverage diagnostics and interval-reliability flags: may flip.** Wave 2 measures each; the table below records the result |
+
+**Description**. Tile-level MCC classifies each evaluation tile by whether it
+holds a gold-standard (GS) mound and whether a detection was reported in it.
+The scorer's published rule, the name-based join `id`, books a detection to
+the single tile named in its `source_tile` field and books a reference mound
+to every tile whose polygon contains it. For a merged detection (one point
+per mound, as every consensus and verified cell produces), `source_tile` is
+the alphabetically first of the tiles the merged cluster's members were seen
+on (`lib_consensus.py:307–309`). Every evaluation frame tiles its maps with
+overlap (decision record § 2.4: summed tile area over union 1.17 to 1.45 on
+the eight frames behind the 21 signed register rows that quote tile-MCC), so
+a mound seen on two tiles is credited by name to one of them while its
+reference counts in both. The other tile becomes a false negative that the
+pipeline did not cause, unless another detection already makes it positive.
+
+The same name rule booked true and false positives in the per-tile count
+tables behind F1's bootstrap intervals and tile-swap permutation tests;
+false negatives went to their nearest-centre tile among the whole frame's
+tiles (`compute_per_tile_tp_fp_fn`).
+
+**The registered text, preserved.** § 4.2 of the lodged registration,
+verbatim (`docs/methodology/preregistration/osf/preregistration.md:379–394`,
+blob `fa221b30f395`). The lodged copy is not edited (E87 remediation 1).
+
+```text
+### 4.2 Secondary Outcome: Tile-level Discrimination (MCC)
+
+In addition to symbol-level F1, we report tile-level Matthews Correlation Coefficient (MCC) for the binary classification of empty vs. populated tiles. At the tile level, True Negatives are well-defined:
+
+| Tile state | Model output | Classification |
+| :---- | :---- | :---- |
+| Has mounds | Detected ≥1 mound | True Positive |
+| Empty | Detected nothing | True Negative |
+| Empty | Detected ≥1 mound | False Positive (hallucination) |
+| Has mounds | Detected nothing | False Negative |
+
+MCC is preferred over accuracy given balanced class distribution in the holdout set (30 empty tiles, 30 non-empty tiles). MCC ranges from -1 (perfect inverse classification) through 0 (random) to +1 (perfect classification), and appropriately penalises both false positives and false negatives.
+
+**Rationale**: A method that simply predicts "mounds present" for every tile would achieve 50% accuracy but MCC ≈ 0. Tile-level MCC directly addresses the practical question: "Can this method correctly identify when there is nothing to find?"
+
+We also report tile-level sensitivity (P(detect ≥1 | tile has mounds)) and specificity (P(detect 0 | tile is empty)) for interpretability.
+```
+
+**What § 4.2 settles and what it does not.** It defines the unit as the tile
+and the classification as "Has mounds" against "Detected ≥1 mound". For one
+tile's own model output, "detected in that tile" and "named for that tile"
+coincide. § 4.2 does not say how merged detections are projected back onto
+overlapping tiles, whether evidence from another map sheet may count, or
+whether the intended output is each tile's own model response. § 3.5
+(`:293`) asks for "95% bootstrapped CIs" and does not name the resampling
+unit or say how a symbol-level outcome is booked to a tile. The
+clarification below is therefore one defensible reading, not the only one.
+
+**Why `id` is invalid for merged output: the perfect-detector test.** The GS
+reference mounds were scored as their own detections on the Era-2 frame
+(`inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson`, 487 tiles
+of 384 px on a 336 px stride), in two shapes. Of the 435 reference mounds in
+the frame, 117 (26.9 %) lie in two or more tiles
+(`planning/tile-join-resolution-2026-11-01-scripts/perfect_detector.py`,
+output `perfect_detector.txt`; decision record § 2.1).
+
+| Perfect pipeline | `id` | `geometric-primary` | `geometric-contains` |
+|---|---|---|---|
+| merged: one point per mound, named for the alphabetically first containing tile | **0.8711** (TP 196, FP 0, FN 33, TN 258) | 1.0000 (TP 199, FP 0, FN 0, TN 288) | 1.0000 (TP 229, FP 0, FN 0, TN 258) |
+| per tile: one point per (mound, containing tile) | 1.0000 | 1.0000 | 1.0000 |
+
+A rule that gives a flawless merged pipeline a tile-MCC of 0.8711 measures
+the scorer, not the pipeline. `id` is wrong for merged output. For unmerged
+per-tile output it is correct only under the per-tile exposure reading, the
+case the S153 ruling 6 reasoning addressed ("the pipeline's decision on the
+tile the model saw"): where each detection's recorded `source_tile`
+identifies the tile the model was actually shown, and the scoring frame is
+that tiling. The September audit states the same restriction ("Well defined
+only when the cell's proposer tiling **is** the scoring frame";
+`reports/tile-mcc-geometric-join-2026-09-12.md:54–56`). Unmerged output
+alone does not validate arbitrary source metadata, mixed tilings, or a
+change of frame. Astra
+(GPT, OpenAI Codex) reproduced 0.8711 independently in JavaScript with no
+project code (D73). The construction above names each merged point for the
+alphabetically first containing tile, which assigns 15 references to a
+sheet other than their own; Astra found the same legacy confusion on a
+fixture that keeps each reference's own sheet (Wave 1 specification,
+W1.2). Wave 1 makes both fixtures permanent tier-1 tests.
+
+**The clarification.** Two joins, each confined to one map sheet, under new
+names so that historical artefacts keep their meaning (D72 as revised by
+D73 (2); Wave 1 specification W1.1):
+
+- **`sheet-contains`, for tile classification** (tile-MCC, tile-F1,
+  sensitivity, specificity): a tile is reference-positive if a GS mound
+  recorded on the tile's own sheet lies in it, and detected if a detection
+  scoped to the tile's own sheet lies in it. A reference's sheet is the one
+  the scorer's existing resolver reads (`reference_map_column`: `Map` in the
+  GS, `source_map` in the 55-map ground truth); a detection's is the one
+  D50's `DetectionScope` chose for symbol matching.
+- **`sheet-primary`, for the per-tile count tables** behind F1's intervals
+  and permutation tests: each matched or unmatched detection and each
+  unmatched reference is booked once, to the nearest-centre tile among the
+  tiles of its own sheet that it intersects, with an exact tie going to the
+  smallest `tile_name`. Containment would book one detection to several
+  tiles and double-count, so the scorer refuses it for count tables.
+
+`id`, `geometric-primary`, and `geometric-contains` stay in the code as
+named historical joins, so committed artefacts can be replayed under the
+rule they recorded.
+
+Sheet-specific semantics were chosen over frame-wide containment because
+the frame-wide routines let a reference attributed to one sheet make
+another sheet's tile positive. On the Era-2 frame all 15 references that
+lie inside another sheet's tile are Elenovo mounds in K-35-052-4's last
+column of tiles (`x4032`), at pixel columns 134–299; two of those tiles,
+inspected by eye, show map content only to about columns 105 and 115, and
+black no-data padding beyond (`sheet_boundary_check.txt`; decision record
+§ 2.6). Astra's independent probe found 16 point–tile contacts across five
+tiles, each on black (RGB 0, 0, 0) pixels. A frame-wide join therefore
+makes those tiles positive for mounds that no model was shown. The same
+probe expects the perfect detector under sheet-specific containment to give
+224 reference-positive and 263 reference-negative tiles, and MCC 1; Wave 1's
+tier-1 test checks this with the project's code. One recorded sheet per
+reference and no cross-sheet pair within 1 km (the closest is 1,313.0 m
+apart) are consistent with per-sheet digitising but do not by themselves
+prove that no mound is printed on two sheets. That finding is specific to
+the Era-2 frame.
+
+**The 55-map seam stop (2026-11-18).** The equivalent check of the 55-map
+reference ran in Wave 1 (W1.0) on 2026-11-18 and found reference
+projections on a neighbouring sheet's map content. Three kinds of evidence
+are kept apart:
+
+- **Measured.** In `best-available-gt-55maps-r2.geojson`, 32 of the 814
+  point–tile contacts with another sheet's tile (26 references) fall where
+  the pixel test classes that tile as map content, not padding, all at nine
+  seams involving the reprojected `_4326` sheets; the other four tracked
+  55-map reference files show 32 to 35 each. No reference on the contacted
+  sheet lies within 50 m of any of r2's 32. That is evidence of missing
+  local annotation, not proof that each contact is a second printed mound
+  left undigitised: the test detects map content, not mound symbols, and
+  neighbouring sheets are misregistered at these seams (`dry-run.md` § 2,
+  "Where").
+- **Confirmed by eye.** Two crops, inspected by the main session
+  (`student:01862` on the Chirpan sheet, `student:02387` on K-35-075-1),
+  each show the point on a printed burial-mound symbol on the neighbouring
+  sheet's map face (stop record § 2).
+- **Not adjudicated.** The remaining map-content contacts and r2's 18
+  ambiguous ones (points on the black edge of the map face). Canonical r50
+  carries a `phantom:*` reference on the contacted sheet within 50 m of 29
+  of its 33 map-content contacts; that is a lead to second copies, not
+  independent confirmation of each feature's identity.
+
+Such a contact bears on two outcomes, differently. At symbol level, a
+correct detection of the neighbouring sheet's printed copy has no
+reference on its own sheet to match under the D50 matcher, and can score
+as a false positive. At tile level, under `sheet-contains`, a tile becomes
+a false positive only if it holds no reference of its own sheet at all: 15
+of the 26 distinct r2 tiles that the map-content contacts reach already
+hold one, so counting the contacts as references would change 11 tile
+labels, not one per contact (`dry-run.md` § 2.2). The padding-only
+rationale above therefore cannot be generalised to the 55-map corpus. The
+finding met the specification's stop condition, and the wave stopped;
+corrected 55-map scoring is paused until the PI rules
+(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` §§ 1–4, and
+`reports/tile-join-wave-1/dry-run.md` §§ 2 and 2.2, on branch
+`tile-join-wave-1-w10`). The remaining candidates, and any reference
+correction, need adjudication. **[TO FILL: the PI's seam ruling (stop
+record § 4, items 1 and 3); any change it makes to the 55-map reference or
+to the estimand, and, for a reference change, its effect on symbol-level
+F1, precision, and recall as a separate component; and whether each was
+made before or after any sheet-specific 55-map score was computed.]**
+
+**When the choice was made, and what was known then.** The tile join has
+been chosen three times, each time with results in view:
+
+1. **2026-09-12 to 2026-09-13.** On 2026-09-12 the PI ruled that the tile
+   assignment should be made geometric. The work stopped when an audit of
+   149 committed cells (the signed Era-2 board and the K-ladder Phase 2
+   cells) showed that both geometric joins raise tile-MCC almost uniformly:
+   mean ΔMCC +0.1059 under `geometric-primary` (higher on 146 of 146 cells)
+   and +0.0754 under `geometric-contains` (145 of 146), with three Gemini 3.7
+   cells refused under `id` (`reports/tile-mcc-geometric-join-2026-09-12.md`
+   § 0, § 4.3; `results/tile-join-audit/`, `3d6b47e33`). On 2026-09-13 the PI
+   ruled `id` the published convention (S153 ruling 6) and kept the
+   geometric joins as a supplementary sensitivity option.
+2. **2026-11-01 (D72; `dc32f3fe5`).** After the perfect-detector test, the
+   PI ruled `geometric-contains` (frame-wide) for classification and
+   `geometric-primary` (frame-wide) for count tables. D72 framed this as
+   restoring the registered definition. Astra's review (delivered
+   2026-11-02) found that § 4.2 does not settle the question and that the
+   frame-wide routines reach across sheets.
+3. **2026-11-18 (D73 (1)–(2); `dce74be05`).** The PI ruled the change a
+   clarification made after results were known, to be disclosed here and on
+   OSF, and ruled the sheet-specific joins above. Astra's second review
+   (delivered later the same day) accepted the revised direction.
+
+Results known when D72 and D73 were ruled:
+
+- every committed symbol-level F1, precision, and recall result, and every
+  published tile-MCC value under `id`, including the 21 signed register
+  rows that quote tile-MCC (decision record § 2.4, `frame_census.txt`);
+- the frame-wide `geometric-primary` and `geometric-contains` tile-MCC of
+  the 149 cells audited on 2026-09-12, including the three withheld Gemini
+  3.7 cells (`geometric-contains` 0.9262, 0.8761, and 0.8903;
+  `reports/tile-mcc-geometric-join-2026-09-12.md` § 4.3);
+- the Session 166 sensitivity runs of 2026-10-30, which re-tiered tile-MCC
+  under all three joins (decision record § 2.5;
+  `reports/s166-agent-records/mcc-join-tiering.md`,
+  `reports/s166-agent-records/k-ladder-mcc-join.md`). Under `id` /
+  `geometric-primary` / `geometric-contains`: the board's top-F1 cell ranks
+  21st / 1st / 1st on tile-MCC; 9 / 50 / 45 of the 52 F1-admissible cells
+  are also MCC-admissible; tile-MCC falls from K = 1 to the best F1 rung on
+  16 / 9 / 11 of 21 K-ladder ladders; K = 1 is MCC-admissible on
+  22 / 17 / 16 of 22 ladders. Under `id`, 59.6 % (board) and 67.3 %
+  (K-ladder) of false-negative tiles contain one of the cell's own
+  detections. The decision record reads the published "F1 and tile-MCC
+  disagree" (Obs 482, Obs 513, R6-18) and "tile-MCC does not follow F1"
+  (R3-12, R3-13) claims as looking like products of the defect;
+- the perfect-detector result (2026-11-01) and the frame census.
+
+Known only when D73 was ruled: the Era-2 sheet-boundary check
+(`sheet_boundary_check.txt`, committed in `dce74be05`). Found after D73 was
+ruled, during Wave 1 (W1.0): the 55-map seam contacts on map content
+described above. Not known at either
+date: any sheet-specific tile-MCC for a real evaluation (none had been
+computed; the joins are implemented in Wave 1), and any F1 interval, mean,
+permutation p-value, or coverage flag under a count-table rule other than
+the name rule. The sheet-specific readings can differ from the known
+frame-wide `geometric-contains` readings only on tiles that another sheet's
+evidence reaches (Wave 1 gate G1 item 3), so much of their effect could be
+anticipated from values that were already known.
+
+**What is affected, and what is not** (decision record § 2.3):
+
+| Result | Status |
+|---|---|
+| Symbol-level F1, precision, and recall **point estimates** (primary outcome) | **Untouched by the join change, with the reference inputs fixed**: matched per map by Hungarian assignment on geometry, before any tile is consulted. To be checked byte-identical in Wave 1 (G1 item 1) and Wave 2 (G2). The invariant does not extend to a corrected reference: if the seam ruling changes a 55-map reference, that change's effect on F1, precision, and recall is disclosed separately, with its own timing, and the baselines before and after it are both preserved |
+| Tile-MCC, tile-F1, sensitivity, specificity (secondary outcome) | **An invalid rule for merged output; each cell's effect must be measured.** Another detection may already make an overlapping tile positive, so the defect need not move every cell, and 117 multiply contained references do not imply 117 false-negative tiles |
+| F1, precision, and recall bootstrap intervals and means, tile-swap permutation p-values, tiers, F1 Hsu sets | **Unknown**: the point estimates are exact (each object booked once), but the spread of counts over tiles followed the name rule for true and false positives, so the null distributions may move. Reassignment can make tests anti-conservative, not only noisier; a spatial-block resampling check is required before any affected significance claim is finalised (D73 (3)) |
+| Coverage diagnostics and interval-reliability flags (`coverage`, `coverage_status`, `sparse_coverage`, `ci_unreliable`, `ci_excludes_point`, and their summary roll-ups) | **May flip**: derived from the same per-tile count table |
+| Sheet attribution of tile outcomes | **Wrong under the frame-wide geometric routines**, which book detections and references against all frame tiles rather than the sheet D50 matched on; corrected by the sheet-specific joins. Where a mound is printed on both sides of a 55-map seam but digitised once, the treatment awaits the PI's seam ruling (see above) |
+
+Any hypothesis decided on an affected interval or test is affected with it.
+The three Gemini 3.7 cells withheld under `id` re-enter the families they
+otherwise qualify for by a rule fixed before their sheet-specific scores
+exist (D73 (4); Wave 1 specification W1.4), and the comparison with the
+fixed old families is shown beside them.
+
+**Before and after (placeholder; Wave 2 fills, Wave 4 finalises).** One row
+per paper-cited evaluation, from the Wave 2 ledger; summary rows for the
+rest of the corpus.
+
+| Evaluation | Frame | Construction route | Buffer | tile-MCC, `id` (published) | tile-MCC, `sheet-contains` | ΔMCC | Sensitivity before → after | Specificity before → after | F1 95 % interval before → after (`sheet-primary`) | Coverage or reliability flags changed | Ledger row |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| *Wave 2* | | | | | | | | | | | |
+
+| Corpus summary | Value |
+|---|---|
+| Evaluations re-scored / expected refusals / skipped / failed | *Wave 2* |
+| ΔMCC distribution (median, range) | *Wave 2* |
+| Significance, tier, or admissible-set changes | *Wave 3* |
+| Claims restated or withdrawn | *Wave 4* |
+
+**Resolution** (to be completed in Wave 4). The plan is in the decision
+record § 5: Wave 1 implements the two joins and the permanent
+perfect-detector test; Wave 2 re-scores every tile-bearing evaluation, live
+`results/` files in place and `archive/` or frozen artefacts as labelled
+corrected counterparts (D73 (5)); Wave 3 regenerates tierings, Hsu sets,
+boards, and the K-ladder tables; wave S runs the spatial-block resampling
+check on both corpora; Wave 4 restates the affected claims, finalises this
+entry, adds a § 4.2 row to `osf/errata-pointers.md`, and posts the OSF
+transparent-changes record once the PI has approved its exact text.
+
+**Update (2026-11-18 — draft revised on Astra's review).** Revised after
+Astra's cross-model review of the draft at `652786ae8`
+(`~/agent-mail/codex/outbox/claude/20261118T124335Z-astra-e93-osf-draft-review.md`):
+the claim that `id` is correct for unmerged output is bounded to the
+per-tile exposure reading; this notice dates the draft against the new joins
+rather than against all re-scoring; and the owed 55-map check is replaced by
+the stop it raised on 2026-11-18, with the PI's ruling left to fill, and
+the stop's timing and its bearing on sheet attribution are added to the
+timing paragraph and the affected-results table. The cell-specific caveat Astra asked to carry into the OSF text was already
+stated here (Impact field; the affected-results table).
+
+**Update (2026-11-19 — seam paragraph made precise, on Astra's second
+review).** Revised after Astra's review of `652786ae8..87d3dfc47`
+(`~/agent-mail/codex/outbox/claude/20261118T130721Z-astra-e93-seam-paragraph-review.md`).
+The seam paragraph now separates the measured proximity fact, the two
+crops confirmed by eye, and the unadjudicated candidates, and words
+canonical r50's phantoms as a lead. It states the symbol-level and
+tile-level effects separately (11 r2 tile labels change, not one per
+contact), replacing the sentence that a correct detection of the second
+copy "would score as a false positive". The symbol-level point-estimate
+invariant, in the Impact field and the affected-results table, is now
+conditional on fixed reference inputs; a reference correction would be a
+separate component with its own timing.
+
+Cross-references: **E81** (undefined tile-MCC published as `0.0`, the
+earlier correction to § 4.2's metric); **E82** (the bootstrap method behind
+the intervals the count tables feed); **E87** remediation 1 (why the lodged
+copy carries no inline pointer); D50 (detection scoping per sheet); S153
+ruling 6 (`id` published, 2026-09-13); D72 and D73
+(`planning/pi-decisions-2026-09-20.md`).
+
+---
