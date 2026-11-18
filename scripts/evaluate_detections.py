@@ -1257,6 +1257,14 @@ def evaluate_single_run(
     # (audit A-M1). An ``id`` count table therefore keeps the historical
     # probe, and a refusal of the table itself is still caught below
     # (``detected_by``), exactly as before Wave 1.
+    #
+    # Known and accepted (re-audit Low): under (sheet-contains or
+    # sheet-primary, id) the probe asks a SHEET join, which counts every
+    # retained row and also refuses an unattributed in-frame row, so that
+    # pair can withhold intervals an ``id`` table would have booked. The pair
+    # never existed historically (every pre-Wave-1 record is (X, id) with X
+    # ``id`` or geometric), so no replay meets it; a new run under it errs on
+    # the side of withholding, and the record names the probe's join.
     probe_join = tile_join if count_table_join == "id" else count_table_join
     tile_join_refusal = (
         describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, probe_join)
@@ -1265,9 +1273,13 @@ def evaluate_single_run(
     )
     if tile_join_refusal is not None:
         shortfall = tile_join_refusal["shortfall"]
+        # ``%s``, not ``%d``: the reference refusal (an in-frame reference
+        # with no recorded sheet) has no booked or in-frame count, so those
+        # fields are None, and ``%d`` raised inside logging, printing a
+        # Traceback that ``wait_for_run.py`` reads as a crash (RA-M2).
         logger.warning(
-            "  PER-TILE STATISTICS WITHHELD (%s): %d of %d in-frame %s "
-            "booked under the '%s' join (shortfall %d). Withheld: %s. "
+            "  PER-TILE STATISTICS WITHHELD (%s): %s of %s in-frame %s "
+            "booked under the '%s' join (shortfall %s). Withheld: %s. "
             "F1, precision and recall point estimates proceed.",
             tile_join_refusal["reason"],
             shortfall["n_booked"],
