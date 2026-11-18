@@ -292,6 +292,19 @@ def rung_tile_classification(geojson: Path, gdf_ref, gdf_bounds,
             confusion, round(float(mcc_new), 4))
 
 
+def pareto_header(tile_join: str, count_table_join: str) -> dict:
+    """The provenance head of ``pareto_v2*.json``: both tile-join rules.
+
+    Args:
+        tile_join: The classification join of the MCC column.
+        count_table_join: The count-table join of the F1 round-robin.
+
+    Returns:
+        ``{"tile_joins": ...}``.
+    """
+    return {"tile_joins": tile_join_provenance(tile_join, count_table_join)}
+
+
 def main(argv: list[str] | None = None) -> int:
     """Score, tier, and plot the cost-weighted frontier."""
     import argparse
@@ -456,7 +469,7 @@ def main(argv: list[str] | None = None) -> int:
     fig.savefig(OUT_DIR / f"{stem}.png", dpi=150)
 
     (OUT_DIR / f"{stem}.json").write_text(json.dumps({
-        "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
+        **pareto_header(args.tile_join, args.count_table_join),
         "cost_model": {"min_pass_usd": MIN_PASS_USD, "high_pass_usd": HIGH_PASS_USD,
                        "vf_call_usd": VF_CALL_USD,
                        "production_scale": {"tiles_gs": TILES_GS, "tiles_55map": TILES_55,

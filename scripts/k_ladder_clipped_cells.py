@@ -710,6 +710,28 @@ def prepare_rung(rung: dict[str, Any], run_id: str, area: Any,
             "recorded_recipe": cli, "clip": clip, "pre_gate": pre_gate, "argv": argv}
 
 
+def prepare_header(args: argparse.Namespace) -> dict[str, Any]:
+    """The head of ``prepare.json``, its tile-join provenance included.
+
+    ``tile_joins`` is behavioural, not decorative: :func:`_tiering_file`
+    reads it to name the tierings the later steps read, falling back to the
+    plain (legacy) name only for a pre-Wave-1 ``prepare.json`` (audit B-M3).
+
+    Args:
+        args: The parsed command line (``tile_join``, ``count_table_join``).
+
+    Returns:
+        The header keys.
+    """
+    return {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "script": "scripts/k_ladder_clipped_cells.py",
+        "script_version": __version__,
+        "status": "PREPARED",
+        "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
+    }
+
+
 def cmd_prepare(args: argparse.Namespace) -> int:
     """Gate every area, clip every target rung, pre-gate it, and write the jobs."""
     out_dir = _abs(args.output_dir)
@@ -798,11 +820,7 @@ def cmd_prepare(args: argparse.Namespace) -> int:
         return EXIT_PREPARE_GATE
 
     payload = {
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "script": "scripts/k_ladder_clipped_cells.py",
-        "script_version": __version__,
-        "status": "PREPARED",
-        "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
+        **prepare_header(args),
         "ruling": "PI ruling D51 (2026-10-07), option 1: detections clipped to the "
                   "area every rung searched; frame (era2-b-487) and reference set kept",
         "area_gate": {
