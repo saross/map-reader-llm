@@ -131,6 +131,7 @@ if str(REPO_ROOT) not in sys.path:
 # label. See scripts/derive_condition_modality.py for the mechanism and for the
 # seven cells a label-substring test got wrong before 2026-09-14.
 from scripts.derive_condition_modality import condition_modality  # noqa: E402
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 RUN_CONDITIONS = REPO_ROOT / "results/run-conditions.json"
 RUN_ANALYSES = REPO_ROOT / "results/run-analyses.json"
@@ -375,7 +376,9 @@ def render_listing(membership: dict[str, Any]) -> str:
 
 def _eval_command(m: dict[str, Any], bounds: str, out_dir: str, bootstrap: int, label: str) -> str:
     r = m["recipe"]
-    parts = ["python", "scripts/evaluate_detections.py",
+    # Pinned to the legacy rules the board was scored under (G1 audit;
+    # reports/tile-join-wave-1/consumer-dispositions.md).
+    parts = ["python", "scripts/evaluate_detections.py", *LEGACY_JOIN_FLAGS,
              "--detections", m["detections"],
              "--ground-truth", r["ground_truth"],
              "--bounds", bounds,

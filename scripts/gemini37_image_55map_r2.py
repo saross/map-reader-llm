@@ -126,6 +126,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
+    LEGACY_JOIN_FLAGS,
     TILE_JOIN_LEGACY_CLASSIFICATION,
     TILE_JOIN_LEGACY_COUNT_TABLE,
 )
@@ -1033,7 +1034,10 @@ def engine_command(det: str, out_dir: str, label: str, workers: int) -> list[str
         The argument vector, for ``subprocess.run``.
     """
     return [
-        ".venv/bin/python", "scripts/evaluate_detections.py",
+        # Pinned to the legacy rules this board was scored under, so a
+        # re-score reproduces it rather than re-scoring under the Wave 1
+        # defaults outside Wave 2's gates (G1 audit; consumer-dispositions.md).
+        ".venv/bin/python", "scripts/evaluate_detections.py", *LEGACY_JOIN_FLAGS,
         "--detections", det,
         "--buffers", *[str(b) for b in ENGINE_BUFFERS],
         "--ground-truth", GROUND_TRUTH,

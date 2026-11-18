@@ -1,6 +1,6 @@
 # Tile-join Wave 1: consumer dispositions
 
-> **Last revised**: 2026-11-18 (original publication, W1.1 code agent). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (G1 audit fix round: launchers pinned to history; A-M3). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), the Wave 1 code agent (W1.1 and W1.2), on branch
@@ -314,56 +314,78 @@ rule exactly as the direct consumers are (commit `da589eb27`).
 
 ## Subprocess launchers of the W1-fixed command-line tools
 
-These scripts build command lines for `evaluate_detections.py`,
-`era1_leaderboard_tiering.py`, `selection_aware_intervals.py` or the
-K-ladder drivers and pass no join flag (found by `grep` for the script
-names, then for `--tile-join`, `--count-table-join` and a `"tile_join"` key;
-two that mention a tool only in prose, `gemini37_image_55map_r2.py` and
-`dedup_tiering_rerun.py`, are left out):
+**Disposition: pinned to history.** A **main-session decision (2026-11-19,
+pending the PI's confirmation)**, with which Astra agrees in her interim
+review (`~/agent-mail/codex/outbox/claude/20261118T134744Z-astra-wave1-interim-provenance.md`:
+historical launchers "should be pinned to their recorded rules, or refuse
+until explicitly migrated"; restated in her full review). Every launcher
+that re-scores or replays committed artefacts now names its rules on the
+command line, so running one reproduces history and cannot re-score under
+the new defaults outside Wave 2's gates. Wave 2's corpus driver is the only
+sanctioned route to the new rules. Commit `bbeb2a5ad`; the tier-1 test
+`tests/test_tile_join_wave1_audit.py` (`test_pinned_launchers_name_the_legacy_rules`
+and its two siblings) fails if a pin is removed.
 
-```text
-scripts/build_gs_era2_board.py
-scripts/build_gs_era2_board_opmax.py
-scripts/build_k1_gapfill_worklist.py
-scripts/build_verifier_pairing_worklist.py
-scripts/grid_materialise_conditions.py
-scripts/grid_verifier_analysis.py
-scripts/migrate_ci_flag_basis.py
-scripts/r2_score_cells.py
-scripts/recovery_reeval.py
-scripts/register_pass1_materialise.py
-scripts/rerun_bca_corpus.py
-scripts/rerun_evals_at_10k.py
-scripts/rescore_conditions.py
-scripts/run_era1_pv_stage_d.py
-scripts/run_generalisation.py
-scripts/run_k_ladder_tier_e.py
-scripts/score_k_ladder_phase2_rungs.py
-scripts/tier_e_ladder_tiering.py
-```
+| Launcher | Tool it launches | Pin |
+|---|---|---|
+| `scripts/build_gs_era2_board_opmax.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` (`id`/`id`) |
+| `scripts/build_k1_gapfill_worklist.py` | `evaluate_detections.py`, `compute_corrected_f1_multi_buffer.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/build_verifier_pairing_worklist.py` | both, as above | `*LEGACY_JOIN_FLAGS` |
+| `scripts/grid_materialise_conditions.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/grid_verifier_analysis.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/r2_score_cells.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/recovery_reeval.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/register_pass1_materialise.py` | both | `*LEGACY_JOIN_FLAGS` |
+| `scripts/rescore_conditions.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/run_era1_pv_stage_d.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/run_generalisation.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/run_k_ladder_tier_e.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/score_k_ladder_phase2_rungs.py` | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/tier_e_ladder_tiering.py` | `era1_leaderboard_tiering.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/rerun_bca_corpus.py` | `evaluate_detections.py` (replays a record) | `*recorded_join_flags(doc)`: the record's own rules |
+| `scripts/rerun_evals_at_10k.py` | `evaluate_detections.py` (replays a record) | `*recorded_join_flags(doc)` |
+| `scripts/analyse_null_exemplar_sensitivity.py` | `evaluate_detections.py` | `--tile-join id --count-table-join id` (`06fd89ffb`) |
+| `scripts/run_bootstrap_10k.py` (audit A-M3) | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/stride55_score.py` (audit A-M3) | `compute_corrected_f1_multi_buffer.py` | `*LEGACY_JOIN_FLAGS` |
+| `scripts/score-unscored-conditions-2026-05-30.sh` (audit A-M3; a shell script, missed by the `.py`-only search) | `evaluate_detections.py` | `--tile-join id --count-table-join id` in `EVAL` |
+| `scripts/build_gs_era2_board.py` (writes a jobs script; found by the fix round's static scan) | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` in `_eval_command` |
+| `scripts/gemini37_image_55map_r2.py` (re-scores cells in place; found by the fix round's static scan) | `evaluate_detections.py` | `*LEGACY_JOIN_FLAGS` in `engine_command` |
 
-**Disposition: inherits the corrected default, honestly labelled; open item
-for Wave 2.** Every evaluation `evaluate_detections.py` now writes records both
-rules (`_metadata.tile_joins`, `metadata_version` 1.5), and every tiering and
-admissible set records them too, so nothing these launchers produce can pass
-for a legacy artefact. The hazard is the opposite one: several are re-scoring
-or replay tools (`rerun_evals_at_10k.py`, `rescore_conditions.py`,
-`rerun_bca_corpus.py`, `migrate_ci_flag_basis.py`, `recovery_reeval.py`,
-`r2_score_cells.py`), and a run before Wave 2 is specified would re-score
-committed evaluations in place under the corrected rules, outside Wave 2's
-worklist, ledger and gates. They were left unpinned because pinning them to
-`id` would make them write `id` evaluations labelled as such, which is
-correct only for a deliberate replay. Wave 2's specification should decide,
-per launcher, whether it becomes the corpus driver, is pinned to replay, or is
-retired; until then none should be run.
-`analyse_null_exemplar_sensitivity.py` launched `evaluate_detections.py`
-with no join flag while its output states `"tile_join": "id (name-based),
-the published convention"`, which a re-run would have made false. Its
-command now names `--tile-join id --count-table-join id` (commit after
-`387b4a28f`, with this note), and its in-process calls are pinned
-(second-order table), so it is a pinned deferred site, not a launcher.
+`LEGACY_JOIN_FLAGS` and `recorded_join_flags` are defined in
+`scripts/lib_advanced_metrics.py`. The first version of this section judged
+two scripts to "mention a tool only in prose"; one of them,
+`gemini37_image_55map_r2.py`, in fact launches `evaluate_detections.py`
+through `subprocess.run` and overwrites the evaluations on disk, and
+`build_gs_era2_board.py` writes a jobs script of evaluator commands. Both
+are now pinned. A tier-1 scan (`test_every_launcher_names_its_rules` in
+`tests/test_tile_join_wave1_audit.py`) parses every `scripts/*.py` and
+fails if a string literal naming a W1-fixed tool sits in a file with no
+pin, unless the file is on an allow-list with its reason:
+`dedup_tiering_rerun.py` and `register_pass1_adapt.py` record a tool's
+path as provenance metadata and launch nothing. `migrate_ci_flag_basis.py`
+runs only `git` and names the evaluator in prose.
+Frozen evidence scripts outside `scripts/` stay tied to the revision their
+records name (above); they are not edited.
+
+A launcher that produces NEW work (not a re-score of a committed artefact)
+may select the corrected rules explicitly once Wave 2's specification says
+so, with its own disposition. None is changed to do so in Wave 1.
 
 ## Changelog
+
+### 2026-11-19 — G1 audit fix round
+
+Trigger: the G1 item 9 audit (lens A finding A-M3: three launchers missing
+from this file) and the main session's decision, with Astra's agreement, to
+pin every in-place re-scoring launcher to its recorded rules. Changes: the
+launcher section is rewritten from "inherits the corrected default; open
+item" to "pinned to history" (commit `bbeb2a5ad`), adding
+`run_bootstrap_10k.py`, `stride55_score.py` and
+`score-unscored-conditions-2026-05-30.sh`, and two launchers the first
+version had misjudged as prose-only mentions, `build_gs_era2_board.py` and
+`gemini37_image_55map_r2.py` (both pinned in this round), with a tier-1
+static scan for any further one. The per-site tables (direct and second-order) are
+unchanged. The full audit record is `g1-audit.md` beside this file.
 
 ### 2026-11-18 — Original publication
 
