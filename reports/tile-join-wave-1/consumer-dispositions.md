@@ -356,9 +356,11 @@ worklist, ledger and gates. They were left unpinned because pinning them to
 correct only for a deliberate replay. Wave 2's specification should decide,
 per launcher, whether it becomes the corpus driver, is pinned to replay, or is
 retired; until then none should be run.
-`analyse_null_exemplar_sensitivity.py` replays a recorded `tile_join` key
-but no count-table join, so its replays now take the corrected count table;
-it belongs on the same Wave 2 list.
+`analyse_null_exemplar_sensitivity.py` launches `evaluate_detections.py`
+with no join flag while its output states `"tile_join": "id (name-based),
+the published convention"` (line 1495), which a re-run would now make false;
+it belongs on the same Wave 2 list. Its in-process calls are pinned
+(second-order table).
 
 ## Changelog
 
