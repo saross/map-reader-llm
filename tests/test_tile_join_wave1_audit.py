@@ -530,13 +530,18 @@ _JOIN_CALLS: dict[str, list[tuple[str, int | None]]] = {
     "bootstrap_multi_run_effect_size_ci": [("count_table_join", 8)],
     "bootstrap_interaction_ci": [("count_table_join", 8)],
     "generate_report": [("count_table_join", 4)],
+    # RA-M6: the second-order entry points, which thread a join to the
+    # functions above; a caller that inherits their default inherits the
+    # corrected rule silently (e.g. ``resweep_pv_on_h10.py``).
+    "evaluate_single_run": [("tile_join", 9), ("count_table_join", 10)],
+    "run_permutation_test": [("count_table_join", 7)],
+    "run_permutation_test_mcc": [("tile_join", 6)],
+    "compute_at_buffer": [("tile_join", 12), ("count_table_join", 13)],
 }
 
 #: Call sites that may inherit a default, each with its reason.
-_ALLOWED: dict[tuple[str, str], str] = {
-    ("scripts/lib_advanced_metrics.py", "generate_report"):
-        "the library's own report helper; its callers choose the rule",
-}
+_ALLOWED: dict[tuple[str, str], str] = {}  # the stale generate_report entry
+# matched no call and was removed (re-audit Low); add entries with reasons.
 
 
 def _join_call_violations() -> list[str]:
@@ -718,7 +723,10 @@ class TestUnattributedReferences:
         result = calculate_tile_classification(det, refs, bounds)
         assert "error" not in result
         part = result["tile_join_diagnostics"]["references"]["exclusions"]["partition"]
-        assert part["n_no_sheet_outside_frame"] == 1
+        # The whole partition, not one cell of it: a blank sheet is not ALSO
+        # a foreign sheet (re-audit mutant ``ref_partition_double``).
+        assert part == {"n_sheet_not_in_frame": 0, "n_outside_own_sheet_tiles": 0,
+                        "n_no_sheet_outside_frame": 1}
 
     def test_the_historical_joins_are_unchanged(self):
         bounds = synthetic_bounds()
@@ -899,9 +907,9 @@ class TestReplayOrder:
         from scripts import era1_leaderboard_tiering as t
 
         path = tmp_path / "tiering.json"
-        path.write_text(json.dumps({"withheld_cells": [
+        path.write_text(json.dumps({"analysis_id": "board", "withheld_cells": [
             {"ref": "r::f", "reason": "x (tile_join_detection_shortfall) y"}]}))
-        assert t.expected_refusals_from(path) == {
+        assert t.expected_refusals_from(path, "board") == {
             "r::f": TILE_JOIN_REASON_DETECTION_SHORTFALL}
 
     def test_an_input_identity_mismatch_stops_the_run(self, tmp_path):
@@ -1567,11 +1575,15 @@ def _path_setup_violations(path: Path) -> str | None:
         return (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call)
                 and ast.unparse(node.value.func) in ("sys.path.insert", "sys.path.append"))
 
+    repo_modules = {"scripts"} | {p.stem for p in (REPO / "scripts").glob("*.py")}
+
     def is_scripts_import(node: ast.stmt) -> bool:
+        # ``scripts.*``, or a bare repository module (``lib_advanced_metrics``),
+        # which resolves only through the script's own directory (re-audit).
         if isinstance(node, ast.ImportFrom):
-            return (node.module or "").split(".")[0] == "scripts" and node.level == 0
+            return (node.module or "").split(".")[0] in repo_modules and node.level == 0
         return isinstance(node, ast.Import) and any(
-            a.name.split(".")[0] == "scripts" for a in node.names)
+            a.name.split(".")[0] in repo_modules for a in node.names)
 
     setup = next((i for i, n in enumerate(body) if is_path_setup(n)), None)
     if setup is None:
@@ -1596,7 +1608,8 @@ def test_r2_5_the_check_sees_the_reviewed_defect(tmp_path):
 
 
 _STANDALONE_LAUNCHERS = ["stride55_score.py", "6_accuracy_report.py",
-                         "analyse_study_effects.py", "verify_phase2a_metrics.py"]
+                         "analyse_study_effects.py", "verify_phase2a_metrics.py",
+                         "rerun_evals_at_10k.py"]
 
 
 @pytest.mark.parametrize("name", _STANDALONE_LAUNCHERS)
@@ -1649,3 +1662,402 @@ def test_r2_6_an_all_missing_nullable_string_sheet_column_is_refused():
     det = merged_detections(synthetic_refs(), bounds)
     result = calculate_tile_classification(det, refs, bounds)
     assert result["reason"] == TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# The fresh Claude re-audit of the fix round (RA-*), folded into this round
+# ═══════════════════════════════════════════════════════════════════════════
+
+#: The committed cell RA-C1 stopped a board on (a true reproduction).
+_RA_C1 = ("results/rescore-2026-06-07/phase3/"
+          "phase3a-high__track2-text__T0.3__n5__t4/evaluation.json")
+
+
+def test_ra_c1_the_mcc_gate_does_not_double_round():
+    """``retest-phase3a-high::text-high-t0.3-n5-4of5``: confusion 175/88/48/29
+    reproduces, its MCC is 0.5206504316…, recorded 0.5207. Rounding the
+    rebuilt value to 6 dp first put it 5.0000000000105e-05 away, past the
+    tolerance; the unrounded value is 4.96e-05 away and passes."""
+    from scripts import era1_leaderboard_tiering as t
+    from scripts.pairwise_permutation_test import compute_mcc_or_none
+
+    block = json.loads((REPO / _RA_C1).read_text())["summary"]["tile_classification"]
+    confusion = {k: int(block["confusion"][k]) for k in ("tp", "tn", "fp", "fn")}
+    assert confusion == {"tp": 175, "tn": 88, "fp": 48, "fn": 29}
+    mcc = compute_mcc_or_none(**confusion)
+    assert block["mcc"]["point"] == 0.5207 and abs(round(mcc, 6) - 0.5207) > t.MCC_GATE_TOL
+    gate = t.check_confusion_gate("ra-c1", confusion, confusion, mcc, 0.5207)
+    assert gate["passed"] is True and gate["mcc_rebuilt"] == round(mcc, 6)
+
+
+def test_ra_c1_the_real_cell_validates_under_its_recorded_join(monkeypatch):
+    """The same cell through ``validate_recorded_classification``, its
+    replay standing in with the committed confusion and the unrounded MCC
+    (as ``calculate_tile_classification`` returns it)."""
+    from scripts import era1_leaderboard_tiering as t
+    from scripts.pairwise_permutation_test import compute_mcc_or_none
+
+    evaluation = json.loads((REPO / _RA_C1).read_text())
+    conf = evaluation["summary"]["tile_classification"]["confusion"]
+    replay = {k: conf[k] for k in ("tp", "tn", "fp", "fn")}
+    replay["mcc"] = compute_mcc_or_none(**replay)
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: replay)
+    record = t.validate_recorded_classification("ra-c1", None, None, None, evaluation, "id")
+    assert record["passed"] is True
+
+
+def test_ra_c1_the_real_cell_replays_on_its_real_inputs():
+    """The cell itself, replayed from its committed detections on its own
+    frame under the join it recorded: it reproduces and passes."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = json.loads((REPO / _RA_C1).read_text())
+    cli = evaluation["_metadata"]["cli_args"]
+    if not (REPO / cli["detections"][0]).exists():
+        pytest.skip("the cell's detections are not in this copy")
+    bounds = gpd.read_file(REPO / cli["bounds"]).to_crs(t.TARGET_CRS)
+    refs = gpd.read_file(REPO / cli["ground_truth"]).to_crs(t.TARGET_CRS)
+    det = t.cell_detections(cli, bounds)
+    record = t.validate_recorded_classification("ra-c1", det, refs, bounds, evaluation, "id")
+    assert record["passed"] is True
+    assert record["confusion"] == {"tp": 175, "tn": 88, "fp": 48, "fn": 29}
+
+
+def test_ra_c2_tier_e_reads_the_tiering_era1_writes(tmp_path, monkeypatch):
+    """The launcher pins the legacy rules, so era1 writes the stamped name;
+    the launcher must summarise THAT file, not the stale plain one.
+
+    The launcher is loaded from its file with ``run_k_ladder_tier_e`` (whose
+    import prices the committed passes from tracked ``outputs/``) stubbed,
+    so the test runs in any real-file copy of ``scripts/`` and ``tests/``."""
+    import importlib.util
+    import types
+
+    from scripts.era1_leaderboard_tiering import tiering_stem
+
+    stub = types.ModuleType("scripts.run_k_ladder_tier_e")
+    stub.__dict__.update(BOARD_BOUNDS="b.geojson", CARRIED_PROB=0.15, HEADLINE_BUFFER=20,
+                         RUN_ID="run", SCORES_JSON=tmp_path / "s.json",
+                         TIER_E_DIR=tmp_path)
+    monkeypatch.setitem(sys.modules, "scripts.run_k_ladder_tier_e", stub)
+    spec = importlib.util.spec_from_file_location(
+        "tier_e_under_test", REPO / "scripts" / "tier_e_ladder_tiering.py")
+    te = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(te)
+
+    monkeypatch.setattr(te, "BASE_DIR", tmp_path)
+    monkeypatch.setattr(te, "TIERING_DIR", tmp_path / "tiering")
+    monkeypatch.setattr(te, "LADDER_JSON", tmp_path / "ladder.json")
+    monkeypatch.setattr(te, "tier_e_rungs", lambda: [{"n_passes": 3}])
+    monkeypatch.setattr(te, "read_cell_figures", lambda path: {})
+    monkeypatch.setattr(te, "write_inputs",
+                        lambda rungs: (tmp_path / "a.json", tmp_path / "c.json"))
+    (tmp_path / "tiering").mkdir()
+    (tmp_path / "tiering" / "tiering_20m.json").write_text(
+        json.dumps({"n_permutations": 1, "seed": 1}))  # the stale committed file
+
+    def fake_era1(cmd, **kwargs):
+        flag = {cmd[i]: cmd[i + 1] for i in range(len(cmd) - 1) if cmd[i].startswith("--")}
+        stem = tiering_stem(int(flag["--buffer"]), flag["--tile-join"],
+                            flag["--count-table-join"])
+        out = tmp_path / flag["--output-dir"] / f"{stem}.json"
+        out.write_text(json.dumps({"n_permutations": int(flag["--n-permutations"]),
+                                   "seed": int(flag["--seed"])}))
+
+    monkeypatch.setattr(te.subprocess, "run", fake_era1)
+    monkeypatch.setattr(sys, "argv", ["tier_e_ladder_tiering.py", "--n-permutations", "77",
+                                      "--seed", "5"])
+    te.main()
+    ladder = json.loads((tmp_path / "ladder.json").read_text())
+    assert (ladder["n_permutations"], ladder["seed"]) == (77, 5)
+
+
+def test_ra_m1_an_unattributed_reference_withholds_rather_than_aborts(tmp_path,
+                                                                        monkeypatch):
+    """A blank in-frame reference sheet under the sheet joins: the cell is
+    withheld and listed (ruling 2026-09-13), not raised out of the board."""
+    from scripts import era1_leaderboard_tiering as t
+
+    det = _perfect()
+    refs = synthetic_refs()
+    refs.loc[refs.index[0], "Map"] = ""
+    monkeypatch.setitem(globals(), "synthetic_refs", lambda *a, **k: refs.copy())
+    c, a = _write_board(tmp_path, {"a": det})
+    withheld: list[dict] = []
+    cells, *_ = t.load_cells(c, a, "board", None, None, withheld=withheld,
+                             tile_join="sheet-contains", count_table_join="sheet-primary")
+    assert cells == [] and len(withheld) == 1
+    assert t.refusal_code(withheld[0]["reason"]) == TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE
+
+
+def test_ra_m1_the_reference_code_is_a_recognised_refusal():
+    from scripts import era1_leaderboard_tiering as t
+
+    assert TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE in t.TILE_JOIN_REFUSAL_CODES
+    assert t.refusal_code(f"x ({TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE})") == (
+        TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE)
+
+
+def test_ra_m2_the_reference_refusal_logs_without_a_traceback(caplog):
+    """The reference refusal's shortfall has no booked or in-frame count
+    (None); the evaluator's warning must format it, not raise inside
+    logging (a Traceback ``wait_for_run.py`` reads as a crash)."""
+    import logging
+
+    from scripts.evaluate_detections import evaluate_single_run
+
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    det = merged_detections(refs, bounds)
+    refs = refs.copy()
+    refs.loc[refs.index[0], "Map"] = None
+    with caplog.at_level(logging.WARNING):
+        run = evaluate_single_run(det, refs, bounds, [20], n_bootstrap=20, compute_mcc=True)
+    assert run["tile_join_withheld"]["reason"] == TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE
+    assert "PER-TILE STATISTICS WITHHELD" in caplog.text
+    assert "None of None in-frame references" in caplog.text
+
+
+def test_ra_m3_a_classification_only_change_validates_the_f1_arm(tmp_path):
+    """(sheet-contains, id) over an (id, id) record: the count table is
+    unchanged, but a record whose F1 does not reproduce still stops."""
+    from scripts import era1_leaderboard_tiering as t
+
+    c, a = _write_board(tmp_path, {"a": _perfect()}, f1_override={"a": 0.5})
+    with pytest.raises(t.ReproductionDriftError, match="micro-F1"):
+        t.load_cells(c, a, "board", None, None, withheld=[], want_mcc=True,
+                     tile_join="sheet-contains", count_table_join="id")
+
+
+class TestExpectedRefusalProvenance:
+    """RA-M5: an expected refusal is accepted only from this board's
+    source, observed under the legacy rules the records were scored under."""
+
+    def _write(self, tmp_path: Path, doc: dict) -> Path:
+        path = tmp_path / "exp.json"
+        path.write_text(json.dumps(doc))
+        return path
+
+    _CELL = {"ref": "r::f", "reason": "x (tile_join_detection_shortfall) y"}
+
+    @pytest.mark.parametrize("doc, message", [
+        ({"analysis_id": "other", "withheld_cells": [_CELL]}, "describes analysis"),
+        ({"analysis_id": "board", "tile_joins": {"classification": "sheet-contains",
+                                                 "count_table": "sheet-primary"},
+          "withheld_cells": [_CELL]}, "observed under"),
+        ({"analysis_id": "board",
+          "withheld_cells": [{**_CELL, "count_table_join": "sheet-primary"}]},
+         "count table"),
+        ({"r::f": "tile_join_detection_shortfall"}, "bare"),
+        ({"analysis_id": "board", "expected_refusals": {"r::f": "x"}}, "tile_joins"),
+    ])
+    def test_a_source_without_matching_provenance_is_refused(self, tmp_path, doc, message):
+        from scripts import era1_leaderboard_tiering as t
+
+        with pytest.raises(ValueError, match=message):
+            t.expected_refusals_from(self._write(tmp_path, doc), "board")
+
+    def test_an_explicit_file_with_provenance_is_read(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        doc = {"analysis_id": "board",
+               "tile_joins": {"classification": "id", "count_table": "id"},
+               "expected_refusals": {"r::f": "tile_join_detection_shortfall"}}
+        assert t.expected_refusals_from(self._write(tmp_path, doc), "board") == {
+            "r::f": TILE_JOIN_REASON_DETECTION_SHORTFALL}
+
+    def test_an_expected_refusal_for_a_record_under_other_rules_stops(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        c, a = _write_board(tmp_path, {"a": _perfect()})
+        ev = tmp_path / "eval_a.json"
+        doc = json.loads(ev.read_text())
+        doc["_metadata"]["tile_joins"] = {"classification": "sheet-contains",
+                                          "count_table": "sheet-primary"}
+        ev.write_text(json.dumps(doc))
+        with pytest.raises(t.ReproductionDriftError, match="expected refusal was supplied"):
+            t.load_cells(c, a, "board", None, None, withheld=[],
+                         expected_refusals={"r::a": TILE_JOIN_REASON_DETECTION_SHORTFALL})
+
+
+def test_cls_expected_refusal_must_be_the_one_the_replay_gives(monkeypatch):
+    """Re-audit mutant ``cls_expected_any``: a verified expected refusal
+    licenses THAT refusal only, not any refusal."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = {"summary": {"tile_classification": {
+        "confusion": {"tp": 1, "tn": 1, "fp": 0, "fn": 0}, "mcc": {"point": 1.0}}}}
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: {
+        "error": "refused", "reason": "tile_join_reference_shortfall"})
+    with pytest.raises(t.ReproductionDriftError, match="refused"):
+        t.validate_recorded_classification(
+            "c", None, None, None, evaluation, "id",
+            expected_refusal=TILE_JOIN_REASON_DETECTION_SHORTFALL)
+
+
+def test_ct_expected_refusal_must_be_the_one_the_replay_gives(monkeypatch, tmp_path):
+    """Re-audit mutant ``ct_expected_any``, on the count-table arm."""
+    from scripts import era1_leaderboard_tiering as t
+
+    def refuse(*args, **kwargs):
+        raise ValueError("refused (tile_join_reference_shortfall)")
+
+    monkeypatch.setattr(t, "cell_per_tile", refuse)
+    with pytest.raises(t.ReproductionDriftError, match="refused"):
+        t.validate_recorded_count_table(
+            "c", {"detections": "d"}, None, None, [], 20, tmp_path / "e.json",
+            {"summary": {}}, "id", TILE_JOIN_REASON_DETECTION_SHORTFALL)
+
+
+def test_scope_counts_are_validated_on_a_rule_change(tmp_path):
+    """Re-audit mutant ``scope_check_off``: a recorded detection_scope count
+    that does not reproduce stops the run."""
+    from scripts import era1_leaderboard_tiering as t
+    from scripts.evaluate_detections import describe_detection_scope
+
+    c, a = _write_board(tmp_path, {"a": _perfect()})
+    ev = tmp_path / "eval_a.json"
+    doc = json.loads(ev.read_text())
+    scope = describe_detection_scope(_perfect(), synthetic_bounds())
+    scope["n_detections"] += 1
+    doc["summary"]["detection_scope"] = json.loads(json.dumps(scope, default=list))
+    ev.write_text(json.dumps(doc))
+    with pytest.raises(t.ReproductionDriftError, match="detection_scope.n_detections"):
+        t.load_cells(c, a, "board", None, None, withheld=[])
+
+
+class TestRefusedCellRecord:
+    """Re-audit mutants ``refused_shortfall_off`` / ``_ignored`` and the
+    absent-row Low, on ``_reproduce_refused_cell``."""
+
+    _SHORT = {"axis": "detections", "n_booked": 3, "n_inside_union": 4,
+              "n_outside_union": 1, "n_multi_tile": None, "shortfall": 1}
+
+    def _call(self, monkeypatch, recorded_short: dict, buffers: list | None = None):
+        from scripts import era1_leaderboard_tiering as t
+
+        monkeypatch.setattr(t, "cell_detections", lambda cli, bounds: None)
+        monkeypatch.setattr(t, "calculate_f1_internal", lambda *a, **k: (0.5, 0.5, 0.5))
+        monkeypatch.setattr(t, "describe_tile_join_refusal", lambda *a: {
+            "reason": TILE_JOIN_REASON_DETECTION_SHORTFALL, "shortfall": dict(self._SHORT)})
+        evaluation = {"summary": {
+            "buffers": ([{"buffer_metres": 20, "f1": 0.5, "precision": 0.5, "recall": 0.5}]
+                        if buffers is None else buffers),
+            "tile_join_withheld": {"reason": TILE_JOIN_REASON_DETECTION_SHORTFALL,
+                                   "shortfall": recorded_short}}}
+        return t._reproduce_refused_cell("c", {"detections": "d"}, None, None, 20,
+                                         evaluation, "id", "id")
+
+    def test_the_refusal_counts_are_compared(self, monkeypatch):
+        out = self._call(monkeypatch, dict(self._SHORT))
+        assert "tile_join_withheld.shortfall.n_booked" in out["refusal_compared"]
+
+    def test_a_different_refusal_count_stops(self, monkeypatch):
+        from scripts import era1_leaderboard_tiering as t
+
+        with pytest.raises(t.ReproductionDriftError, match="n_booked"):
+            self._call(monkeypatch, {**self._SHORT, "n_booked": 2})
+
+    def test_an_absent_buffer_row_is_said(self, monkeypatch):
+        out = self._call(monkeypatch, dict(self._SHORT), buffers=[])
+        assert out["point_check"].startswith("not comparable")
+
+
+class TestRecordedOutputJoins:
+    """Re-audit Low and mutant ``output_joins_ignore_mcc``."""
+
+    def test_a_sensitivity_tiering_records_its_join_in_the_mcc_block(self):
+        from scripts.era1_leaderboard_tiering import recorded_output_joins
+
+        assert recorded_output_joins({"mcc_permutation": {"tile_join": "sheet-contains"}}) \
+            == ("sheet-contains", "id")
+        assert recorded_output_joins({}) == ("id", "id")
+
+    def test_contradictory_records_are_refused(self):
+        from scripts.era1_leaderboard_tiering import recorded_output_joins
+
+        with pytest.raises(ValueError, match="contradictory classification"):
+            recorded_output_joins({"tile_joins": {"classification": "sheet-contains"},
+                                   "mcc_permutation": {"tile_join": "id"}})
+
+
+class TestInputIdentityCoverage:
+    """Re-audit Low (probes P3, P3b): ``verified`` means the files read."""
+
+    def test_hashes_of_other_files_do_not_verify_the_detections(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+        from scripts.lib_content_anchor import git_blob_hash
+
+        other = tmp_path / "unrelated.txt"
+        other.write_text("x")
+        ev = {"_metadata": {"input_git_state": {"blob_hashes": {
+            str(other): git_blob_hash(other)}}}}
+        with pytest.raises(t.ReproductionDriftError, match="do not cover"):
+            t.verify_input_identity("c", ev, {"detections": [str(tmp_path / "d.geojson")]},
+                                    set())
+
+    def test_all_null_hashes_are_not_verified(self):
+        from scripts import era1_leaderboard_tiering as t
+
+        ev = {"_metadata": {"input_git_state": {"blob_hashes": {"det.geojson": None}}}}
+        out = t.verify_input_identity("c", ev, {"detections": ["det.geojson"]}, set())
+        assert out["status"] == "not recorded"
+
+    def test_a_snapshot_path_covers_the_file_it_snapshots(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+        from scripts.lib_content_anchor import git_blob_hash
+
+        det = tmp_path / "d.geojson"
+        det.write_text("{}")
+        snap = tmp_path / "blobs" / "abc" / str(det).lstrip("/")
+        snap.parent.mkdir(parents=True)
+        snap.write_text("{}")
+        ev = {"_metadata": {"input_git_state": {"blob_hashes": {
+            str(snap): git_blob_hash(snap)}}}}
+        out = t.verify_input_identity("c", ev, {"detections": str(det)}, set())
+        assert out == {"status": "verified", "n_files": 1, "detections_covered": 1}
+
+
+def test_mcc55_an_undefined_mcc_ranks_last():
+    """Re-audit mutant ``mcc55_none_first``."""
+    from scripts.mcc_tiering_55map import rank_by_mcc
+
+    ranked = rank_by_mcc([{"mcc": None}, {"mcc": 0.2}, {"mcc": 0.5}, {"mcc": 0.0}])
+    assert [c["mcc"] for c in ranked] == [0.5, 0.2, 0.0, None]
+
+
+@pytest.mark.parametrize("version, refused", [("1.0.0", False), ("1.1.0", True),
+                                              (None, False)])
+def test_track2_a_new_writer_must_record_its_join(version, refused):
+    """Re-audit Low: absence reads as the legacy ``id`` only for files older
+    than the writer that records it."""
+    from scripts.mcc_tiering_55map import _track2_recorded_join
+
+    summary = {"version": version} if version else {}
+    if refused:
+        with pytest.raises(ValueError, match="must record"):
+            _track2_recorded_join(summary, {})
+    else:
+        assert _track2_recorded_join(summary, {}) == "id"
+
+
+def test_ra_m4_every_shell_launcher_names_its_rules():
+    """RA-M4: the launcher scan covers ``scripts/*.sh`` too. A shell file
+    that names a W1-fixed tool on a non-comment line must pass
+    ``--tile-join`` (13 were unpinned)."""
+    unpinned = []
+    for path in sorted((REPO / "scripts").glob("*.sh")):
+        code = [ln for ln in path.read_text().splitlines()
+                if not ln.lstrip().startswith("#")]
+        if not any(tool in ln for ln in code for tool in _W1_TOOLS):
+            continue
+        if any("--tile-join" in ln for ln in code):
+            continue
+        unpinned.append(path.name)
+    assert unpinned == []
+
+
+def test_ra_m4_the_shell_scan_sees_an_unpinned_launcher(tmp_path):
+    text = "#!/bin/bash\npython scripts/evaluate_detections.py --detections x\n"
+    code = [ln for ln in text.splitlines() if not ln.lstrip().startswith("#")]
+    assert any("evaluate_detections.py" in ln for ln in code)
+    assert not any("--tile-join" in ln for ln in code)

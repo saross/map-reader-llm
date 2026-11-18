@@ -164,6 +164,13 @@ def _write_board(tmp_path: Path) -> tuple[Path, Path]:
     ):
         det = tmp_path / f"det_{label}.geojson"
         _detections(spec).to_file(det, driver="GeoJSON")
+        # The record's F1 is the cell's own (the re-audit's RA-M3 validates
+        # the F1 arm on a classification-only change, so a placeholder 0.5
+        # would now be drift); read back exactly as the replay reads it.
+        _, _, f1 = lam.calculate_f1_internal(
+            gpd.read_file(det).to_crs(t.TARGET_CRS),
+            gpd.read_file(refs).to_crs(t.TARGET_CRS),
+            gpd.read_file(bounds).to_crs(t.TARGET_CRS), buffer_metres=20)
         evaluation = tmp_path / f"eval_{label}.json"
         evaluation.write_text(json.dumps({
             "_metadata": {"cli_args": {
@@ -171,7 +178,7 @@ def _write_board(tmp_path: Path) -> tuple[Path, Path]:
                 "ground_truth": str(refs),
             }},
             "summary": {
-                "buffers": [{"buffer_metres": 20, "f1": 0.5}],
+                "buffers": [{"buffer_metres": 20, "f1": round(f1, 4)}],
                 "tile_classification": {"confusion": confusion,
                                         "mcc": {"point": mcc}},
             },
