@@ -924,7 +924,8 @@ def join_sensitivity_gate(
 #: is an entry here, keyed by the record's dotted path and naming the
 #: replay's field (dotted, from the replay block's root) that carries the
 #: same quantity under a later schema. Empty on purpose: a survey of the
-#: 2,763 committed ``evaluation.json`` files on zbook (2026-11-19) found
+#: 2,763 ``evaluation.json`` files under ``results/``, ``outputs/`` and
+#: ``reports/`` in zbook's main checkout (2026-11-19) found
 #: every recorded ``tile_join_diagnostics``, ``detection_scope`` and
 #: ``tile_join_withheld`` field the single-set replay compares also in the
 #: replay's schema (``detection_scope.n_passes`` exists only in multi-pass

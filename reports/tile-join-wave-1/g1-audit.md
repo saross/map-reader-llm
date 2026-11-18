@@ -1,6 +1,6 @@
 # Tile-join Wave 1: G1 item 9 audit record
 
-> **Last revised**: 2026-11-19 (original publication, after the second fix pass). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (re-review round: Astra's R2-1 to R2-6 and the Claude re-audit's RA findings, § 8). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), the agent that finished the Wave 1 audit fix round,
@@ -136,8 +136,8 @@ another file is named.
   this pass covers subprocess routes that name a W1-fixed tool's file in a
   string literal under `scripts/`; a route that builds the name another
   way, or lives outside `scripts/`, is not covered by it.
-- The fixes have not yet had a re-audit. § 6 names where one should look
-  first.
+- The fixes have since had two re-reviews, answered in § 8. § 6 names
+  where a further one should look first.
 
 ## 4. This pass (second fix pass)
 
@@ -327,7 +327,178 @@ block, so W1-C1's refusal cannot fire on it.
 - **markdownlint-cli2** passes on this file and on
   `consumer-dispositions.md`.
 
+## 8. Re-review round
+
+Two reviews of the fix diff `f6f5ffe54..0549672ec` arrived together and
+were answered in one round, on `tile-join-wave-1` from `340382c5f` to
+`af16ca52a`:
+
+- **Astra (GPT, Codex, Astra lane)**, changes requested, findings R2-1
+  to R2-6
+  (`~/agent-mail/codex/outbox/claude/20261118T144813Z-astra-wave1-fix-rereview.md`;
+  probes in `~/agent-mail/codex/reviews/wave1-fix-review-2026-11-18/`).
+  Each was verified against the code at `0549672ec` before it was fixed;
+  the probes were read, not run on amd-tower.
+- **A fresh Claude (Opus) re-audit** of the same diff, findings RA-C1 to
+  RA-C3, RA-M1 to RA-M6, nine Lows and nine surviving mutants (relayed by
+  the main session; evidence on zbook under `~/scratch/wave1/reaudit*`).
+  Where the two overlap, the finding was fixed once and both IDs are
+  given.
+
+### 8.1 Findings and dispositions
+
+| ID | Finding (short) | Fix commit | Tests | Mutants (§ 8.2) |
+|---|---|---|---|---|
+| R2-1 | `compare_present` skipped a field the record holds and the replay lacks; a replay with no diagnostics passed with nothing compared | `340382c5f` | `test_compare_present_is_strict_on_the_replay_and_lenient_on_the_record` (replaces `test_compare_present_never_invents_fields`, which asserted the opposite), `test_compare_present_catches_each_kind_of_replay_loss` (changed value, removed field, removed block, emptied block), `test_r2_1_a_replay_that_drops_recorded_refusal_counts_stops` (the real committed Gemini 3.7 block), `test_r2_1_an_old_refusal_record_without_diagnostics_is_listed`, the translation tests | `r2_1_missing_field_skipped`, `r2_1_null_counted_silently`, `r2_1_no_diag_not_listed` |
+| R2-2, RA-M3 | Recorded arms were validated only for the rule that changed: a count-table-only change left the historical confusion to the step-2 handler that withholds (R2-2), and a classification-only change skipped the F1 arm (RA-M3) | `340382c5f` (R2-2), `af16ca52a` (RA-M3) | `test_r2_2_classification_drift_stops_a_count_table_only_change` (also asserts nothing was computed under the new count table), `test_r2_2_a_matching_record_still_scores_the_new_count_table`, `test_ra_m3_a_classification_only_change_validates_the_f1_arm` | `r2_2_same_join_only`, `ra_m3_ct_only`, `w1c2_no_ct_validation` (ported) |
+| R2-3 (re-audit Low, same) | A replicate-mean cell was passed without reading its committed F1 | `340382c5f` | `TestReplicateMeanReplay`: a faithful two-pass record passes pass by pass; a changed pass F1 and a changed mean are each caught with two passes; a different pass count is drift; a record from another writer, with no writer, or with no `per_run` is held (`ReplayRouteUnsupportedError`) | `r2_3_replicate_unchecked`, `r2_3_per_pass_unchecked`, `r2_3_mean_unchecked`, `r2_3_writer_unchecked`, `r2_3_per_run_unchecked`, `r2_3_pass_count_unchecked` |
+| R2-4 (re-audit Low, same) | `k_ladder_mcc_test` labelled a missing pair an expected refusal with nothing, or only an unrelated cell, withheld | `f32c0aad2` | `test_r2_4_an_unexplained_missing_pair_stops` (no refusal, an unrelated cell, an unrecognised reason), `test_r2_4_a_member_refusal_is_recorded_with_its_code`, `test_r2_4_the_driver_stops_rather_than_passing_the_gate` (Astra's two probe cases, through `main`) | `r2_4_absence_accepted`, `r2_4_any_withheld_cell`, `r2_4_code_unchecked` |
+| R2-5, RA-C3 | `stride55_score.py` imported `scripts.*` above its path set-up | `8a4fd7c05` | `test_r2_5_no_launcher_imports_scripts_before_its_path_setup` (static, every script; widened in `af16ca52a` to bare repository modules), `test_r2_5_launcher_prelude_runs_in_a_clean_interpreter` (`python -I`, an unrelated directory), `test_r2_5_stride55_help_runs_standalone` | `r2_5_import_above_path` |
+| R2-6 | `_blank_sheet` missed `pd.NA` | `7361f137e` | `test_r2_6_every_scalar_null_is_a_blank_sheet`, `test_r2_6_an_all_missing_nullable_string_sheet_column_is_refused` (`string` dtype, all `None`) | `r2_6_pd_na_missed`, `refref_blank_none_only` (ported) |
+| RA-C1 | The MCC gate rounded the rebuilt MCC to 6 dp before comparing it with the recorded 4-dp value, so `retest-phase3a-high::text-high-t0.3-n5-4of5` (0.5206504316, recorded 0.5207) stopped a committed board | `af16ca52a` | `test_ra_c1_the_mcc_gate_does_not_double_round` (the committed record), `test_ra_c1_the_real_cell_validates_under_its_recorded_join`, `test_ra_c1_the_real_cell_replays_on_its_real_inputs` (its committed detections on its own frame; skipped in a copy without them) | `ra_c1_validator_rounds`, `ra_c1_gate_rounds` |
+| RA-C2 | `tier_e_ladder_tiering.py` read the stale plain `tiering_20m.json` after pinning the legacy rules | `fdd9ad89a` | `test_ra_c2_tier_e_reads_the_tiering_era1_writes` (end to end through `main`, era1 faked by a writer that names its file with the real `tiering_stem`) | `ra_c2_plain_name` |
+| RA-M1 | The reference refusal code was not a recognised refusal; a blank in-frame reference sheet raised out of the board | `af16ca52a` | `test_ra_m1_an_unattributed_reference_withholds_rather_than_aborts`, `test_ra_m1_the_reference_code_is_a_recognised_refusal` | `ra_m1_code_missing` |
+| RA-M2 | The evaluator's withholding warning formatted the reference refusal's `None` counts with `%d`, a logging Traceback that `wait_for_run.py` reads as a crash | `f8acc926d` | `test_ra_m2_the_reference_refusal_logs_without_a_traceback` | `ra_m2_percent_d` |
+| RA-M4 | Thirteen shell launchers ran `evaluate_detections.py` unpinned | `e44cfaf2d` | `test_ra_m4_every_shell_launcher_names_its_rules` (the scan now covers `scripts/*.sh`) | `ra_m4_shell_unpin` |
+| RA-M5 | `expected_refusals_from` checked no provenance | `af16ca52a` | `TestExpectedRefusalProvenance` (another board, other rules, another count table, a bare mapping, a file without `tile_joins`; a record under other rules), `test_cls_expected_refusal_must_be_the_one_the_replay_gives`, `test_ct_expected_refusal_must_be_the_one_the_replay_gives` | `ra_m5_analysis_unchecked`, `ra_m5_joins_unchecked`, `ra_m5_record_rules_unchecked`, `ra_cls_expected_any`, `ra_ct_expected_any` |
+| RA-M6 | The AST scan missed `evaluate_single_run`, `run_permutation_test*` and `compute_at_buffer` | `af16ca52a` | `test_every_library_call_names_its_join` (four entries added; no call site lacked its join) | `ra_resweep_unpin` |
+| Low: input identity | `verified` was returned when the hashes named other files, or were all null | `af16ca52a` | `TestInputIdentityCoverage` | `low_identity_not_covering`, `low_identity_null_verified` |
+| Low: output joins | `recorded_output_joins` resolved contradictions by field order | `af16ca52a` | `TestRecordedOutputJoins` | `ra_output_joins_ignore_mcc` |
+| Low: refused cell | An absent buffer row or refusal block gave an empty record | `af16ca52a` | `TestRefusedCellRecord` | `low_refused_row_silent`, `ra_refused_shortfall_off`, `ra_refused_shortfall_ignored` |
+| Low: Track-2 join | An unrecorded join always read as `id`; the writer stamped `1.0.0` | `2bbe14499` | `test_track2_a_new_writer_must_record_its_join`, `test_mcc55_an_undefined_mcc_ranks_last` | `low_track2_version_ungated`, `ra_mcc55_none_first` |
+| Low: stale allow-list | `_ALLOWED` named a `generate_report` call that does not exist | `af16ca52a` | the scan, with the entry removed | — |
+| Low: `rerun_evals_at_10k.py` | A bare repository import above the path set-up | `0d41256a3` | the widened static check; the clean-interpreter prelude run | — |
+| Low: (sheet-\*, id) probe | Over-withholds under a pair that never existed historically | `f8acc926d` | documented beside `probe_join`, not changed | — |
+| Re-audit mutants | `scope_check_off`, `ref_partition_double` | `af16ca52a` (tests only) | `test_scope_counts_are_validated_on_a_rule_change`; the full partition in `test_an_out_of_frame_reference_with_no_sheet_is_an_exclusion` | `ra_scope_check_off`, `ra_ref_partition_double` |
+
+Three consequences beyond the findings:
+
+- The board fixture in `tests/test_board_mcc_tile_join.py` recorded a
+  placeholder F1 of 0.5. RA-M3 now validates the F1 arm on a
+  classification-only change, so the fixture records each cell's real
+  F1 (`af16ca52a`).
+- `expected_refusals_from` now takes the board's `analysis_id`, and the
+  main session's `--expected-refusals` input must be this board's
+  tiering (or an explicit file recording `analysis_id` and
+  `tile_joins`) under the legacy rules.
+- **Three further launchers predate Wave 1 but had the R2-5 defect in a
+  stronger form** (no path set-up at all, yet documented as `python
+  scripts/<name>`): `6_accuracy_report.py`, `analyse_study_effects.py`
+  and `verify_phase2a_metrics.py`. They received the same prelude
+  (`8a4fd7c05`) and are in the clean-interpreter check. Other scripts
+  with no path set-up (for example `7_analyse_consensus.py`) were not
+  touched by this wave and were left alone.
+
+**Not done, for the main session**: RA-M4 asks that
+`reports/tile-join-wave-1/consumer-dispositions.md` be updated for the
+thirteen shell launchers. That file is outside this round's write list,
+so it was not edited; the launchers and their pin are listed in the
+RA-M4 row above.
+
+### 8.2 Real-data checks and mutation table
+
+**Replicate-mean reconstruction on committed cells** (R2-3). The new
+per-pass check was run read-only on zbook against three committed
+replicate-mean records (`~/scratch/wave1/r2/real_rep.py`), all of which
+passed: smoke cell 5,
+`results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/`
+(3 passes; recorded mean 0.6658, replayed 0.665767), the phase 3c
+replication cell `results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t1/`
+(5 passes; 0.2816 and 0.28156), and
+`outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.1/` (3 passes;
+0.655 and 0.655). The record holds the mean of per-pass F1s
+(`evaluate_multi_run_mean`), and that is what is reconstructed.
+
+**R2-1 schema survey.** Before making a replay's missing field fatal,
+the key paths of every recorded `tile_join_diagnostics` (refusal),
+`detection_scope` and `tile_join_withheld` block were collected from the
+2,763 `evaluation.json` files under `results/`, `outputs/` and
+`reports/` in zbook's main checkout (`~/scratch/wave1/r2/survey.py`). The
+replay's schema holds every one, except `detection_scope.n_passes`, which
+is written only by the multi-pass rollup (16 records: six H13 overlap
+arms whose `detections` list the evaluator scored as separate passes, and
+ten replicate-mean cells). A single-set replay of such a record is drift
+and stops, which is correct. `REPLAY_SCHEMA_TRANSLATIONS` therefore ships
+empty.
+
+**Mutation table.** The same harness (§ 5; real-file copies, never
+symlinks) was run from the zbook worktree at `af16ca52a` over
+`~/scratch/wave1/g1-fix3/mut/muts7.json`, built by `make_muts6.py` and
+`make_muts7.py` beside it from § 5's `muts5.json`: the 61 earlier mutants,
+15 for Astra's findings, the re-audit's nine survivors (prefixed `ra_`)
+and 14 for the re-audit's fixes. Four were ported because this round
+changed the code they edit: `refref_blank_none_only` and
+`w1c2_no_ct_validation` of the earlier 61, `r2_2_same_join_only` after
+RA-M3, and the re-audit's `output_joins_ignore_mcc`. Twelve detached groups (`launch.sh`), results
+`res0.txt`…`res11.txt`, summarised by `parse.py`.
+
+Before it, two red sentinels: the harness itself, run on
+`r2_4_absence_accepted` alone, turned the R2-4 tests red
+(`~/scratch/wave1/g1-fix3/mut/sentinel.txt`); and the repository's
+`tests/sentinels/perfect-detector-red-sentinel.sh` at `7361f137e`
+reported "SENTINEL PASSED: baseline 211 passed; every mutation red;
+restored identical" (`~/scratch/wave1/g1-fix3/sentinel.log`).
+
+**Baseline in the copy**: 7 failed, 845 passed, 6 skipped, 10 errors,
+the same 17 input-dependent tests as § 5, which pass in tier 1.
+
+**Result: 99 of 99 mutants killed, none surviving**, the 61 earlier ones
+included. One new mutant, `low_refused_row_silent`, was first written so
+that it broke the module's syntax and was killed by import failures, not
+by a test of the behaviour; it was rewritten to drop the marker only and
+re-run alone (`res12.txt`), and is killed by
+`TestRefusedCellRecord::test_an_absent_buffer_row_is_said`. The first
+killing test of every new mutant is in the table in § 8.1; the full list
+with counts is `python3 parse.py` in that directory.
+
+The RA-C2 test loads `tier_e_ladder_tiering.py` with
+`run_k_ladder_tier_e` stubbed, because that module prices committed
+passes from tracked `outputs/` files on import, which no harness copy
+holds; so `ra_c2_plain_name` is killed in the copy, not only in tier 1.
+
+### 8.3 Observation for the PI (pre-existing; no change made)
+
+Symbol-level F1 silently drops a reference whose sheet is blank. On the
+synthetic perfect-detector frame (`tests/test_perfect_detector.py`), the
+perfect merged detector scores precision 1.0, recall 1.0, F1 1.0; with
+one of the five references' `Map` set to null, `calculate_f1_internal`
+gives precision 0.8, recall 1.0, F1 0.8889: the reference leaves the
+matching, so its detection becomes a false positive and the reference
+leaves the recall denominator (re-audit probe P7, re-run on zbook in this
+round). This predates Wave 1, symbol matching was not changed, and no
+committed reference file has a blank sheet. Under the sheet joins the
+tile arm now refuses such a frame by name (decision 2; R2-6 closes the
+`pd.NA` gap); the point F1 still does not.
+
+### 8.4 Tier 1 and lint
+
+- **Tier 1** at `af16ca52a`, zbook worktree, detached with a pid file and
+  a log-staleness watch (`pytest -m tier1 -q`; log
+  `~/scratch/wave1/g1-fix3/tier1b.log`): **4,772 passed, 0 failed**,
+  5 skipped, 132 deselected, 1 xfailed, in 428.65 s. Tier 1 at
+  `7361f137e` (Astra's six fixes only) was 4,739 passed, 0 failed
+  (`tier1.log` there). The commit after `af16ca52a` changes one comment
+  and this file.
+- **Ruff** passes on every touched Python file; `bash -n` passes on the
+  thirteen shell launchers; **markdownlint-cli2** passes on this file.
+
 ## Changelog
+
+### 2026-11-19 — Re-review round
+
+Trigger: Astra's re-review of `f6f5ffe54..0549672ec` (changes requested,
+R2-1 to R2-6) and a fresh Claude re-audit of the same diff (RA-C1 to
+RA-C3, RA-M1 to RA-M6, Lows, nine surviving mutants). Added § 8; changed
+§ 3's last bullet and the banner.
+
+| Quantity | Before | After |
+|---|---|---|
+| Tier 1 passed (failed) | 4,699 (0) at `ff39f74f8` | 4,772 (0) at `af16ca52a` |
+| Mutants killed | 61 of 61 | 99 of 99 |
+
+Not changed: §§ 1–7 as records of the earlier passes; the two pending
+main-session decisions (§ 2). Fix commits `340382c5f`…`af16ca52a`; this
+entry lands with the commit that follows them.
 
 ### 2026-11-19 — Original publication
 
