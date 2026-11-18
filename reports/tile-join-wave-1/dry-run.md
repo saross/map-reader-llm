@@ -70,9 +70,9 @@ contact). Crops of every contact (96 × 96 px around the point, enlarged
 3 ×, point circled in red) are in zbook scratch,
 `~/scratch/wave1/w10/sheet-check/crops/<reference-file-stem>/<ref-id>__<tile-stem>.png`
 (814 for r2, 814, 873, 534, and 544 for the others: the two student
-files yield fewer crop files than contacts because their \`uuid\` values
+files yield fewer crop files than contacts because their `uuid` values
 are written as rounded numbers, so file names collide; their contacts are
-all in the committed \`.txt\`).
+all in the committed `.txt`).
 
 **Results.**
 
