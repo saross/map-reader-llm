@@ -32,7 +32,8 @@ Usage::
 
 Outputs:
     results/k-ladder-2026-09-12/tier-e/tiering-input/{run-analyses,run-conditions}.json
-    results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.{json,md}
+    results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m_id_ct-id.{json,md}
+        (the legacy rules it pins; RA-C2)
     results/k-ladder-2026-09-12/tier-e/ladder.json
 
 Author: Shawn Ross, Claude Code
@@ -62,6 +63,7 @@ from scripts.run_k_ladder_tier_e import (  # noqa: E402
     TIER_E_DIR,
 )
 from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
+from scripts.era1_leaderboard_tiering import tiering_stem  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -74,6 +76,30 @@ LADDER_JSON = TIER_E_DIR / "ladder.json"
 
 N_PERMUTATIONS = 10_000
 SEED = 42
+
+
+def _flag(flags: tuple[str, ...], name: str) -> str:
+    """The value following ``name`` in a flag tuple."""
+    return flags[flags.index(name) + 1]
+
+
+def tiering_output_path() -> Path:
+    """The JSON ``era1_leaderboard_tiering.py`` writes for this launcher's run.
+
+    RA-C2 (Wave 1 re-audit): the launcher pins the legacy rules
+    (``LEGACY_JOIN_FLAGS``), under which era1 writes ``tiering_stem`` 's
+    stamped name (``tiering_20m_id_ct-id``), not the plain
+    ``tiering_20m.json``. Reading the plain name summarised a stale
+    committed file, and ``--n-permutations`` / ``--seed`` never reached the
+    ladder. The path is derived from the same flags the command passes.
+
+    Returns:
+        ``TIERING_DIR / <stem>.json``.
+    """
+    stem = tiering_stem(HEADLINE_BUFFER,
+                        _flag(LEGACY_JOIN_FLAGS, "--tile-join"),
+                        _flag(LEGACY_JOIN_FLAGS, "--count-table-join"))
+    return TIERING_DIR / f"{stem}.json"
 
 #: The K = 10 rung: the committed grid cell's detections, re-scored on the board
 #: frame by this job so the ladder sits on one frame.
@@ -293,9 +319,7 @@ def main() -> None:
     logger.info("$ %s", " ".join(command))
     subprocess.run(command, check=True, cwd=BASE_DIR)
 
-    tiering = json.loads(
-        (TIERING_DIR / f"tiering_{HEADLINE_BUFFER}m.json").read_text()
-    )
+    tiering = json.loads(tiering_output_path().read_text())
     pairwise = tiering.get("pairwise") or []
     mcc = (tiering.get("mcc_permutation") or {}).get("pairwise") or []
     ladder = {
