@@ -51,10 +51,13 @@ import sys
 import tempfile
 from pathlib import Path
 from typing import Any
-from lib_advanced_metrics import recorded_join_flags  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+
+# After the path set-up, as the package path (re-audit Low, the R2-5 class):
+# the bare name above it resolved only through the script's own directory.
+from scripts.lib_advanced_metrics import recorded_join_flags  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
