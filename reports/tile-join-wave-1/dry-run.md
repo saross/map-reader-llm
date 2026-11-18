@@ -317,7 +317,7 @@ outside the sheet's scan altogether (below). Nothing here is of the
 55-map stop's class.
 
 **Method.** `reports/tile-join-wave-1/scripts/sheet_check_gs_frames.py`
-(zbook, 2026-11-19, at the commit that adds it): the 55-map check's
+(zbook, 2026-11-19, at `cf15e9906`): the 55-map check's
 geometry and pixel functions, unchanged thresholds, applied to the GS
 references (`inputs/vectors/references/mounds-reference.geojson`, 569
 points, sheet from `Map`) on every distinct GS frame that a tile-bearing
