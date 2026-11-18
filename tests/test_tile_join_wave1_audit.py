@@ -582,6 +582,7 @@ _PINNED_LAUNCHERS = [
     "register_pass1_materialise.py", "rescore_conditions.py", "run_era1_pv_stage_d.py",
     "run_generalisation.py", "run_k_ladder_tier_e.py", "score_k_ladder_phase2_rungs.py",
     "tier_e_ladder_tiering.py", "run_bootstrap_10k.py", "stride55_score.py",
+    "build_gs_era2_board.py", "gemini37_image_55map_r2.py",
 ]
 
 
@@ -1058,3 +1059,202 @@ class TestReferenceAttributionEdges:
         assert result["tp"] == 0 and result["fp"] == 5
         table = compute_per_tile_tp_fp_fn(det, refs, bounds, 20)
         assert int(table["fp"].sum()) == len(det) and int(table["fn"].sum()) == 0
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Second fix pass: mutants that survived the first fix round's tests
+# ═══════════════════════════════════════════════════════════════════════════
+
+#: The W1-fixed command-line tools a launcher may run.
+_W1_TOOLS = ("evaluate_detections.py", "era1_leaderboard_tiering.py",
+             "compute_corrected_f1_multi_buffer.py", "selection_aware_intervals.py",
+             "k_ladder_mcb.py", "k_ladder_mcc_test.py", "mcc_tiering_55map.py")
+
+#: Files that name a W1-fixed tool in a bare string literal but launch nothing.
+_NOT_LAUNCHERS: dict[str, str] = {
+    "dedup_tiering_rerun.py": "records the tools' paths as source_script metadata",
+    "register_pass1_adapt.py": "records the tool's path as script_path metadata",
+}
+
+#: Text that shows a file names its rules on the command lines it builds.
+_PINS = ("LEGACY_JOIN_FLAGS", "recorded_join_flags", "--tile-join")
+
+
+def test_every_launcher_names_its_rules():
+    """A static scan for launchers (the first dispositions file missed two
+    that it judged prose-only): any ``scripts/*.py`` holding a space-free
+    string literal that ends in a W1-fixed tool's file name must carry a pin
+    or sit on :data:`_NOT_LAUNCHERS` with its reason."""
+    unpinned = []
+    for path in sorted((REPO / "scripts").glob("*.py")):
+        text = path.read_text()
+        literals = {n.value.strip() for n in ast.walk(ast.parse(text))
+                    if isinstance(n, ast.Constant) and isinstance(n.value, str)
+                    and " " not in n.value.strip()}
+        if not any(s.endswith(tool) for s in literals for tool in _W1_TOOLS):
+            continue
+        if path.name in _NOT_LAUNCHERS or any(pin in text for pin in _PINS):
+            continue
+        unpinned.append(path.name)
+    assert unpinned == []
+
+
+def test_a_m1_a_sheet_count_table_probes_its_own_join():
+    """(id, sheet-primary): ``id`` refuses this frame (a detection names a
+    tile outside it) but the sheet-primary table does not, so the F1
+    intervals stand and only the tile block is withheld (kills the mutant
+    that probes the classification join whatever the count table)."""
+    from scripts.evaluate_detections import evaluate_single_run
+
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    det = merged_detections(refs, bounds).drop(columns="source_tiles")
+    det.loc[det.index[0], "source_tile"] = f"{SHEET_A}_32635_x999_y999.png"
+    assert lam.describe_tile_join_refusal(det, refs, bounds, "id") is not None
+    assert lam.describe_tile_join_refusal(det, refs, bounds, "sheet-primary") is None
+    run = evaluate_single_run(det, refs, bounds, [20], n_bootstrap=20, compute_mcc=True,
+                              tile_join="id", count_table_join="sheet-primary")
+    assert "tile_join_withheld" not in run
+    assert run["buffers"][0]["f1_ci_lower"] is not None
+    assert run["tile_classification"]["withheld_reason"] == (
+        TILE_JOIN_REASON_DETECTION_SHORTFALL)
+
+
+@pytest.mark.parametrize("join", ["id", "sheet-primary"])
+def test_compute_at_buffer_passes_the_count_table_to_its_intervals(monkeypatch, join):
+    """B-M4 at the call site: ``compute_at_buffer`` hands its count-table
+    join to ``bootstrap_tile_level_ci`` (kills corrected_ci_ct_dropped)."""
+    from scripts import compute_corrected_f1_multi_buffer as cc
+
+    seen: list[str | None] = []
+
+    def spy(*args, **kwargs):
+        seen.append(kwargs.get("count_table_join"))
+        return {"precision": (0, 1), "recall": (0, 1), "f1": (0, 1)}
+
+    monkeypatch.setattr(cc, "bootstrap_tile_level_ci", spy)
+    bounds, refs = synthetic_bounds(), synthetic_refs("source_map")
+    cc.compute_at_buffer(
+        merged_detections(refs, bounds, "source_map"), refs, bounds, None, None, 50, 20, 1,
+        extension_gdf=gpd.GeoDataFrame(
+            {"candidate_id": [0], "source_map": [SHEET_A], "nearest_student_m": [500.0]},
+            geometry=[_pt(-5000, -5000)], crs=CRS),
+        count_table_join=join)
+    assert seen == [join]
+
+
+@pytest.mark.parametrize("block, message", [
+    ({"mcc": 0.25}, "records no tile_join"),
+    ({"mcc": 0.25, "tile_join": None}, "records no tile_join"),
+    ({"mcc": 0.25, "tile_join": "bogus"}, "not a classification join"),
+    ({"mcc": 0.25, "tile_join": "id"}, "is under 'id', not 'sheet-contains'"),
+])
+def test_cached_mcc_refusals_name_their_reason(block, message):
+    """W1-C1: each refusal says why (kills w1c1_relabel, whose unlabelled
+    cache was still refused, but as an invalid name)."""
+    from scripts.compute_corrected_f1_multi_buffer import _check_precomputed_mcc
+
+    with pytest.raises(ValueError, match=message):
+        _check_precomputed_mcc(block, "sheet-contains")
+
+
+class TestTieBreakDefeatsInputOrder:
+    """Audit Low: ``sjoin`` returns candidates in spatial order, which on the
+    first fixture was also name order. Here the spatially first tile (x80)
+    has the LARGER name (``x80`` sorts after ``x160``)."""
+
+    A80, A160 = _tile(SHEET_A, 80, 0), _tile(SHEET_A, 160, 0)
+
+    def test_candidates_are_sorted_by_name(self):
+        bounds = synthetic_bounds()
+        sheet = bounds[bounds["tile_name"].str.startswith(SHEET_A)]
+        pts = gpd.GeoDataFrame(geometry=[_pt(170, 50)], crs=CRS)
+        assert lam.sheet_join_candidate_tiles(pts, SHEET_A, sheet, bounds) == [
+            [self.A160, self.A80]]
+
+    def test_an_equidistant_point_books_to_the_smaller_name(self):
+        """x = 170 is 40 m from both centres (130 and 210)."""
+        table = _fp_table([(170, 50)], synthetic_bounds(), self.A160)
+        assert table.loc[self.A160, "fp"] == 1
+        assert table.loc[self.A80, "fp"] == 0
+
+    def test_unsorted_candidates_passed_in(self):
+        """The helper's own contract: whatever order the caller passes."""
+        bounds = synthetic_bounds()
+        pts = gpd.GeoDataFrame(geometry=[_pt(170, 50)], crs=CRS)
+        assert lam.sheet_primary_tiles(pts, bounds, [[self.A80, self.A160]]) == [self.A160]
+
+
+def test_w1_c4_point_values_must_reproduce(monkeypatch):
+    """The expected-refusal route also reproduces the unaffected F1,
+    precision and recall (W1.4); a drift in one stops the run (kills
+    w1c4_no_point_check)."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = {"summary": {"buffers": [
+        {"buffer_metres": 20, "f1": 0.5, "precision": 0.5, "recall": 0.5}]}}
+    monkeypatch.setattr(t, "cell_detections", lambda cli, bounds: None)
+    monkeypatch.setattr(t, "calculate_f1_internal", lambda *a, **k: (0.5, 0.5, 0.5))
+    out = t._reproduce_refused_cell("c", {"detections": "d"}, None, None, 20,
+                                    evaluation, "id", "id")
+    assert sorted(out["point_compared"]) == ["point.f1", "point.precision", "point.recall"]
+    monkeypatch.setattr(t, "calculate_f1_internal", lambda *a, **k: (0.5, 0.6, 0.5))
+    with pytest.raises(t.ReproductionDriftError, match="recall"):
+        t._reproduce_refused_cell("c", {"detections": "d"}, None, None, 20,
+                                  evaluation, "id", "id")
+
+
+def test_a_l1_a_rung_the_validation_run_withholds_is_recorded(tmp_path, monkeypatch):
+    """K-ladder MCC test, (id, sheet-primary): the (id, id) validation run
+    withholds a rung, so the pair has no committed p-value. The gate records
+    the reproduced refusal instead of raising a bare KeyError (A-L1)."""
+    import scripts.k_ladder_mcc_test as kmt
+
+    rungs = [{"K": 1, "condition_id": "run::a", "eval_path": "e", "f1_headline": 0.8,
+              "tile_mcc": 0.5},
+             {"K": 3, "condition_id": "run::b", "eval_path": "e", "f1_headline": 0.9,
+              "tile_mcc": 0.6}]
+    inventory = tmp_path / "ladders.json"
+    inventory.write_text(json.dumps({"ladders": [{
+        "slug": "x", "family_base": "X", "run_id": "run", "proposer_pool": "p",
+        "corpus": "c", "reference_file": "r.geojson", "frame_file": "f.geojson",
+        "headline_buffer_m": 20, "rungs": rungs}]}))
+    pair = {"ref_a": "run::a", "ref_b": "run::b", "p_value": 0.5, "bh_adjusted_p": 0.5,
+            "significant": False}
+    requested = {"pairwise": [{**pair, "observed_diff": -0.1}], "fdr_q": 0.05,
+                 "n_permutations": 10, "seed": 1, "n_tiles": 4,
+                 "mcc_permutation": {"pairwise": [{**pair, "observed_mcc_diff": -0.1}],
+                                     "gates": []}}
+    validation = {"pairwise": [], "withheld_cells": [
+        {"ref": "run::a", "reason": TILE_JOIN_REASON_DETECTION_SHORTFALL}]}
+
+    def fake_tiering(*args: Any) -> dict:
+        return validation if args[-2:] == ("id", "id") else requested
+
+    monkeypatch.setattr(kmt, "run_tiering", fake_tiering)
+    out = tmp_path / "out"
+    monkeypatch.setattr(sys, "argv", ["k_ladder_mcc_test.py", "--ladders", str(inventory),
+                                      "--output-dir", str(out), "--tile-join", "id",
+                                      "--count-table-join", "sheet-primary"])
+    kmt.main()
+    gate = json.loads((out / "x.json").read_text())["gate"]
+    assert gate["n_pairs_gated"] == 0
+    (entry,) = gate["pairs"]
+    assert entry["expected_refusal"] is True and entry["available"] is False
+    assert entry["withheld"] == {"run::a": TILE_JOIN_REASON_DETECTION_SHORTFALL}
+
+
+def test_a_l4_the_describer_books_the_sheet_scoped_population():
+    """Audit A-L4: with one D50 exclusion that lies IN the frame (attributed
+    to A, inside only B's tile B280) and one unattributed in-frame row, the
+    describer's ``n_booked`` is the sheet-scoped population (3), not the
+    in-frame count less the unattributed rows (4)."""
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    det = merged_detections(refs, bounds).drop(columns="source_tiles")
+    det.loc[det.index[4], "source_tile"] = _tile(SHEET_A, 0, 0)
+    det.loc[det.index[4], "geometry"] = _pt(370, 50)
+    det.loc[det.index[0], "source_tile"] = None
+    refusal = lam.describe_tile_join_refusal(det, refs, bounds, "sheet-primary")
+    assert refusal["reason"] == TILE_JOIN_REASON_UNATTRIBUTED_DETECTION
+    assert refusal["shortfall"] == {
+        "axis": "detections", "n_booked": 3, "n_inside_union": 4, "n_outside_union": 1,
+        "n_multi_tile": None, "shortfall": 1}
