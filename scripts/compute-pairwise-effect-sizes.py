@@ -53,6 +53,7 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_effect_size_ci,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_consensus import (  # noqa: E402
     build_pv_gdf,
     generate_consensus_gdf,
@@ -262,17 +263,50 @@ def define_all_comparisons(
     # --- Proposer GeoJSON definitions ---
     # Maps proposer short name to GeoJSON path (relative to data_dir)
     proposer_geojsons = {
-        "proposer-text-t0.0": data_dir / "retest" / "phase2b" / "track2-text" / "T0.0" / "run_1" / "detections_T0.0_run01.geojson",
-        "proposer-canonical-last": data_dir / "retest" / "phase2e" / "canonical-last" / "run_1" / "detections_canonical-last_run01.geojson",
-        "proposer-high-t0.3": data_dir / "retest" / "phase3a-high" / "track2-text" / "T0.3" / "run_1" / "detections_T0.3_run01.geojson",
-        "proposer-rep-high": data_dir / "retest" / "phase3a-replication" / "high" / "run_1" / "detections_high_run01.geojson",
-        "proposer-image-terse": data_dir / "retest" / "phase2d" / "track1-image" / "terse" / "run_1" / "detections_terse_run01.geojson",
-        "proposer-text-t0.7": data_dir / "retest" / "phase2b" / "track2-text" / "T0.7" / "run_1" / "detections_T0.7_run01.geojson",
-        "proposer-text-t1.0": data_dir / "retest" / "phase2b" / "track2-text" / "T1.0" / "run_1" / "detections_T1.0_run01.geojson",
-        "proposer-image-t0.0": data_dir / "retest" / "phase2b" / "track1-image" / "T0.0" / "run_1" / "detections_T0.0_run01.geojson",
-        "proposer-high-t0.7": data_dir / "retest" / "phase3a-high" / "track2-text" / "T0.7" / "run_1" / "detections_T0.7_run01.geojson",
-        "proposer-brief-text": data_dir / "retest" / "phase2a" / "brief-text" / "run_1" / "detections_brief-text_run01.geojson",
-        "proposer-image-t0.7": data_dir / "retest" / "phase3a" / "track1-image" / "T0.7" / "run_1" / "detections_T0.7_run01.geojson",
+        "proposer-text-t0.0": (
+            data_dir / "retest" / "phase2b" / "track2-text" / "T0.0" / "run_1" /
+            "detections_T0.0_run01.geojson"
+        ),
+        "proposer-canonical-last": (
+            data_dir / "retest" / "phase2e" / "canonical-last" / "run_1" /
+            "detections_canonical-last_run01.geojson"
+        ),
+        "proposer-high-t0.3": (
+            data_dir / "retest" / "phase3a-high" / "track2-text" / "T0.3" / "run_1" /
+            "detections_T0.3_run01.geojson"
+        ),
+        "proposer-rep-high": (
+            data_dir / "retest" / "phase3a-replication" / "high" / "run_1" /
+            "detections_high_run01.geojson"
+        ),
+        "proposer-image-terse": (
+            data_dir / "retest" / "phase2d" / "track1-image" / "terse" / "run_1" /
+            "detections_terse_run01.geojson"
+        ),
+        "proposer-text-t0.7": (
+            data_dir / "retest" / "phase2b" / "track2-text" / "T0.7" / "run_1" /
+            "detections_T0.7_run01.geojson"
+        ),
+        "proposer-text-t1.0": (
+            data_dir / "retest" / "phase2b" / "track2-text" / "T1.0" / "run_1" /
+            "detections_T1.0_run01.geojson"
+        ),
+        "proposer-image-t0.0": (
+            data_dir / "retest" / "phase2b" / "track1-image" / "T0.0" / "run_1" /
+            "detections_T0.0_run01.geojson"
+        ),
+        "proposer-high-t0.7": (
+            data_dir / "retest" / "phase3a-high" / "track2-text" / "T0.7" / "run_1" /
+            "detections_T0.7_run01.geojson"
+        ),
+        "proposer-brief-text": (
+            data_dir / "retest" / "phase2a" / "brief-text" / "run_1" /
+            "detections_brief-text_run01.geojson"
+        ),
+        "proposer-image-t0.7": (
+            data_dir / "retest" / "phase3a" / "track1-image" / "T0.7" / "run_1" /
+            "detections_T0.7_run01.geojson"
+        ),
     }
 
     # Consensus proposer GeoJSONs (pre-built)
@@ -285,7 +319,9 @@ def define_all_comparisons(
         "consensus-image-2of10": data_dir / "consensus-proposers" / "3a-image-t0.7-2of10.geojson",
         "consensus-image-3of10": data_dir / "consensus-proposers" / "3a-image-t0.7-3of10.geojson",
         "consensus-image-5of10": data_dir / "consensus-proposers" / "3a-image-t0.7-5of10.geojson",
-        "consensus-rep-min-1of10": data_dir / "consensus-proposers" / "3a-rep-minimal-1of10.geojson",
+        "consensus-rep-min-1of10": (
+            data_dir / "consensus-proposers" / "3a-rep-minimal-1of10.geojson"
+        ),
         "consensus-text-25of30": data_dir / "consensus-proposers" / "3a-text-t0.7-25of30.geojson",
         "consensus-text-1of30": data_dir / "consensus-proposers" / "3a-text-t0.7-1of30.geojson",
         "consensus-image-20of30": data_dir / "consensus-proposers" / "3a-image-t0.7-20of30.geojson",
@@ -568,7 +604,7 @@ def run_one_comparison(
             gdf_ref=gdf_ref,
             n_iterations=n_iterations,
             random_seed=random_seed,
-            return_p_values=True,
+            return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         elapsed = time.time() - t0

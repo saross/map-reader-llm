@@ -84,6 +84,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_f1_internal,
     parse_tile_list,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.merge_passes import cluster_across_passes  # noqa: E402
 from scripts.prepare_h13_scoring import (  # noqa: E402
     CRS_EPSG,
@@ -284,6 +285,7 @@ def main() -> int:
                         gdf, gdf_ref, bounds, n_iterations=args.bootstrap,
                         random_seed=SEED, buffer_metres=BUFFER_M,
                         processed_tiles=set(bounds["tile_name"]),
+                            count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
                     )
                 cells.append({
                     "arm": arm,

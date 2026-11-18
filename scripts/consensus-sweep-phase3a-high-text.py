@@ -60,6 +60,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_effect_size_ci,
     calculate_f1_internal,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_consensus import (  # noqa: E402
     TARGET_CRS,
     build_pv_gdf,
@@ -171,7 +172,7 @@ def compute_single_consensus(args: tuple) -> dict:
             gdf_consensus, gdf_ref, gdf_bounds,
             n_iterations=BOOTSTRAP_ITERATIONS,
             random_seed=BOOTSTRAP_SEED,
-            buffer_metres=BUFFER_METRES,
+            buffer_metres=BUFFER_METRES, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
     config_key = f"{temp}_N{pool_size}_T{threshold}"
@@ -275,7 +276,7 @@ def compute_pairwise(args: tuple) -> dict:
         gdf_ref,
         n_iterations=BOOTSTRAP_ITERATIONS,
         random_seed=BOOTSTRAP_SEED,
-        return_p_values=True,
+        return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     # Also compute point estimates for both conditions

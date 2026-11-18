@@ -119,6 +119,7 @@ from scripts.final_board_sweeps import (  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
 from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
 from scripts.stride55_score import build_map_constrained_index  # noqa: E402
@@ -405,7 +406,8 @@ def confusion_gate(label: str, sub: gpd.GeoDataFrame, row: dict,
         RuntimeError: On any mismatch.
     """
     tiles = compute_per_tile_tp_fp_fn(sub, ref, bounds,
-                                      buffer_metres=BUFFER_M)
+                                      buffer_metres=BUFFER_M,
+                                          tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     confusion = tile_confusion(sub, ref, bounds)  # once: it is the slow call
     # DETECTION-level and TILE-level counts are two different confusions and
     # must stay in two different namespaces. Folding ``tile_tp`` onto ``tp``

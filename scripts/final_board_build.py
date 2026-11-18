@@ -68,6 +68,7 @@ from scripts.build_55map_leaderboard import (  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     greedy_clique_tiers,
     micro_f1,
@@ -525,7 +526,8 @@ def per_tile_arrays(det_path: Path, ref, bounds, tile_index, n_tiles):
     if "source_tile" not in det.columns:
         raise RuntimeError(f"{det_path}: no source_tile — attribution "
                            "must be origin-tile (S143 lesson)")
-    tm = compute_per_tile_tp_fp_fn(det, ref, bounds, buffer_metres=BUFFER_M)
+    tm = compute_per_tile_tp_fp_fn(det, ref, bounds, buffer_metres=BUFFER_M,
+        tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     tp = np.zeros(n_tiles)
     fp = np.zeros(n_tiles)
     fn = np.zeros(n_tiles)
@@ -695,7 +697,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
                         "on %s -- oracle and committed rows are distinct cells",
                         label, manifest_points.get(label), pt, pk, reference)
             coincidence_log.append(f"{label}: argmax {manifest_points.get(label)} "
-                                   f"moved off the committed point ({pt:.2f}, k{pk}) — distinct cells")
+                                   f"moved off the committed point ({pt:.2f}, k{pk}) "
+                                   f"— distinct cells")
             continue
         new = eval50(out / "cells" / label / "evaluation.json")
         old = eval50(PROJECT_ROOT / retarget(committed_eval, reference))

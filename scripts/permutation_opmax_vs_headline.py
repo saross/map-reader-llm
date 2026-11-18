@@ -64,6 +64,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 from scripts.consensus_vs_baseline_tiering import consensus_per_tile  # noqa: E402
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import permutation_test_float  # noqa: E402
 
 OPMAX_DIR = BASE_DIR / "outputs" / "verifier-robustness" / "384-flash-high-text-16of30"
@@ -112,7 +113,8 @@ def materialise_opmax(gdf_ref: gpd.GeoDataFrame,
     gdf = gpd.GeoDataFrame(
         {"geometry": [Point(r["x"], r["y"]) for r in sel],
          "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
-    res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True)
+    res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
 
     if len(cids) != OPMAX_EXPECT_N or round(res["f1"], 4) != OPMAX_EXPECT_F1:
         sys.exit(f"GATE FAIL (opmax): n_accepted={len(cids)} (expect {OPMAX_EXPECT_N}), "
@@ -144,7 +146,8 @@ def verify_headline(gdf_ref: gpd.GeoDataFrame, gdf_bounds: gpd.GeoDataFrame) -> 
     if gdf.crs is None:
         gdf = gdf.set_crs("EPSG:4326")
     gdf = gdf.to_crs(EVAL_CRS)
-    res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True)
+    res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
 
     if len(gdf) != HEADLINE_EXPECT_N or round(res["f1"], 4) != HEADLINE_EXPECT_F1:
         sys.exit(f"GATE FAIL (headline): n={len(gdf)} (expect {HEADLINE_EXPECT_N}), "

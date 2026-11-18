@@ -84,6 +84,7 @@ from scripts.consensus_vs_baseline_tiering import (  # noqa: E402
 )
 from scripts.dedup_metric_impact import dedup_with_provenance  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     FDR_Q,
     HEADLINE_BUFFER_M,
@@ -152,7 +153,8 @@ def per_tile_arrays(
         Tuple of float arrays ``(tp, fp, fn)``.
     """
     metrics = compute_per_tile_tp_fp_fn(
-        gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     index = {name: i for i, name in enumerate(tile_order)}
     tp = np.zeros(len(tile_order), dtype=float)

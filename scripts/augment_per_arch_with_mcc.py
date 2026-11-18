@@ -40,6 +40,7 @@ from lib_advanced_metrics import (  # noqa: E402
     bootstrap_tile_classification_ci,
     calculate_tile_classification,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 ARCHITECTURES = ["single-pass", "consensus", "single-pass+PV", "pv"]
 ERAS_BOUNDS = {
@@ -100,12 +101,12 @@ def compute_mcc_for_condition(
         # buffer is fixed at 20 m inside calculate_tile_classification.
         # The buffer_metres argument is informational only.
         tile_class = calculate_tile_classification(
-            gdf_det, gdf_ref, gdf_bounds,
+            gdf_det, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
         )
         tile_ci = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=n_bootstrap,
-            random_seed=seed,
+            random_seed=seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
         )
         return {
             "confusion": {

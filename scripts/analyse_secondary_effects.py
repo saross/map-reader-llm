@@ -69,6 +69,10 @@ from lib_advanced_metrics import (  # noqa: E402
     precision_recall_f1,
     spatial_tolerance_curve,
 )
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from evaluate_detections import load_geojson  # noqa: E402
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
 
@@ -371,10 +375,11 @@ def analyse_tile_mcc(conditions, optimal_thresholds, gdf_ref, gdf_bounds,
         t = optimal_thresholds[cid]
         gj = PROJECT_ROOT / cfg["consensus_dir"] / f"consensus_t{t}.geojson"
         gdf_det = load_consensus_geojson(gj, gdf_bounds)
-        tc = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+        tc = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds,
+            tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
         ci = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
-            n_iterations=n_bootstrap, random_seed=seed,
+            n_iterations=n_bootstrap, random_seed=seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
         )
         def _safe_round(val, digits=4):
             return round(val, digits) if val is not None else None
@@ -597,6 +602,7 @@ def analyse_thinking_temp_interaction(conditions, optimal_thresholds, gdf_ref, g
                     int_conditions, gdf_ref,
                     factor_a_name="thinking", factor_b_name="temperature",
                     metric=metric, n_iterations=1000, random_seed=seed,
+                        count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
                 )
                 interaction_tests[metric] = result
                 logger.info("  Interaction test (%s): %s",
@@ -753,7 +759,8 @@ def analyse_spatial_clustering(conditions, optimal_thresholds, gdf_ref, gdf_boun
         gj = PROJECT_ROOT / cfg["consensus_dir"] / f"consensus_t{t}.geojson"
         gdf_det = load_consensus_geojson(gj, gdf_bounds)
         tile_metrics = compute_per_tile_tp_fp_fn(
-            gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m)
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m,
+                tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
 
         fps = tile_metrics["fp"].values
         fns = tile_metrics["fn"].values

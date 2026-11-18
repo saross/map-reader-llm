@@ -125,6 +125,7 @@ from scripts.score_55maps_standardised_reference import (  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.mcc_tiering_55map import (  # noqa: E402
     mcc_from_confusion,
     tile_vectors,
@@ -420,7 +421,7 @@ def _score(task):
     g = _G["fams"][fam_name]
     sub = g[(g["mound_probability"] >= prob_t) & (g["vote_count"] >= k)]
     tm = compute_per_tile_tp_fp_fn(sub, _G["ref"], _G["bounds"],
-                                   buffer_metres=BUFFER_M)
+                                   buffer_metres=BUFFER_M, tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     tp, fp, fn = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                   int(tm["fn"].sum()))
     return {"family": fam_name, "prob_t": prob_t, "min_votes": k,
@@ -811,7 +812,8 @@ def main() -> int:
         det = gpd.read_file(det_path).to_crs("EPSG:32635")
         det = assign_source_tiles(det, bounds)
         tm = compute_per_tile_tp_fp_fn(det, gate_ref, bounds,
-                                       buffer_metres=BUFFER_M)
+                                       buffer_metres=BUFFER_M,
+                                           tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
         tp, fp, fn = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                       int(tm["fn"].sum()))
         committed_counts[label] = (tp, fp, fn)
@@ -853,7 +855,8 @@ def main() -> int:
         g = families[name]["gdf"]
         sub = g[(g["mound_probability"] >= pt) & (g["vote_count"] >= pk)]
         tm = compute_per_tile_tp_fp_fn(sub, gate_ref, bounds,
-                                       buffer_metres=BUFFER_M)
+                                       buffer_metres=BUFFER_M,
+                                           tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
         triple = (int(tm["tp"].sum()), int(tm["fp"].sum()),
                   int(tm["fn"].sum()))
         if triple != committed_counts[committed_label]:

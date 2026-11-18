@@ -55,6 +55,7 @@ from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     load_standardised_extension,
 )
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     greedy_clique_tiers,
     micro_f1,
@@ -489,7 +490,8 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
         crs = "EPSG:32635" if abs(det.geometry.x.iloc[0]) > 180 else "EPSG:4326"
         det = det.set_crs(crs, allow_override=True).to_crs("EPSG:32635")
         det = assign_source_tiles(det, gdf_bounds)
-        tm = compute_per_tile_tp_fp_fn(det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M)
+        tm = compute_per_tile_tp_fp_fn(det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
         tp = np.zeros(len(tile_order))
         fp = np.zeros(len(tile_order))
         fn = np.zeros(len(tile_order))

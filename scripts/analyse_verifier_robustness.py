@@ -53,6 +53,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 # Evaluation CRS is EPSG:32635 (lib_advanced_metrics.DEFAULT_CRS); candidate
 # centroids are already in 32635, so no reprojection is needed for scoring.
@@ -177,7 +178,8 @@ def score_cids(cids: frozenset[int], by_cid: dict[int, dict],
         crs=EVAL_CRS,
     )
     res = score_detection_set(gdf_det, gdf_ref, gdf_bounds,
-                              buffer_metres=20, compute_mcc=True)
+                              buffer_metres=20, compute_mcc=True,
+                                  tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     return res["f1"], res["mcc"]
 
 
@@ -268,7 +270,8 @@ def summarise(cell_result: dict, prob_ts: list[float]) -> dict:
         determinism.append({
             "proposer_k": pk, "prob_t": best_pt,
             "single_run_f1_mean": round(best_mean, 4) if best_f1s else None,
-            "single_run_f1_sd": round(statistics.pstdev(best_f1s), 4) if len(best_f1s) > 1 else None,
+            "single_run_f1_sd": (round(statistics.pstdev(best_f1s), 4)
+                                 if len(best_f1s) > 1 else None),
             "single_run_f1_min": round(min(best_f1s), 4) if best_f1s else None,
             "single_run_f1_max": round(max(best_f1s), 4) if best_f1s else None,
             "consensus_majority_f1": round(cons, 4) if cons is not None else None,

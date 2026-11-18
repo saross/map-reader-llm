@@ -40,6 +40,10 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
     score_detection_set,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from scripts.n1_baseline_leaderboard_tiering import permutation_test_float  # noqa: E402
 from scripts.pairwise_permutation_test import assign_source_tiles  # noqa: E402
 
@@ -59,7 +63,8 @@ COMPARATORS = {
 def per_tile(gdf, gdf_ref, gdf_bounds, tile_order):
     """Per-tile TP/FP/FN at 50 m, aligned to the fixed tile order."""
     gdf = assign_source_tiles(gdf, gdf_bounds)
-    tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M)
+    tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M,
+        tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     idx = {t: i for i, t in enumerate(tile_order)}
     tp = np.zeros(len(tile_order)); fp = np.zeros(len(tile_order))  # noqa: E702
     fn = np.zeros(len(tile_order))
@@ -106,7 +111,7 @@ def main() -> int:
         {"geometry": [Point(r["x"], r["y"]) for r in best["sel"]],
          "source_tile": [r["source_tile"] for r in best["sel"]]}, crs=EVAL_CRS)
     full = score_detection_set(g_best, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M,
-                               compute_mcc=True)
+                               compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     print(f"\nBEST uplift: F1@50={full['f1']:.4f} P={full['precision']:.4f} "
           f"R={full['recall']:.4f} MCC={full['mcc']:.4f} "
           f"({best['k']}of10/pt{best['pt']}, n={len(best['sel'])})", flush=True)

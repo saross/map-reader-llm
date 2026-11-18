@@ -55,6 +55,7 @@ from analyse_consensus_sweep import (  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from merge_passes import apply_threshold  # noqa: E402
 
 # Default paths for evaluation data
@@ -297,11 +298,11 @@ def run_comparison(
     logger.info("Computing per-tile metrics (buffer=%dm)...", buffer_metres)
     tile_metrics_a = compute_per_tile_tp_fp_fn(
         gdf_consensus_a, gdf_ref, gdf_bounds,
-        buffer_metres=buffer_metres,
+        buffer_metres=buffer_metres, tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     tile_metrics_b = compute_per_tile_tp_fp_fn(
         gdf_consensus_b, gdf_ref, gdf_bounds,
-        buffer_metres=buffer_metres,
+        buffer_metres=buffer_metres, tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     tile_f1s_a = compute_tile_f1s(tile_metrics_a)

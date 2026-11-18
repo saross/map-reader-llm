@@ -12,8 +12,10 @@ and the PV data loading from ``evaluate_pv_results``.
 Usage — single condition:
 
     python scripts/analyse_pv_buffer_sensitivity.py \\
-        --probabilities outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json \\
-        --manifest outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json \\
+        --probabilities \\
+        outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json \\
+        --manifest \\
+        outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json \\
         --threshold 0.20 \\
         --label "Flash HIGH text 16-of-30 + PV" \\
         --output-dir results/buffer-sensitivity/flash-high-text-16of30
@@ -74,6 +76,7 @@ from lib_advanced_metrics import (  # noqa: E402
     bootstrap_ci,
     calculate_f1_internal,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from evaluate_pv_results import (  # noqa: E402
     build_candidate_gdf,
     load_probabilities,
@@ -153,7 +156,7 @@ def evaluate_condition_at_buffers(
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=n_bootstrap,
             random_seed=seed,
-            buffer_metres=buffer_m,
+            buffer_metres=buffer_m, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         buffer_results.append({

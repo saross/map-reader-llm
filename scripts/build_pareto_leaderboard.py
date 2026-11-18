@@ -57,6 +57,7 @@ from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.consensus_vs_baseline_tiering import consensus_per_tile  # noqa: E402
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     greedy_clique_tiers,
     permutation_test_float,
@@ -149,7 +150,8 @@ def _score_cids(cids, by_cid, gdf_ref, gdf_bounds) -> dict:
     gdf = gpd.GeoDataFrame(
         {"geometry": [Point(r["x"], r["y"]) for r in sel],
          "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
-    return score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True)
+    return score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20, compute_mcc=True,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
 
 
 def _write_gdf(cids, by_cid, path: Path) -> None:
@@ -254,7 +256,8 @@ def main() -> int:
             if gdf.crs is None:
                 gdf = gdf.set_crs("EPSG:4326")
             res = score_detection_set(gdf.to_crs(EVAL_CRS), gdf_ref, gdf_bounds,
-                                      buffer_metres=20, compute_mcc=True)
+                                      buffer_metres=20, compute_mcc=True,
+                                          tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
         if round(res["f1"], 4) != expect:
             sys.exit(f"GATE FAIL ({label}): F1@20m={res['f1']:.4f}, expected {expect}")
         print(f"  gate ok: {label} F1@20m={res['f1']:.4f} MCC={res['mcc']:.3f}", flush=True)

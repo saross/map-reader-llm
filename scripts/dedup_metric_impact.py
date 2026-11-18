@@ -93,6 +93,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     get_map_name,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.lib_detection_paths import POOL_PASS_GLOBS  # noqa: E402
 from scripts.merge_passes import (  # noqa: E402
     DISTANCE_THRESHOLD_METRES,
@@ -363,7 +364,8 @@ def gate_tile_confusion(
         Dict recording both confusion matrices and whether they agree.
     """
     fast = tile_confusion(set(gdf_det["source_tile"].dropna()), tile_order, populated)
-    slow = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    slow = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     keys = ("tp", "tn", "fp", "fn")
     agree = all(fast[k] == slow[k] for k in keys)
     return {

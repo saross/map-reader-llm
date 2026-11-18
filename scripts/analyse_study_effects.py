@@ -57,6 +57,10 @@ from scripts.lib_advanced_metrics import (
     print_effect_size_summary,
     print_tile_effect_size_summary,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 
 __version__ = "1.0.0"
 
@@ -226,7 +230,7 @@ def compare_conditions(
         gdf_bounds_b,
         gdf_ref,
         n_iterations=n_iterations,
-        random_seed=random_seed,
+        random_seed=random_seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     # Tile-level bootstrapped effect sizes (MCC, sensitivity, specificity)
@@ -237,7 +241,7 @@ def compare_conditions(
         gdf_bounds_b,
         gdf_ref,
         n_iterations=n_iterations,
-        random_seed=random_seed,
+        random_seed=random_seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
 
     results = {

@@ -33,6 +33,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 POOL = BASE_DIR / "outputs/h11/pv-diag-384/verified/flash-high-text-1of10"
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
@@ -60,7 +61,7 @@ def main() -> int:
             {"geometry": [Point(r["x"], r["y"]) for r in sel],
              "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
         return score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
-                                   compute_mcc=True)
+                                   compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
 
     print("\n=== 10-pass proposer (k-of-10) + n=1 carry-forward verifier ===",
           flush=True)

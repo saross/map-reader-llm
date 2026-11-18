@@ -35,6 +35,7 @@ import geopandas as gpd
 from shapely.geometry import Point
 
 from scripts.lib_advanced_metrics import bootstrap_effect_size_ci
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_consensus import load_shared_data
 
 logging.basicConfig(
@@ -309,7 +310,7 @@ def main() -> None:
             gdf_ref=gdf_ref,
             n_iterations=1000,
             random_seed=42,
-            return_p_values=True,
+            return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         f1d = effect.get("f1_difference", {})

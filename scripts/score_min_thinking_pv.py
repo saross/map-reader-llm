@@ -48,6 +48,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 VERIFIED = BASE_DIR / "outputs" / "h11" / "pv-diag-384" / "verified"
 CONSENSUS = BASE_DIR / "outputs" / "h11" / "pv-diag-384" / "consensus"
@@ -107,7 +108,7 @@ def sweep(label: str, table: list[dict], gdf_ref, gdf_bounds) -> dict:
                 {"geometry": [Point(r["x"], r["y"]) for r in sel],
                  "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
             res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
-                                      compute_mcc=True)
+                                      compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             if res["f1"] > bpk["f1"]:
                 bpk = {"f1": res["f1"], "mcc": res["mcc"], "pt": pt,
                        "cids": cids, "gdf": gdf}

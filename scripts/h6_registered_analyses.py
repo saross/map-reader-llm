@@ -77,6 +77,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from e45_bootstrap_pairings import micro_f1, paired_bootstrap  # noqa: E402
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from lib_cost import (  # noqa: E402
     load_rate_card,
     price_tokens,
@@ -597,7 +598,7 @@ def f1_at_20m(geojson: Path, gdf_ref: gpd.GeoDataFrame,
     gdf = gdf.to_crs(TARGET_CRS)
     gdf = assign_source_tiles(gdf, gdf_bounds)
     tile_metrics = compute_per_tile_tp_fp_fn(
-        gdf, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M)
+        gdf, gdf_ref, gdf_bounds, buffer_metres=BUFFER_M, tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     return micro_f1(float(tile_metrics["tp"].sum()),
                     float(tile_metrics["fp"].sum()),
                     float(tile_metrics["fn"].sum()))

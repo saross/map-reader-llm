@@ -94,6 +94,10 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
     score_detection_set,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from scripts.lib_cluster_origins import (  # noqa: E402
     cluster_votes_with_members,
     member_tiles,
@@ -251,7 +255,8 @@ def score(
         ``{"f1", "precision", "recall", "n_detections", "mcc"}`` with ``mcc``
         possibly ``None``.
     """
-    result = score_detection_set(gdf_det, gdf_ref, bounds, buffer_metres=BUFFER_M)
+    result = score_detection_set(gdf_det, gdf_ref, bounds, buffer_metres=BUFFER_M,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     return {
         "precision": result["precision"],
         "recall": result["recall"],
@@ -288,7 +293,8 @@ def single_pass_table(
             row = score(gdf, gdf_ref, bounds)
             # The tile confusion matrix is what makes an MCC readable at all —
             # without it a low MCC cannot be told apart from a degenerate one.
-            tile_class = calculate_tile_classification(gdf, gdf_ref, bounds)
+            tile_class = calculate_tile_classification(gdf, gdf_ref, bounds,
+                tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             row["tile_classification"] = {
                 k: tile_class[k] for k in
                 ("tp", "tn", "fp", "fn", "sensitivity", "specificity",
@@ -401,7 +407,8 @@ def build_per_tile(
         acc = {k: np.zeros(len(tile_order)) for k in ("tp", "fp", "fn")}
         for dets in cell_passes[cell]:
             gdf = pass_frame(dets, bounds)
-            tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, bounds, buffer_metres=BUFFER_M)
+            tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, bounds, buffer_metres=BUFFER_M,
+                tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
             tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
             for k in ("tp", "fp", "fn"):
                 acc[k] += tm[k].to_numpy(dtype=float)

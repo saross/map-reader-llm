@@ -109,7 +109,7 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
-    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
     compute_per_tile_tp_fp_fn,
 )
 from pairwise_permutation_test import assign_source_tiles  # noqa: E402
@@ -152,7 +152,7 @@ def consensus_per_tile(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
-    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
+    count_table_join: str = TILE_JOIN_LEGACY_COUNT_TABLE,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute a consensus cell's per-tile TP/FP/FN from one aggregated set.
 
@@ -169,8 +169,13 @@ def consensus_per_tile(
         gdf_ref: Ground-truth references (projected to TARGET_CRS).
         gdf_bounds: Evaluation tile boundaries (projected to TARGET_CRS).
         tile_order: Fixed list of tile_name values defining array positions.
-        count_table_join: The count-table join (Wave 1; ``"id"`` replays a
-            pre-Wave-1 result).
+        count_table_join: The count-table join. Defaults to the LEGACY
+            rule, so this script and its importers (``tier_verifier_matrix``,
+            ``permutation_opmax_vs_headline``, ``permute_flash35_pairs``,
+            ``build_pareto_leaderboard``) keep their historical behaviour
+            until Wave 2/3 migrates them deliberately
+            (``reports/tile-join-wave-1/consumer-dispositions.md``);
+            ``build_pareto_v2`` passes its rule explicitly.
 
     Returns:
         Tuple ``(tp, fp, fn)`` of float arrays, length ``len(tile_order)``.

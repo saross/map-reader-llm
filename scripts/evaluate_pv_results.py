@@ -54,6 +54,7 @@ from scripts.lib_advanced_metrics import (
     calculate_f1_internal,
     parse_tile_list,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 
 # Script version
 __version__ = "1.0.0"
@@ -358,7 +359,7 @@ def cmd_sweep(args: argparse.Namespace) -> int:
             gdf_det, gdf_ref, gdf_bounds,
             n_iterations=args.bootstrap,
             random_seed=args.seed,
-            buffer_metres=buffer_metres,
+            buffer_metres=buffer_metres, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         entry = {
@@ -557,7 +558,7 @@ def cmd_compare(args: argparse.Namespace) -> int:
                     gdf_ref=gdf_ref,
                     n_iterations=args.bootstrap,
                     random_seed=args.seed,
-                    return_p_values=True,
+                    return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
                 )
 
                 pairwise.append({

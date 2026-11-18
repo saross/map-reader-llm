@@ -153,8 +153,10 @@ def rescore_incumbent(
         result = score(clipped, gdf_ref, common_bounds) if buf == 20 else None
         if result is None:
             from scripts.lib_advanced_metrics import score_detection_set
+            from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
             raw = score_detection_set(
-                clipped, gdf_ref, common_bounds, buffer_metres=buf)
+                clipped, gdf_ref, common_bounds, buffer_metres=buf,
+                    tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             result = {
                 "precision": raw["precision"], "recall": raw["recall"],
                 "f1": raw["f1"], "n_detections": raw["n_detections"],

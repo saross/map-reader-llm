@@ -77,6 +77,7 @@ from lib_advanced_metrics import (  # noqa: E402
     aggregate_tile_metrics,
     compute_per_tile_tp_fp_fn,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from lib_permutation import label_permutation_sums  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -226,7 +227,8 @@ def build_count_matrices(
         frames = []
         for _run_n, gdf_det in runs:
             frames.append(compute_per_tile_tp_fp_fn(
-                gdf_det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_METRES))
+                gdf_det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_METRES,
+                    tile_join=TILE_JOIN_LEGACY_COUNT_TABLE))
         tm_by_cond[cond] = frames
 
         mats = np.zeros((len(frames), len(tile_names), 3), dtype=float)

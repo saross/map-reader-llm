@@ -40,6 +40,10 @@ from scripts.lib_advanced_metrics import (
     bootstrap_tile_classification_ci,
     load_data,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 
 # Paths
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -139,7 +143,7 @@ def evaluate_on_bounds(
     ci_results = bootstrap_ci(
         gdf_det_scoped, gdf_ref, gdf_bounds,
         n_iterations=1000,
-        random_seed=42,
+        random_seed=42, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     f1_ci = ci_results.get("f1", {})
@@ -164,12 +168,12 @@ def evaluate_on_bounds(
 
     # Tile-level classification
     tile_results = calculate_tile_classification(
-        gdf_det_scoped, gdf_ref, gdf_bounds,
+        gdf_det_scoped, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
     tile_ci = bootstrap_tile_classification_ci(
         gdf_det_scoped, gdf_ref, gdf_bounds,
         n_iterations=1000,
-        random_seed=42,
+        random_seed=42, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
 
     mcc = tile_results.get("mcc")

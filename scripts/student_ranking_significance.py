@@ -49,6 +49,7 @@ from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     permutation_test_float,
 )
@@ -90,7 +91,8 @@ def assign_source_tiles(det: gpd.GeoDataFrame,
 def per_tile(det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
              bounds: gpd.GeoDataFrame, radius: int) -> pd.DataFrame:
     """Per-tile counts on the zone's tile universe, gap tiles zeroed."""
-    counts = compute_per_tile_tp_fp_fn(det, ref, bounds, radius)
+    counts = compute_per_tile_tp_fp_fn(det, ref, bounds, radius,
+        tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     return counts.set_index("tile_name").reindex(
         bounds["tile_name"], fill_value=0)
 

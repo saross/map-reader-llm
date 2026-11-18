@@ -70,6 +70,7 @@ from scripts.grid_verifier_analysis import (  # noqa: E402
     verified_subset,
 )
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.lib_cluster_origins import union_on_origin  # noqa: E402
 from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
@@ -223,7 +224,8 @@ def load_stride_union_on_origin(
 def score_at(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
              bounds: gpd.GeoDataFrame, buffer_m: int) -> dict[str, Any]:
     """Score one set at an arbitrary buffer, preserving the E81 MCC contract."""
-    raw = score_detection_set(gdf, gdf_ref, bounds, buffer_metres=buffer_m)
+    raw = score_detection_set(gdf, gdf_ref, bounds, buffer_metres=buffer_m,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     return {
         "precision": raw["precision"], "recall": raw["recall"], "f1": raw["f1"],
         "n_detections": raw["n_detections"],

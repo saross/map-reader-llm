@@ -119,6 +119,7 @@ from lib_advanced_metrics import (  # noqa: E402
     aggregate_tile_metrics,
     compute_per_tile_tp_fp_fn,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -177,6 +178,7 @@ def bootstrap_ci_percentile(
     rng = np.random.default_rng(random_seed)
     tile_metrics = compute_per_tile_tp_fp_fn(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     precision_scores: list[float] = []

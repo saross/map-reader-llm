@@ -83,6 +83,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     match_detections_to_references,
     scope_references_to_tiles,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -160,6 +161,7 @@ def build_per_tile(
             gdf_det = gpd.read_file(det_path)
             tm = compute_per_tile_tp_fp_fn(
                 gdf_det, gdf_ref, bounds, buffer_metres=BUFFER_M,
+                    tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
             )
             tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
             for k in ("tp", "fp", "fn"):

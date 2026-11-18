@@ -75,6 +75,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 PV = BASE_DIR / "outputs" / "h11" / "pv-diag-384"
 CROPS = PV / "crops"
@@ -416,7 +417,8 @@ def sweep_cell(cell: dict, table: list[dict], gdf_ref: gpd.GeoDataFrame,
             if not cids:
                 continue
             res = score_detection_set(gdf_for(cids), gdf_ref, gdf_bounds,
-                                      buffer_metres=20, compute_mcc=True)
+                                      buffer_metres=20, compute_mcc=True,
+                                          tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             if res["f1"] > bpk["f1"]:
                 bpk = {"f1": res["f1"], "mcc": res["mcc"],
                        "precision": res["precision"], "recall": res["recall"],

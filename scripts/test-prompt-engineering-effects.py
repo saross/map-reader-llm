@@ -33,6 +33,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from lib_detection_paths import PASS_GLOBS
 
 logging.basicConfig(
@@ -70,9 +71,11 @@ def run_permutation_test(
     # Compute per-tile metrics for each condition
     tiles_a = compute_per_tile_tp_fp_fn(
         gdf_a, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     tiles_b = compute_per_tile_tp_fp_fn(
         gdf_b, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     # Align on common tiles

@@ -46,6 +46,7 @@ from scripts.lib_advanced_metrics import (
     calculate_f1_internal,
     load_data,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_detection_paths import PASS_GLOBS
 from scripts.lib_permutation import bh_adjust
 
@@ -106,7 +107,7 @@ def evaluate_condition(
         gdf_det, gdf_ref, gdf_bounds,
         n_iterations=BOOTSTRAP_ITERATIONS,
         random_seed=RANDOM_SEED,
-        buffer_metres=buffer_metres,
+        buffer_metres=buffer_metres, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     return {
@@ -157,7 +158,7 @@ def evaluate_multi_run_condition(
         run_gdfs[0], gdf_ref, gdf_bounds,
         n_iterations=BOOTSTRAP_ITERATIONS,
         random_seed=RANDOM_SEED,
-        buffer_metres=buffer_metres,
+        buffer_metres=buffer_metres, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     return {
@@ -238,7 +239,7 @@ def pairwise_effect_sizes(
             n_iterations=BOOTSTRAP_ITERATIONS,
             random_seed=RANDOM_SEED,
             buffer_metres=buffer_metres,
-            return_p_values=True,
+            return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         f1_diff = effect.get("f1_difference", {})

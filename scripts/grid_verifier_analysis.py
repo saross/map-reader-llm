@@ -140,6 +140,7 @@ from scripts.grid_analysis import (  # noqa: E402
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_cluster_origins import ORIGIN_COLUMN, union_on_origin  # noqa: E402
 from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.materialise_grid_unions import EXPECTED  # noqa: E402
@@ -439,7 +440,8 @@ def per_tile_counts(
         ``{"tp", "fp", "fn"}`` float arrays aligned with the bounds order.
     """
     tile_order = list(bounds["tile_name"])
-    tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, bounds, buffer_metres=BUFFER_M)
+    tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, bounds, buffer_metres=BUFFER_M,
+        tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
     return {k: tm[k].to_numpy(dtype=float) for k in ("tp", "fp", "fn")}
 

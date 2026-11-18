@@ -26,13 +26,16 @@ Usage:
 
     python scripts/paired_permutation_corrected_55maps.py \\
         --label-a t0.7 \\
-        --detections-a outputs/55maps-text-high-generalisation/verified/verified_detections.geojson \\
+        --detections-a \\
+        outputs/55maps-text-high-generalisation/verified/verified_detections.geojson \\
         --review-yesterday-a /tmp/empty-review-yesterday.csv \\
         --review-today-a results/55maps-text-high-generalisation/human-review-multi-buffer.csv \\
         --label-b t0.3 \\
-        --detections-b outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson \\
+        --detections-b \\
+        outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson \\
         --review-yesterday-b /tmp/empty-review-yesterday.csv \\
-        --review-today-b results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv \\
+        --review-today-b \\
+        results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv \\
         --output-dir results/55maps-pairwise-permutation-v2/paired-t0.7-vs-t0.3 \\
         --buffers 20 25 30 35 40 45 50 75 100 125
 
@@ -73,6 +76,7 @@ from compute_corrected_f1_multi_buffer import (  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 
 __version__ = "1.0.0"
 
@@ -211,6 +215,7 @@ def get_per_tile_counts(
     """
     pt = compute_per_tile_tp_fp_fn(
         gdf_det, gdf_ext_gt, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     tiles = gdf_bounds["tile_name"].unique()
     indexed = pt.set_index("tile_name")

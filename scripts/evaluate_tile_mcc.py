@@ -65,6 +65,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_tile_classification_ci,
     calculate_tile_classification,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,
@@ -279,14 +280,14 @@ def evaluate_mcc(
     """
     # Point estimate
     tile_class = calculate_tile_classification(
-        gdf_det, gdf_ref, gdf_bounds,
+        gdf_det, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
 
     # Bootstrap CIs
     tile_ci = bootstrap_tile_classification_ci(
         gdf_det, gdf_ref, gdf_bounds,
         n_iterations=n_bootstrap,
-        random_seed=seed,
+        random_seed=seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
 
     result = {

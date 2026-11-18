@@ -30,6 +30,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib_advanced_metrics import (
     bootstrap_ci,
 )
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from evaluate_tile_mcc import (
     calculate_tile_classification,
     bootstrap_tile_classification_ci,
@@ -287,7 +291,7 @@ def main() -> None:
                     gdf_bounds,
                     buffer_metres=buffer_m,
                     n_iterations=BOOTSTRAP,
-                    random_seed=SEED,
+                    random_seed=SEED, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
                 )
 
                 row = {
@@ -331,12 +335,12 @@ def main() -> None:
 
             # MCC at primary buffer (20m) — tile-level
             tile_class = calculate_tile_classification(
-                detections, gdf_ref, gdf_bounds,
+                detections, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
             )
             tile_ci = bootstrap_tile_classification_ci(
                 detections, gdf_ref, gdf_bounds,
                 n_iterations=BOOTSTRAP,
-                random_seed=SEED,
+                random_seed=SEED, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
             )
 
             # Attach MCC to the 20m row

@@ -22,13 +22,13 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
-import numpy as np
 from shapely.geometry import MultiPoint, Point
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from scripts.lib_advanced_metrics import bootstrap_ci, calculate_f1_internal
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.pairwise_permutation_test import run_permutation_test
 
 TARGET_CRS = "EPSG:32635"
@@ -99,7 +99,10 @@ def main() -> int:
     # Greedy baseline: optimum found previously at (vote=6, prob=0.15)
     print("\nLoading greedy baseline at optimum (vote=6, prob=0.15)...")
     greedy = load_candidates_with_probs(
-        BASE_DIR / "outputs" / "h10" / "verifier-crops" / "pool_160_hp4hn4" / "candidate_manifest.json",
+        (
+            BASE_DIR / "outputs" / "h10" / "verifier-crops" / "pool_160_hp4hn4" /
+            "candidate_manifest.json"
+        ),
         BASE_DIR / "outputs" / "h10" / "verified" / "pool_160_hp4hn4" / "probabilities.json",
     )
     greedy_best = filter_at_threshold(greedy, vote_t=6, prob_t=0.15)
@@ -108,8 +111,14 @@ def main() -> int:
     # WBF Variant C: optimum found previously at (vote=7, prob=0.15)
     print("\nLoading WBF Variant C at optimum (vote=7, prob=0.15)...")
     wbf = load_candidates_with_probs(
-        BASE_DIR / "outputs" / "h10" / "wbf" / "pool_160_hp4hn4_variant_c" / "crops" / "candidate_manifest.json",
-        BASE_DIR / "outputs" / "h10" / "wbf" / "pool_160_hp4hn4_variant_c" / "verified" / "probabilities.json",
+        (
+            BASE_DIR / "outputs" / "h10" / "wbf" / "pool_160_hp4hn4_variant_c" / "crops" /
+            "candidate_manifest.json"
+        ),
+        (
+            BASE_DIR / "outputs" / "h10" / "wbf" / "pool_160_hp4hn4_variant_c" / "verified" /
+            "probabilities.json"
+        ),
     )
     wbf_best = filter_at_threshold(wbf, vote_t=7, prob_t=0.15)
     print(f"  {len(wbf)} total candidates -> {len(wbf_best)} at optimum")
@@ -130,6 +139,7 @@ def main() -> int:
     greedy_ci = bootstrap_ci(
         greedy_best, gt, bounds,
         n_iterations=1000, random_seed=42, buffer_metres=20,
+            count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     f1_lo, f1_hi = _ci_tuple(greedy_ci, "f1")
     p_lo, p_hi = _ci_tuple(greedy_ci, "precision")
@@ -142,6 +152,7 @@ def main() -> int:
     wbf_ci = bootstrap_ci(
         wbf_best, gt, bounds,
         n_iterations=1000, random_seed=42, buffer_metres=20,
+            count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     f1_lo_w, f1_hi_w = _ci_tuple(wbf_ci, "f1")
     p_lo_w, p_hi_w = _ci_tuple(wbf_ci, "precision")

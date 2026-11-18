@@ -50,6 +50,7 @@ from lib_advanced_metrics import (
     bootstrap_multi_run_effect_size_ci,
     calculate_f1_internal,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from lib_detection_paths import find_pass_geojsons
 from lib_permutation import bh_adjust
 
@@ -362,7 +363,7 @@ def analyse_phase_results(
             gdf_ref=gdf_ref,
             gdf_bounds=gdf_bounds_common,
             n_iterations=n_bootstrap,
-            random_seed=random_seed,
+            random_seed=random_seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         per_condition_metrics[condition] = {
@@ -408,7 +409,7 @@ def analyse_phase_results(
             gdf_bounds=gdf_bounds_common,
             n_iterations=n_bootstrap,
             random_seed=random_seed,
-            return_p_values=True,
+            return_p_values=True, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         pairwise_comparisons.append({

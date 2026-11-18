@@ -91,6 +91,7 @@ sys.path.insert(0, str(BASE_DIR / "scripts"))
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from pairwise_permutation_test import assign_source_tiles  # noqa: E402
 
 # --- Project-standard constants (kept identical to the canonical pipeline) ---
@@ -294,7 +295,8 @@ def pass_averaged_per_tile(
         gdf_det = gdf_det.to_crs(TARGET_CRS)
         gdf_det = assign_source_tiles(gdf_det, gdf_bounds)
         tile_metrics = compute_per_tile_tp_fp_fn(
-            gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M,
+                tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
         # Align this pass's per-tile counts into the fixed tile order.
         for _, row in tile_metrics.iterrows():

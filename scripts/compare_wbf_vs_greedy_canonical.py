@@ -27,18 +27,20 @@ from itertools import product
 from pathlib import Path
 
 import geopandas as gpd
-import numpy as np
-from shapely.geometry import MultiPoint, Point, shape
+from shapely.geometry import MultiPoint, Point
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from scripts.lib_advanced_metrics import bootstrap_ci, calculate_f1_internal
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.pairwise_permutation_test import run_permutation_test
 
 TARGET_CRS = "EPSG:32635"
 GT_PATH = BASE_DIR / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
-PRODUCTION_BOUNDS = BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "full_evaluation_bounds.geojson"
+PRODUCTION_BOUNDS = (
+    BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "full_evaluation_bounds.geojson"
+)
 
 #: Full sweep grid — matches the original production run sweeps
 VOTE_THRESHOLDS = [1, 2, 3, 4, 5]
@@ -213,7 +215,8 @@ def main() -> int:
 
     # Print optima table
     print("\n=== Optima per buffer ===")
-    print(f"{'Method':<12} {'Buf':<5} {'vote_t':<7} {'prob_t':<7} {'n':<6} {'P':<7} {'R':<7} {'F1':<7}")
+    print(f"{'Method':<12} {'Buf':<5} {'vote_t':<7} {'prob_t':<7} "
+          f"{'n':<6} {'P':<7} {'R':<7} {'F1':<7}")
     for label, opt in [
         ("greedy-v1", opt_greedy_v1),
         ("greedy-v2", opt_greedy_v2),
@@ -252,10 +255,12 @@ def main() -> int:
             g_ci = bootstrap_ci(
                 greedy_best, gt, bounds,
                 n_iterations=1000, random_seed=42, buffer_metres=bm,
+                    count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
             )
             w_ci = bootstrap_ci(
                 wbf_best, gt, bounds,
                 n_iterations=1000, random_seed=42, buffer_metres=bm,
+                    count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
             )
             print(f"  greedy F1 CI: [{g_ci['f1']['ci_lower']:.4f}, "
                   f"{g_ci['f1']['ci_upper']:.4f}]")

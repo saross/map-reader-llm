@@ -125,6 +125,10 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from scripts.lib_verify_dirs import (  # noqa: E402
     POLICY_FIXED,
     resolve_verify_dir,
@@ -473,7 +477,8 @@ def per_tile_arrays(
     Returns:
         Three float arrays of length ``len(tile_index)``.
     """
-    tm = compute_per_tile_tp_fp_fn(det, ref, bounds, buffer_metres=BUFFER_M)
+    tm = compute_per_tile_tp_fp_fn(det, ref, bounds, buffer_metres=BUFFER_M,
+        tile_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     n = len(tile_index)
     tp, fp, fn = np.zeros(n), np.zeros(n), np.zeros(n)
     for _, row in tm.iterrows():
@@ -507,7 +512,7 @@ def tile_vectors(
     """
     tiles = list(bounds["tile_name"].unique())
     index = {t: i for i, t in enumerate(tiles)}
-    cls = calculate_tile_classification(det, ref, bounds)
+    cls = calculate_tile_classification(det, ref, bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     if "error" in cls:
         raise ValueError(f"tile vectors refused: {cls['error']}")
     truth = np.zeros(len(tiles), dtype=bool)

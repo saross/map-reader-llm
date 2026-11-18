@@ -37,11 +37,14 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 VERIFIED = BASE_DIR / "outputs/h11/pv-diag-384/verified"
 UNION = BASE_DIR / "outputs/h11/pv-diag-384/consensus/pro-high-text-1of5.geojson"
 POOLS = {
-    "Pro-prop + Flash-vf (n=1)": VERIFIED / "pro-high-text-1of5-flash-minimal-verifier/probabilities.json",
+    "Pro-prop + Flash-vf (n=1)": (
+        VERIFIED / "pro-high-text-1of5-flash-minimal-verifier/probabilities.json"
+    ),
     "Pro-prop + Pro-vf (n=1)": VERIFIED / "pro-high-text-1of5-pro-verifier/probabilities.json",
 }
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
@@ -85,7 +88,7 @@ def main() -> int:
             {"geometry": [Point(r["x"], r["y"]) for r in sel],
              "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
         return score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
-                                   compute_mcc=True)
+                                   compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
 
     for label, ppath in POOLS.items():
         table = build_table(ppath)

@@ -78,6 +78,7 @@ from shapely.geometry import mapping, shape
 sys.path.insert(0, str(Path(__file__).parent))
 from analyse_phase2_results import load_condition_results
 from lib_advanced_metrics import bootstrap_ci, calculate_f1_internal, parse_tile_list
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from merge_passes import (
     apply_threshold,
     cluster_across_passes,
@@ -422,7 +423,7 @@ def evaluate_condition_replication(
             gdf_consensus, gdf_ref, gdf_bounds,
             n_iterations=n_bootstrap,
             random_seed=random_seed,
-            buffer_metres=buffer_metres,
+            buffer_metres=buffer_metres, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         results.append({

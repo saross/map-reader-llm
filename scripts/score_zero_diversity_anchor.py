@@ -53,6 +53,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 PV_DIAG = BASE_DIR / "outputs" / "h11" / "pv-diag-384"
 MANIFEST = PV_DIAG / "crops" / "text-baseline" / "candidate_manifest.json"
@@ -123,7 +124,7 @@ def main() -> int:
             continue
         gdf = gdf_of(cids)
         res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
-                                  compute_mcc=True)
+                                  compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
         mcc = f"{res['mcc']:.3f}" if res.get("mcc") is not None else "NA"
         print(f"  pt{pt}: F1={res['f1']:.4f}  MCC={mcc}  "
               f"P={res['precision']:.4f}  R={res['recall']:.4f}  "

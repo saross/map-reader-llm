@@ -31,6 +31,7 @@ from scripts.lib_advanced_metrics import (
     load_data,
     scope_references_to_tiles,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 
 def _normalise_source_tile(gdf: gpd.GeoDataFrame) -> None:
@@ -163,10 +164,10 @@ def validate_file(
 
     # 5. Calculate tile-level MCC (preregistration Section 4.2)
     tile_results = calculate_tile_classification(
-        gdf_verified, gdf_ref, gdf_bounds,
+        gdf_verified, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
     tile_ci = bootstrap_tile_classification_ci(
-        gdf_verified, gdf_ref, gdf_bounds,
+        gdf_verified, gdf_ref, gdf_bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
     )
 
     print("\n=== Tile-Level Classification (MCC) ===")

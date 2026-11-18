@@ -98,6 +98,7 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_assessed_area import COMMON_AREA_CLIP_NAME  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     TARGET_CRS,
@@ -237,7 +238,8 @@ def per_tile_table(
         gdf_det = gdf_det.set_crs("EPSG:4326")
     gdf_det = gdf_det.to_crs(TARGET_CRS)
     table = compute_per_tile_tp_fp_fn(
-        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     table = table.set_index("tile_name")
     order = list(gdf_bounds["tile_name"])

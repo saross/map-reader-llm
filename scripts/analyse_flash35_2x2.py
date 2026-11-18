@@ -42,6 +42,7 @@ from scripts.analyse_verifier_robustness import (  # noqa: E402
 )
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 T2 = BASE_DIR / "outputs" / "flash35-pv-2x2"
 PVD = BASE_DIR / "outputs" / "h11" / "pv-diag-384"
@@ -134,7 +135,7 @@ def sweep(table, ks, vote_field, gdf_ref, gdf_bounds, smoke=False,
                 {"geometry": [Point(r["x"], r["y"]) for r in sel],
                  "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
             res = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
-                                      compute_mcc=True)
+                                      compute_mcc=True, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             if res["f1"] > bk["f1"]:
                 bk = {"f1": res["f1"], "mcc": res["mcc"], "pt": pt, "n": len(sel)}
         per_k[k] = {k2: (round(v, 4) if isinstance(v, float) else v)

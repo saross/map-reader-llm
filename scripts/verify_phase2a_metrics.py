@@ -35,6 +35,7 @@ from scripts.lib_advanced_metrics import (
     get_map_name,
     match_detections_to_references,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_detection_paths import find_pass_geojsons
 
 # Script version
@@ -348,6 +349,7 @@ def per_tile_decomposition(
         gdf_det = load_detection_gdf(det_path)
         tile_metrics = compute_per_tile_tp_fp_fn(
             gdf_det, gdf_ref, gdf_bounds, buffer_metres=BUFFER_METRES,
+                tile_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
         results[condition] = tile_metrics
 
