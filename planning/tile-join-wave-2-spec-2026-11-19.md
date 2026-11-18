@@ -1,9 +1,7 @@
 # Tile-join Wave 2 — specification (the corpus re-score)
 
-> **Last revised**: 2026-11-19 (revised after Astra's round-3 review:
-> fresh drift checks before `already-done`, published refusals done,
-> superseded anchors; the 24 native-adapter files re-scored through their
-> own engine). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (Astra's technical review closed at
+> `16354b73a`; its implementation notes recorded in § 5.2). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), drafting for session S169 on amd-tower. Every path,
@@ -766,6 +764,34 @@ textual guard of G2 item 1 compares the committed and new
 that do not round-trip (§ 2 item 3) are covered by the adapter-replay
 check rather than by `json.dumps`. The A10 capability check stays in
 force for these files (W2.1).
+
+**Implementation notes from Astra's closing review** (`16354b73a`;
+`~/agent-mail/codex/outbox/claude/20261118T141430Z-astra-wave2-spec-accepted.md`;
+evidence `~/agent-mail/codex/reviews/native-writer-audit-2026-11-18/`
+`native-input-git-anchors.json` and `native-dedup-default-anchors.json`).
+These bind the native-schema trace; they do not change the design.
+
+- **`dedup_tolerance_m` is recorded explicitly** in each native file's
+  effective recipe. The engine accepts it
+  (`scripts/compute_corrected_f1_multi_buffer.py:1296` at `f6f5ffe54`), the
+  native summaries' metadata omit it, and every recorded source revision
+  has a 5 m default; a default does not prove that no override was used, so
+  the legacy replay and the native reference-count checks must establish
+  the value actually selected.
+- **Native refusal propagation is handled deliberately.** At `f6f5ffe54`,
+  `compute_mcc_block` (`:683–705`) reads metric fields with `.get` from a
+  library refusal and discards its reason and diagnostics, and
+  `_result_to_dict` (from `:1025`) omits the tile block when both MCC and TP
+  are absent. This predates the new joins. The migration adapter carries
+  the refusal reason and diagnostics through, and a missing block is never
+  read as "MCC not requested". A test drives a refusal from the engine
+  through the adapter.
+- **An older identity is verified against its own published bundle**, not
+  a later superseding one, if older-entry verification is exposed.
+- Astra checked the native inputs against Git trees: of 112 per-file input
+  references, 100 have the same blob at the recorded source-code commit and
+  at the reviewed head, and 12 were untracked at the source commit but are
+  tracked now. This corroborates, but does not prove, clean original inputs.
 
 ### 5.3 The 13 files whose detection input is absent on zbook
 
@@ -1540,7 +1566,20 @@ below was checked against `6d2729b96` and, for the writers, against
 | **Superseded computations have their own anchor source** | Yes: forced recomputation read the merge base and the first history entry, while `--supersede` anchors to the current bundle | Adopted (§ 5.6, W2.1). Each history entry records `original_bundle[]` (commit, blob, SHA-256). Verification replays the entry being verified (the latest by default), read by blob, and never assumes the merge base. A supersession lifecycle test is added |
 | **The 24 alternative-writer files are native-adapter views** | Yes. Every file's `_metadata` names its adapter (`adapter` or `adapted_by`) and its source `summary.json`: 8 `adapt_track2_evals_for_manifest.py`, 8 `register_standardised_gt_conditions.py`, 3 `register_gemini37_author.py`, 5 `register_pass1_adapt.py`. The evidence JSON shows the point and F1-interval mappings and the 50 m confusion mapping equal for all 24, percentile intervals throughout, and reference counts varying by buffer in 16 (IM-k3: 4,746 at 5 m, 5,160 at 50 m, 5,508 at 150 m). The adapter source anchors were read at `f6f5ffe54` | Adopted (§ 2 item 5, § 3.1, § 5.2). A new disposition, `rescore-native` (24). Native engine and recipe replay, then the adapter, preserving the percentile estimator and the reference construction; a key match never selects the scorer. Native inputs, review tables, mode and vintage, seeds, and buffers are in the effective recipe and identity. The native outputs and the adapted view are one bundle, with the native summary staying the current source. Migration adapters carry both rules and the refusal state. The A10 capability check stays, and the percentile method is intentional. Scope: `rescore-in-place` 2,469, `rescore-native` 24 (totals unchanged). Cost: the 24 stay in the 55-map total at the scorer's rate as a 1.77 CPU-h placeholder; the engine is untimed (§ 7) |
 
+**Closing review** (`16354b73a`;
+`~/agent-mail/codex/outbox/claude/20261118T141430Z-astra-wave2-spec-accepted.md`):
+the technical specification review is **closed** at this revision. That
+accepts the design, not an implementation, G1 or G2 evidence, a scientific
+ruling, or launch. Its three implementation notes are recorded in § 5.2.
+
 ## Changelog
+
+### 2026-11-19 — Astra's closing review recorded (S169, amd-tower)
+
+Trigger: Astra closed the technical review at `16354b73a`. Its three
+implementation notes (`dedup_tolerance_m`, native refusal propagation,
+older-entry verification) and the input-anchor corroboration are recorded
+in § 5.2; § 13.3 notes the closure. No design element changed.
 
 ### 2026-11-19 — Revised after Astra's round-3 review (S169, amd-tower)
 
