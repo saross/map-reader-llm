@@ -146,10 +146,14 @@ def test_evals_path_threads_buffer(monkeypatch, tmp_path):
     monkeypatch.setattr(sai, "PROJECT_ROOT", tmp_path)
 
     seen_buffers: list[int] = []
+    seen_joins: list[str] = []
 
+    # Wave 1: the builder now threads the count-table join to the per-tile
+    # reproduction, so the stub accepts it (and the test checks it arrives).
     def fake_cell_per_tile(cli_args, gdf_ref, gdf_bounds, tile_order,
-                           buffer_metres=20):
+                           buffer_metres=20, count_table_join=None):
         seen_buffers.append(buffer_metres)
+        seen_joins.append(count_table_join)
         n = len(tile_order)
         return (np.ones(n), np.zeros(n), np.zeros(n), 1)
 
@@ -160,6 +164,7 @@ def test_evals_path_threads_buffer(monkeypatch, tmp_path):
         str(tmp_path / "evals" / "*" / "evaluation.json"), buffer_metres=50)
 
     assert seen_buffers == [50, 50]
+    assert seen_joins == ["sheet-primary", "sheet-primary"]
     assert [s["eval_f1"] for s in specs] == [0.5, 0.5]
     assert scope == {"bounds": bounds_rel, "ground_truth": gt_rel}
     assert counts.shape == (2, 2, 3)
@@ -178,7 +183,7 @@ def _run_main(monkeypatch, tmp_path, extra_args: list[str]) -> dict:
     seen: dict[str, object] = {}
 
     def fake_board(analysis_id, gt_override, bounds_override, buffer_metres,
-                   analyses_path=None, conditions_path=None):
+                   analyses_path=None, conditions_path=None, count_table_join=None):
         seen.update(analysis_id=analysis_id, gt_override=gt_override,
                     bounds_override=bounds_override, buffer_metres=buffer_metres,
                     analyses_path=analyses_path, conditions_path=conditions_path)

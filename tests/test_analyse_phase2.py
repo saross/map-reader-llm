@@ -417,7 +417,7 @@ def _make_synthetic_runs(
     rng = np.random.RandomState(seed)
 
     # Create tile names and bounds
-    tile_names = [f"K-35-052-4_32635_tile_{i:03d}.png" for i in range(n_tiles)]
+    tile_names = [f"K-35-052-4_32635_x{i * 100}_y0.png" for i in range(n_tiles)]
 
     bounds_rows = []
     for i, tname in enumerate(tile_names):

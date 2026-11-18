@@ -276,8 +276,11 @@ def test_gate_reference_comes_from_the_tiering_not_the_inventory() -> None:
     re-verified rows moved the board-frame rung (`f53f6e97c`); the pins were
     0.7834 (MCC) and 0.8605 (F1), and the grid-common reading was 0.7894.
     """
+    # Wave 1: the committed tiering was built under the legacy ``id`` join,
+    # which the MCC gate must now name (the default is ``sheet-contains``).
     ranking = mcb.committed_ranking(
-        mcb.K_LADDER_DIR / "mcc-test/tiering/gs-stride-a/tiering_20m.json")
+        mcb.K_LADDER_DIR / "mcc-test/tiering/gs-stride-a/tiering_20m.json",
+        "id")
     k1 = ranking["g384-ov128-ladder-n1-verified-p0.15-k1"]
     assert k1["mcc"] == pytest.approx(0.7948, abs=1e-4)  # was 0.7834
     assert k1["f1"] == pytest.approx(0.8665, abs=1e-4)  # was 0.8605
@@ -357,7 +360,7 @@ def test_label_to_k_covers_every_committed_ranking_label() -> None:
     k_of = mcb.label_to_k()
     registry = mcb.ladder_registry()
     for entry in registry:
-        labels = list(mcb.committed_ranking(entry["tiering"]))
+        labels = list(mcb.committed_ranking(entry["tiering"], "id"))
         assert labels, entry["slug"]
         for label in labels:
             assert label in k_of, f"{entry['slug']}: no K for {label}"
@@ -420,11 +423,14 @@ def _replay_committed_artefacts(calls: list[tuple[str, str]]) -> Any:
         A function with :func:`mcb.run_mcb`'s signature.
     """
     def runner(entry: dict[str, Any], metric: str, out_dir: Path,
-               bootstrap: int,
-               tile_join: str = mcb.TILE_JOIN_DEFAULT) -> tuple[Path, dict[str, Any]]:
+               bootstrap: int, tile_join: str,
+               count_table_join: str) -> tuple[Path, dict[str, Any]]:
         calls.append((entry["slug"], metric))
-        name = mcb.artefact_name(entry["analysis_id"], metric, entry["buffer_m"],
-                                 tile_join)
+        # The committed artefacts were built under the legacy rules, which a
+        # replay must request explicitly (Wave 1); they carry the plain name
+        # those rules had when they were the defaults.
+        assert (tile_join, count_table_join) == ("id", "id")
+        name = mcb.artefact_name(entry["analysis_id"], metric, entry["buffer_m"])
         path = mcb.BASE_DIR / COMMITTED_MCB / entry["slug"] / name
         result = json.loads(path.read_text(encoding="utf-8"))
         assert result["board"] == entry["analysis_id"]
@@ -460,7 +466,8 @@ def test_default_path_reproduces_the_committed_summary(
     calls: list[tuple[str, str]] = []
     monkeypatch.setattr(mcb, "run_mcb", _replay_committed_artefacts(calls))
     monkeypatch.setattr(sys, "argv",
-                        ["k_ladder_mcb.py", "--output-dir", str(tmp_path)])
+                        ["k_ladder_mcb.py", "--output-dir", str(tmp_path),
+                         "--tile-join", "id", "--count-table-join", "id"])
     assert mcb.main() == 0
     assert len(calls) == 44, "22 ladders, two metrics each"
 
@@ -469,6 +476,9 @@ def test_default_path_reproduces_the_committed_summary(
     committed = json.loads((committed_dir / "summary.json").read_text(encoding="utf-8"))
     for payload in (produced, committed):
         del payload["generated_at_utc"]
+    # Wave 1 adds the provenance block; it must name the rules replayed.
+    joins = produced.pop("tile_joins")
+    assert (joins["classification"], joins["count_table"]) == ("id", "id")
     assert produced == committed
     assert ((tmp_path / "table.md").read_text(encoding="utf-8")
             == (committed_dir / "table.md").read_text(encoding="utf-8"))

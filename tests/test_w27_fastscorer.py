@@ -90,7 +90,11 @@ def _dets(rows: list[tuple], **extra: list) -> gpd.GeoDataFrame:
 
 
 def _library(dets, refs, bounds, buffer) -> dict:
-    tm = lam.compute_per_tile_tp_fp_fn(dets, refs, bounds, buffer_metres=buffer)
+    # The fast scorer restates the legacy ``id`` count table, so the library
+    # is asked under that rule, named explicitly (Wave 1 retired the implicit
+    # default, which is now ``sheet-primary``).
+    tm = lam.compute_per_tile_tp_fp_fn(dets, refs, bounds, buffer_metres=buffer,
+                                       tile_join="id")
     return {r.tile_name: (int(r.tp), int(r.fp), int(r.fn)) for r in tm.itertuples()}
 
 
@@ -151,7 +155,7 @@ def test_a_scored_row_naming_no_frame_tile_is_refused(lib, bounds, refs):
         origin_source_tile=[None, "A_x100_y0.png"],  # attributed to A, booked nowhere
     )
     with pytest.raises(ValueError):
-        lam.compute_per_tile_tp_fp_fn(d, refs, bounds, buffer_metres=20)
+        lam.compute_per_tile_tp_fp_fn(d, refs, bounds, buffer_metres=20, tile_join="id")
     scorer = lib.FastScorer(refs, bounds, 20)
     with pytest.raises(ValueError):
         scorer.per_tile(scorer.prepare(d))

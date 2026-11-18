@@ -30,7 +30,7 @@ from scripts.lib_advanced_metrics import (
     TILE_JOIN_ID,
     TILE_JOIN_REASON_DETECTION_SHORTFALL,
     TILE_JOIN_REASON_NO_SOURCE_TILE,
-    TILE_JOINS,
+    TILE_JOINS_CLASSIFICATION,
     assign_points_to_tiles,
     calculate_tile_classification,
     check_tile_join_invariant,
@@ -171,16 +171,22 @@ def test_offset_grids_geometric_join_gives_the_right_confusion():
 
 
 def test_string_join_reproduces_geometry_when_vocabularies_agree():
-    """On a matched, non-overlapping frame all three joins coincide."""
-    frame = _grid(4, offset=0.0, prefix="frame")
+    """On a matched, non-overlapping frame every classification join coincides.
+
+    Wave 1: the joins are the classification joins (the count-table join
+    ``sheet-primary`` is not one), and the frame is one sheet, ``f``, whose
+    references record it, since ``sheet-contains`` reads each reference's
+    sheet.
+    """
+    frame = _grid(4, offset=0.0, prefix="f")
     coords = [(ORIGIN_X + 50, ORIGIN_Y + 50), (ORIGIN_X + 150, ORIGIN_Y + 50)]
     names = list(frame["tile_name"])[:2]
     dets = _points(coords, source_tiles=names)
-    refs = _points(coords)
+    refs = _points(coords, with_map=True)
 
     results = {
         join: calculate_tile_classification(dets, refs, frame, tile_join=join)
-        for join in TILE_JOINS
+        for join in TILE_JOINS_CLASSIFICATION
     }
     confusions = {
         join: (r["tp"], r["tn"], r["fp"], r["fn"])

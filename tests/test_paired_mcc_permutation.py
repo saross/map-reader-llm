@@ -71,8 +71,14 @@ N_TILES = N_MOUND_TILES + N_EMPTY_TILES
 # =============================================================================
 
 def _tile_name(index: int) -> str:
-    """Return the canonical fixture tile name for a tile index."""
-    return f"tile_{index:03d}"
+    """Return the canonical fixture tile name for a tile index.
+
+    In the pipeline's ``<sheet>_x<N>_y<N>`` vocabulary, so that ruling D50
+    can attribute every detection to the sheet ``FIX``: the sheet joins of
+    Wave 1 refuse an in-frame detection without an attributable sheet, which
+    the old ``tile_<n>`` names (a legacy-rule assumption) could not give.
+    """
+    return f"FIX_x{index * int(TILE_SIZE_M)}_y0.png"
 
 
 def _tile_centre(index: int) -> Point:
@@ -109,7 +115,7 @@ def gdf_ref() -> gpd.GeoDataFrame:
     fixes the row sums of every confusion table the tests build.
     """
     return gpd.GeoDataFrame(
-        {"mound_id": list(range(N_MOUND_TILES))},
+        {"mound_id": list(range(N_MOUND_TILES)), "Map": ["FIX"] * N_MOUND_TILES},
         geometry=[_tile_centre(i) for i in range(N_MOUND_TILES)],
         crs=TEST_CRS,
     )

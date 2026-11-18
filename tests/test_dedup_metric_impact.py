@@ -108,7 +108,10 @@ def test_tile_confusion_matches_calculate_tile_classification():
 
     order, populated = populated_tiles(refs, bounds)
     fast = tile_confusion(set(dets["source_tile"]), order, populated)
-    slow = calculate_tile_classification(dets, refs, bounds)
+    # ``tile_confusion`` restates the legacy name rule, so it is compared
+    # with the scorer under that rule, named explicitly (Wave 1 retired the
+    # implicit default).
+    slow = calculate_tile_classification(dets, refs, bounds, tile_join="id")
 
     for key in ("tp", "tn", "fp", "fn"):
         assert fast[key] == slow[key], key

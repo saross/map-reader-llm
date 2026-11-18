@@ -130,20 +130,36 @@ RECIPE: dict[str, Any] = {
 
 
 def test_recipe_replays_every_key_and_replaces_only_three() -> None:
+    """Every recorded key is replayed; the two joins are the requested ones.
+
+    Wave 1: both joins are always written explicitly, so a clipped cell never
+    inherits a scorer default. Requested as ``id``/``id`` here, the argument
+    list is the historical one plus ``--count-table-join id``.
+    """
     argv = kcc.recipe_argv(RECIPE, detections="OUT/a-d51clip.geojson",
-                           output_dir="OUT/cells/a-d51clip", label="a-d51clip")
+                           output_dir="OUT/cells/a-d51clip", label="a-d51clip",
+                           tile_join="id", count_table_join="id")
     assert argv == ["--detections", "OUT/a-d51clip.geojson",
                     "--buffers", "5", "20", "50",
                     "--ground-truth", RECIPE["ground_truth"], "--bounds", kcc.BOARD_BOUNDS,
                     "--bootstrap", "10000", "--seed", "42",
                     "--output-dir", "OUT/cells/a-d51clip", "--label", "a-d51clip",
-                    "--mcc", "--tile-join", "id", "--workers", "1"]
+                    "--mcc", "--tile-join", "id", "--count-table-join", "id",
+                    "--workers", "1"]
 
 
-def test_recipe_omits_a_tile_join_the_cell_did_not_record() -> None:
+def test_recipe_always_names_both_joins() -> None:
+    """A recipe that recorded no join still gets both, explicitly (Wave 1).
+
+    Before Wave 1 an unrecorded join was omitted, which meant "the scorer's
+    default" — then ``id``, now ``sheet-contains``. Omission would silently
+    change meaning, so the requested joins (defaults here) are always named.
+    """
     argv = kcc.recipe_argv({**RECIPE, "tile_join": None}, detections="d",
                            output_dir="o", label="l")
-    assert "--tile-join" not in argv
+    i = argv.index("--tile-join")
+    assert argv[i:i + 4] == ["--tile-join", "sheet-contains",
+                             "--count-table-join", "sheet-primary"]
 
 
 @pytest.mark.parametrize("change, message", [
@@ -358,7 +374,7 @@ def test_mcb_main_runs_the_registry_it_is_given(tmp_path: Path,
         seen.append(entry["slug"])
         raise RuntimeError("stopped")
 
-    monkeypatch.setattr(mcb, "committed_ranking", lambda _path: {})
+    monkeypatch.setattr(mcb, "committed_ranking", lambda *_a, **_k: {})
     monkeypatch.setattr(mcb, "run_mcb", capture)
     monkeypatch.setattr("sys.argv", ["k_ladder_mcb.py", "--registry",
                                      str(_registry_file(tmp_path)),

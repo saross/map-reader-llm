@@ -88,7 +88,10 @@ def test_tile_confusion_matches_the_engines_own_rule() -> None:
     """
     det, ref, bounds = _points([0, 1, 3], True), _points([0, 1, 2], False), _bounds()
     conf = fbs.tile_confusion(det, ref, bounds)
-    engine = calculate_tile_classification(det, ref, bounds)
+    # final_board_sweeps is pinned to the legacy rule until Wave 2/3
+    # migrates it (reports/tile-join-wave-1/consumer-dispositions.md), so the
+    # engine is asked under that rule, explicitly.
+    engine = calculate_tile_classification(det, ref, bounds, tile_join="id")
     assert "error" not in engine
     for key in ("tp", "tn", "fp", "fn"):
         assert conf[f"tile_{key}"] == engine[key]

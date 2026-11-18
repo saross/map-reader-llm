@@ -258,6 +258,9 @@ def _evaluate(
         label=GOLDEN_LABEL,
         compute_mcc=True,
         tile_join=TILE_JOIN_ID,
+        # Wave 1: the golden recipe's count table was always ``id`` (the
+        # pre-Wave-1 scorer took no count-table join); now it is named.
+        count_table_join=TILE_JOIN_ID,
     )
 
 
@@ -494,6 +497,10 @@ def test_sound_cell_reproduces_the_pre_change_golden(tmp_path):
     assert scope["rule"] == "origin-sheet-geometric"
     assert scope["n_in_scope"] == scope["n_detections"]
     assert scope["n_out_of_frame"] == 0
+    # Wave 1 adds the second: every buffer row records the count-table join
+    # its intervals were built under, here the legacy ``id`` of the golden.
+    for row in written["summary"]["buffers"]:
+        assert row.pop("count_table_join") == TILE_JOIN_ID
     assert written["summary"] == expected_summary
 
     assert (tmp_path / "evaluation.csv").read_text() == (

@@ -102,8 +102,10 @@ class TestBuildMetadataSchema:
         # requested method and a measured one added at write time.
         # 1.4 (2026-09-12, audit Finding 6) added
         # ``input_git_state.blob_hashes``, the content anchor binding an
-        # evaluation to the input bytes it scored.
-        assert meta["metadata_version"] == "1.4"
+        # evaluation to the input bytes it scored. 1.5 (2026-11-18, tile-join
+        # Wave 1) added ``tile_joins``: both rules always recorded.
+        assert meta["metadata_version"] == "1.5"
+        assert set(meta["tile_joins"]) == {"classification", "count_table", "rulings"}
 
     def test_script_path_is_relative(self) -> None:
         """Script path is the stable repo-relative location."""

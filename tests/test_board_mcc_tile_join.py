@@ -27,6 +27,16 @@ These tests pin the two halves of that option:
 Everything runs on synthetic frames in ``tmp_path``; no committed board
 artefact is read.
 
+**Revised for tile-join Wave 1 (2026-11-18, PI rulings D72 and D73).**
+``TILE_JOIN_DEFAULT`` is retired; the defaults are ``sheet-contains``
+(classification) and ``sheet-primary`` (count tables). Half 1 now pins the
+historical REPLAY: the explicit ``id``/``id`` call reproduces the committed
+record through the committed-record gate, exactly as the old default did.
+Half 2 pins the two-computation order: a join the record did not use is
+computed only after the record has been validated under its own join, and
+the committed MCC is no longer carried beside the new arrays (``mcc_join``
+is gone; ``cell["mcc"]`` is the requested join's).
+
 Author: Shawn Ross, Claude Code (Session 166). Licence: Apache 2.0
 """
 
@@ -43,8 +53,10 @@ from shapely.geometry import Point, box
 
 from scripts import era1_leaderboard_tiering as t
 from scripts import selection_aware_intervals as sai
+import scripts.lib_advanced_metrics as lam
 from scripts.lib_advanced_metrics import (
-    TILE_JOIN_DEFAULT,
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
     TILE_JOIN_GEOMETRIC_CONTAINS,
     TILE_JOIN_GEOMETRIC_PRIMARY,
     TILE_JOIN_ID,
@@ -189,54 +201,58 @@ def _load(tmp_path: Path, **kwargs) -> list[dict]:
 # 1. The default path is unchanged
 # --------------------------------------------------------------------------
 
-def test_the_default_join_is_the_published_id_join():
-    """The option's default is the library's default, which is ``id``."""
-    assert TILE_JOIN_DEFAULT == TILE_JOIN_ID
+def test_the_defaults_are_the_sheet_joins_and_the_old_one_is_retired():
+    """Wave 1: one default per purpose; the single default is gone (D73 (6))."""
+    assert TILE_JOIN_CLASSIFICATION_DEFAULT == "sheet-contains"
+    assert TILE_JOIN_COUNT_TABLE_DEFAULT == "sheet-primary"
+    assert not hasattr(lam, "TILE_JOIN_DEFAULT")
 
 
-def test_default_per_tile_classification_equals_the_explicit_id_call():
-    """Naming no join gives exactly the arrays the ``id`` join gives."""
+def test_default_per_tile_classification_is_sheet_contains():
+    """Naming no join gives the ``sheet-contains`` arrays; on this one-sheet
+    frame they equal the frame-wide containment ones."""
     frame, refs, dets = _frame(), _references(), _detections(DET_A)
     order = list(frame["tile_name"])
     default = t.cell_per_tile_classification(dets, refs, frame, order)
     explicit = t.cell_per_tile_classification(
-        dets, refs, frame, order, tile_join=TILE_JOIN_ID)
+        dets, refs, frame, order, tile_join="sheet-contains")
     for got, want in zip(default[:4], explicit[:4], strict=True):
         np.testing.assert_array_equal(got, want)
-    assert default[4] == explicit[4]
-    assert _confusion(default) == EXPECTED_A[TILE_JOIN_ID]
+    assert _confusion(default) == EXPECTED_A[TILE_JOIN_GEOMETRIC_CONTAINS]
 
 
-def test_default_load_cells_gates_against_the_committed_record(tmp_path):
-    """The default loader keeps the committed-record gate and adds no key."""
-    cells = _load(tmp_path)
+def test_id_replay_gates_against_the_committed_record(tmp_path):
+    """The explicit legacy replay keeps the committed-record gate unchanged."""
+    cells = _load(tmp_path, tile_join=TILE_JOIN_ID, count_table_join=TILE_JOIN_ID)
     for cell in cells:
         assert "mcc_join" not in cell
         assert "tile_join" not in cell["mcc_gate"]
         assert cell["mcc_gate"]["passed"] is True
     assert cells[0]["mcc_gate"]["confusion"] == EXPECTED_A[TILE_JOIN_ID]
+    assert cells[0]["mcc_gate"]["recorded_tile_joins"]["classification"] == "id"
     assert t.mcc_point(cells[0]) == pytest.approx(EXPECTED_MCC_A[TILE_JOIN_ID])
 
 
-def test_default_load_cells_still_withholds_a_disagreeing_record(tmp_path):
-    """A committed record the rebuild contradicts is still caught by default."""
+@pytest.mark.parametrize("join", [TILE_JOIN_ID, "sheet-contains"])
+def test_a_disagreeing_record_is_withheld_whatever_the_requested_join(tmp_path, join):
+    """Step 1 validates the record under its own join, so a contradicted
+    record is caught under the replay and under the new default alike."""
     conditions, analyses = _write_board(tmp_path)
     evaluation = tmp_path / "eval_a.json"
     doc = json.loads(evaluation.read_text())
     doc["summary"]["tile_classification"]["confusion"]["tn"] += 1
     evaluation.write_text(json.dumps(doc))
     cells, *_rest = t.load_cells(conditions, analyses, "board", None, None,
-                                 want_mcc=True, withheld=[])
+                                 want_mcc=True, withheld=[], tile_join=join)
     assert cells[0]["mcc_gate"]["passed"] is False
     assert "mcc_withheld" in cells[0]
+    assert cells[0]["mcc"] is None
 
 
-def test_mcc_point_ignores_a_join_value_that_is_absent():
-    """Without ``mcc_join`` the ordering reads the committed MCC as before."""
-    cell = {"mcc": 0.5}
+def test_mcc_point_reads_the_requested_joins_mcc_only():
+    """``mcc_join`` is gone; a stray one is never read beside ``mcc``."""
+    cell = {"mcc": 0.5, "mcc_join": 0.7}
     assert t.mcc_point(cell) == 0.5
-    cell["mcc_join"] = 0.7
-    assert t.mcc_point(cell) == 0.7
 
 
 def test_mcb_default_indicators_are_derived_from_the_f1_counts():
@@ -263,9 +279,11 @@ def test_board_indicators_under_id_match_the_default_derivation(tmp_path):
     """
     conditions, analyses = _write_board(tmp_path)
     specs, counts, occupancy = sai.build_board_tile_counts(
-        "board", analyses_path=analyses, conditions_path=conditions)
+        "board", analyses_path=analyses, conditions_path=conditions,
+        count_table_join=TILE_JOIN_ID)
     j_specs, j_counts, j_occupancy, j_has_det = sai.build_board_tile_classification(
-        "board", TILE_JOIN_ID, analyses_path=analyses, conditions_path=conditions)
+        "board", TILE_JOIN_ID, analyses_path=analyses, conditions_path=conditions,
+        count_table_join=TILE_JOIN_ID)
     assert j_specs == specs
     np.testing.assert_array_equal(j_counts, counts)
     np.testing.assert_array_equal(j_occupancy, occupancy)
@@ -297,32 +315,32 @@ def test_the_three_joins_disagree_on_the_fixture():
 @pytest.mark.parametrize("join", [TILE_JOIN_GEOMETRIC_PRIMARY,
                                   TILE_JOIN_GEOMETRIC_CONTAINS])
 def test_load_cells_under_a_geometric_join_ranks_on_that_join(tmp_path, join):
-    """A geometric join is gated on its own aggregate and ranked on its MCC.
-
-    The committed record holds the ``id`` confusion, so gating against it
-    would fail every cell; the sensitivity gate compares with the scorer's
-    aggregate under the same join instead, and records that it did.
-    """
-    cells = _load(tmp_path, tile_join=join)
+    """Two computations: the ``id`` record is validated under ``id``, then the
+    cell is gated on the requested join's own aggregate and ranked on its MCC,
+    which replaces the committed one (no committed MCC beside new arrays)."""
+    cells = _load(tmp_path, tile_join=join, count_table_join=TILE_JOIN_ID)
     gate = cells[0]["mcc_gate"]
     assert gate["passed"] is True
     assert gate["tile_join"] == join
     assert gate["confusion"] == EXPECTED_A[join]
-    assert cells[0]["mcc_join"] == pytest.approx(EXPECTED_MCC_A[join])
+    assert gate["validation"]["passed"] is True
+    assert gate["validation"]["recorded_join"] == TILE_JOIN_ID
+    assert gate["validation"]["confusion"] == EXPECTED_A[TILE_JOIN_ID]
+    assert "mcc_join" not in cells[0]
+    assert cells[0]["mcc"] == pytest.approx(EXPECTED_MCC_A[join])
     assert t.mcc_point(cells[0]) == pytest.approx(EXPECTED_MCC_A[join])
-    # The published MCC is kept beside it, untouched.
-    assert cells[0]["mcc"] == pytest.approx(EXPECTED_MCC_A[TILE_JOIN_ID])
-    # The F1 arm ignores the join.
-    (tmp_path / "default").mkdir()
-    default_cells = _load(tmp_path / "default")
+    # The F1 arm reads the count-table join only, not the classification one.
+    (tmp_path / "replay").mkdir()
+    replay = _load(tmp_path / "replay", tile_join=TILE_JOIN_ID,
+                   count_table_join=TILE_JOIN_ID)
     for k in ("tp", "fp", "fn"):
-        np.testing.assert_array_equal(cells[0][k], default_cells[0][k])
+        np.testing.assert_array_equal(cells[0][k], replay[0][k])
 
 
 def test_load_cells_rejects_an_unknown_join(tmp_path):
     """An unknown join name raises rather than falling back to ``id``."""
     conditions, analyses = _write_board(tmp_path)
-    with pytest.raises(ValueError, match="tile_join must be one of"):
+    with pytest.raises(ValueError, match="classification join must be one of"):
         t.load_cells(conditions, analyses, "board", None, None, want_mcc=True,
                      withheld=[], tile_join="nearest")
 
@@ -331,10 +349,11 @@ def test_board_indicators_follow_a_geometric_join(tmp_path):
     """The MCB builder reads the join's labels, not the F1 arm's."""
     conditions, analyses = _write_board(tmp_path)
     _specs, counts, occupancy = sai.build_board_tile_counts(
-        "board", analyses_path=analyses, conditions_path=conditions)
+        "board", analyses_path=analyses, conditions_path=conditions,
+        count_table_join=TILE_JOIN_ID)
     _j, _c, j_occupancy, j_has_det = sai.build_board_tile_classification(
         "board", TILE_JOIN_GEOMETRIC_PRIMARY, analyses_path=analyses,
-        conditions_path=conditions)
+        conditions_path=conditions, count_table_join=TILE_JOIN_ID)
     # References: intersection books T0, T2 and T3; primary books T0 and T2.
     np.testing.assert_array_equal(occupancy, [True, False, True, True])
     np.testing.assert_array_equal(j_occupancy, [True, False, True, False])

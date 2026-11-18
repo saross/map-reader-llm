@@ -332,8 +332,12 @@ def test_mcc_board_reads_the_engine_evaluation_shape(tmp_path):
     finally:
         m.BASE_DIR = old
     assert len(gdf) == 1 and gdf.crs.to_epsg() == 32635
+    # Wave 1 added ``recorded_tile_join``: the join the committed block was
+    # built under (none recorded here, so the legacy ``id``), which the board
+    # validates the record under before computing under the requested join.
     assert tile == {"tp": 1, "tn": 2, "fp": 3, "fn": 4, "mcc": 0.5,
-                    "mcc_CI": [0.4, 0.6], "sensitivity": 0.2, "specificity": 0.9}
+                    "mcc_CI": [0.4, 0.6], "sensitivity": 0.2, "specificity": 0.9,
+                    "recorded_tile_join": "id"}
 
 
 @pytest.mark.tier1
@@ -362,10 +366,13 @@ def test_r2_registrar_authors_every_board_family_and_skips_coincidence():
         return {"label": label, "det": f"x/cells/{label}/detections.geojson",
                 "basis": basis, "point": point, "committed_eval": False}
 
-    manifest = [cell("B-N1-oracle", "(0.20, k1)"), cell("A-N3-carried", "(0.15, k3)", "carried (post-hoc)"),
+    manifest = [cell("B-N1-oracle", "(0.20, k1)"),
+                cell("A-N3-carried", "(0.15, k3)", "carried (post-hoc)"),
                 cell("TH7-oracle", "(0.15, k3)"), cell("T03-oracle", "(0.20, k3)"),
-                cell("ARM2-N3-oracle", "(0.95, k3)"), cell("FOURTH-N10-carried", "(0.98, k10)", "carried"),
-                {"label": "TH7-k4", "det": "d", "basis": "carried", "point": "(0.15, k4)", "committed_eval": True}]
+                cell("ARM2-N3-oracle", "(0.95, k3)"),
+                cell("FOURTH-N10-carried", "(0.98, k10)", "carried"),
+                {"label": "TH7-k4", "det": "d", "basis": "carried", "point": "(0.15, k4)",
+                 "committed_eval": True}]
     plan = author_board_rows = r2reg.author_board_rows(dec, manifest, None)
     by = {row["label"]: (run, status) for run, row, status in plan}
     assert by["TH7-oracle"] == (None, "coincident")  # argmax on the committed set
@@ -459,7 +466,8 @@ def test_student_base_layer_under_a_canonical_label_resolves_canonical():
         "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
         "review_today": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
     }}
-    res = lus.resolve_reference(meta, "g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt", None)
+    res = lus.resolve_reference(
+        meta, "g384-ov128-55map-verified-carried-p0.15-k8-canonical-gt", None)
     assert (res.term, res.basis) == ("canonical", "label-suffix")
     assert res.path.endswith("canonical-gt-55maps-r50.geojson")
     assert res.consumed_path.endswith("student-mounds-55maps-reviewed.geojson")

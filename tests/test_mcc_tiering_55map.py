@@ -122,14 +122,22 @@ def test_permutation_is_seed_deterministic() -> None:
 
 
 @pytest.mark.tier1
-def test_tile_vectors_reproduces_engine_confusion() -> None:
+@pytest.mark.parametrize("tile_join", ["id", "sheet-contains"])
+def test_tile_vectors_reproduces_engine_confusion(tile_join: str) -> None:
     """The vectorised per-tile labelling matches the engine's loop,
     including a reference point sitting ON a shared tile boundary
-    (intersects -> counts for both tiles)."""
+    (intersects -> counts for both tiles).
+
+    Wave 1: run under the legacy join and the new default, with the frame's
+    tiles named in the pipeline's ``<sheet>_x<N>_y<N>`` vocabulary and the
+    references recording their sheet, which a sheet join needs (the
+    original ``t00`` names carried no sheet, an assumption only the legacy
+    frame-wide rule tolerated)."""
     crs = "EPSG:32635"
+    names = ["S_x0_y0.png", "S_x10_y0.png", "S_x0_y10.png", "S_x10_y10.png"]
     bounds = gpd.GeoDataFrame(
         {
-            "tile_name": ["t00", "t01", "t10", "t11"],
+            "tile_name": names,
             "geometry": [
                 box(0, 0, 10, 10), box(10, 0, 20, 10),
                 box(0, 10, 10, 20), box(10, 10, 20, 20),
@@ -138,6 +146,7 @@ def test_tile_vectors_reproduces_engine_confusion() -> None:
         crs=crs,
     )
     refs = gpd.GeoDataFrame(
+        {"Map": ["S", "S"]},
         geometry=[
             Point(5, 5),     # interior of t00
             Point(10, 5),    # ON the t00/t01 boundary — both tiles populated
@@ -153,14 +162,14 @@ def test_tile_vectors_reproduces_engine_confusion() -> None:
     # inside would make this fixture assert the defect.
     dets = gpd.GeoDataFrame(
         {
-            "source_tile": ["t00", "t11", "not-a-tile"],
+            "source_tile": [names[0], names[3], "not-a-tile"],
             "geometry": [Point(2, 2), Point(15, 15), Point(-50, -50)],
         },
         crs=crs,
     )
 
-    engine = calculate_tile_classification(dets, refs, bounds)
-    tiles, truth, pred = tile_vectors(dets, refs, bounds)
+    engine = calculate_tile_classification(dets, refs, bounds, tile_join=tile_join)
+    tiles, truth, pred = tile_vectors(dets, refs, bounds, tile_join=tile_join)
 
     rebuilt = {
         "tp": int((pred & truth).sum()),
@@ -223,7 +232,8 @@ def test_render_md_carries_both_methodological_notes():
     doc = render_md(_PAYLOAD)
     assert PAIRED_CI_NOTE in doc
     assert ATTRIBUTION_RESOLUTION_NOTE in doc
-    assert "below R = 50 m the\nextended ground truth reduces to the reviewed student ground truth" in doc
+    assert ("below R = 50 m the\nextended ground truth reduces to the reviewed "
+            "student ground truth") in doc
 
 
 @pytest.mark.tier1

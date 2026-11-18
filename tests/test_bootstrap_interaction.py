@@ -41,7 +41,7 @@ def _make_tile_bounds(n_tiles: int) -> gpd.GeoDataFrame:
     for i in range(n_tiles):
         x = base_x + i * 200
         tiles.append(box(x, base_y, x + 100, base_y + 100))
-        names.append(f"K-35-052-4_32635_tile_{i:03d}")
+        names.append(f"K-35-052-4_32635_x{i:03d}_y0")
     return gpd.GeoDataFrame(
         {"tile_name": names}, geometry=tiles, crs=CRS
     )
@@ -94,7 +94,7 @@ def _make_detections(
     for i in hit_tiles:
         x = base_x + i * 200 + 55  # 5m offset from reference
         points.append(Point(x, base_y + 50))
-        tile_names.append(f"K-35-052-4_32635_tile_{i:03d}")
+        tile_names.append(f"K-35-052-4_32635_x{i:03d}_y0")
 
     if not points:
         return gpd.GeoDataFrame(

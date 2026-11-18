@@ -87,10 +87,15 @@ def _make_references(
     Returns:
         GeoDataFrame with geometry column.
     """
+    # Wave 1: the references record their sheet (``Map``), and the tiles
+    # are named ``T_x<N>_y0.png`` in the pipeline's vocabulary, because the
+    # default classification join is sheet-specific (D73 (2)). The old
+    # ``tile_00N`` names and sheetless references were an assumption only
+    # the legacy frame-wide rule tolerated.
     if not coords:
-        return gpd.GeoDataFrame(geometry=[], crs=crs)
+        return gpd.GeoDataFrame({"Map": []}, geometry=[], crs=crs)
     points = [Point(x, y) for x, y in coords]
-    return gpd.GeoDataFrame(geometry=points, crs=crs)
+    return gpd.GeoDataFrame({"Map": ["T"] * len(points)}, geometry=points, crs=crs)
 
 
 def _make_empty_detections(crs: str = "EPSG:32635") -> gpd.GeoDataFrame:
@@ -112,7 +117,7 @@ class TestCalculateTileClassification:
         Scenario: 3 tiles, each with reference mounds and at least one detection.
         Expected: TP=3, TN=0, FP=0, FN=0, MCC=undefined (no negatives).
         """
-        tile_names = ["tile_001", "tile_002", "tile_003"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
         gdf_det = _make_detections(tile_names)
         ref_coords = [(500050, 4700050), (500150, 4700050), (500250, 4700050)]
@@ -135,7 +140,7 @@ class TestCalculateTileClassification:
         Scenario: 3 tiles, none have mounds, none have detections.
         Expected: TP=0, TN=3, FP=0, FN=0, MCC=undefined (no positives).
         """
-        tile_names = ["tile_001", "tile_002", "tile_003"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
         gdf_det = _make_empty_detections()
         gdf_ref = _make_references([])
@@ -157,7 +162,7 @@ class TestCalculateTileClassification:
         Scenario: 3 tiles, none have mounds, but all have detections.
         Expected: TP=0, TN=0, FP=3, FN=0.
         """
-        tile_names = ["tile_001", "tile_002", "tile_003"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
         gdf_det = _make_detections(tile_names)
         gdf_ref = _make_references([])
@@ -177,7 +182,7 @@ class TestCalculateTileClassification:
         Scenario: 3 tiles, all have mounds, but no detections.
         Expected: TP=0, TN=0, FP=0, FN=3.
         """
-        tile_names = ["tile_001", "tile_002", "tile_003"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
         gdf_det = _make_empty_detections()
         ref_coords = [(500050, 4700050), (500150, 4700050), (500250, 4700050)]
@@ -203,11 +208,11 @@ class TestCalculateTileClassification:
 
         Expected: TP=1, TN=1, FP=1, FN=1.
         """
-        tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png", "T_x004_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
 
         gdf_det = _make_detections(
-            ["tile_001", "tile_003"],
+            ["T_x001_y0.png", "T_x003_y0.png"],
             coords=[(500050, 4700050), (500250, 4700050)],
         )
         ref_coords = [(500050, 4700050), (500150, 4700050)]
@@ -232,11 +237,11 @@ class TestCalculateTileClassification:
 
         Scenario: 2 populated tiles with detections, 2 empty tiles without.
         """
-        tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png", "T_x004_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
 
         gdf_det = _make_detections(
-            ["tile_001", "tile_002"],
+            ["T_x001_y0.png", "T_x002_y0.png"],
             coords=[(500050, 4700050), (500150, 4700050)],
         )
         ref_coords = [(500050, 4700050), (500150, 4700050)]
@@ -268,9 +273,9 @@ class TestCalculateTileClassification:
 
     def test_tile_details_populated(self) -> None:
         """Tile details should be populated with per-tile information."""
-        tile_names = ["tile_001", "tile_002"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
-        gdf_det = _make_detections(["tile_001"], coords=[(500050, 4700050)])
+        gdf_det = _make_detections(["T_x001_y0.png"], coords=[(500050, 4700050)])
         gdf_ref = _make_references([(500050, 4700050)])
 
         result = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
@@ -278,7 +283,7 @@ class TestCalculateTileClassification:
         assert "tile_details" in result
         assert len(result["tile_details"]) == 2
 
-        tile_001 = next(t for t in result["tile_details"] if t["tile_name"] == "tile_001")
+        tile_001 = next(t for t in result["tile_details"] if t["tile_name"] == "T_x001_y0.png")
         assert tile_001["has_mounds"] is True
         assert tile_001["has_detections"] is True
         assert tile_001["classification"] == "TP"
@@ -290,11 +295,11 @@ class TestBootstrapTileClassificationCi:
 
     def test_bootstrap_with_fixed_seed(self) -> None:
         """Bootstrap with fixed seed should be reproducible."""
-        tile_names = ["tile_001", "tile_002", "tile_003", "tile_004"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png", "T_x003_y0.png", "T_x004_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
 
         gdf_det = _make_detections(
-            ["tile_001", "tile_002"],
+            ["T_x001_y0.png", "T_x002_y0.png"],
             coords=[(500050, 4700050), (500150, 4700050)],
         )
         ref_coords = [(500050, 4700050), (500150, 4700050)]
@@ -316,9 +321,9 @@ class TestBootstrapTileClassificationCi:
 
     def test_bootstrap_returns_valid_structure(self) -> None:
         """Bootstrap should return expected dict structure."""
-        tile_names = ["tile_001", "tile_002"]
+        tile_names = ["T_x001_y0.png", "T_x002_y0.png"]
         gdf_bounds = _make_tile_bounds(tile_names)
-        gdf_det = _make_detections(["tile_001"], coords=[(500050, 4700050)])
+        gdf_det = _make_detections(["T_x001_y0.png"], coords=[(500050, 4700050)])
         gdf_ref = _make_references([(500050, 4700050)])
 
         result = bootstrap_tile_classification_ci(
