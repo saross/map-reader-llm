@@ -1656,3 +1656,6 @@ only his remarks, quoted, and nothing awaits a verdict.
   sheet-specific tile scoring after checking the gold standard for cross-sheet duplicates and
   inspecting the pixels of K-35-052-4's edge tiles, and had withdrawn its own reason for exempting
   the gold-standard frames from the block check when asked "why not also require for GS?".
+- "good suggestions." (2026-11-18) — said when answering yes to all four how-we-work questions
+  Claude had put at the S168 handoff (review order, the mail watch's re-arming and its cap, and
+  drafting the next wave's specification while a wave runs).
