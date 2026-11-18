@@ -1,6 +1,6 @@
 # Tile-join Wave 1 — dry run, census, and worklist (W1.0)
 
-> **Last revised**: 2026-11-18 (W1.0 steps 3–8 completed after the stop, by the main session's decision; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), Wave 1 census agent (work item W1.0). Driven from
@@ -17,8 +17,10 @@
 The 55-map sheet check (§ 2) found **32 point–tile contacts, from 26
 references, where a reference recorded on one sheet lies on the map
 content of another sheet's tile**, in `inputs/vectors/references/best-available-gt-55maps-r2.geojson`
-(the reference of smoke cell 2): adjacent sheets print the same mound and
-only one copy is digitised. That is a specification § 5 stop. The main
+(the reference of smoke cell 2), with no reference on the contacted sheet
+nearby; in the crops inspected, the point lies on a printed mound symbol
+on the neighbouring sheet (the other contacts are candidates, not
+adjudicated). That is a specification § 5 stop. The main
 session verified it, notified the PI, and recorded the stop in
 `reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`. **The wave is
 stopped on the seam ruling.** By the main session's decision (stop
@@ -114,19 +116,27 @@ images):
   `K-35-054-4_Voynika_x4032_y672.png`: the point is on the black map edge
   itself, between content and padding.
 
-**Why it matters, and a pointer for the ruling.** In r2 no cross-sheet
-pair lies within 200 m, so for these mounds only one sheet's copy is a
-reference. Under sheet-specific scoring a correct detection of the other
-sheet's printed copy, attributed (by D50) to the sheet whose tile showed
-it, has no reference on its sheet and scores as a false positive, while
-the frame-wide join would match it. The canonical r50 reference differs:
-it carries 415 `phantom:*` references (`layer` `phantom_canonical`,
+**Why it matters, and a pointer for the ruling** (revised 2026-11-19
+after Astra's review, to keep apart what was measured, what was seen, and
+what is not adjudicated). *Measured:* in r2 no cross-sheet pair lies
+within 200 m, and no contacted-sheet reference lies within 50 m of any
+non-padding contact (§ 2.2); that shows no local annotation on the
+contacted sheet, not what is printed there, since the pixel test detects
+map content, not mound symbols, and the seams are misregistered. *Seen:*
+the crops above show a printed mound symbol at the point. *Not
+adjudicated:* the other map-content contacts and the ambiguous ones.
+Where a contact is a second printed copy, the effects differ by level.
+At symbol level, a correct detection of that copy, attributed by D50 to
+the sheet whose tile showed it, has no reference on its sheet and can be
+scored a false positive. At tile level, a tile changes only if it holds
+none of its own sheet's references: 11 of r2's 26 contacted tiles for
+the map-content scope (§ 2.2). The canonical r50 reference differs: it
+carries 415 `phantom:*` references (`layer` `phantom_canonical`,
 `position_source` `detection_centroid`, `provenance`
 `canonical_review_r50`), and 24 of its cross-sheet pairs lie within
-50 m, every listed one a `student` reference on one sheet beside a
-`phantom` on the neighbouring sheet. That looks like a second copy of the
-same mound added on the other sheet by review; this agent did not verify
-that reading.
+50 m, each a `student` reference on one sheet beside a `phantom` on the
+neighbouring sheet. That is a lead that review added the second copy;
+it does not confirm each feature's identity.
 
 ### 2.1 Every non-padding contact in r2 (the smoke-cell-2 reference)
 
@@ -218,41 +228,81 @@ contacted-sheet reference 835.8–1,213.3 m away. Per-contact ids, layers,
 and distances are in the committed `.txt` and `.json`.
 
 **(ii) and (iii) Tiles moved, relative to sheet-specific containment.**
-Baseline positive tiles (of 8,541): r2 3,196; best-available 3,191;
-canonical 3,200; student-reviewed 3,056; student 3,055.
+Corrected 2026-11-19 after Astra's review (see below): option (a) now
+adds one reference per **(source feature, recipient sheet)**, the source
+feature identified by its index in its file, however many overlapping
+tiles of that sheet the point reaches. Contacts are kept beside them,
+labelled as contacts. Baseline positive tiles (of 8,541): r2 3,196;
+best-available 3,191; canonical 3,200; student-reviewed 3,056; student
+3,055. No two references of any file share a sheet and identical
+coordinates, so the feature keys are unambiguous.
 
-| Reference file | Scope | Contacts | Distinct contacted tiles | (a) references added / tiles turning positive | (b) tiles turning positive | (d) tiles removed (of which positive / negative) |
-|---|---|---:|---:|---|---:|---|
-| r2 | map content | 32 | 26 | 32 / 11 | 11 | 52 (41 / 11) |
-| r2 | + ambiguous | 50 | 41 | 50 / 17 | 17 | 85 (68 / 17) |
-| best-available | map content | 32 | 26 | 32 / 11 | 11 | 52 (41 / 11) |
-| best-available | + ambiguous | 50 | 41 | 50 / 17 | 17 | 85 (68 / 17) |
-| canonical r50 | map content | 33 | 27 | 4 / **0** | **0** | 53 (53 / 0) |
-| canonical r50 | + ambiguous | 53 | 41 | 23 / 4 | 4 | 82 (78 / 4) |
-| student-reviewed | map content | 33 | 27 | 33 / 11 | 11 | 53 (42 / 11) |
-| student-reviewed | + ambiguous | 49 | 39 | 49 / 15 | 15 | 79 (64 / 15) |
-| student | map content | 35 | 27 | 35 / 11 | 11 | 53 (42 / 11) |
-| student | + ambiguous | 50 | 39 | 50 / 15 | 15 | 79 (64 / 15) |
+| Reference file | Scope | Contacts | (feature, recipient sheet) pairs | Distinct contacted tiles | (a) contacts without a second copy / **references added** / tiles turning positive | (b) tiles turning positive | (d) tiles removed (positive / negative) |
+|---|---|---:|---:|---:|---|---:|---|
+| r2 | map content | 32 | 26 | 26 | 32 / **26** / 11 | 11 | 52 (41 / 11) |
+| r2 | + ambiguous | 50 | 40 | 41 | 50 / **40** / 17 | 17 | 85 (68 / 17) |
+| best-available | map content | 32 | 26 | 26 | 32 / **26** / 11 | 11 | 52 (41 / 11) |
+| best-available | + ambiguous | 50 | 40 | 41 | 50 / **40** / 17 | 17 | 85 (68 / 17) |
+| canonical r50 | map content | 33 | 27 | 27 | 4 / **4** / 0 | 0 | 53 (53 / 0) |
+| canonical r50 | + ambiguous | 53 | 44 | 41 | 23 / **20** / 4 | 4 | 82 (78 / 4) |
+| student-reviewed | map content | 33 | 27 | 27 | 33 / **27** / 11 | 11 | 53 (42 / 11) |
+| student-reviewed | + ambiguous | 49 | 40 | 39 | 49 / **40** / 15 | 15 | 79 (64 / 15) |
+| student | map content | 35 | 29 | 27 | 35 / **29** / 11 | 11 | 53 (42 / 11) |
+| student | + ambiguous | 50 | 41 | 39 | 50 / **41** / 15 | 15 | 79 (64 / 15) |
 
-Option (c), frame-wide containment, turns **333** tiles positive on r2
-(333 on best-available, 324 on canonical, 325 on each student file), of
-which only 11 (0 on canonical) are map-content contacted tiles; the rest
-come from references lying in other sheets' padding, the class of error
-D73 (2) removed on the GS.
+On r2 the six references whose point reaches two tiles of the same
+recipient sheet are `student:01876` (Tatarevo), `student:02191` and
+`student:02195` (Sredets), `student:02387` and `student:02388`
+(K-35-075-1), and `student:02393` (Dimitrovgrad), exactly as Astra
+reported. The tile counts did not change: they were always counted as
+sets of tiles.
+
+**Option (c), frame-wide containment, split into disjoint categories.**
+Each tile that turns positive is assigned by the pixel verdicts of the
+contacts inside it, in priority order: any map-content contact; else any
+ambiguous contact; else, if every contact is padding, confirmed padding;
+else remainder. Verdicts come from the sheet check's full output
+(`~/scratch/wave1/w10/sheet-check/sheet_check_55map.json`), padding
+contacts included.
+
+| Reference file | Tiles turning positive | Map-content contacted | Ambiguous contacted | Confirmed padding | Remainder | Tiles with mixed verdicts |
+|---|---:|---:|---:|---:|---:|---:|
+| r2 | 333 | 11 | 6 | 316 | 0 | 8 |
+| best-available | 333 | 11 | 6 | 316 | 0 | 8 |
+| canonical r50 | 324 | 0 | 4 | 320 | 0 | 2 |
+| student-reviewed | 325 | 11 | 4 | 310 | 0 | 7 |
+| student | 325 | 11 | 4 | 310 | 0 | 7 |
+
+So on r2, 316 of the 333 tiles that a frame-wide join would make
+positive are confirmed padding (every contact inside them measured as
+padding), 11 are map-content contacts, and 6 hold only ambiguous
+contacts. This replaces the earlier wording, which treated everything
+except the 11 map-content tiles as padding without showing it.
 
 Reading the table: (a) and (b) move the same tiles here, because a tile
 the contact reaches either already holds one of its own sheet's
 references or does not; they differ in what else they change ((a) adds
-references, so recall's denominator; (b) changes matching). On r2, 15 of
-the 26 contacted tiles are already positive from their own sheet's
+references, and so recall's denominator; (b) changes matching). On r2,
+15 of the 26 contacted tiles are already positive from their own sheet's
 references, so 11 tiles move.
+
+**Astra's independent audit** (`~/agent-mail/codex/outbox/claude/20261118T130529Z-astra-seam-measurement-counting-finding.md`,
+reviewing `seam_second_copy.py` at `6bd4a3e03`): all 50 of r2's
+non-padding contacts reproduced, measurements and verdicts both, with no
+discrepancies; every supplied world file has zero rotation. Under a
+nearest-pixel-centre sensitivity, the two ambiguous contacts of
+`student:04282` (sheet K-35-076-1) change, so they **stay unresolved for
+manual judgement**: `student:04282` in `K-35-076-2_x0_y2352.png` (col
+13.6, row 345.6) and in `K-35-076-2_x0_y2688.png` (col 13.6, row 9.6),
+rows 46 and 47 of § 2.1 (Astra's evidence-manifest indices 46 and 47).
 
 **The canonical r50 lead, checked.** All **24** of canonical r50's
 student–phantom cross-sheet pairs within 50 m are map-content contacts:
 in each, the student reference on one sheet lies on the map content of a
 tile of the phantom's sheet (distances 3.1–39.5 m, listed in the `.txt`).
-So the r50 review already digitised the neighbouring sheet's copy for 29
-of its 33 map-content contacts, which is option (a) in effect; r2, the
+So the r50 review appears to have digitised the neighbouring sheet's copy
+for 29 of its 33 map-content contacts, option (a) in effect (a lead from
+proximity, not a check of each feature's identity); r2, the
 best-available file, and the student files carry no `phantom` layer (r2's
 layers are `student` 4,726, `extension` 278, `audit` 14 by `gt_id`
 prefix).
@@ -584,6 +634,29 @@ plus an idempotence rerun.
 7. One evaluation records its bounds as an absolute path.
 
 ## Changelog
+
+### 2026-11-19 — Seam counts corrected; claims made precise
+
+Trigger: Astra's reviews (`~/agent-mail/codex/outbox/claude/20261118T130529Z-astra-seam-measurement-counting-finding.md`,
+`…/20261118T130721Z-astra-e93-seam-paragraph-review.md`), verified by
+this agent (26 distinct pairs among r2's 32 map-content contacts, and the
+six duplicated references, recomputed from the committed summary).
+`seam_second_copy.py` fixed and re-run on zbook (`57a4ac33a`).
+
+| Item (§ 2.2) | Before | After |
+|---|---|---|
+| (a) "references added", r2 map content / + ambiguous | 32 / 50 (contacts) | **26 / 40** references; 32 / 50 contacts kept beside them |
+| the same, canonical r50 | 4 / 23 | 4 / **20** |
+| the same, student-reviewed | 33 / 49 | **27 / 40** |
+| the same, student | 35 / 50 | **29 / 41** |
+| (c) on r2 | 333 tiles; 11 map content; the rest called padding | 333 = 11 map content + 6 ambiguous + 316 confirmed padding + 0 remainder |
+
+Also: Astra's pixel audit recorded (all 50 r2 contacts reproduced; zero
+rotation; `student:04282`'s two contacts unresolved under the
+nearest-pixel-centre sensitivity); §§ 0 and 2 reworded to separate the
+measured proximity fact, the inspected examples, and the unadjudicated
+candidates, and the symbol-level from the tile-level effect. Unchanged:
+every tile count, the stop, and §§ 3–10.
 
 ### 2026-11-18 — Steps 3–8 completed after the stop; seam measurement added
 

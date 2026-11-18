@@ -4,6 +4,7 @@
   "inputs/vectors/references/best-available-gt-55maps-r2.geojson": {
    "n_points": 5018,
    "n_baseline_positive_tiles": 3196,
+   "n_coincident_points_same_sheet": 0,
    "contacts": [
     {
      "verdict": "ambiguous",
@@ -711,7 +712,9 @@
      "n_contacts": 32,
      "n_distinct_contacted_tiles": 26,
      "a_tiles_turning_positive": 11,
-     "a_references_added": 32,
+     "n_feature_sheet_pairs": 26,
+     "a_contacts_without_second_copy": 32,
+     "a_references_added": 26,
      "b_tiles_turning_positive": 11,
      "d_tiles_removed": 52,
      "d_removed_baseline_positive": 41,
@@ -721,7 +724,9 @@
      "n_contacts": 50,
      "n_distinct_contacted_tiles": 41,
      "a_tiles_turning_positive": 17,
-     "a_references_added": 50,
+     "n_feature_sheet_pairs": 40,
+     "a_contacts_without_second_copy": 50,
+     "a_references_added": 40,
      "b_tiles_turning_positive": 17,
      "d_tiles_removed": 85,
      "d_removed_baseline_positive": 68,
@@ -729,11 +734,18 @@
     }
    },
    "c_tiles_turning_positive_frame_wide": 333,
-   "c_tiles_turning_positive_on_map_content_contacts": 11
+   "c_breakdown": {
+    "map-content": 11,
+    "ambiguous": 6,
+    "confirmed-padding": 316,
+    "remainder": 0
+   },
+   "c_tiles_with_mixed_verdicts": 8
   },
   "inputs/vectors/references/best-available-gt-55maps.geojson": {
    "n_points": 5010,
    "n_baseline_positive_tiles": 3191,
+   "n_coincident_points_same_sheet": 0,
    "contacts": [
     {
      "verdict": "ambiguous",
@@ -1441,7 +1453,9 @@
      "n_contacts": 32,
      "n_distinct_contacted_tiles": 26,
      "a_tiles_turning_positive": 11,
-     "a_references_added": 32,
+     "n_feature_sheet_pairs": 26,
+     "a_contacts_without_second_copy": 32,
+     "a_references_added": 26,
      "b_tiles_turning_positive": 11,
      "d_tiles_removed": 52,
      "d_removed_baseline_positive": 41,
@@ -1451,7 +1465,9 @@
      "n_contacts": 50,
      "n_distinct_contacted_tiles": 41,
      "a_tiles_turning_positive": 17,
-     "a_references_added": 50,
+     "n_feature_sheet_pairs": 40,
+     "a_contacts_without_second_copy": 50,
+     "a_references_added": 40,
      "b_tiles_turning_positive": 17,
      "d_tiles_removed": 85,
      "d_removed_baseline_positive": 68,
@@ -1459,11 +1475,18 @@
     }
    },
    "c_tiles_turning_positive_frame_wide": 333,
-   "c_tiles_turning_positive_on_map_content_contacts": 11
+   "c_breakdown": {
+    "map-content": 11,
+    "ambiguous": 6,
+    "confirmed-padding": 316,
+    "remainder": 0
+   },
+   "c_tiles_with_mixed_verdicts": 8
   },
   "inputs/vectors/references/canonical-gt-55maps-r50.geojson": {
    "n_points": 5161,
    "n_baseline_positive_tiles": 3200,
+   "n_coincident_points_same_sheet": 0,
    "contacts": [
     {
      "verdict": "ambiguous",
@@ -2213,6 +2236,8 @@
      "n_contacts": 33,
      "n_distinct_contacted_tiles": 27,
      "a_tiles_turning_positive": 0,
+     "n_feature_sheet_pairs": 27,
+     "a_contacts_without_second_copy": 4,
      "a_references_added": 4,
      "b_tiles_turning_positive": 0,
      "d_tiles_removed": 53,
@@ -2223,7 +2248,9 @@
      "n_contacts": 53,
      "n_distinct_contacted_tiles": 41,
      "a_tiles_turning_positive": 4,
-     "a_references_added": 23,
+     "n_feature_sheet_pairs": 44,
+     "a_contacts_without_second_copy": 23,
+     "a_references_added": 20,
      "b_tiles_turning_positive": 4,
      "d_tiles_removed": 82,
      "d_removed_baseline_positive": 78,
@@ -2231,7 +2258,13 @@
     }
    },
    "c_tiles_turning_positive_frame_wide": 324,
-   "c_tiles_turning_positive_on_map_content_contacts": 0,
+   "c_breakdown": {
+    "map-content": 0,
+    "ambiguous": 4,
+    "confirmed-padding": 320,
+    "remainder": 0
+   },
+   "c_tiles_with_mixed_verdicts": 2,
    "phantom_pairs_within_50m": [
     {
      "student_sheet": "K-35-064-3_Dimitrovgrad_4326",
@@ -2430,6 +2463,7 @@
   "inputs/vectors/references/student-mounds-55maps-reviewed.geojson": {
    "n_points": 4746,
    "n_baseline_positive_tiles": 3056,
+   "n_coincident_points_same_sheet": 0,
    "contacts": [
     {
      "verdict": "ambiguous",
@@ -3123,7 +3157,9 @@
      "n_contacts": 33,
      "n_distinct_contacted_tiles": 27,
      "a_tiles_turning_positive": 11,
-     "a_references_added": 33,
+     "n_feature_sheet_pairs": 27,
+     "a_contacts_without_second_copy": 33,
+     "a_references_added": 27,
      "b_tiles_turning_positive": 11,
      "d_tiles_removed": 53,
      "d_removed_baseline_positive": 42,
@@ -3133,7 +3169,9 @@
      "n_contacts": 49,
      "n_distinct_contacted_tiles": 39,
      "a_tiles_turning_positive": 15,
-     "a_references_added": 49,
+     "n_feature_sheet_pairs": 40,
+     "a_contacts_without_second_copy": 49,
+     "a_references_added": 40,
      "b_tiles_turning_positive": 15,
      "d_tiles_removed": 79,
      "d_removed_baseline_positive": 64,
@@ -3141,11 +3179,18 @@
     }
    },
    "c_tiles_turning_positive_frame_wide": 325,
-   "c_tiles_turning_positive_on_map_content_contacts": 11
+   "c_breakdown": {
+    "map-content": 11,
+    "ambiguous": 4,
+    "confirmed-padding": 310,
+    "remainder": 0
+   },
+   "c_tiles_with_mixed_verdicts": 7
   },
   "inputs/vectors/references/student-mounds-55maps.geojson": {
    "n_points": 4770,
    "n_baseline_positive_tiles": 3055,
+   "n_coincident_points_same_sheet": 0,
    "contacts": [
     {
      "verdict": "map-content",
@@ -3853,7 +3898,9 @@
      "n_contacts": 35,
      "n_distinct_contacted_tiles": 27,
      "a_tiles_turning_positive": 11,
-     "a_references_added": 35,
+     "n_feature_sheet_pairs": 29,
+     "a_contacts_without_second_copy": 35,
+     "a_references_added": 29,
      "b_tiles_turning_positive": 11,
      "d_tiles_removed": 53,
      "d_removed_baseline_positive": 42,
@@ -3863,7 +3910,9 @@
      "n_contacts": 50,
      "n_distinct_contacted_tiles": 39,
      "a_tiles_turning_positive": 15,
-     "a_references_added": 50,
+     "n_feature_sheet_pairs": 41,
+     "a_contacts_without_second_copy": 50,
+     "a_references_added": 41,
      "b_tiles_turning_positive": 15,
      "d_tiles_removed": 79,
      "d_removed_baseline_positive": 64,
@@ -3871,7 +3920,13 @@
     }
    },
    "c_tiles_turning_positive_frame_wide": 325,
-   "c_tiles_turning_positive_on_map_content_contacts": 11
+   "c_breakdown": {
+    "map-content": 11,
+    "ambiguous": 4,
+    "confirmed-padding": 310,
+    "remainder": 0
+   },
+   "c_tiles_with_mixed_verdicts": 7
   }
  }
 }
