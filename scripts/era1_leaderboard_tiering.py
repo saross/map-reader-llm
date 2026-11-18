@@ -456,6 +456,7 @@ def cell_per_tile(
     tile_order: list[str],
     buffer_metres: int = HEADLINE_BUFFER_M,
     count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
+    per_pass: list[dict] | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, int]:
     """Reproduce a cell's per-tile TP/FP/FN, its inputs exactly as its eval scored them.
 
@@ -485,6 +486,11 @@ def cell_per_tile(
         tile_order: Fixed list of ``tile_name`` values.
         buffer_metres: Match radius.
         count_table_join: The count-table join the counts are booked under.
+        per_pass: Optional sink. When given, one ``{"file", "tp", "fp",
+            "fn"}`` record of whole-frame totals is appended per replicate
+            pass, so a caller can rebuild each pass's own F1 (Astra R2-3:
+            a replicate-mean cell's committed F1 is the mean of per-pass
+            F1s, which the pass-averaged table does not give).
 
     Returns:
         Tuple ``(tp, fp, fn, n_passes)`` -- float arrays of length
@@ -547,6 +553,9 @@ def cell_per_tile(
             tp_sum += tp_i
             fp_sum += fp_i
             fn_sum += fn_i
+            if per_pass is not None:
+                per_pass.append({"file": str(pass_file), "tp": float(tp_i.sum()),
+                                 "fp": float(fp_i.sum()), "fn": float(fn_i.sum())})
         n = len(pass_files)
         return tp_sum / n, fp_sum / n, fn_sum / n, n
 
@@ -572,6 +581,28 @@ class ReproductionDriftError(RuntimeError):
     is deliberately not a :class:`ConfusionGateError`: :func:`load_cells`
     does not catch it and withhold the cell, it ends the run (audit A-L6).
     """
+
+
+class ReplayRouteUnsupportedError(ReproductionDriftError):
+    """A committed record this replay cannot reconstruct, held for its own route.
+
+    Astra R2-3: a replicate-mean record that ``evaluate_detections.py`` did
+    not write (a native adapter's output), or that keeps no ``per_run``
+    block, has no per-pass statistic this replay can rebuild. It is held,
+    never reported as validated; as a :class:`ReproductionDriftError` it
+    ends the run rather than being withheld.
+    """
+
+
+#: The writer whose replicate-mean records this replay reconstructs.
+EVALUATOR_SCRIPT_NAME = "evaluate_detections.py"
+
+#: Per-pass F1 tolerance: each pass's committed F1 is rounded to 4 dp.
+F1_RECORD_TOL = 5e-5
+
+#: Mean F1 tolerance: the committed mean is ``round(mean(round(f1_i, 4)), 4)``
+#: (``evaluate_multi_run_mean``), so it carries two roundings.
+F1_MEAN_TOL = 1e-4 + 1e-9
 
 
 def read_tile_confusion(eval_path: Path) -> dict | None:
@@ -861,43 +892,99 @@ def join_sensitivity_gate(
     return gate, mcc_join
 
 
-def compare_present(recorded: Any, replay: Any,
-                    where: str = "") -> tuple[list[str], list[str]]:
-    """Compare every scalar field the RECORD holds with the replay's.
+#: Explicit schema translations for :func:`compare_present` (Astra R2-1).
+#: A field the RECORD holds must be present in the replay; the only escape
+#: is an entry here, keyed by the record's dotted path and naming the
+#: replay's field (dotted, from the replay block's root) that carries the
+#: same quantity under a later schema. Empty on purpose: a survey of the
+#: 2,763 committed ``evaluation.json`` files on zbook (2026-11-19) found
+#: every recorded ``tile_join_diagnostics``, ``detection_scope`` and
+#: ``tile_join_withheld`` field the single-set replay compares also in the
+#: replay's schema (``detection_scope.n_passes`` exists only in multi-pass
+#: rollups, which this replay does not cover). Add an entry only with a
+#: written rationale beside it.
+REPLAY_SCHEMA_TRANSLATIONS: dict[str, str] = {}
+
+
+def _lookup(block: Any, dotted: str) -> tuple[bool, Any]:
+    """Follow a dotted path through nested dicts: ``(found, value)``."""
+    node = block
+    for part in dotted.split("."):
+        if not isinstance(node, dict) or part not in node:
+            return False, None
+        node = node[part]
+    return True, node
+
+
+def compare_present(recorded: Any, replay: Any, where: str = "",
+                    _root: Any = None) -> tuple[list[str], list[str], list[str]]:
+    """Compare every field the RECORD holds with the replay's.
 
     Astra W1-C4: a recorded refusal (or diagnostic block) is reproduced only
-    when every count it records reproduces, not merely its reason. Fields an
-    old record lacks are not invented; a field the record holds but the
-    replay's schema does not is listed as not comparable, never as a pass.
+    when every count it records reproduces, not merely its reason. Astra
+    R2-1: the comparison is one-sided in the record's favour, never the
+    replay's —
+
+    * a field the record holds with a value is compared, and a field (or a
+      whole block) the record holds but the replay LACKS is a mismatch,
+      unless :data:`REPLAY_SCHEMA_TRANSLATIONS` names the replay field that
+      carries it, which is then compared in its place;
+    * a field the record holds as ``null`` (an old record that did not
+      measure it) is NOT comparable, and is listed as such, never counted
+      as compared;
+    * a field only the replay has is not invented into the record (it is
+      what a newer schema added);
+    * list values (descriptive samples, not counts) must be present, but
+      are not compared.
 
     Args:
         recorded: The committed block (dict, list or scalar).
         replay: The replay's block of the same shape.
         where: The dotted path, for messages.
+        _root: The replay's root block, for translations (internal).
 
     Returns:
-        ``(compared, mismatches)``: dotted paths compared, and one message per
-        field that differs (``"not comparable"`` entries are in neither).
+        ``(compared, mismatches, not_comparable)``: dotted paths compared,
+        one message per field that differs or is missing from the replay,
+        and the dotted paths the record holds as ``null``.
     """
+    root = replay if _root is None else _root
     compared: list[str] = []
     mismatches: list[str] = []
+    not_comparable: list[str] = []
     if isinstance(recorded, dict):
         if not isinstance(replay, dict):
-            return compared, [f"{where or '.'}: the replay has no block here"]
+            return compared, [f"{where or '.'}: the replay has no block here"], []
         for key, value in recorded.items():
-            if value is None or key not in replay:
+            path = f"{where}.{key}" if where else key
+            if value is None:
+                not_comparable.append(path)
                 continue
-            c, m = compare_present(value, replay[key], f"{where}.{key}" if where else key)
+            if key in replay:
+                counterpart = replay[key]
+            elif path in REPLAY_SCHEMA_TRANSLATIONS:
+                found, counterpart = _lookup(root, REPLAY_SCHEMA_TRANSLATIONS[path])
+                if not found:
+                    mismatches.append(
+                        f"{path}: recorded {value!r}, and the replay lacks both "
+                        f"it and its translation {REPLAY_SCHEMA_TRANSLATIONS[path]}")
+                    continue
+            else:
+                mismatches.append(f"{path}: recorded {value!r}, the replay lacks "
+                                  f"this field")
+                continue
+            c, m, n = compare_present(value, counterpart, path, root)
             compared += c
             mismatches += m
-        return compared, mismatches
+            not_comparable += n
+        return compared, mismatches, not_comparable
     if isinstance(recorded, (list, tuple)) or isinstance(replay, (list, tuple)):
-        return compared, mismatches  # sample lists are descriptive, not counts
+        return compared, mismatches, not_comparable  # descriptive, not counts
     if isinstance(recorded, bool) or isinstance(recorded, (int, float, str)):
         compared.append(where)
         if recorded != replay:
             mismatches.append(f"{where}: recorded {recorded!r}, replay {replay!r}")
-    return compared, mismatches
+    return compared, mismatches, not_comparable
 
 
 def validate_detection_scope(label: str, gdf_det: gpd.GeoDataFrame,
@@ -924,11 +1011,11 @@ def validate_detection_scope(label: str, gdf_det: gpd.GeoDataFrame,
     except ImportError:
         from evaluate_detections import describe_detection_scope  # noqa: PLC0415
 
-    compared, mismatches = compare_present(
+    compared, mismatches, not_comparable = compare_present(
         recorded, describe_detection_scope(gdf_det, gdf_bounds), "detection_scope")
     if mismatches:
         raise ReproductionDriftError(f"{label}: " + "; ".join(mismatches))
-    return {"compared": compared}
+    return {"compared": compared, "not_comparable": not_comparable}
 
 
 def validate_recorded_classification(
@@ -992,16 +1079,25 @@ def validate_recorded_classification(
         expected = block.get("withheld_reason")
         if "error" in replay and replay.get("reason") == expected:
             # W1-C4: the reason alone is not a reproduction; every count the
-            # committed refusal records must reproduce too.
-            compared, mismatches = compare_present(
-                block.get("tile_join_diagnostics") or {},
-                replay.get("tile_join_diagnostics") or {}, "tile_join_diagnostics")
+            # committed refusal records must reproduce too, and a count the
+            # record holds that the replay no longer emits is a failure, not
+            # a skip (R2-1). A record with no diagnostics at all (an old
+            # one) has nothing comparable, and says so.
+            recorded_diag = block.get("tile_join_diagnostics")
+            if recorded_diag is None:
+                compared, mismatches = [], []
+                not_comparable = ["tile_join_diagnostics"]
+            else:
+                compared, mismatches, not_comparable = compare_present(
+                    recorded_diag, replay.get("tile_join_diagnostics"),
+                    "tile_join_diagnostics")
             if mismatches:
                 raise ReproductionDriftError(
                     f"{label}: the recorded refusal ({expected}) reproduces in "
                     f"reason but not in its counts: " + "; ".join(mismatches))
             return {"recorded_join": recorded_join, "passed": True,
-                    "expected_refusal": expected, "compared": compared}
+                    "expected_refusal": expected, "compared": compared,
+                    "not_comparable": not_comparable}
         raise ReproductionDriftError(
             f"{label}: the committed record is a refusal ({expected}) under "
             f"'{recorded_join}', but the replay gave "
@@ -1149,9 +1245,13 @@ def validate_recorded_count_table(
     * otherwise a table: the replay must not refuse, the evaluation must not
       record a refusal, and for a single-set cell the micro-F1 of the table
       must equal the committed F1 at ``buffer_metres`` to its four decimals.
-      (A replicate-mean cell's committed F1 is a mean over passes, which the
-      pass-averaged table's micro-F1 does not equal by construction, so it
-      is checked on refusal status only; the record says so.)
+      A replicate-mean cell's committed F1 is the mean of per-pass F1s,
+      which the pass-averaged table's micro-F1 does not equal, so each pass
+      is replayed and the record's per-pass F1s and their mean are compared
+      (:func:`_validate_replicate_mean_f1`; Astra R2-3). A record whose
+      ``per_run`` count differs from the replay's pass count is drift; a
+      record this replay cannot reconstruct is held
+      (:class:`ReplayRouteUnsupportedError`), never passed.
 
     On the expected-refusal route (W1-C4, W1.4) a single-set cell must also
     reproduce its unaffected point values (F1, precision and recall at
@@ -1182,9 +1282,11 @@ def validate_recorded_count_table(
     """
     own = recorded_refusal(evaluation)
     expected = own or expected_refusal
+    per_pass: list[dict] = []
     try:
         tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order,
-                                             buffer_metres, recorded_join)
+                                             buffer_metres, recorded_join,
+                                             per_pass=per_pass)
     except (ValueError, ConfusionGateError) as error:
         code = refusal_code(error)
         if code is not None and code == expected:
@@ -1207,6 +1309,11 @@ def validate_recorded_count_table(
             f"{label}: the evaluation records a refusal ({own}), but the count "
             f"table replays under '{recorded_join}'")
     record = {"recorded_join": recorded_join, "passed": True, "n_passes": n_passes}
+    per_run = evaluation.get("per_run")
+    if isinstance(per_run, list) and len(per_run) != n_passes:
+        raise ReproductionDriftError(
+            f"{label}: the evaluation averages {len(per_run)} passes, the "
+            f"replay under '{recorded_join}' scores {n_passes}")
     if n_passes == 1:
         eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
         replay_f1 = micro_f1(tp.sum(), fp.sum(), fn.sum())
@@ -1216,8 +1323,79 @@ def validate_recorded_count_table(
                 f"{label}: the count table replayed under '{recorded_join}' gives "
                 f"micro-F1 {replay_f1:.6f}, the evaluation records {eval_f1:.4f}")
     else:
-        record["f1_check"] = "not applicable: replicate-mean cell"
+        record.update(_validate_replicate_mean_f1(
+            label, eval_path, evaluation, per_pass, buffer_metres, recorded_join))
     return record
+
+
+def _validate_replicate_mean_f1(label: str, eval_path: Path, evaluation: dict,
+                                per_pass: list[dict], buffer_metres: int,
+                                recorded_join: str) -> dict:
+    """Reconstruct a replicate-mean cell's committed F1 pass by pass (R2-3).
+
+    ``evaluate_multi_run_mean`` publishes the arithmetic mean of the
+    per-pass F1s (each rounded to 4 dp), NOT the micro-F1 of the
+    pass-averaged count table, so the table cannot be compared with it.
+    This rebuilds the statistic the record holds instead: each pass's
+    whole-frame micro-F1 under the recorded count-table rule, matched to
+    the record's ``per_run`` F1s, and their mean against the committed
+    summary F1. Passes are matched as sorted values, since their labels
+    (file stems) need not be unique; sorted pairing is the matching that
+    minimises the largest difference, so no valid pairing is missed.
+
+    Args:
+        label: Cell label.
+        eval_path: The committed evaluation's path.
+        evaluation: The parsed evaluation.
+        per_pass: Per-pass whole-frame totals from :func:`cell_per_tile`.
+        buffer_metres: The F1 buffer.
+        recorded_join: The recorded count-table rule (for messages).
+
+    Returns:
+        The F1 part of the validation record.
+
+    Raises:
+        ReplayRouteUnsupportedError: If the record was written by another
+            writer (a native adapter) or keeps no ``per_run`` block.
+        ReproductionDriftError: If a pass's F1 or the mean does not reproduce.
+    """
+    writer = (evaluation.get("_metadata") or {}).get("script_path")
+    per_run = evaluation.get("per_run")
+    if not writer or Path(str(writer)).name != EVALUATOR_SCRIPT_NAME:
+        raise ReplayRouteUnsupportedError(
+            f"{label}: a replicate-mean record written by {writer!r}, not "
+            f"{EVALUATOR_SCRIPT_NAME}, cannot be reconstructed by this replay; "
+            f"it is held for its own replay route, not passed")
+    if not isinstance(per_run, list):
+        raise ReplayRouteUnsupportedError(
+            f"{label}: a replicate-mean record ({len(per_pass)} passes) with no "
+            f"per_run block has no per-pass F1 to reconstruct; it is held for "
+            f"its own replay route, not passed")
+    try:
+        recorded = sorted(
+            float(next(b["f1"] for b in run["buffers"]
+                       if b.get("buffer_metres") == buffer_metres))
+            for run in per_run)
+    except (StopIteration, KeyError, TypeError) as error:
+        raise ReproductionDriftError(
+            f"{label}: a per_run entry records no F1 at {buffer_metres} m") from error
+    replay = sorted(micro_f1(p["tp"], p["fp"], p["fn"]) for p in per_pass)
+    differing = [f"recorded {r:.4f}, replay {q:.6f}" for r, q in zip(recorded, replay)
+                 if abs(q - r) > F1_RECORD_TOL]
+    if differing:
+        raise ReproductionDriftError(
+            f"{label}: replayed under '{recorded_join}', {len(differing)} of "
+            f"{len(per_pass)} passes' F1 do not reproduce: " + "; ".join(differing))
+    eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
+    replay_mean = float(np.mean([round(q, 4) for q in replay]))
+    if abs(replay_mean - eval_f1) > F1_MEAN_TOL:
+        raise ReproductionDriftError(
+            f"{label}: the mean of the replayed per-pass F1s is "
+            f"{replay_mean:.6f}, the evaluation records {eval_f1:.4f}")
+    return {"f1_check": "per-pass F1 and their mean (replicate-mean cell)",
+            "eval_f1": eval_f1, "replay_mean_f1": round(replay_mean, 6),
+            "per_pass_eval_f1": recorded,
+            "per_pass_replay_f1": [round(q, 6) for q in replay]}
 
 
 def _reproduce_refused_cell(label: str, cli: dict, gdf_ref: gpd.GeoDataFrame,
@@ -1252,16 +1430,17 @@ def _reproduce_refused_cell(label: str, cli: dict, gdf_ref: gpd.GeoDataFrame,
         p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds,
                                          buffer_metres=buffer_metres)
         replay = {"f1": round(f1, 4), "precision": round(p, 4), "recall": round(r, 4)}
-        compared, mismatches = compare_present(
+        compared, mismatches, not_comparable = compare_present(
             {k: row.get(k) for k in replay}, replay, "point")
         if mismatches:
             raise ReproductionDriftError(f"{label}: " + "; ".join(mismatches))
         out["point_compared"] = compared
+        out["point_not_comparable"] = not_comparable
     withheld = (evaluation.get("summary") or {}).get("tile_join_withheld") or {}
     if withheld:
         probe_join = recorded_classification if recorded_join == "id" else recorded_join
         replay = describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, probe_join) or {}
-        compared, mismatches = compare_present(
+        compared, mismatches, not_comparable = compare_present(
             {"reason": withheld.get("reason"), "shortfall": withheld.get("shortfall")},
             {"reason": replay.get("reason"), "shortfall": replay.get("shortfall")},
             "tile_join_withheld")
@@ -1270,6 +1449,7 @@ def _reproduce_refused_cell(label: str, cli: dict, gdf_ref: gpd.GeoDataFrame,
                 f"{label}: the recorded refusal does not reproduce: "
                 + "; ".join(mismatches))
         out["refusal_compared"] = compared
+        out["refusal_not_comparable"] = not_comparable
     return out
 
 
@@ -1682,7 +1862,13 @@ def load_cells(
             gdf_det_mcc = cell_detections(cli, gdf_bounds)
             validation["detection_scope"] = validate_detection_scope(
                 cond["label"], gdf_det_mcc, gdf_bounds, r["evaluation"])
-        if want_mcc and not same_join:
+        # R2-2: the classification record is validated whenever EITHER rule
+        # changes, not only the classification join. With the join unchanged
+        # and only the count table new, the step-2 gate below sits inside the
+        # handler that withholds, so a historical confusion mismatch would
+        # otherwise surface as an ordinary withholding after the new count
+        # table was computed, instead of stopping the run before it.
+        if want_mcc and (not same_join or recorded_ct != count_table_join):
             if gdf_det_mcc is None:
                 gdf_det_mcc = cell_detections(cli, gdf_bounds)
             validation["classification"] = validate_recorded_classification(
@@ -1791,6 +1977,8 @@ def load_cells(
                         cells[-1]["mcc"],
                         geometry_check=join_diagnostics,
                     )
+                    if "classification" in validation:
+                        gate["validation"] = validation["classification"]
                 else:
                     gate, mcc_join = join_sensitivity_gate(
                         cond["label"], gdf_det, gdf_ref, gdf_bounds, rebuilt,

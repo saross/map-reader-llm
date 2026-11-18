@@ -852,9 +852,10 @@ class TestReplayOrder:
         real = t.cell_per_tile
 
         def spy(cli, gdf_ref, gdf_bounds, tile_order, buffer_metres=20,
-                count_table_join="sheet-primary"):
+                count_table_join="sheet-primary", **kwargs):
             order.append(count_table_join)
-            return real(cli, gdf_ref, gdf_bounds, tile_order, buffer_metres, count_table_join)
+            return real(cli, gdf_ref, gdf_bounds, tile_order, buffer_metres,
+                        count_table_join, **kwargs)
 
         monkeypatch.setattr(t, "cell_per_tile", spy)
         c, a = _write_board(tmp_path, {"a": _perfect(), "b": differing_detections()})
@@ -1007,13 +1008,89 @@ def test_w1_c4_recorded_refusal_checked_count_by_count(monkeypatch, n_assigned, 
             t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
 
 
-def test_compare_present_never_invents_fields():
+def test_compare_present_is_strict_on_the_replay_and_lenient_on_the_record():
+    """Astra R2-1: a field the record holds and the replay lacks is a
+    mismatch (the previous test asserted the opposite); a field the record
+    holds as null is listed as not comparable; a field only the replay has
+    is never invented into the record."""
     from scripts.era1_leaderboard_tiering import compare_present
 
-    compared, mismatches = compare_present({"a": 1, "b": None, "c": 2}, {"a": 1, "d": 9})
-    assert compared == ["a"] and mismatches == []
-    _, mismatches = compare_present({"a": 1}, {"a": 2})
-    assert mismatches == ["a: recorded 1, replay 2"]
+    compared, mismatches, not_comparable = compare_present(
+        {"a": 1, "b": None, "c": 2}, {"a": 1, "d": 9})
+    assert compared == ["a"]
+    assert mismatches == ["c: recorded 2, the replay lacks this field"]
+    assert not_comparable == ["b"]
+
+
+@pytest.mark.parametrize("replay, message", [
+    ({"x": {"n": 2, "m": 1}}, "x.n: recorded 1, replay 2"),           # changed value
+    ({"x": {"m": 1}}, "x.n: recorded 1, the replay lacks this field"),  # removed field
+    ({}, "x: recorded {'n': 1, 'm': 1}, the replay lacks this field"),  # removed block
+    ({"x": None}, "x: the replay has no block here"),                  # emptied block
+])
+def test_compare_present_catches_each_kind_of_replay_loss(replay, message):
+    from scripts.era1_leaderboard_tiering import compare_present
+
+    _, mismatches, _ = compare_present({"x": {"n": 1, "m": 1}}, replay)
+    assert mismatches == [message]
+
+
+def test_compare_present_honours_an_explicit_schema_translation(monkeypatch):
+    from scripts import era1_leaderboard_tiering as t
+
+    monkeypatch.setattr(t, "REPLAY_SCHEMA_TRANSLATIONS", {"x.old": "x.new"})
+    compared, mismatches, _ = t.compare_present({"x": {"old": 3}}, {"x": {"new": 3}})
+    assert compared == ["x.old"] and mismatches == []
+    _, mismatches, _ = t.compare_present({"x": {"old": 3}}, {"x": {"new": 4}})
+    assert mismatches == ["x.old: recorded 3, replay 4"]
+    _, mismatches, _ = t.compare_present({"x": {"old": 3}}, {"x": {}})
+    assert mismatches and "translation x.new" in mismatches[0]
+
+
+def test_no_schema_translation_is_in_force():
+    """The table ships empty: every entry must be added deliberately."""
+    from scripts.era1_leaderboard_tiering import REPLAY_SCHEMA_TRANSLATIONS
+
+    assert REPLAY_SCHEMA_TRANSLATIONS == {}
+
+
+@pytest.mark.parametrize("mode", ["removed_field", "removed_block", "no_diagnostics"])
+def test_r2_1_a_replay_that_drops_recorded_refusal_counts_stops(monkeypatch, mode):
+    """Astra R2-1, on the real committed refusal block: a replay that no
+    longer emits a count the record holds (one field, or the whole
+    diagnostics block) is a reproduction failure, not a pass with fewer
+    fields compared."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = json.loads((REPO / _G37).read_text())
+    block = evaluation["summary"]["tile_classification"]
+    diag = json.loads(json.dumps(block["tile_join_diagnostics"]))
+    replay: dict[str, Any] = {"error": "refused", "reason": block["withheld_reason"]}
+    if mode == "removed_field":
+        del diag["detections"]["n_assigned"]
+        replay["tile_join_diagnostics"] = diag
+    elif mode == "removed_block":
+        del diag["references"]
+        replay["tile_join_diagnostics"] = diag
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: replay)
+    with pytest.raises(t.ReproductionDriftError, match="the replay lacks|no block here"):
+        t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
+
+
+def test_r2_1_an_old_refusal_record_without_diagnostics_is_listed(monkeypatch):
+    """A record that predates the diagnostics has nothing to compare; it is
+    listed as not comparable, never reported as compared."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = json.loads((REPO / _G37).read_text())
+    block = evaluation["summary"]["tile_classification"]
+    replay = {"error": "refused", "reason": block["withheld_reason"],
+              "tile_join_diagnostics": block["tile_join_diagnostics"]}
+    del block["tile_join_diagnostics"]
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: replay)
+    record = t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
+    assert record["compared"] == []
+    assert record["not_comparable"] == ["tile_join_diagnostics"]
 
 
 def test_the_two_refusal_paths_emit_different_fields():
@@ -1258,3 +1335,157 @@ def test_a_l4_the_describer_books_the_sheet_scoped_population():
     assert refusal["shortfall"] == {
         "axis": "detections", "n_booked": 3, "n_inside_union": 4, "n_outside_union": 1,
         "n_multi_tile": None, "shortfall": 1}
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Astra's re-review (R2-2 to R2-6)
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+def test_r2_2_classification_drift_stops_a_count_table_only_change(tmp_path, monkeypatch):
+    """Recorded (id, id), requested (id, sheet-primary): the classification
+    join is unchanged, but the historical confusion is still validated in
+    step 1, so its drift STOPS the run before any table is built under the
+    new count-table rule, instead of surfacing as an MCC withholding."""
+    from scripts import era1_leaderboard_tiering as t
+
+    c, a = _write_board(tmp_path, {"a": _perfect()})
+    ev = tmp_path / "eval_a.json"
+    doc = json.loads(ev.read_text())
+    doc["summary"]["tile_classification"]["confusion"]["tp"] += 1
+    ev.write_text(json.dumps(doc))
+    order: list[str] = []
+    real = t.cell_per_tile
+
+    def spy(*args, **kwargs):
+        order.append(args[5] if len(args) > 5 else kwargs.get("count_table_join"))
+        return real(*args, **kwargs)
+
+    monkeypatch.setattr(t, "cell_per_tile", spy)
+    with pytest.raises(t.ReproductionDriftError, match="reproduction drift"):
+        t.load_cells(c, a, "board", None, None, withheld=[], want_mcc=True,
+                     tile_join="id", count_table_join="sheet-primary")
+    assert order == ["id"]  # the historical replay only; nothing new computed
+
+
+def test_r2_2_a_matching_record_still_scores_the_new_count_table(tmp_path):
+    from scripts import era1_leaderboard_tiering as t
+
+    c, a = _write_board(tmp_path, {"a": _perfect()})
+    (cell,) = t.load_cells(c, a, "board", None, None, withheld=[], want_mcc=True,
+                           tile_join="id", count_table_join="sheet-primary")[0]
+    assert cell["validation"]["classification"]["passed"] is True
+    assert cell["mcc_gate"]["validation"]["recorded_join"] == "id"
+    # The id join's committed MCC stands (a merged perfect detector scores
+    # below 1 under id: the D72 defect, which the classification join fixes).
+    recorded = json.loads((tmp_path / "eval_a.json").read_text())
+    assert cell["mcc"] == pytest.approx(
+        recorded["summary"]["tile_classification"]["mcc"]["point"], abs=5e-5)
+
+
+def _write_replicate_board(tmp_path: Path, passes: list[gpd.GeoDataFrame], *,
+                           per_run_f1: list[float] | None = None,
+                           mean_f1: float | None = None,
+                           writer: str | None = "scripts/evaluate_detections.py",
+                           per_run: bool = True) -> tuple[Path, Path]:
+    """A one-cell board whose cell is a replicate mean over ``passes``.
+
+    The record is what ``evaluate_detections.py`` writes for several runs:
+    each pass's F1 (rounded to 4 dp) in ``per_run``, and their mean in the
+    summary. ``per_run_f1`` / ``mean_f1`` override the recorded values.
+    """
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    bpath = _write(bounds, tmp_path / "bounds.geojson")
+    rpath = _write(refs, tmp_path / "refs.geojson")
+    pool = tmp_path / "pool"
+    f1s = []
+    for i, det in enumerate(passes, start=1):
+        (pool / f"rep_{i}").mkdir(parents=True)
+        _write(det, pool / f"rep_{i}" / "consensus.geojson")
+        f1s.append(round(calculate_f1_internal(det, refs, bounds, 20)[2], 4))
+    f1s = per_run_f1 or f1s
+    rec = calculate_tile_classification(passes[0], refs, bounds, tile_join="id")
+    meta: dict[str, Any] = {"cli_args": {"detections_dir": str(pool),
+                                         "glob": "rep_*/consensus.geojson",
+                                         "bounds": str(bpath), "ground_truth": str(rpath)}}
+    if writer is not None:
+        meta["script_path"] = writer
+    doc: dict[str, Any] = {"_metadata": meta, "summary": {
+        "n_runs": len(passes),
+        "buffers": [{"buffer_metres": 20,
+                     "f1": mean_f1 if mean_f1 is not None else round(float(np.mean(f1s)), 4)}],
+        "tile_classification": {"confusion": {k: rec[k] for k in ("tp", "tn", "fp", "fn")},
+                                "mcc": {"point": rec["mcc"]}}}}
+    if per_run:
+        doc["per_run"] = [{"label": "consensus",
+                           "buffers": [{"buffer_metres": 20, "f1": f}]} for f in f1s]
+    ev = tmp_path / "eval_rep.json"
+    ev.write_text(json.dumps(doc))
+    cpath = tmp_path / "run-conditions.json"
+    cpath.write_text(json.dumps({"decomposition": {"r": {"conditions": [
+        {"label": "rep", "eval_path": str(ev), "architecture": "consensus"}]}}}))
+    apath = tmp_path / "run-analyses.json"
+    apath.write_text(json.dumps({"analyses": [{"analysis_id": "board",
+                                               "conditions_compared": ["r::rep"]}]}))
+    return cpath, apath
+
+
+class TestReplicateMeanReplay:
+    """Astra R2-3: a replicate-mean cell's committed F1 is the mean of its
+    per-pass F1s; each pass and the mean are reconstructed and compared,
+    for two passes as for one."""
+
+    def _passes(self) -> list[gpd.GeoDataFrame]:
+        return [_perfect(), differing_detections()]
+
+    def test_a_faithful_record_passes_pass_by_pass(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        c, a = _write_replicate_board(tmp_path, self._passes())
+        (cell,) = t.load_cells(c, a, "board", None, None, withheld=[])[0]
+        ct = cell["validation"]["count_table"]
+        assert ct["n_passes"] == 2
+        assert len(ct["per_pass_eval_f1"]) == 2
+        assert ct["per_pass_replay_f1"] == pytest.approx(ct["per_pass_eval_f1"], abs=5e-5)
+        assert ct["replay_mean_f1"] == pytest.approx(ct["eval_f1"], abs=1e-4)
+        assert "not applicable" not in ct["f1_check"]
+
+    def test_a_changed_pass_f1_is_caught_with_two_passes(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        bounds, refs = synthetic_bounds(), synthetic_refs()
+        f1s = [round(calculate_f1_internal(d, refs, bounds, 20)[2], 4)
+               for d in self._passes()]
+        wrong = [f1s[0], round(f1s[1] - 0.05, 4)]
+        c, a = _write_replicate_board(tmp_path, self._passes(), per_run_f1=wrong,
+                                      mean_f1=round(float(np.mean(f1s)), 4))
+        with pytest.raises(t.ReproductionDriftError, match="1 of 2 passes' F1"):
+            t.load_cells(c, a, "board", None, None, withheld=[])
+
+    def test_a_changed_mean_is_caught_with_two_passes(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        c, a = _write_replicate_board(tmp_path, self._passes(), mean_f1=0.1)
+        with pytest.raises(t.ReproductionDriftError, match="mean of the replayed"):
+            t.load_cells(c, a, "board", None, None, withheld=[])
+
+    def test_a_different_pass_count_is_drift(self, tmp_path):
+        from scripts import era1_leaderboard_tiering as t
+
+        bounds, refs = synthetic_bounds(), synthetic_refs()
+        f1 = round(calculate_f1_internal(_perfect(), refs, bounds, 20)[2], 4)
+        c, a = _write_replicate_board(tmp_path, self._passes(), per_run_f1=[f1, f1, f1])
+        with pytest.raises(t.ReproductionDriftError, match="averages 3 passes"):
+            t.load_cells(c, a, "board", None, None, withheld=[])
+
+    @pytest.mark.parametrize("kwargs, message", [
+        ({"writer": "scripts/register_pass1_adapt.py"}, "register_pass1_adapt"),
+        ({"writer": None}, "written by None"),
+        ({"per_run": False}, "no per_run block"),
+    ])
+    def test_a_record_this_replay_cannot_rebuild_is_held(self, tmp_path, kwargs, message):
+        from scripts import era1_leaderboard_tiering as t
+
+        c, a = _write_replicate_board(tmp_path, self._passes(), **kwargs)
+        with pytest.raises(t.ReplayRouteUnsupportedError, match=message):
+            t.load_cells(c, a, "board", None, None, withheld=[])
