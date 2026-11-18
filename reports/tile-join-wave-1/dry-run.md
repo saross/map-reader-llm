@@ -1,6 +1,6 @@
 # Tile-join Wave 1 — dry run, census, and worklist (W1.0)
 
-> **Last revised**: 2026-11-19 (seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (§ 2.3: every GS frame checked, no map-content contact; seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), Wave 1 census agent (work item W1.0). Driven from
@@ -306,6 +306,73 @@ proximity, not a check of each feature's identity); r2, the
 best-available file, and the student files carry no `phantom` layer (r2's
 layers are `student` 4,726, `extension` 278, `audit` 14 by `gt_id`
 prefix).
+
+### 2.3 Every gold-standard frame (Wave 2 precondition P4)
+
+**Result: no contact on any GS frame lies on map content.** Every
+measured cross-sheet contact on the twelve GS frames is padding. Of the
+contacts on the two H13 arms whose own tiles are not on disk, 86 were
+measured on a substitute image of the same sheet (all padding) and 6 lie
+outside the sheet's scan altogether (below). Nothing here is of the
+55-map stop's class.
+
+**Method.** `reports/tile-join-wave-1/scripts/sheet_check_gs_frames.py`
+(zbook, 2026-11-19, at the commit that adds it): the 55-map check's
+geometry and pixel functions, unchanged thresholds, applied to the GS
+references (`inputs/vectors/references/mounds-reference.geojson`, 569
+points, sheet from `Map`) on every distinct GS frame that a tile-bearing
+evaluation in `worklist.json` uses. Tile names repeat across tilings, so
+each contact is measured on the image whose world file and pixel size
+reproduce the frame polygon within 1 m (its **own tile**). Where no such
+image exists, a **substitute** image of the same sheet containing the
+point was measured and is labelled so. The seven contacted 256 px tiles
+exist only on amd-tower; those 7 PNGs and their world files were copied
+to zbook scratch (`~/scratch/wave1/w10/gs-frames/tiles_256/`), so the
+256 px frame was measured on its own tiles. Outputs:
+`scripts/out/sheet_check_gs_frames.txt` and `.json`; crops (166) in
+`~/scratch/wave1/w10/gs-frames/crops/<frame>/`.
+
+**Cross-sheet reference pairs.** None within 1,000 m anywhere in the GS
+(the parent record's 1,313.0 m closest pair), so none within 500 m on any
+frame.
+
+| Frame (bounds file) | Evaluations | Tiles (own image on disk) | References inside | Pairs ≤ 500 m | Contacts (references) | Padding | Ambiguous | Map content | Measured on |
+|---|---:|---|---:|---:|---|---:|---:|---:|---|
+| `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` | 1,101 | 487 (487) | 435 | 0 | 16 (15) | 16 | 0 | 0 | own tiles |
+| `inputs/vectors/bounds/full_evaluation_bounds.geojson` (512 px) | 739 | 340 (340) | 539 | 0 | 17 (15) | 17 | 0 | 0 | own tiles |
+| `inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson` | 254 | 487 (455) | 435 | 0 | 16 (15) | 16 | 0 | 0 | own tiles |
+| `results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson` | 153 | 467 (435) | 429 | 0 | 16 (15) | 16 | 0 | 0 | own tiles |
+| `results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson` | 82 | 315 (315) | 493 | 0 | 17 (15) | 17 | 0 | 0 | own tiles |
+| `outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson` | 64 | 487 (438) | 428 | 0 | 16 (15) | 16 | 0 | 0 | own tiles |
+| `inputs/vectors/bounds/384/h10_test_bounds.geojson` | 40 | 327 (327) | 319 | 0 | 4 (4) | 4 | 0 | 0 | own tiles |
+| `inputs/vectors/bounds/256/full_evaluation_bounds.geojson` | 16 | 1,032 (7 copied) | 431 | 0 | 15 (14) | 15 | 0 | 0 | own tiles (copied from amd-tower) |
+| `outputs/h13/scoring/bounds/h13_common_bounds.geojson` | 3 | 340 (278) | 538 | 0 | 17 (15) | 17 | 0 | 0 | own tiles |
+| `outputs/h13/scoring/bounds/h13_armA_bounds.geojson` | 1 | 340 (340) | 539 | 0 | 17 (15) | 17 | 0 | 0 | own tiles |
+| `outputs/h13/scoring/bounds/h13_armB_bounds.geojson` (512 px, overlap 128) | 1 | 430 (16) | 563 | 0 | 26 (15) | 26 | 0 | 0 | **substitute** for all 26 |
+| `outputs/h13/scoring/bounds/h13_armC_bounds.geojson` (512 px, overlap 256) | 1 | 999 (35) | 565 | 0 | 66 (18) | 60 | 0 | 0 | **substitute** for 60; **own tiles unavailable** for 6 |
+| **All twelve** | 2,455 | | | **0** | **243** | **237** | **0** | **0** | 6 unavailable |
+
+("Evaluations" counts the tile-bearing files in `worklist.json` with that
+frame and the GS reference. "Own image on disk" is lower where a frame
+clips tiles, so the polygon no longer matches a whole tile image, or
+where the tiling was never written to disk: `inputs/tiles_512_ov128/` and
+`inputs/tiles_512_ov256/` hold manifests but no PNGs on zbook or
+amd-tower. Every contact on a clipping frame matched its own tile.)
+
+**Where.** Every contact on every frame is the same pattern the parent
+record found on Era-2: an Elenovo (K-35-053-3) reference inside a tile of
+K-35-052-4's last column (`x4032`, or `x3840`/`x4096` on the H13 arms), at
+pixel columns 134.4–298.5, where the map content along the point's row ends
+between columns 95 and 116 (in the image measured) and the window around the point is 100 % near-black.
+
+**The six unavailable H13 arm C contacts** are fids 2, 46, and 180, each
+in two `K-35-052-4_32635_x4096_*` tiles. No image of that sheet on disk
+contains them. Measured instead against the source scan
+(`inputs/rasters/K-35-052-4_32635.tif`, EPSG:32635, read for its bounds
+only): all six points lie 2,135.9–2,183.0 m east of the scan's right edge,
+so the tile there can only be outside the scan. That is a measurement of
+the raster extent, not of the tile's pixels; the tile itself was not
+seen.
 
 ## 3. Field schema
 
@@ -634,6 +701,14 @@ plus an idempotence rerun.
 7. One evaluation records its bounds as an absolute path.
 
 ## Changelog
+
+### 2026-11-19 — § 2.3 added: the sheet check on every GS frame
+
+Trigger: the main session's request, from the Wave 2 specification
+draft's precondition P4 (`planning/tile-join-wave-2-spec-2026-11-19.md`
+on `main` at `7d6e1e881`). Twelve GS frames, 243 contacts, all padding
+where measured; no map-content contact; 6 H13 arm C contacts with no
+tile on disk lie outside the K-35-052-4 scan. No other section changed.
 
 ### 2026-11-19 — Seam counts corrected; claims made precise
 
