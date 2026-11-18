@@ -20,7 +20,8 @@
   § 10; the PI approved this revision on 2026-11-18. **Gate R is closed.
   Blocked only on the PI's approval to launch (P2).**
 - **Target**: all data and results settled, and the write-up begun, by
-  **Sunday 2026-11-22** (PI, 2026-11-18).
+  **Sunday 2026-11-29** (PI, 2026-11-18; first set to 2026-11-22, moved
+  the same day).
 - **Runs on**: zbook, **unattended from launch to M1, stopping only on a
   problem** (D73 (7); § 5). **Zero API calls.**
 
@@ -556,7 +557,7 @@ unchanged.
 | 3.7 eligibility | rule only | rule plus a (cell, family) table fixed in W1.0 |
 | G1 item 2 | confusion | confusion and committed intervals |
 | Stop list | eight conditions | adds any G1 failure, unattributed detections, unresolved eligibility rows |
-| Target | not set | Sunday 2026-11-22 |
+| Target | not set | Sunday 2026-11-29 (first set to 2026-11-22, moved the same day) |
 
 ### 2026-11-18 — Revised after gate R round 1 (S168, amd-tower)
 

@@ -16,7 +16,8 @@
   launch its specification. Nothing has been re-scored, and no committed
   result has changed.
 - **Target**: all data and results settled, and the write-up begun, by
-  **Sunday 2026-11-22** (PI, 2026-11-18). The original 2026-11-08 target
+  **Sunday 2026-11-29** (PI, 2026-11-18; first set to 2026-11-22, moved
+  the same day). The original 2026-11-08 target
   passed during a pause in the work.
 
 ## 0. The decision in one paragraph
@@ -405,7 +406,7 @@ revision and new target. Wording and scope only; no ruling changed.
 | "Untouched" (§ 0, § 2.3) | F1, precision, recall | their point estimates |
 | § 2.6 | "no mound appears twice" | evidence stated narrowly; Astra's 16-contact pixel check added |
 | Wave S | block rule fixed before results | five items frozen in its own reviewed specification |
-| Target | not reset | Sunday 2026-11-22 |
+| Target | not reset | Sunday 2026-11-29 (first set to 2026-11-22, moved the same day) |
 
 ### 2026-11-18 — Gate R round 1 answered (S168, amd-tower)
 
