@@ -542,15 +542,30 @@ def tiering_joins(data: dict[str, Any]) -> dict[str, str]:
 
     Returns:
         ``{"classification": ..., "count_table": ...}``.
+
+    Raises:
+        ValueError: If two records of one rule disagree, or a recorded join
+            is named for the wrong purpose.
     """
     block = data.get("tile_joins") or {}
     mcc = data.get("mcc_permutation") or {}
-    return {
-        "classification": (block.get("classification") or mcc.get("tile_join")
-                           or TILE_JOIN_LEGACY_CLASSIFICATION),
-        "count_table": (block.get("count_table") or data.get("count_table_join")
-                        or TILE_JOIN_LEGACY_COUNT_TABLE),
+    records = {
+        "classification": [block.get("classification"), mcc.get("tile_join")],
+        "count_table": [block.get("count_table"), data.get("count_table_join")],
     }
+    legacy = {"classification": TILE_JOIN_LEGACY_CLASSIFICATION,
+              "count_table": TILE_JOIN_LEGACY_COUNT_TABLE}
+    out: dict[str, str] = {}
+    for purpose, values in records.items():
+        seen = {v for v in values if v is not None}
+        if len(seen) > 1:
+            # Audit A-L7: two records of one rule that disagree are refused,
+            # never resolved by whichever field is read first.
+            raise ValueError(
+                f"tiering records contradictory {purpose} joins {sorted(seen)}")
+        out[purpose] = seen.pop() if seen else legacy[purpose]
+    check_tile_joins(out["classification"], out["count_table"])
+    return out
 
 
 def committed_ranking(tiering_path: Path,
@@ -927,8 +942,14 @@ def main() -> int:
             "gates": [],
         }
         for metric in args.metrics:
+            # The classification join applies to the MCC indicators only; an
+            # F1 run is told the count-table join alone (run_mcb refuses a
+            # non-default classification join on F1, so passing --tile-join
+            # id through to F1 crashed the documented replay: audit B-C1).
+            metric_join = (args.tile_join if metric == "mcc"
+                           else TILE_JOIN_CLASSIFICATION_DEFAULT)
             path, result = run_mcb(entry, metric, out_root / entry["slug"],
-                                   args.bootstrap, args.tile_join,
+                                   args.bootstrap, metric_join,
                                    args.count_table_join)
             record["gates"].append(gate(entry, metric, result, committed))
             block = summarise(entry, result, k_of)

@@ -613,10 +613,23 @@ def main() -> int:
             mcc_sign = 1.0 if mcc_a_k == k_hi else -1.0
             d_f1 = round(f1_sign * f1_entry["observed_diff"], 6)
             d_mcc = round(mcc_sign * mcc_entry["observed_mcc_diff"], 6)
-            v_entry, v_a_k = f1_validation_by_pair[key]
-            gate = gate_against_board(by_k[v_a_k],
-                                      by_k[k_lo if v_a_k == k_hi else k_hi],
-                                      v_entry, board_cache)
+            if key in f1_validation_by_pair:
+                v_entry, v_a_k = f1_validation_by_pair[key]
+                gate = gate_against_board(by_k[v_a_k],
+                                          by_k[k_lo if v_a_k == k_hi else k_hi],
+                                          v_entry, board_cache)
+            else:
+                # Audit A-L1: the committed recipe (id, id) withholds a rung
+                # of this pair, so there is no committed p-value to gate;
+                # the refusal is reproduced and recorded, never a KeyError.
+                withheld = {w.get("ref"): w.get("reason")
+                            for w in validation.get("withheld_cells") or []}
+                gate = {"available": False, "expected_refusal": True,
+                        "why": ("the committed recipe (id, id) withholds "
+                                + ", ".join(sorted(str(r) for r in withheld))
+                                if withheld else
+                                "the validation run has no entry for this pair"),
+                        "withheld": withheld}
             gates.append({"pair": f"K{k_lo}-vs-K{k_hi}", **gate})
             mcc_block = {
                 "low": by_k[k_lo]["tile_mcc"],
