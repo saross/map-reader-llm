@@ -3404,15 +3404,15 @@ def _reference_sheet_frame(gdf_ref: gpd.GeoDataFrame) -> tuple[gpd.GeoDataFrame,
         gdf_ref: References (``Map`` or ``source_map``).
 
     Returns:
-        ``(gdf_ref, column)``. An EMPTY reference set without either column is
-        given an empty ``Map`` column, so it scopes to nothing rather than
-        raising; a non-empty one without either column raises.
-
-    Raises:
-        ValueError: As :func:`reference_map_column`, for a non-empty set.
+        ``(gdf_ref, column)``. A reference set with neither column is given a
+        ``Map`` column of nulls: every reference in it records no sheet, so
+        under a sheet join an in-frame one is refused by name
+        (:data:`TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE`) and an
+        out-of-frame one is a reported exclusion (Astra's code review).
     """
-    if len(gdf_ref) == 0 and not {"Map", "source_map"} & set(gdf_ref.columns):
-        return gdf_ref.assign(Map=pd.Series([], dtype=object)), "Map"
+    if not {"Map", "source_map"} & set(gdf_ref.columns):
+        return gdf_ref.assign(Map=pd.Series([None] * len(gdf_ref), dtype=object,
+                                            index=gdf_ref.index)), "Map"
     return gdf_ref, reference_map_column(gdf_ref)
 
 

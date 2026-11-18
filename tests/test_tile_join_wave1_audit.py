@@ -829,7 +829,8 @@ def _perfect() -> gpd.GeoDataFrame:
 def _foreign() -> gpd.GeoDataFrame:
     """Another tiling's names: the legacy id table refuses it."""
     det = _perfect().drop(columns="source_tiles")
-    det["source_tile"] = [f"{s}_x{7 + i}_y{7 + i}.png" for i, s in enumerate(synthetic_refs()["Map"])]
+    sheets = synthetic_refs()["Map"]
+    det["source_tile"] = [f"{s}_x{7 + i}_y{7 + i}.png" for i, s in enumerate(sheets)]
     return det
 
 
@@ -963,3 +964,89 @@ def test_tiering_joins_refuses_contradictions():
         mcb.tiering_joins({"tile_joins": {"count_table": "id"},
                            "count_table_join": "sheet-primary"})
     assert mcb.tiering_joins({}) == {"classification": "id", "count_table": "id"}
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Astra W1-C4: a recorded refusal reproduces in every count it records
+# ═══════════════════════════════════════════════════════════════════════════
+
+_G37 = ("results/k-ladder-2026-09-12/phase2/cells/"
+        "gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json")
+
+
+@pytest.mark.parametrize("n_assigned, reproduces", [(22, True), (525, False)])
+def test_w1_c4_recorded_refusal_checked_count_by_count(monkeypatch, n_assigned, reproduces):
+    """The real committed refusal block (22 of 526 booked under ``id``), with
+    only the replay's response varied: the same reason with other counts is
+    drift, not a reproduction."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = json.loads((REPO / _G37).read_text())
+    block = evaluation["summary"]["tile_classification"]
+    diag = json.loads(json.dumps(block["tile_join_diagnostics"]))
+    diag["detections"]["n_assigned"] = n_assigned
+    replay = {"error": "refused", "reason": block["withheld_reason"],
+              "tile_join_diagnostics": diag}
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: replay)
+    if reproduces:
+        record = t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
+        assert record["expected_refusal"] == "tile_join_detection_shortfall"
+        assert "tile_join_diagnostics.detections.n_assigned" in record["compared"]
+        assert "tile_join_diagnostics.references.n_inside_union" in record["compared"]
+    else:
+        with pytest.raises(t.ReproductionDriftError, match="n_assigned: recorded 22"):
+            t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
+
+
+def test_compare_present_never_invents_fields():
+    from scripts.era1_leaderboard_tiering import compare_present
+
+    compared, mismatches = compare_present({"a": 1, "b": None, "c": 2}, {"a": 1, "d": 9})
+    assert compared == ["a"] and mismatches == []
+    _, mismatches = compare_present({"a": 1}, {"a": 2})
+    assert mismatches == ["a: recorded 1, replay 2"]
+
+
+def test_the_two_refusal_paths_emit_different_fields():
+    """Pinned and documented (Astra's review; audit A-M1): under (X, id) with
+    X geometric, the probe asks the classification join (as before Wave 1)
+    and the id table's own refusal is caught later, so the record is the
+    late path's (``detected_by``, no vocabularies); under (id, id) the probe
+    refuses up front and the record carries both vocabularies."""
+    from scripts.evaluate_detections import evaluate_single_run
+
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    det = _foreign()
+    late = evaluate_single_run(det.copy(), refs, bounds, [20], n_bootstrap=20,
+                               compute_mcc=True, tile_join="geometric-contains",
+                               count_table_join="id")["tile_join_withheld"]
+    early = evaluate_single_run(det.copy(), refs, bounds, [20], n_bootstrap=20,
+                                compute_mcc=True, tile_join="id",
+                                count_table_join="id")["tile_join_withheld"]
+    assert late["detected_by"] == "per_tile_table_not_preflight_probe"
+    assert late["vocabularies"] is None and late["shortfall"]["n_outside_union"] is None
+    assert "detected_by" not in early and isinstance(early["vocabularies"], dict)
+    assert late["reason"] == early["reason"] == TILE_JOIN_REASON_DETECTION_SHORTFALL
+
+
+class TestReferenceAttributionEdges:
+
+    def test_an_absent_sheet_column_is_refused_in_frame(self):
+        bounds = synthetic_bounds()
+        refs = synthetic_refs().drop(columns="Map")
+        det = merged_detections(synthetic_refs(), bounds)
+        result = calculate_tile_classification(det, refs, bounds)
+        assert result["reason"] == TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE
+        assert result["n_unattributed_references_in_frame"] == len(refs)
+        with pytest.raises(TileJoinRefusalError):
+            compute_per_tile_tp_fp_fn(det, refs, bounds, 20)
+
+    def test_an_empty_reference_set_is_not_refused(self):
+        bounds = synthetic_bounds()
+        refs = gpd.GeoDataFrame(geometry=[], crs=CRS)
+        det = merged_detections(synthetic_refs(), bounds)
+        result = calculate_tile_classification(det, refs, bounds)
+        assert "error" not in result
+        assert result["tp"] == 0 and result["fp"] == 5
+        table = compute_per_tile_tp_fp_fn(det, refs, bounds, 20)
+        assert int(table["fp"].sum()) == len(det) and int(table["fn"].sum()) == 0

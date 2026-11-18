@@ -196,7 +196,13 @@ def merged_detections(refs: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame,
 
 def unmerged_detections(refs: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame,
                         column: str = "Map") -> gpd.GeoDataFrame:
-    """The perfect UNMERGED detector: one point per (mound, own-sheet tile)."""
+    """The perfect UNMERGED detector: one point per (mound, own-sheet tile).
+
+    "Unmerged" here means each mound reported once on every tile OF ITS OWN
+    SHEET that contains it, as an unmerged pass over that sheet's tiles
+    would (audit, lens B). A neighbouring sheet's tile that also contains
+    the mound is that sheet's pass, which did not see this sheet's mound.
+    """
     rows = []
     for geom, tiles in zip(refs.geometry, _own_sheet_tiles(refs, bounds, column)):
         for name in tiles:
@@ -517,7 +523,13 @@ class TestEdgeCases:
         det = merged_detections(refs, bounds).drop(columns="source_tiles")
         result = calculate_tile_classification(det, refs, bounds)
         assert result["mcc"] == pytest.approx(1.0)
-        compute_per_tile_tp_fp_fn(det, refs, bounds, 20)  # does not raise
+        # The table equals the one built WITH the origin list: source_tile
+        # alone attributes every row to the same sheet here.
+        without = compute_per_tile_tp_fp_fn(det, refs, bounds, 20)
+        with_origins = compute_per_tile_tp_fp_fn(merged_detections(refs, bounds),
+                                                 refs, bounds, 20)
+        pd.testing.assert_frame_equal(without, with_origins)
+        assert _counts(without) == {"tp": 5, "fp": 0, "fn": 0}
 
     def test_cross_sheet_origin_books_on_the_origin_sheet(self):
         """A row re-keyed to A but seen on B is booked on B (D50 restores it)."""
@@ -601,7 +613,10 @@ class TestUnattributed:
         det, refs, bounds = self._no_columns()
         frame_wide = calculate_tile_classification(
             det, refs, bounds, tile_join="geometric-contains")
-        assert "error" not in frame_wide  # booked by position, as before
+        # Booked by position across the frame, as before: every detection
+        # sits on a reference, so the detected and positive tiles coincide,
+        # A240 (padding) included.
+        assert _confusion(frame_wide) == (6, 0, 0, 2)
         by_id = calculate_tile_classification(det, refs, bounds, tile_join="id")
         assert by_id["reason"] == TILE_JOIN_REASON_NO_SOURCE_TILE
 
@@ -704,9 +719,12 @@ class TestReplayAndProvenance:
         det = merged_detections(refs, bounds)
         table = compute_per_tile_tp_fp_fn(det, refs, bounds, 20, tile_join="id")
         assert table.attrs["count_table_join"] == "id"
-        by_name = table.set_index("tile_name")
-        for name in det["source_tile"]:
-            assert by_name.loc[name, "tp"] >= 1
+        # Exactly the name rule: each merged point's TP is on the tile it is
+        # NAMED for (counted per name), and no tile it is not named for.
+        expected = det["source_tile"].value_counts().to_dict()
+        booked = {t: int(v) for t, v in zip(table["tile_name"], table["tp"]) if v}
+        assert booked == expected
+        assert int(table["fp"].sum()) == 0 and int(table["fn"].sum()) == 0
 
     def test_containment_joins_refused_for_count_tables(self):
         bounds, refs = synthetic_bounds(), synthetic_refs()

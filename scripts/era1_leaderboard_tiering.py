@@ -173,6 +173,7 @@ import sys
 from datetime import datetime, timezone
 from itertools import combinations
 from pathlib import Path
+from typing import Any
 
 import geopandas as gpd
 import numpy as np
@@ -205,6 +206,7 @@ from lib_advanced_metrics import (  # noqa: E402
     TILE_JOIN_REASON_UNATTRIBUTED_DETECTION,
     TILE_JOINS_CLASSIFICATION,
     TILE_JOINS_COUNT_TABLE,
+    calculate_f1_internal,
     calculate_tile_classification,
     check_tile_joins,
     compute_per_tile_classification,
@@ -859,6 +861,76 @@ def join_sensitivity_gate(
     return gate, mcc_join
 
 
+def compare_present(recorded: Any, replay: Any,
+                    where: str = "") -> tuple[list[str], list[str]]:
+    """Compare every scalar field the RECORD holds with the replay's.
+
+    Astra W1-C4: a recorded refusal (or diagnostic block) is reproduced only
+    when every count it records reproduces, not merely its reason. Fields an
+    old record lacks are not invented; a field the record holds but the
+    replay's schema does not is listed as not comparable, never as a pass.
+
+    Args:
+        recorded: The committed block (dict, list or scalar).
+        replay: The replay's block of the same shape.
+        where: The dotted path, for messages.
+
+    Returns:
+        ``(compared, mismatches)``: dotted paths compared, and one message per
+        field that differs (``"not comparable"`` entries are in neither).
+    """
+    compared: list[str] = []
+    mismatches: list[str] = []
+    if isinstance(recorded, dict):
+        if not isinstance(replay, dict):
+            return compared, [f"{where or '.'}: the replay has no block here"]
+        for key, value in recorded.items():
+            if value is None or key not in replay:
+                continue
+            c, m = compare_present(value, replay[key], f"{where}.{key}" if where else key)
+            compared += c
+            mismatches += m
+        return compared, mismatches
+    if isinstance(recorded, (list, tuple)) or isinstance(replay, (list, tuple)):
+        return compared, mismatches  # sample lists are descriptive, not counts
+    if isinstance(recorded, bool) or isinstance(recorded, (int, float, str)):
+        compared.append(where)
+        if recorded != replay:
+            mismatches.append(f"{where}: recorded {recorded!r}, replay {replay!r}")
+    return compared, mismatches
+
+
+def validate_detection_scope(label: str, gdf_det: gpd.GeoDataFrame,
+                             gdf_bounds: gpd.GeoDataFrame, evaluation: dict) -> dict:
+    """Reproduce the committed ``detection_scope`` counts (Astra W1-C4).
+
+    Args:
+        label: Cell label.
+        gdf_det: The cell's detections.
+        gdf_bounds: The frame.
+        evaluation: The committed evaluation.
+
+    Returns:
+        ``{"compared": [...]}``, or ``{"status": "not recorded"}``.
+
+    Raises:
+        ReproductionDriftError: If a recorded count does not reproduce.
+    """
+    recorded = (evaluation.get("summary") or {}).get("detection_scope")
+    if not isinstance(recorded, dict):
+        return {"status": "not recorded"}
+    try:  # imported as scripts.<module> (tests) or run as a script
+        from scripts.evaluate_detections import describe_detection_scope  # noqa: PLC0415
+    except ImportError:
+        from evaluate_detections import describe_detection_scope  # noqa: PLC0415
+
+    compared, mismatches = compare_present(
+        recorded, describe_detection_scope(gdf_det, gdf_bounds), "detection_scope")
+    if mismatches:
+        raise ReproductionDriftError(f"{label}: " + "; ".join(mismatches))
+    return {"compared": compared}
+
+
 def validate_recorded_classification(
     label: str,
     gdf_det: gpd.GeoDataFrame,
@@ -919,8 +991,17 @@ def validate_recorded_classification(
     if block.get("withheld"):
         expected = block.get("withheld_reason")
         if "error" in replay and replay.get("reason") == expected:
+            # W1-C4: the reason alone is not a reproduction; every count the
+            # committed refusal records must reproduce too.
+            compared, mismatches = compare_present(
+                block.get("tile_join_diagnostics") or {},
+                replay.get("tile_join_diagnostics") or {}, "tile_join_diagnostics")
+            if mismatches:
+                raise ReproductionDriftError(
+                    f"{label}: the recorded refusal ({expected}) reproduces in "
+                    f"reason but not in its counts: " + "; ".join(mismatches))
             return {"recorded_join": recorded_join, "passed": True,
-                    "expected_refusal": expected}
+                    "expected_refusal": expected, "compared": compared}
         raise ReproductionDriftError(
             f"{label}: the committed record is a refusal ({expected}) under "
             f"'{recorded_join}', but the replay gave "
@@ -1055,6 +1136,7 @@ def validate_recorded_count_table(
     evaluation: dict,
     recorded_join: str,
     expected_refusal: str | None,
+    recorded_classification: str = "id",
 ) -> dict:
     """Step 1 for the F1 arm: replay the committed per-tile table numerically.
 
@@ -1071,6 +1153,13 @@ def validate_recorded_count_table(
       pass-averaged table's micro-F1 does not equal by construction, so it
       is checked on refusal status only; the record says so.)
 
+    On the expected-refusal route (W1-C4, W1.4) a single-set cell must also
+    reproduce its unaffected point values (F1, precision and recall at
+    ``buffer_metres``) and every count of its recorded refusal record
+    (``summary.tile_join_withheld.shortfall``), replayed by the probe the
+    evaluator used: the classification join when the count table is ``id``,
+    as before Wave 1, else the count-table join.
+
     Args:
         label: Cell label.
         cli: The cell's recipe.
@@ -1082,6 +1171,8 @@ def validate_recorded_count_table(
         evaluation: The parsed evaluation.
         recorded_join: The count-table rule the evaluation recorded.
         expected_refusal: A verified expected refusal code, or ``None``.
+        recorded_classification: The classification join the evaluation
+            recorded (the historical probe's join for an ``id`` table).
 
     Returns:
         The validation record.
@@ -1097,10 +1188,14 @@ def validate_recorded_count_table(
     except (ValueError, ConfusionGateError) as error:
         code = refusal_code(error)
         if code is not None and code == expected:
-            return {"recorded_join": recorded_join, "passed": True,
-                    "expected_refusal": code,
-                    "expected_refusal_source": ("evaluation" if own else
-                                                "caller (verified input)")}
+            record = {"recorded_join": recorded_join, "passed": True,
+                      "expected_refusal": code,
+                      "expected_refusal_source": ("evaluation" if own else
+                                                  "caller (verified input)")}
+            record.update(_reproduce_refused_cell(
+                label, cli, gdf_ref, gdf_bounds, buffer_metres, evaluation,
+                recorded_join, recorded_classification))
+            return record
         if code is not None:
             raise ReproductionDriftError(
                 f"{label}: replay of the count table under the recorded rule "
@@ -1123,6 +1218,59 @@ def validate_recorded_count_table(
     else:
         record["f1_check"] = "not applicable: replicate-mean cell"
     return record
+
+
+def _reproduce_refused_cell(label: str, cli: dict, gdf_ref: gpd.GeoDataFrame,
+                            gdf_bounds: gpd.GeoDataFrame, buffer_metres: int,
+                            evaluation: dict, recorded_join: str,
+                            recorded_classification: str) -> dict:
+    """Point values and refusal counts of a refused single-set cell (W1-C4).
+
+    Args:
+        label: Cell label.
+        cli: The recipe.
+        gdf_ref: References.
+        gdf_bounds: The frame.
+        buffer_metres: The buffer whose point values are checked.
+        evaluation: The committed evaluation.
+        recorded_join: The recorded count-table rule.
+        recorded_classification: The recorded classification join.
+
+    Returns:
+        What was compared (or why nothing could be).
+
+    Raises:
+        ReproductionDriftError: If a point value or a recorded count differs.
+    """
+    if not cli.get("detections"):
+        return {"point_check": "not applicable: replicate-mean cell"}
+    gdf_det = cell_detections(cli, gdf_bounds)
+    out: dict = {}
+    row = next((b for b in (evaluation.get("summary") or {}).get("buffers") or []
+                if b.get("buffer_metres") == buffer_metres), None)
+    if row is not None:
+        p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, gdf_bounds,
+                                         buffer_metres=buffer_metres)
+        replay = {"f1": round(f1, 4), "precision": round(p, 4), "recall": round(r, 4)}
+        compared, mismatches = compare_present(
+            {k: row.get(k) for k in replay}, replay, "point")
+        if mismatches:
+            raise ReproductionDriftError(f"{label}: " + "; ".join(mismatches))
+        out["point_compared"] = compared
+    withheld = (evaluation.get("summary") or {}).get("tile_join_withheld") or {}
+    if withheld:
+        probe_join = recorded_classification if recorded_join == "id" else recorded_join
+        replay = describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, probe_join) or {}
+        compared, mismatches = compare_present(
+            {"reason": withheld.get("reason"), "shortfall": withheld.get("shortfall")},
+            {"reason": replay.get("reason"), "shortfall": replay.get("shortfall")},
+            "tile_join_withheld")
+        if mismatches:
+            raise ReproductionDriftError(
+                f"{label}: the recorded refusal does not reproduce: "
+                + "; ".join(mismatches))
+        out["refusal_compared"] = compared
+    return out
 
 
 #: Reason codes the tile-join invariant stamps into its refusal messages. A
@@ -1525,10 +1673,18 @@ def load_cells(
         if recorded_ct != count_table_join:
             validation["count_table"] = validate_recorded_count_table(
                 cond["label"], cli, gdf_ref, gdf_bounds, tile_order,
-                buffer_metres, eval_path, r["evaluation"], recorded_ct, expected)
+                buffer_metres, eval_path, r["evaluation"], recorded_ct, expected,
+                recorded_join)
         gdf_det_mcc = None
-        if want_mcc and not same_join:
+        if cli.get("detections") and (not same_join or recorded_ct != count_table_join):
+            # The recorded scope counts reproduce too (W1-C4); single-set
+            # cells only, whose one detection set the evaluation scoped.
             gdf_det_mcc = cell_detections(cli, gdf_bounds)
+            validation["detection_scope"] = validate_detection_scope(
+                cond["label"], gdf_det_mcc, gdf_bounds, r["evaluation"])
+        if want_mcc and not same_join:
+            if gdf_det_mcc is None:
+                gdf_det_mcc = cell_detections(cli, gdf_bounds)
             validation["classification"] = validate_recorded_classification(
                 cond["label"], gdf_det_mcc, gdf_ref, gdf_bounds,
                 r["evaluation"], recorded_join, expected_refusal=expected)
