@@ -277,11 +277,96 @@ path.
 | 130 | `scripts/validate_first5_of10_derivation.py:131` | `sweep` | `score_detection_set` | inherits correctly | — | compute_mcc=False: point estimates only, no table read |
 | 131 | `scripts/verify_phase2a_metrics.py:349` | `per_tile_decomposition` | `compute_per_tile_tp_fp_fn` | deferred to Wave 2/3, pinned to legacy | `e34a7e581` | `tile_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
 
+## Second-order consumers (wrappers in W1-fixed modules)
+
+Tier 1 found a route the AST inventory could not see:
+`final_board_sweeps.tile_confusion` calls `mcc_tiering_55map.tile_vectors`,
+a wrapper whose default moved with the library's. An AST scan of `scripts/`
+for calls to every W1-fixed wrapper whose default moved found 23 calls in
+15 files, none passing a join. Each is pinned to the legacy
+rule exactly as the direct consumers are (commit `da589eb27`).
+
+| # | Call site (line before the pin) | Wrapper called | Disposition | Commit | Keywords added |
+|---:|---|---|---|---|---|
+| 1 | `scripts/analyse_null_exemplar_sensitivity.py:743` | `era1_leaderboard_tiering.cell_per_tile` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 2 | `scripts/analyse_null_exemplar_sensitivity.py:748` | `era1_leaderboard_tiering.cell_per_tile_classification` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 3 | `scripts/build_cross_architecture_tables.py:389` | `pairwise_permutation_test.run_permutation_test_mcc` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 4 | `scripts/build_cross_architecture_tables.py:397` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 5 | `scripts/build_tiered_leaderboard.py:730` | `evaluate_detections.evaluate_single_run` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 6 | `scripts/build_tiered_leaderboard.py:1240` | `pairwise_permutation_test.run_permutation_test_mcc` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 7 | `scripts/build_tiered_leaderboard.py:1260` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 8 | `scripts/build_tiered_leaderboard.py:1444` | `pairwise_permutation_test.run_permutation_test_mcc` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 9 | `scripts/build_tiered_leaderboard.py:1471` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 10 | `scripts/compare_wbf_greedy_pv_permutation.py:187` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 11 | `scripts/compare_wbf_vs_greedy.py:166` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 12 | `scripts/compare_wbf_vs_greedy_canonical.py:270` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 13 | `scripts/compare_wbf_vs_greedy_production.py:265` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 14 | `scripts/dedup_tiering_rerun.py:437` | `mcc_tiering_55map.tile_vectors` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 15 | `scripts/dedup_tiering_rerun.py:462` | `mcc_tiering_55map.tile_vectors` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 16 | `scripts/dedup_tiering_rerun.py:600` | `era1_leaderboard_tiering.load_cells` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 17 | `scripts/final_board_sweeps.py:409` | `mcc_tiering_55map.tile_vectors` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+| 18 | `scripts/resweep_pv_on_h10.py:132` | `evaluate_detections.evaluate_single_run` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 19 | `scripts/run_pairwise_tests.py:857` | `pairwise_permutation_test.run_permutation_test` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 20 | `scripts/run_verifier_t_stage_b.py:199` | `evaluate_detections._evaluate_condition` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 21 | `scripts/score_55maps_extended_gt_canonical.py:161` | `compute_corrected_f1_multi_buffer.run` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 22 | `scripts/score_55maps_standardised_reference.py:331` | `compute_corrected_f1_multi_buffer.run` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE` |
+| 23 | `scripts/stride55_sweep_oracle.py:212` | `mcc_tiering_55map.tile_vectors` | deferred to Wave 2/3, pinned to legacy | `da589eb27` | `tile_join=TILE_JOIN_LEGACY_CLASSIFICATION` |
+
+## Subprocess launchers of the W1-fixed command-line tools
+
+These scripts build command lines for `evaluate_detections.py`,
+`era1_leaderboard_tiering.py`, `selection_aware_intervals.py` or the
+K-ladder drivers and pass no join flag (found by `grep` for the script
+names, then for `--tile-join`, `--count-table-join` and a `"tile_join"` key;
+two that mention a tool only in prose, `gemini37_image_55map_r2.py` and
+`dedup_tiering_rerun.py`, are left out):
+
+```text
+scripts/build_gs_era2_board.py
+scripts/build_gs_era2_board_opmax.py
+scripts/build_k1_gapfill_worklist.py
+scripts/build_verifier_pairing_worklist.py
+scripts/grid_materialise_conditions.py
+scripts/grid_verifier_analysis.py
+scripts/migrate_ci_flag_basis.py
+scripts/r2_score_cells.py
+scripts/recovery_reeval.py
+scripts/register_pass1_materialise.py
+scripts/rerun_bca_corpus.py
+scripts/rerun_evals_at_10k.py
+scripts/rescore_conditions.py
+scripts/run_era1_pv_stage_d.py
+scripts/run_generalisation.py
+scripts/run_k_ladder_tier_e.py
+scripts/score_k_ladder_phase2_rungs.py
+scripts/tier_e_ladder_tiering.py
+```
+
+**Disposition: inherits the corrected default, honestly labelled; open item
+for Wave 2.** Every evaluation `evaluate_detections.py` now writes records both
+rules (`_metadata.tile_joins`, `metadata_version` 1.5), and every tiering and
+admissible set records them too, so nothing these launchers produce can pass
+for a legacy artefact. The hazard is the opposite one: several are re-scoring
+or replay tools (`rerun_evals_at_10k.py`, `rescore_conditions.py`,
+`rerun_bca_corpus.py`, `migrate_ci_flag_basis.py`, `recovery_reeval.py`,
+`r2_score_cells.py`), and a run before Wave 2 is specified would re-score
+committed evaluations in place under the corrected rules, outside Wave 2's
+worklist, ledger and gates. They were left unpinned because pinning them to
+`id` would make them write `id` evaluations labelled as such, which is
+correct only for a deliberate replay. Wave 2's specification should decide,
+per launcher, whether it becomes the corpus driver, is pinned to replay, or is
+retired; until then none should be run.
+`analyse_null_exemplar_sensitivity.py` replays a recorded `tile_join` key
+but no count-table join, so its replays now take the corrected count table;
+it belongs on the same Wave 2 list.
+
 ## Changelog
 
 ### 2026-11-18 — Original publication
 
 First version, written by the Wave 1 code agent after commit `a7989c47f` on
 `tile-join-wave-1`. Covers Astra's 129-call inventory at `e92d1c5d7` and the
-two re-exported calls in `scripts/evaluate-pro-n10.py`; lists the evidence
-scripts outside `scripts/` without changing them.
+two re-exported calls in `scripts/evaluate-pro-n10.py`; the 23
+second-order calls to W1-fixed wrappers pinned in `da589eb27`; the
+subprocess launchers; and lists the evidence scripts outside `scripts/`
+without changing them.
