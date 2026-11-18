@@ -3587,3 +3587,76 @@ first (the evidence, its size, what each option changes) and ask the
 question inline. Keep the modal tool for choices whose stakes are already
 clear to him, such as operational or naming choices, or a choice he has
 asked to be given as options.
+
+## claude-obs 175 — 2026-11-18: Two absence claims from partial reads, both refuted by the cross-model reviewer
+
+**Pattern.** In the Wave 1 specification's gap analysis I wrote that no
+evaluation records its tile join, having looked at one file. I also wrote
+that the S166 board's contains readings existed only on sapphire, because a
+`git ls-files | grep … | head -30` listing stopped before
+`results/tile-join-audit/`. I then built a precondition on the second
+claim: recover the readings from sapphire if it was reachable. Astra's S3
+and S4 refuted both from committed files.
+
+**Lesson.** A claim that something is absent from a corpus is a universal
+claim. One file, or a truncated listing, cannot support it, however
+plausible the absence looks.
+
+**How to apply.** Before writing "none", "not committed", or "only on X",
+run the exhaustive form of the search: a count without `head`, `grep -c`,
+or a search by content rather than by filename. Quote its count. Phrase
+anything learned from a sample as "in the file checked".
+
+## claude-obs 176 — 2026-11-18: Shawn's "why not also require for GS?" dissolved an exemption I had recommended
+
+**Pattern.** I recommended requiring the spatial-block check on the
+55-map corpus and exempting the gold-standard frames, because four sheets
+give too few sheet blocks. Shawn agreed and asked "why not also require for
+GS? Again, weighing trade-offs". The exemption rested on treating "block"
+as "sheet". Blocks of contiguous tiles inside one sheet give roughly 30 to
+50 blocks on the 487-tile frame, and the gold-standard frames carry most of
+the hypothesis tests.
+
+**Lesson.** An exemption is only as sound as the mechanism it relies on.
+Shawn tests exemptions by asking for the trade-off, and the answer can
+remove the exemption entirely.
+
+**How to apply.** When recommending that a check be skipped somewhere,
+name the mechanism that makes it infeasible there. Then check whether a
+different design of the check removes that mechanism, before recommending
+the skip.
+
+## claude-obs 177 — 2026-11-18: Shawn asks for the principled fix and its cost together; answer both, the cost against planned work
+
+**Pattern.** On the sheet-boundary question Shawn wrote "Id like the
+principled, long term fix, but does that mean recalculating everything?".
+He confirmed in one line once the answer gave three things: evidence for the
+principled option (the gold standard records one sheet per mound; the
+cross-sheet contacts are black padding in the tile image); its cost
+measured against the work already planned (no re-score beyond Wave 2's);
+and the long-term risk of the alternative (a second corpus re-score later).
+
+**Lesson.** Shawn's default is the principled option, weighed against
+rework. Stated against zero, a principled option's cost looks larger than
+it is; stated against the planned work, it is often nil.
+
+**How to apply.** With a principled option, state its incremental cost
+against the work already scheduled, and separate a one-off cost from the
+risk of repeating work later. Put the evidence first, so the recommendation
+does not rest on taste.
+
+## claude-obs 178 — 2026-11-18: A peer-mail watch produces near-empty turns once nothing is owed by the peer
+
+**Pattern.** While Shawn was away, and later while every open item waited
+on him, the mail watch's expiries and other-project counts each forced a
+visible turn. There were dozens of near-identical "still waiting" lines. The
+four-hour idle stop ended one cycle, but each message from Shawn re-armed
+it. After Astra's round-2 review arrived, no peer owed anything.
+
+**Lesson.** The watch earns its turns while a peer owes a reply. Once the
+next move is Shawn's, it adds noise and carries no information.
+
+**How to apply.** Do not re-arm the watch when no peer owes a reply. Say
+once that it is off, and that the session-start hook will surface any
+mail. (Raised as a 4c question at the S168 handoff, for the mail-watch
+skill.)

@@ -1649,3 +1649,10 @@ only his remarks, quoted, and nothing awaits a verdict.
   tasks for you rather than 'pair programming' our way through, with specific milestones where I
   review and approve before launching the next wave of long-running tasks." (2026-11-01) — said
   when ruling on the tile-join fix, with a week left before the write-up should begin.
+
+## 2026-11-18 — map-reader-llm: Session 168 (gate R in two rounds; the sheet-boundary ruling)
+
+- "I confirm r2 and r3, thanks for the analysis." (2026-11-18) — Claude had recommended
+  sheet-specific tile scoring after checking the gold standard for cross-sheet duplicates and
+  inspecting the pixels of K-35-052-4's edge tiles, and had withdrawn its own reason for exempting
+  the gold-standard frames from the block check when asked "why not also require for GS?".
