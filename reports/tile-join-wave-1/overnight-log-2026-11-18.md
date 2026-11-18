@@ -1,6 +1,6 @@
 # S169 overnight log: Wave 1 of the tile-join resolution, 2026-11-18 to 19
 
-> **Last revised**: 2026-11-19 (original publication). See
+> **Last revised**: 2026-11-19 (final entries appended). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, Opus lane, the S169
@@ -327,8 +327,15 @@
   Findings are in `scratchpad/g1-reaudit-findings.md` and were folded
   into the final fix round.
 - ~08:15: pixel-convention fix complete (seam2 `834c705a2`; self-tests re-run by me on zbook: pass). One 1/3-candidate in every file (student:04282 / r50 04296; weak, near the threshold). GS unchanged. § 5 overclaims withdrawn. Sent to Astra.
+- ~08:30: Astra **accepted the seam pixel correction and revised interpretation** at seam2 `834c705a2` (not feature identity, a reference correction, the ruling, a merge, or launch). It independently matched all 50 contacts and 62 own-tile measurements. Lead: student:02686 (panel 030) may be a displaced counterpart (case 3), which illustrates why padding at the point cannot rule case 3 out. Receipted.
+- ~08:55: **final code fix round done** (`0549672ec..4a8d2af34`, plus my dispositions update `ef18e4e76`). Tier 1 is 4,772 passed, 0 failed; 99/99 mutants killed. All of R2-1..R2-6 and the RA findings are fixed. Fix head sent to Astra.
 
 ## Changelog
+
+### 2026-11-19 — Final entries appended
+
+The entries from about 08:30 to 08:55 were appended when the overnight
+run ended.
 
 ### 2026-11-19 — Original publication
 
