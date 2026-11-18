@@ -3417,12 +3417,16 @@ def _reference_sheet_frame(gdf_ref: gpd.GeoDataFrame) -> tuple[gpd.GeoDataFrame,
 
 
 def _blank_sheet(value: Any) -> bool:
-    """Whether a reference's recorded sheet is missing or blank."""
-    if value is None:
-        return True
-    if isinstance(value, float) and np.isnan(value):
-        return True
-    return isinstance(value, str) and not value.strip()
+    """Whether a reference's recorded sheet is missing or blank.
+
+    Missing is what the library's own scalar-null check
+    (:func:`_is_missing`) recognises — ``None``, float NaN, ``pd.NA`` (a
+    nullable ``string`` column's missing value; Astra R2-6) and ``NaT`` —
+    and blank is a string of whitespace only.
+    """
+    if isinstance(value, str):
+        return not value.strip()
+    return _is_missing(value)
 
 
 def unattributed_references_in_frame(

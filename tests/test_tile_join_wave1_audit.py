@@ -1624,3 +1624,28 @@ def test_r2_5_stride55_help_runs_standalone(tmp_path):
                           timeout=120)
     assert done.returncode == 0, done.stderr[-2000:]
     assert "usage" in done.stdout.lower()
+
+
+# R2-6: the nullable string dtype's missing value is a blank sheet.
+
+@pytest.mark.parametrize("value", [None, float("nan"), pd.NA, pd.NaT, "", "  "])
+def test_r2_6_every_scalar_null_is_a_blank_sheet(value):
+    assert lam._blank_sheet(value) is True
+
+
+def test_r2_6_a_named_sheet_is_not_blank():
+    assert lam._blank_sheet(SHEET_A) is False
+
+
+def test_r2_6_an_all_missing_nullable_string_sheet_column_is_refused():
+    """``pd.Series([None, ...], dtype="string")`` holds ``pd.NA``. Every
+    in-frame reference then records no sheet, so the count is the in-frame
+    population, not zero, and the named refusal follows."""
+    bounds, refs = synthetic_bounds(), synthetic_refs()
+    refs["Map"] = pd.Series([None] * len(refs), dtype="string", index=refs.index)
+    assert refs["Map"].isna().all() and refs["Map"].iloc[0] is pd.NA
+    n = lam.unattributed_references_in_frame(refs, bounds)
+    assert n == lam._n_in_frame_union(refs, bounds) > 0
+    det = merged_detections(synthetic_refs(), bounds)
+    result = calculate_tile_classification(det, refs, bounds)
+    assert result["reason"] == TILE_JOIN_REASON_UNATTRIBUTED_REFERENCE
