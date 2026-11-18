@@ -1,0 +1,210 @@
+W1.0 worklist at 89cab15ee: 2829 entries
+
+== 1. Proposed disposition x corpus x paper-cited ==
+     11  ('counterpart', '55map', False)
+     43  ('counterpart', 'gs', False)
+     12  ('hold:input-absent', '55map', False)
+      1  ('hold:input-absent', 'gs', False)
+    232  ('regenerate-then-rescore', 'gs', False)
+    156  ('rescore-in-place', '55map', False)
+    153  ('rescore-in-place', '55map', True)
+   1576  ('rescore-in-place', 'gs', False)
+    608  ('rescore-in-place', 'gs', True)
+     36  ('skip:no-recipe', 'none', False)
+      1  ('skip:not-tile-bearing', 'gs', False)
+  totals by disposition: {'counterpart': 54, 'rescore-in-place': 2493, 'hold:input-absent': 13, 'regenerate-then-rescore': 232, 'skip:not-tile-bearing': 1, 'skip:no-recipe': 36}
+  totals by corpus: {'55map': 332, 'gs': 2461, 'none': 36}
+
+== 1b. Tile block / intervals, by disposition ==
+     21  ('counterpart', False, True)  (disp, tile block, intervals)
+     33  ('counterpart', True, True)  (disp, tile block, intervals)
+     13  ('hold:input-absent', True, True)  (disp, tile block, intervals)
+    232  ('regenerate-then-rescore', True, True)  (disp, tile block, intervals)
+      5  ('rescore-in-place', False, False)  (disp, tile block, intervals)
+    149  ('rescore-in-place', False, True)  (disp, tile block, intervals)
+     44  ('rescore-in-place', True, False)  (disp, tile block, intervals)
+   2295  ('rescore-in-place', True, True)  (disp, tile block, intervals)
+     12  ('skip:no-recipe', False, False)  (disp, tile block, intervals)
+     24  ('skip:no-recipe', True, True)  (disp, tile block, intervals)
+      1  ('skip:not-tile-bearing', False, False)  (disp, tile block, intervals)
+
+== 1c. Writer (_metadata.script_path), by disposition ==
+      5  ('scripts/compute_corrected_f1_multi_buffer.py', 'rescore-in-place')
+     54  ('scripts/evaluate_detections.py', 'counterpart')
+     13  ('scripts/evaluate_detections.py', 'hold:input-absent')
+    232  ('scripts/evaluate_detections.py', 'regenerate-then-rescore')
+   2469  ('scripts/evaluate_detections.py', 'rescore-in-place')
+      1  ('scripts/evaluate_detections.py', 'skip:not-tile-bearing')
+     19  (None, 'rescore-in-place')
+     36  (None, 'skip:no-recipe')
+  files not written by scripts/evaluate_detections.py, by directory:
+       8  ('results/55maps-extended-gt-2026-06-07', None, 'rescore-in-place')
+       8  ('results/55maps-standardised-ref-2026-08-14', None, 'rescore-in-place')
+       2  ('results/gemini37-55map-2026-08-31', None, 'rescore-in-place')
+       1  ('results/gemini37-fourth-cell', None, 'rescore-in-place')
+      12  ('results/retest', None, 'skip:no-recipe')
+       5  ('results/stride55-2026-08-27', 'scripts/compute_corrected_f1_multi_buffer.py', 'rescore-in-place')
+      24  ('results/verifier-t-pilot', None, 'skip:no-recipe')
+
+== 1d. hold:input-absent and skip:no-recipe, by directory ==
+     12  ('results/deployment-oracle-2026-06-06', 'hold:input-absent')
+      1  ('results/rescore-2026-05-31', 'hold:input-absent')
+     12  ('results/retest', 'skip:no-recipe')
+     24  ('results/verifier-t-pilot', 'skip:no-recipe')
+
+== 2. Frames (tiles) and references, rescored or counterparted files ==
+      1  ('55map', '/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson', 8541)
+    319  ('55map', 'inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson', 8541)
+     16  ('gs', 'inputs/vectors/bounds/256/full_evaluation_bounds.geojson', 1032)
+    254  ('gs', 'inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson', 487)
+   1105  ('gs', 'inputs/vectors/bounds/384/full_evaluation_bounds.geojson', 487)
+     40  ('gs', 'inputs/vectors/bounds/384/h10_test_bounds.geojson', 327)
+    739  ('gs', 'inputs/vectors/bounds/full_evaluation_bounds.geojson', 340)
+     64  ('gs', 'outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson', 487)
+      1  ('gs', 'outputs/h13/scoring/bounds/h13_armA_bounds.geojson', 340)
+      1  ('gs', 'outputs/h13/scoring/bounds/h13_armB_bounds.geojson', 430)
+      1  ('gs', 'outputs/h13/scoring/bounds/h13_armC_bounds.geojson', 999)
+      3  ('gs', 'outputs/h13/scoring/bounds/h13_common_bounds.geojson', 340)
+     82  ('gs', 'results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson', 315)
+    153  ('gs', 'results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson', 467)
+  references:
+        1  ('55map', '/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson', False)  (corpus, reference, paper-cited)
+       92  ('55map', 'inputs/vectors/references/best-available-gt-55maps-r2.geojson', False)  (corpus, reference, paper-cited)
+      104  ('55map', 'inputs/vectors/references/best-available-gt-55maps-r2.geojson', True)  (corpus, reference, paper-cited)
+       39  ('55map', 'inputs/vectors/references/best-available-gt-55maps.geojson', False)  (corpus, reference, paper-cited)
+       28  ('55map', 'inputs/vectors/references/best-available-gt-55maps.geojson', True)  (corpus, reference, paper-cited)
+        8  ('55map', 'inputs/vectors/references/canonical-gt-55maps-r50.geojson', True)  (corpus, reference, paper-cited)
+       33  ('55map', 'inputs/vectors/references/student-mounds-55maps-reviewed.geojson', False)  (corpus, reference, paper-cited)
+       13  ('55map', 'inputs/vectors/references/student-mounds-55maps-reviewed.geojson', True)  (corpus, reference, paper-cited)
+        2  ('55map', 'inputs/vectors/references/student-mounds-55maps.geojson', False)  (corpus, reference, paper-cited)
+     1851  ('gs', 'inputs/vectors/references/mounds-reference.geojson', False)  (corpus, reference, paper-cited)
+      608  ('gs', 'inputs/vectors/references/mounds-reference.geojson', True)  (corpus, reference, paper-cited)
+  absolute frame or reference paths:
+    archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json [counterpart] frame=/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson ref=/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson
+
+== 3. Cost projection (CPU seconds are legacy-replay measurements) ==
+  rgs_per_pass_buffer = 2.0329
+  gs_floor_per_pass = 4.1900
+  r55_per_pass_buffer = 9.5614
+  refusal_per_pass = 9.1600
+  rss_gs_mb = 295.9000
+  rss_55_mb = 2094.9000
+
+  class (corpus, tiles, passes, buffers)       files replay CPU-h compute CPU-h  x2 CPU-h
+  ('55map', 8541, 1, 14)                         293        9.890        10.895    20.785
+  ('55map', 8541, 1, 3)                           11        0.409         0.409     0.818
+  ('55map', 8541, 1, 4)                            9        0.335         0.335     0.669
+  ('55map', 8541, 1, 5)                            7        0.260         0.260     0.521
+  ('gs', 1032, 1, 14)                             16        0.595         0.595     1.190
+  ('gs', 315, 1, 14)                              56        0.443         0.443     0.885
+  ('gs', 315, 3, 14)                              17        0.403         0.403     0.806
+  ('gs', 315, 5, 14)                               9        0.356         0.356     0.712
+  ('gs', 327, 1, 1)                               30        0.035         0.035     0.070
+  ('gs', 327, 1, 10)                               1        0.006         0.006     0.011
+  ('gs', 327, 1, 14)                               8        0.063         0.063     0.126
+  ('gs', 327, 1, 6)                                1        0.003         0.003     0.007
+  ('gs', 340, 1, 1)                               36        0.042         0.042     0.084
+  ('gs', 340, 1, 14)                             566        4.475         4.475     8.949
+  ('gs', 340, 1, 4)                               18        0.041         0.041     0.081
+  ('gs', 340, 3, 1)                               34        0.119         0.119     0.237
+  ('gs', 340, 3, 14)                              29        0.688         0.688     1.376
+  ('gs', 340, 3, 4)                               15        0.102         0.102     0.203
+  ('gs', 340, 5, 14)                              45        1.779         1.779     3.558
+  ('gs', 430, 3, 1)                                1        0.003         0.003     0.007
+  ('gs', 467, 1, 14)                             153        1.193         1.210     2.403
+  ('gs', 487, 1, 1)                               65        0.085         0.076     0.161
+  ('gs', 487, 1, 10)                              23        0.130         0.130     0.260
+  ('gs', 487, 1, 13)                               1        0.007         0.007     0.015
+  ('gs', 487, 1, 14)                             941        7.412         7.439    14.851
+  ('gs', 487, 1, 2)                                4        0.010         0.005     0.015
+  ('gs', 487, 1, 4)                              329        0.743         0.743     1.486
+  ('gs', 487, 10, 1)                               8        0.093         0.093     0.186
+  ('gs', 487, 10, 14)                              4        0.316         0.316     0.632
+  ('gs', 487, 10, 2)                               1        0.012         0.012     0.023
+  ('gs', 487, 10, 4)                               4        0.090         0.090     0.181
+  ('gs', 487, 3, 1)                               10        0.035         0.035     0.070
+  ('gs', 487, 3, 14)                              13        0.308         0.308     0.617
+  ('gs', 487, 3, 2)                                1        0.008         0.003     0.011
+  ('gs', 487, 3, 4)                                5        0.034         0.034     0.068
+  ('gs', 487, 30, 1)                               4        0.140         0.140     0.279
+  ('gs', 487, 30, 14)                              2        0.474         0.474     0.949
+  ('gs', 487, 30, 2)                               2        0.070         0.070     0.140
+  ('gs', 487, 30, 4)                               2        0.136         0.136     0.271
+  ('gs', 487, 5, 1)                                2        0.012         0.012     0.023
+  ('gs', 487, 5, 14)                               1        0.040         0.040     0.079
+  ('gs', 487, 5, 4)                                1        0.011         0.011     0.023
+  ('gs', 999, 3, 1)                                1        0.003         0.003     0.007
+
+  by corpus and paper citation (replay + compute, CPU-h):
+    gs     paper-cited=True    608 files    12.40
+    gs     paper-cited=False  1851 files    28.65
+    55map  paper-cited=True    153 files    11.38
+    55map  paper-cited=False   167 files    11.41
+  non-scorer writers among active files (corpus, writer, paper-cited):
+       5  ('55map', 'scripts/compute_corrected_f1_multi_buffer.py', True)
+      19  ('55map', None, True)
+  workers: 55-map 12 (memory: (31.0 - 6.0) GB / 2.046 GB, capped at 14); GS 14 (brief cap), or 30 (cores, memory 8.7 GB)
+  gs     replay+compute                41.05 CPU-h; 14 workers ->   2.93 h wall
+  gs     + full idempotence rerun      61.59 CPU-h; 14 workers ->   4.40 h wall
+  gs     replay+compute                41.05 CPU-h; 30 workers ->   1.37 h wall
+  gs     + full idempotence rerun      61.59 CPU-h; 30 workers ->   2.05 h wall
+  55map  replay+compute                22.79 CPU-h; 12 workers ->   1.90 h wall
+  55map  + full idempotence rerun      34.69 CPU-h; 12 workers ->   2.89 h wall
+
+== 4. Re-serialisation: committed bytes == json.dumps(parsed, indent=2)? ==
+   {'exact': 2795, 'exact+newline': 26, 'differs': 8}
+    differs: results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-in-place] writer=None
+    differs: results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-in-place] writer=None
+    differs: results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json [rescore-in-place] writer=None
+    differs: results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov128_55map/primary/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/primary/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+      26  ('exact+newline', 'rescore-in-place')
+
+== 5. Schema strata (replay risk): metadata_version, interval method, coverage ==
+      3  ('counterpart', '1.0', None, False)  (disp, metadata_version, method, coverage block)
+     12  ('counterpart', '1.1', 'BCa', False)  (disp, metadata_version, method, coverage block)
+     15  ('counterpart', '1.1', 'BCa', True)  (disp, metadata_version, method, coverage block)
+     19  ('counterpart', '1.3', 'BCa', True)  (disp, metadata_version, method, coverage block)
+      1  ('counterpart', '1.3', 'mixed', True)  (disp, metadata_version, method, coverage block)
+      4  ('counterpart', '1.4', 'BCa', True)  (disp, metadata_version, method, coverage block)
+     13  ('hold:input-absent', '1.2', 'BCa', True)  (disp, metadata_version, method, coverage block)
+     11  ('regenerate-then-rescore', '1.4', 'BCa', False)  (disp, metadata_version, method, coverage block)
+    185  ('regenerate-then-rescore', '1.4', 'BCa', True)  (disp, metadata_version, method, coverage block)
+     15  ('regenerate-then-rescore', '1.4', 'mixed', False)  (disp, metadata_version, method, coverage block)
+     21  ('regenerate-then-rescore', '1.4', 'mixed', True)  (disp, metadata_version, method, coverage block)
+      2  ('rescore-in-place', '1.0', None, False)  (disp, metadata_version, method, coverage block)
+    117  ('rescore-in-place', '1.3', 'BCa', False)  (disp, metadata_version, method, coverage block)
+   1182  ('rescore-in-place', '1.3', 'BCa', True)  (disp, metadata_version, method, coverage block)
+     49  ('rescore-in-place', '1.3', 'mixed', False)  (disp, metadata_version, method, coverage block)
+    113  ('rescore-in-place', '1.3', 'mixed', True)  (disp, metadata_version, method, coverage block)
+      5  ('rescore-in-place', '1.4', 'BCa', False)  (disp, metadata_version, method, coverage block)
+    948  ('rescore-in-place', '1.4', 'BCa', True)  (disp, metadata_version, method, coverage block)
+      1  ('rescore-in-place', '1.4', 'mixed', False)  (disp, metadata_version, method, coverage block)
+      3  ('rescore-in-place', '1.4', 'mixed', True)  (disp, metadata_version, method, coverage block)
+      1  ('rescore-in-place', '1.4', None, False)  (disp, metadata_version, method, coverage block)
+     48  ('rescore-in-place', '1.4', None, True)  (disp, metadata_version, method, coverage block)
+     16  ('rescore-in-place', None, 'percentile', False)  (disp, metadata_version, method, coverage block)
+      8  ('rescore-in-place', None, None, False)  (disp, metadata_version, method, coverage block)
+     36  ('skip:no-recipe', None, None, False)  (disp, metadata_version, method, coverage block)
+      1  ('skip:not-tile-bearing', '1.3', None, False)  (disp, metadata_version, method, coverage block)
+  smoke cells (the strata W1.0's determinism replays exercised):
+    1.3 BCa cov=True results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/evaluation.json
+    1.4 BCa cov=True results/grid-2026-08-18/conditions/g512_ov064/eval/evaluation.json
+    1.4 None cov=True results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json
+    1.4 None cov=True results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json
+    1.4 None cov=True results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json
+    1.4 BCa cov=True results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-image-t0_3-n1-opmax/evaluation.json
+    1.3 BCa cov=False results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json
+    1.3 mixed cov=True results/paper-eval/phase2/512px-14buf-mcc/p2c-image-canonical/evaluation.json
+  active files by metadata_version and paper citation:
+        5  ('1.0', False)
+       27  ('1.1', False)
+      961  ('1.3', False)
+      520  ('1.3', True)
+     1025  ('1.4', False)
+      217  ('1.4', True)
+       24  (None, True)
+  longest single file (replay + compute): results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json 28.5 min CPU
