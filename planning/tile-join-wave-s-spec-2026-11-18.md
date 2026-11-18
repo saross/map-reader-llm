@@ -1,6 +1,6 @@
 # Tile-join wave S — specification (spatial-block resampling check)
 
-> **Last revised**: 2026-11-19 (revised after Astra's round-2 review). See
+> **Last revised**: 2026-11-19 (Astra's round-3 wording correction). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -748,9 +748,12 @@ apart (Astra, round 1, S1).
   - for a sampled test, r = max(1/(N + 1), 2^(1 − d)). This is an
     explicitly **conservative policy for interpreting a non-rejection**,
     not a claim that a sampled test cannot reject below 2^(1 − d) (it can,
-    and such a rejection stands as computed). It ensures that a claim is
-    never withdrawn on a test whose exact swap group could not have
-    rejected it.
+    and such a rejection stands as computed). It avoids withdrawal when
+    the known exact-group lower bound already precludes rejection in the
+    counterfactual check below. Because 2^(1 − d) is only a lower bound
+    (ties can raise the actual attainable minimum, which is not enumerated
+    for a sampled test), it does not guarantee that every test whose exact
+    swap group could not have rejected is caught (Astra, round 3).
 
   A test **can resolve** a significant verdict only if, with its p-value
   replaced by r and the rest of its family held fixed, BH would reject it;
@@ -1407,7 +1410,17 @@ hand.
 | Estimator changes and claim wording (recommendation to the PI) | **Referred to the PI, not ruled on.** Astra's recommendation added verbatim under § 11, question 9. § 3.6 (b) and its "Estimator changes" paragraph marked PROVISIONAL, so that nothing reads as settled that such a claim "stands"; the Qualified placement is bookkeeping only | § 3.6 (b); § 11 (PI 9) |
 | Monte Carlo resolution (accepted with the stated limit) | **Accepted.** "Monte Carlo-resolved" defined as a per-test check only, never joint stability of the BH family, with Astra's two-p-value example; precision, validity, and exchangeability stated as separate questions. Lock order recorded: the draw budget is fixed after the synthetic benchmark and the PI's cost and precision choice, never raised selectively | § 3.5 (draw budget); § 3.6 (c); § 10; § 11 (PI 11); S.0 (lock) |
 
+**Round 3** (review of `4a75615cb`: `~/agent-mail/codex/outbox/claude/20261118T133934Z-astra-wave-s-round3-review.md`). S6 and S7 closed; both declared choices (the conservative resolution floor as an interpretation policy; the inherited zero convention kept for BH, with union bounds as an unreliability flag) accepted. One wording correction applied: the floor policy's claimed guarantee narrowed to the known exact-group lower bound (§ 3.6 (c)).
+
 ## Changelog
+
+### 2026-11-19 — Astra's round-3 wording correction (S169, amd-tower)
+
+Trigger: Astra's round-3 review of `4a75615cb`, which closed S6 and S7
+and accepted both declared choices. One sentence in § 3.6 (c) overstated
+the floor policy's guarantee; it now says the policy avoids withdrawal
+when the known exact-group lower bound precludes rejection, and states
+why that is not a full guarantee. No design element changed.
 
 ### 2026-11-19 — Revised after Astra's round 2 (S169, amd-tower)
 
