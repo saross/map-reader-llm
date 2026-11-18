@@ -1,6 +1,6 @@
 # Wave 1 stop: 55-map mounds printed on both sides of a sheet seam
 
-> **Last revised**: 2026-11-18 (original publication). See
+> **Last revised**: 2026-11-19 (Wave 2 drafting moved to the continuing list). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, Opus lane, the S169 main
@@ -66,9 +66,9 @@ contacts.
 ## 3. What is paused, and what continues
 
 **Paused until the PI rules**: everything that would consume a seam ruling.
-That is the W1.5 smoke run, every corrected score on the 55-map corpus, the
-Wave 2 cost projection, and the Wave 2 specification. Nothing is merged to
-`main`.
+That is the W1.5 smoke run and every corrected score on the 55-map corpus.
+Nothing is merged to `main`. (The Wave 2 specification and its cost
+projection were first listed here; see the second bullet below.)
 
 **Continuing, on branches only, because none of it depends on the ruling**:
 
@@ -80,6 +80,12 @@ Wave 2 cost projection, and the Wave 2 specification. Nothing is merged to
   replays under each artefact's recorded rules.
 - A read-only measurement for the ruling, described in § 4.
 - Astra's cross-model review of the sheet check.
+- The Wave 2 specification and its cost projection, **drafted with the seam
+  handling as an explicit open parameter** that the PI's ruling fills. The
+  draft takes no position among options (a)–(d), and the projection uses
+  legacy-replay timings only. Moved here from the paused list at about
+  00:15 AEDT on 2026-11-19, so that Astra can review the draft overnight;
+  the draft is text, and the ruling slots into it unchanged.
 
 This reading of "stops the wave" is the main session's, made overnight. The
 PI may stop everything instead; the continuing work is on branches and can
@@ -127,6 +133,13 @@ be discarded.
    a rule, or a look at the crops.
 
 ## Changelog
+
+### 2026-11-19 — Wave 2 drafting moved to the continuing list (main session)
+
+Trigger: W1.0 finished its ruling-independent steps. The Wave 2
+specification and cost projection moved from "paused" to "continuing",
+drafted with the seam handling left open (§ 3). No decision or measurement
+in this record changed.
 
 ### 2026-11-18 — The read-only measurement for the ruling added (W1.0 agent)
 
