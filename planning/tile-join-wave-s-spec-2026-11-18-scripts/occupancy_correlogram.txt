@@ -1,0 +1,29 @@
+Reference-occupancy correlogram for wave S (design information; no detection or model output read).
+
+## inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
+references: inputs/vectors/references/mounds-reference.geojson (569 points, sheet column 'Map'; 0 sheet values not in the frame)
+tiles 487; reference-occupied 224 (46.0 %)
+per-sheet occupancy rate min/median/max 0.099/0.600/0.619 over 4 sheets
+lag (strides) | centre spacing | pairs | occupancy r pooled | occupancy r within sheet | count r pooled
+1 | 336 px | 1523 | 0.361 | 0.188 | 0.313
+2 | 672 px | 2407 | 0.262 | 0.048 | 0.194
+3 | 1008 px | 2889 | 0.273 | 0.072 | 0.165
+4 | 1344 px | 3266 | 0.216 | 0.012 | 0.110
+5 | 1680 px | 3463 | 0.202 | 0.008 | 0.106
+6 | 2016 px | 3415 | 0.140 | -0.057 | 0.114
+7 | 2352 px | 3209 | 0.155 | 0.002 | 0.098
+8 | 2688 px | 2918 | 0.102 | -0.052 | 0.085
+
+## inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+references: inputs/vectors/references/best-available-gt-55maps-r2.geojson (5018 points, sheet column 'source_map'; 0 sheet values not in the frame)
+tiles 8541; reference-occupied 3196 (37.4 %)
+per-sheet occupancy rate min/median/max 0.038/0.404/0.686 over 55 sheets
+lag (strides) | centre spacing | pairs | occupancy r pooled | occupancy r within sheet | count r pooled
+1 | 336 px | 30158 | 0.251 | 0.165 | 0.253
+2 | 672 px | 52744 | 0.155 | 0.057 | 0.138
+3 | 1008 px | 68418 | 0.124 | 0.024 | 0.115
+4 | 1344 px | 77840 | 0.107 | 0.005 | 0.097
+5 | 1680 px | 81670 | 0.089 | -0.014 | 0.085
+6 | 2016 px | 80568 | 0.079 | -0.023 | 0.079
+7 | 2352 px | 75194 | 0.060 | -0.045 | 0.050
+8 | 2688 px | 66208 | 0.053 | -0.047 | 0.038
