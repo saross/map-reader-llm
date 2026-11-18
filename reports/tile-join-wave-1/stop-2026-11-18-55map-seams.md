@@ -1,6 +1,6 @@
-# Wave 1 stop: 55-map mounds printed on both sides of a sheet seam
+# Wave 1 stop: 55-map references across a sheet seam (first read as double printing)
 
-> **Last revised**: 2026-11-19 (seam counts corrected and § 1 made precise after Astra's reviews; earlier the same day, Wave 2 drafting moved to the continuing list). See
+> **Last revised**: 2026-11-19 (own-sheet evidence: § 5 added, § 2 corrected; earlier the same day, seam counts corrected and Wave 2 drafting moved). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, Opus lane, the S169 main
@@ -89,6 +89,13 @@ I viewed two of the W1.0 agent's crops, copied from zbook
 Both agree with the agent's pixel measurements. I did not view the other 30
 contacts.
 
+**Correction (2026-11-19).** These two checks looked only at the
+*neighbouring* sheet. They established a printed symbol there, not a second
+printed copy. Astra's paired panels
+(`~/agent-mail/codex/reviews/seam-paired-views-2026-11-18/`, panels 008 and
+020, which I viewed) show both recorded coordinates in black padding on
+their **own** labelled sheets (Granit and Tatarevo). See § 5.
+
 ## 3. What is paused, and what continues
 
 **Paused until the PI rules**: everything that would consume a seam ruling.
@@ -119,8 +126,9 @@ be discarded.
 
 ## 4. Decisions the PI is asked to make
 
-1. **How sheet-specific scoring treats a mound printed on both sides of a
-   seam but digitised once.** The options seen so far:
+1. **How sheet-specific scoring treats these seam contacts.** Read § 5
+   first: it changes the question. The options first framed (for a mound
+   printed on both sides of a seam but digitised once) were:
    - (a) Add the second copy as its own reference on the neighbouring
      sheet, in the style of the phantom references. The canonical r50
      file already carries 415 `phantom:*` references from a review, and in
@@ -163,7 +171,70 @@ be discarded.
 3. **The 18 ambiguous contacts** (points on the black edge of the map face):
    a rule, or a look at the crops.
 
+## 5. Own-sheet evidence: the contacts are not double printings (2026-11-19)
+
+The § 1 check measured each point only on the **other** sheet's tile.
+Astra's review (`~/agent-mail/codex/outbox/claude/20261118T142910Z-astra-seam-attribution-evidence.md`,
+`…T143422Z-astra-seam-padding-diagnostic.md`) and a follow-up measurement
+(`dry-run.md` § 2.4; branch `tile-join-wave-1-seam2`, `61c091dc2`) measured
+each point on its **own** labelled sheet as well.
+
+- **No contact in any of the five 55-map reference files has map content
+  on both sheets.** Separately printed instances at the same point (Astra's
+  case 1) are therefore ruled out for every contact.
+- **Every map-content contact lies in padding on its own sheet.** On r2 that
+  is 25 distinct references (31 contacts). Astra's independent diagnostic on
+  the full-sheet scans agrees on all 40 r2 pairs: the 9×9 window at the
+  final coordinate on the labelled sheet is entirely near-black for all 26
+  distinct map-content pairs, and so is the original reviewed-student
+  coordinate before centre marking, so the marking step did not cause it.
+- Two readings remain, and pixels at the point cannot separate them: **(2)
+  the reference's sheet label is wrong** (the mound is printed once, on the
+  neighbouring sheet), or **(3) a displaced counterpart**: the labelled
+  sheet prints the same mound elsewhere, and the reference needs a
+  sheet-specific centre. A compact dark blob lies within about 240 m on the
+  own sheet for 12 of r2's 25, and none for 13 (a hint for where to look,
+  not an adjudication).
+- **Lineage.** Astra traced `student:01862` through the standardised
+  reference, `marked-centres.csv`, and the materialisers.
+  `scripts/mark_mound_centres.py` chooses the display raster with
+  `_best_raster_for_point` but saves the queue's `map_name`, not the raster
+  shown, so a reviewed coordinate does not prove that the symbol was
+  reviewed on the retained sheet.
+- **Canonical r50:** 20 of its 24 such references already have a
+  `phantom:*` on the neighbouring sheet, so the student reference sits in
+  padding beside a digitised copy.
+- **A pre-existing effect at symbol level, to be measured, not assumed.**
+  D50 already matches symbols per sheet. A reference labelled with a sheet
+  whose map face does not show it can turn a correct detection on the
+  neighbouring sheet into a false positive and leave the reference a false
+  negative, **in the published 55-map scores, under any tile join**. On r2,
+  26 distinct references (plus 1 ambiguous) are placed on a sheet where the
+  point is padding. That is a count of affected references, not an F1
+  change. A whole-file pass would find any other references in their own
+  sheet's padding beyond these seam contacts.
+
+What this means for § 4, item 1. For case-2 references, adding a copy
+(option a) would keep a phantom instance in padding on the wrong sheet; the
+matching fix is to correct the sheet label. Case 3 needs a sheet-specific
+centre. Either is a **reference correction**, distinct from the join change
+and disclosed separately with its own timing (E93's accepted wording). It
+needs adjudication against both sheets' imagery. Astra's preference for (a)
+was conditional on exactly that adjudication. The stop stands.
+
 ## Changelog
+
+### 2026-11-19 — Own-sheet evidence added (§ 5); § 2 corrected (main session)
+
+Trigger: Astra's paired panels and source-padding diagnostic, and the
+own-sheet measurement (`dry-run.md` § 2.4). § 2's two "confirmed" examples
+are corrected: they confirmed a symbol on the neighbouring sheet, and both
+points lie in padding on their own sheet. New § 5 rules out double printing
+for every contact, and sets out the label-error and displaced-counterpart
+readings and the possible pre-existing symbol-level effect. § 4 item 1 now
+points to § 5. The title, which read "55-map mounds printed on both sides
+of a sheet seam", now says the contacts were first read as double printing.
+No measurement in §§ 1–4 changed.
 
 ### 2026-11-19 — Seam counts corrected; § 1 made precise (W1.0 agent)
 
