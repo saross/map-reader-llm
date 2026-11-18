@@ -7,12 +7,13 @@ W1.0 worklist at 89cab15ee: 2829 entries
       1  ('hold:input-absent', 'gs', False)
     232  ('regenerate-then-rescore', 'gs', False)
     156  ('rescore-in-place', '55map', False)
-    153  ('rescore-in-place', '55map', True)
+    129  ('rescore-in-place', '55map', True)
    1576  ('rescore-in-place', 'gs', False)
     608  ('rescore-in-place', 'gs', True)
+     24  ('rescore-native', '55map', True)
      36  ('skip:no-recipe', 'none', False)
       1  ('skip:not-tile-bearing', 'gs', False)
-  totals by disposition: {'counterpart': 54, 'rescore-in-place': 2493, 'hold:input-absent': 13, 'regenerate-then-rescore': 232, 'skip:not-tile-bearing': 1, 'skip:no-recipe': 36}
+  totals by disposition: {'counterpart': 54, 'rescore-in-place': 2469, 'rescore-native': 24, 'hold:input-absent': 13, 'regenerate-then-rescore': 232, 'skip:not-tile-bearing': 1, 'skip:no-recipe': 36}
   totals by corpus: {'55map': 332, 'gs': 2461, 'none': 36}
 
 == 1b. Tile block / intervals, by disposition ==
@@ -23,27 +24,28 @@ W1.0 worklist at 89cab15ee: 2829 entries
       5  ('rescore-in-place', False, False)  (disp, tile block, intervals)
     149  ('rescore-in-place', False, True)  (disp, tile block, intervals)
      44  ('rescore-in-place', True, False)  (disp, tile block, intervals)
-   2295  ('rescore-in-place', True, True)  (disp, tile block, intervals)
+   2271  ('rescore-in-place', True, True)  (disp, tile block, intervals)
+     24  ('rescore-native', True, True)  (disp, tile block, intervals)
      12  ('skip:no-recipe', False, False)  (disp, tile block, intervals)
      24  ('skip:no-recipe', True, True)  (disp, tile block, intervals)
       1  ('skip:not-tile-bearing', False, False)  (disp, tile block, intervals)
 
 == 1c. Writer (_metadata.script_path), by disposition ==
-      5  ('scripts/compute_corrected_f1_multi_buffer.py', 'rescore-in-place')
+      5  ('scripts/compute_corrected_f1_multi_buffer.py', 'rescore-native')
      54  ('scripts/evaluate_detections.py', 'counterpart')
      13  ('scripts/evaluate_detections.py', 'hold:input-absent')
     232  ('scripts/evaluate_detections.py', 'regenerate-then-rescore')
    2469  ('scripts/evaluate_detections.py', 'rescore-in-place')
       1  ('scripts/evaluate_detections.py', 'skip:not-tile-bearing')
-     19  (None, 'rescore-in-place')
+     19  (None, 'rescore-native')
      36  (None, 'skip:no-recipe')
   files not written by scripts/evaluate_detections.py, by directory:
-       8  ('results/55maps-extended-gt-2026-06-07', None, 'rescore-in-place')
-       8  ('results/55maps-standardised-ref-2026-08-14', None, 'rescore-in-place')
-       2  ('results/gemini37-55map-2026-08-31', None, 'rescore-in-place')
-       1  ('results/gemini37-fourth-cell', None, 'rescore-in-place')
+       8  ('results/55maps-extended-gt-2026-06-07', None, 'rescore-native')
+       8  ('results/55maps-standardised-ref-2026-08-14', None, 'rescore-native')
+       2  ('results/gemini37-55map-2026-08-31', None, 'rescore-native')
+       1  ('results/gemini37-fourth-cell', None, 'rescore-native')
       12  ('results/retest', None, 'skip:no-recipe')
-       5  ('results/stride55-2026-08-27', 'scripts/compute_corrected_f1_multi_buffer.py', 'rescore-in-place')
+       5  ('results/stride55-2026-08-27', 'scripts/compute_corrected_f1_multi_buffer.py', 'rescore-native')
       24  ('results/verifier-t-pilot', None, 'skip:no-recipe')
 
 == 1d. hold:input-absent and skip:no-recipe, by directory ==
@@ -143,6 +145,11 @@ W1.0 worklist at 89cab15ee: 2829 entries
   non-scorer writers among active files (corpus, writer, paper-cited):
        5  ('55map', 'scripts/compute_corrected_f1_multi_buffer.py', True)
       19  ('55map', None, True)
+  native-adapter files (rescore-native), by adapter (scorer-rate placeholder):
+       8  ('scripts/adapt_track2_evals_for_manifest.py', '55map', True)    0.59 CPU-h
+       3  ('scripts/register_gemini37_author.py', '55map', True)    0.22 CPU-h
+       5  ('scripts/register_pass1_adapt.py', '55map', True)    0.37 CPU-h
+       8  ('scripts/register_standardised_gt_conditions.py', '55map', True)    0.59 CPU-h
   workers: 55-map 12 (memory: (31.0 - 6.0) GB / 2.046 GB, capped at 14); GS 14 (brief cap), or 30 (cores, memory 8.7 GB)
   gs     replay+compute                41.05 CPU-h; 14 workers ->   2.93 h wall
   gs     + full idempotence rerun      61.59 CPU-h; 14 workers ->   4.40 h wall
@@ -153,14 +160,14 @@ W1.0 worklist at 89cab15ee: 2829 entries
 
 == 4. Re-serialisation: committed bytes == json.dumps(parsed, indent=2)? ==
    {'exact': 2795, 'exact+newline': 26, 'differs': 8}
-    differs: results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-in-place] writer=None
-    differs: results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-in-place] writer=None
-    differs: results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json [rescore-in-place] writer=None
-    differs: results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
-    differs: results/stride55-2026-08-27/g384_ov128_55map/primary/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
-    differs: results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
-    differs: results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
-    differs: results/stride55-2026-08-27/g384_ov192_55map/primary/eval/evaluation.json [rescore-in-place] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-native] writer=None
+    differs: results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json [rescore-native] writer=None
+    differs: results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json [rescore-native] writer=None
+    differs: results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/evaluation.json [rescore-native] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov128_55map/primary/eval/evaluation.json [rescore-native] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json [rescore-native] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json [rescore-native] writer=scripts/compute_corrected_f1_multi_buffer.py
+    differs: results/stride55-2026-08-27/g384_ov192_55map/primary/eval/evaluation.json [rescore-native] writer=scripts/compute_corrected_f1_multi_buffer.py
       26  ('exact+newline', 'rescore-in-place')
 
 == 5. Schema strata (replay risk): metadata_version, interval method, coverage ==
@@ -186,8 +193,8 @@ W1.0 worklist at 89cab15ee: 2829 entries
       3  ('rescore-in-place', '1.4', 'mixed', True)  (disp, metadata_version, method, coverage block)
       1  ('rescore-in-place', '1.4', None, False)  (disp, metadata_version, method, coverage block)
      48  ('rescore-in-place', '1.4', None, True)  (disp, metadata_version, method, coverage block)
-     16  ('rescore-in-place', None, 'percentile', False)  (disp, metadata_version, method, coverage block)
-      8  ('rescore-in-place', None, None, False)  (disp, metadata_version, method, coverage block)
+     16  ('rescore-native', None, 'percentile', False)  (disp, metadata_version, method, coverage block)
+      8  ('rescore-native', None, None, False)  (disp, metadata_version, method, coverage block)
      36  ('skip:no-recipe', None, None, False)  (disp, metadata_version, method, coverage block)
       1  ('skip:not-tile-bearing', '1.3', None, False)  (disp, metadata_version, method, coverage block)
   smoke cells (the strata W1.0's determinism replays exercised):
