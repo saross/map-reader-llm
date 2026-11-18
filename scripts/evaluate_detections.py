@@ -30,6 +30,35 @@ Usage:
         --buffers 20 30 40 50 \\
         --output-dir results/my-evaluation
 
+    # Replay a historical artefact under the rules it was scored with
+    python scripts/evaluate_detections.py \\
+        --detections path/to/detections.geojson --mcc \\
+        --tile-join id --count-table-join id
+
+Tile joins (Wave 1, PI rulings D72 and D73; 2026-11-18):
+    Two SEPARATE options, one per purpose, each recorded in the output.
+
+    --tile-join         the CLASSIFICATION join: how points become tiles for
+                        the tile confusion behind tile-MCC, sensitivity and
+                        specificity (``--mcc``). Default ``sheet-contains``:
+                        containment within each sheet. ``id``,
+                        ``geometric-primary`` and ``geometric-contains`` are
+                        the historical frame-wide joins, kept for replay.
+    --count-table-join  the COUNT-TABLE join: how each TP, FP and FN is booked
+                        to one tile for the per-tile table behind F1's
+                        bootstrap intervals, means, methods and coverage
+                        flags. Default ``sheet-primary``: the nearest-centre
+                        tile of the point's own sheet. ``id`` and
+                        ``geometric-primary`` are kept for replay; every
+                        evaluation written before Wave 1 used ``id`` here,
+                        whatever ``--tile-join`` said. Containment joins are
+                        refused (they double-count, D72 (2)).
+
+    Neither option touches the F1, precision and recall point estimates.
+    Provenance: ``tile_classification.tile_join``, each buffer row's
+    ``count_table_join``, ``_metadata.cli_args`` and ``_metadata.tile_joins``
+    (``metadata_version`` 1.5).
+
 Created: 2026-03-27
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
@@ -68,18 +97,22 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     COVERAGE_STATUS_SPARSE,
     COVERAGE_STATUS_WITHHELD,
     DEFAULT_CRS,
-    TILE_JOIN_DEFAULT,
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
     TILE_JOIN_WITHHELD_QUANTITIES,
-    TILE_JOINS,
+    TILE_JOINS_CLASSIFICATION,
+    TILE_JOINS_COUNT_TABLE,
     TileJoinRefusalError,
     bootstrap_ci,
     bootstrap_tile_classification_ci,
     calculate_f1_internal,
     calculate_tile_classification,
+    check_tile_joins,
     describe_tile_join_refusal,
     measured_exclusion,
     read_processed_tiles,
     scope_detections_to_frame,
+    tile_join_provenance,
 )
 
 #: Coverage statuses ordered worst-last, for the "worst case wins" rollups
@@ -333,6 +366,15 @@ def aggregate_tile_classification(
     # pass is withheld the aggregate is withheld too, naming the reason and
     # the count. (An undefined pass is different: it is a measurement that
     # came out degenerate, and E81's rule is to average the defined ones.)
+    # Wave 1: the aggregate records the classification join its passes were
+    # built under. Passes built under different joins cannot be averaged.
+    joins = {m.get("tile_join") for m in mcc_results} - {None}
+    if len(joins) > 1:
+        raise ValueError(
+            f"per-pass tile_classification blocks record different "
+            f"classification joins {sorted(joins)}; they cannot be averaged"
+        )
+    join_record = {"tile_join": joins.pop()} if joins else {}
     withheld = [m for m in mcc_results if m.get("withheld")]
     if withheld:
         return {
@@ -347,6 +389,7 @@ def aggregate_tile_classification(
             "n_runs_withheld": len(withheld),
             "confusion": {},
             "confusion_source": "withheld",
+            **join_record,
         }
 
     avg: dict[str, Any] = {}
@@ -393,6 +436,7 @@ def aggregate_tile_classification(
     # face of the record — so the provenance is now stated in the block.
     avg["confusion"] = mcc_results[0].get("confusion", {}) if mcc_results else {}
     avg["confusion_source"] = "run_1"
+    avg.update(join_record)
     return avg
 
 
@@ -768,8 +812,12 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
         # measured — the literal was contradicted by 162 per-metric ``method``
         # values inside 58 committed files. 1.4 (2026-09-12, audit Finding 6)
         # added ``input_git_state.blob_hashes`` — the content anchor that
-        # binds an evaluation to the exact input bytes it scored.
-        "metadata_version": "1.4",
+        # binds an evaluation to the exact input bytes it scored. 1.5
+        # (2026-11-18, tile-join Wave 1) added ``tile_joins``: the
+        # classification and count-table rules, both always recorded, so a
+        # 1.5 file without them is rejected rather than read through the
+        # historical fallbacks (``lib_advanced_metrics.recorded_tile_joins``).
+        "metadata_version": "1.5",
         "script_path": _SCRIPT_RELATIVE_PATH,
         "script_git_commit": _git_short_hash(PROJECT_ROOT),
         "script_git_status": _git_status(PROJECT_ROOT),
@@ -826,6 +874,13 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
                 "the scorer reprojects to evaluation_crs before matching."
             ),
         },
+        # Wave 1 (D72, D73): both tile-join rules, with the rulings behind
+        # the defaults. Recorded for every run, MCC or not, because the
+        # count-table rule governs the intervals of every buffer row.
+        "tile_joins": tile_join_provenance(
+            getattr(args, "tile_join", TILE_JOIN_CLASSIFICATION_DEFAULT),
+            getattr(args, "count_table_join", TILE_JOIN_COUNT_TABLE_DEFAULT),
+        ),
     }
     return metadata
 
@@ -1130,7 +1185,8 @@ def evaluate_single_run(
     label: str = "",
     compute_mcc: bool = False,
     processed_tiles: set[str] | None = None,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """Evaluate a single detection run at multiple buffer distances.
 
@@ -1149,15 +1205,22 @@ def evaluate_single_run(
             counted directly against the evaluation bounds and a shortfall
             flags ``coverage_status = "partial_coverage"``. ``None``
             preserves the pre-E72 zero-fraction-only behaviour.
-        tile_join: How points are booked to evaluation-frame tiles when
-            computing the tile confusion — one of
-            ``lib_advanced_metrics.TILE_JOINS``. See ``--tile-join``.
+        tile_join: The CLASSIFICATION join, how points are booked to
+            evaluation-frame tiles for the tile confusion — one of
+            ``lib_advanced_metrics.TILE_JOINS_CLASSIFICATION``. See
+            ``--tile-join``.
+        count_table_join: The COUNT-TABLE join the per-tile TP/FP/FN table
+            behind the bootstrap intervals and coverage flags is built
+            under — one of ``lib_advanced_metrics.TILE_JOINS_COUNT_TABLE``.
+            See ``--count-table-join``.
 
     Returns:
         Dict with metadata and per-buffer results including F1, P, R
         with bootstrap CIs. When compute_mcc is True, also includes
-        a tile_classification key.
+        a tile_classification key. Every buffer row of a non-empty run
+        records ``count_table_join``; the tile block records ``tile_join``.
     """
+    check_tile_joins(tile_join, count_table_join)
     n_det = len(gdf_det)
     buffer_results = []
 
@@ -1180,8 +1243,15 @@ def evaluate_single_run(
     # artefact says so), and the per-tile table it resamples is exactly
     # what the invariant refuses. They are therefore withheld with the
     # tile block, and the row carries the point estimate alone.
+    #
+    # Wave 1: the question is asked of the COUNT-TABLE join, because the
+    # quantities it withholds (intervals, coverage) are read from the count
+    # table. The classification join governs only the tile block, which
+    # ``calculate_tile_classification`` refuses on its own below. Until
+    # Wave 1 the probe used the classification join while the table itself
+    # was always built under ``id``; for the pair (id, id) the two coincide.
     tile_join_refusal = (
-        describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, tile_join)
+        describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, count_table_join)
         if n_det > 0
         else None
     )
@@ -1237,6 +1307,7 @@ def evaluate_single_run(
                 random_seed=seed,
                 buffer_metres=buffer_m,
                 processed_tiles=processed_tiles,
+                count_table_join=count_table_join,
             )
         except TileJoinRefusalError as exc:
             # Defence in depth. The pre-flight probe above asks the
@@ -1380,6 +1451,13 @@ def evaluate_single_run(
             buffer_results.append(_withheld_buffer_row(
                 buffer_m, f1, precision, recall, tile_join_refusal,
             ))
+
+    # Wave 1 provenance: every row whose intervals or coverage come from (or
+    # were withheld from) a count table names the rule that table is built
+    # under. A run with no detections reads no table and records none.
+    if n_det > 0:
+        for row in buffer_results:
+            row["count_table_join"] = count_table_join
 
     # Cell-level rollup (Mitigation 3, per-cell flag): if ANY buffer's
     # bootstrap distribution flagged sparse coverage, flag the whole cell.
@@ -1617,6 +1695,15 @@ def evaluate_multi_run_mean(
             avg["coverage_status"] == COVERAGE_STATUS_SPARSE
         )
         avg["ci_flag_basis"] = CI_FLAG_BASIS_FULL
+        # Wave 1: the passes' count-table rule, which must be one rule.
+        ct_joins = {e.get("count_table_join") for e in entries} - {None}
+        if len(ct_joins) > 1:
+            raise ValueError(
+                f"buffer {buffer_m} m: passes record different count-table "
+                f"joins {sorted(ct_joins)}; their intervals cannot be averaged"
+            )
+        if ct_joins:
+            avg["count_table_join"] = ct_joins.pop()
         if any_withheld:
             withheld_entry = next(
                 e for e in entries if e.get("ci_withheld")
@@ -2611,24 +2698,37 @@ def main() -> int:
         ),
     )
     parser.add_argument(
-        "--tile-join", type=str, default=TILE_JOIN_DEFAULT,
-        choices=list(TILE_JOINS),
+        "--tile-join", type=str, default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+        choices=list(TILE_JOINS_CLASSIFICATION),
         help=(
-            "How a detection or reference becomes a tile of the evaluation "
-            "frame, for the tile confusion matrix behind MCC. "
-            "'id' (the default) matches the detection's source_tile STRING "
-            "against the frame's tile_name — the legacy rule, kept so "
-            "published numbers reproduce; it encodes which tile the model "
-            "was shown rather than where the point is, and the scorer now "
-            "refuses to report an MCC when it does not describe the frame. "
-            "'geometric-primary' books each point to the frame tile whose "
-            "centroid is nearest among those it intersects. "
-            "'geometric-contains' books it to every tile that contains it, "
-            "symmetric with the reference side's long-standing rule. "
-            "The three are NOT interchangeable: the 384 px frames overlap "
-            "on a 336 px stride, so they give different confusions even "
-            "where the vocabulary matches — see "
-            "reports/tile-mcc-geometric-join-2026-09-12.md."
+            "CLASSIFICATION join: how a detection or reference becomes a "
+            "tile of the evaluation frame, for the tile confusion matrix "
+            "behind MCC, sensitivity and specificity. "
+            f"'{TILE_JOIN_CLASSIFICATION_DEFAULT}' (the default; PI rulings "
+            "D72 and D73) is containment within each sheet: a tile is "
+            "reference-positive if a reference recorded on its sheet lies "
+            "in it, and detected if a detection attributed to its sheet "
+            "(ruling D50) lies in it. The historical frame-wide joins stay "
+            "for replay: 'id' matches source_tile STRINGS (invalid for "
+            "merged output, D72); 'geometric-primary' books each point to "
+            "the nearest-centre frame tile; 'geometric-contains' to every "
+            "frame tile that contains it. See "
+            "planning/tile-join-resolution-2026-11-01.md."
+        ),
+    )
+    parser.add_argument(
+        "--count-table-join", type=str, default=TILE_JOIN_COUNT_TABLE_DEFAULT,
+        choices=list(TILE_JOINS_COUNT_TABLE),
+        help=(
+            "COUNT-TABLE join: how each TP, FP and FN is booked to ONE tile "
+            "for the per-tile table behind F1's bootstrap intervals, means "
+            "and coverage flags. "
+            f"'{TILE_JOIN_COUNT_TABLE_DEFAULT}' (the default; D72 (2), D73 "
+            "(2)) books to the nearest-centre tile of the point's own sheet. "
+            "'id' (TP/FP by source_tile name) is the rule every evaluation "
+            "before Wave 1 used, whatever --tile-join said; pass it to "
+            "replay one. 'geometric-primary' is the frame-wide nearest "
+            "centre. Point estimates are unaffected."
         ),
     )
     parser.add_argument(
@@ -2680,7 +2780,8 @@ def _evaluate_condition(
     output_dir: Path | None = None,
     compute_mcc: bool = False,
     metadata: dict[str, Any] | None = None,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """Evaluate a single condition (one or more detection files).
 
@@ -2699,6 +2800,8 @@ def _evaluate_condition(
         metadata: Optional provenance metadata (see ``_build_metadata``)
             written into the resulting ``evaluation.json`` so the output
             is self-documenting.
+        tile_join: The classification join (``--tile-join``).
+        count_table_join: The count-table join (``--count-table-join``).
 
     Returns:
         Summary dict with metrics.
@@ -2748,6 +2851,7 @@ def _evaluate_condition(
             compute_mcc=compute_mcc,
             processed_tiles=processed_tiles,
             tile_join=tile_join,
+            count_table_join=count_table_join,
         )
         run_results.append(result)
 
@@ -2819,6 +2923,7 @@ def _run_single_mode(args: argparse.Namespace) -> int:
         compute_mcc=args.mcc,
         metadata=run_metadata,
         tile_join=args.tile_join,
+        count_table_join=args.count_table_join,
     )
 
     if not args.output_dir:
@@ -2878,7 +2983,10 @@ def _evaluate_condition_worker(task: dict[str, Any]) -> tuple[int, dict]:
         output_dir=task["output_dir"],
         compute_mcc=task["compute_mcc"],
         metadata=task["metadata"],
-        tile_join=task.get("tile_join", TILE_JOIN_DEFAULT),
+        # Both joins are always set by ``_build_condition_tasks``; a task
+        # without them is a programming error, not a cue for a default.
+        tile_join=task["tile_join"],
+        count_table_join=task["count_table_join"],
     )
     return task["index"], summary
 
@@ -2977,6 +3085,7 @@ def _build_condition_tasks(
             "output_dir": args.output_dir / slugify(label),
             "compute_mcc": args.mcc,
             "tile_join": args.tile_join,
+            "count_table_join": args.count_table_join,
             "metadata": cond_metadata,
         })
 
@@ -3078,7 +3187,8 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
                 output_dir=task["output_dir"],
                 compute_mcc=task["compute_mcc"],
                 metadata=task["metadata"],
-                tile_join=task.get("tile_join", TILE_JOIN_DEFAULT),
+                tile_join=task["tile_join"],
+                count_table_join=task["count_table_join"],
             )
             results[task["index"]] = summary
     else:

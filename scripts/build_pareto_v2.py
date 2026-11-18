@@ -38,6 +38,18 @@
 #     that its `detections` path in `results/run-conditions.json` is the same
 #     geojson this script scores. A rung whose register entry disagrees aborts
 #     the build, so the MCC cannot be read off the wrong cell.
+#
+# TILE JOINS (Wave 1, PI rulings D72 and D73; 2026-11-18; Astra's audit, C4):
+# ``--tile-join`` (classification, default ``sheet-contains``) and
+# ``--count-table-join`` (the F1 round-robin's per-tile tables, default
+# ``sheet-primary``). Two computations, in order: each rung's committed
+# ``tile_classification`` is first rebuilt under the join IT recorded
+# (``lib_advanced_metrics.recorded_tile_joins``) and gated exactly as
+# before; then its arrays and MCC are computed under the requested join, and
+# the committed MCC is used only when the two joins coincide. The F1 gate
+# (board F1 against the record) is join-independent. Outputs record both
+# rules (``tile_joins``); a non-default pair writes ``pareto_v2_<rules>.*``
+# beside, never over, the corrected files.
 #   - The MCC is then read from that condition's own `evaluation.json`
 #     (`summary.tile_classification`) and GATED by recomputing the per-tile
 #     classification from the same geojson through the house definition
@@ -72,7 +84,13 @@ from scripts.consensus_vs_baseline_tiering import consensus_per_tile  # noqa: E4
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_frontier_cost import gs_units  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    TILE_JOINS_CLASSIFICATION,
+    TILE_JOINS_COUNT_TABLE,
     compute_per_tile_classification,
+    recorded_tile_joins,
+    tile_join_provenance,
 )
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     greedy_clique_tiers,
@@ -196,8 +214,14 @@ def resolve_registered_cell(cond_ref: str, geojson: str) -> tuple[Path, dict]:
 
 def rung_tile_classification(geojson: Path, gdf_ref, gdf_bounds,
                              tile_order: list[str], evaluation: dict,
-                             rung: str) -> tuple[tuple, dict, float]:
+                             rung: str,
+                             tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+                             ) -> tuple[tuple, dict, float]:
     """Per-tile one-hot classification for one rung, gated against its record.
+
+    Step 1 rebuilds the committed confusion under the join the evaluation
+    recorded and gates it, unchanged; step 2 builds the arrays and MCC under
+    ``tile_join`` (the same arrays when the joins coincide).
 
     Args:
         geojson: The rung's detection set.
@@ -206,9 +230,11 @@ def rung_tile_classification(geojson: Path, gdf_ref, gdf_bounds,
         tile_order: Fixed tile order the arrays are aligned to.
         evaluation: The rung's committed ``evaluation.json``.
         rung: Rung name, for the error message.
+        tile_join: The requested classification join.
 
     Returns:
-        ``((tp, tn, fp, fn) arrays, recorded_confusion, mcc_point)``.
+        ``((tp, tn, fp, fn) arrays, confusion, mcc_point)``, all under
+        ``tile_join``.
 
     Raises:
         RegisterGateError: if the rebuilt confusion or MCC disagrees with the
@@ -217,16 +243,24 @@ def rung_tile_classification(geojson: Path, gdf_ref, gdf_bounds,
     import numpy as np
 
     gdf_det = assign_source_tiles(load_geojson(geojson), gdf_bounds)
-    per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
     index = {t: i for i, t in enumerate(tile_order)}
-    arrays = {k: np.zeros(len(tile_order), dtype=int)
-              for k in ("tp", "tn", "fp", "fn")}
-    for _, row in per_tile.iterrows():
-        i = index.get(row["tile_name"])
-        if i is None:
-            continue
-        for k in arrays:
-            arrays[k][i] = int(row[k])
+
+    def arrays_under(join: str) -> dict:
+        per_tile = compute_per_tile_classification(
+            gdf_det, gdf_ref, gdf_bounds, tile_join=join)
+        out = {k: np.zeros(len(tile_order), dtype=int)
+               for k in ("tp", "tn", "fp", "fn")}
+        for _, row in per_tile.iterrows():
+            i = index.get(row["tile_name"])
+            if i is None:
+                continue
+            for k in out:
+                out[k][i] = int(row[k])
+        return out
+
+    recorded_join = recorded_tile_joins(evaluation)["classification"]
+    # Step 1: the record, under ITS join.
+    arrays = arrays_under(recorded_join)
     rebuilt = {k: int(v.sum()) for k, v in arrays.items()}
 
     tc = evaluation["summary"].get("tile_classification") or {}
@@ -245,12 +279,36 @@ def rung_tile_classification(geojson: Path, gdf_ref, gdf_bounds,
             and abs(float(mcc_rebuilt) - float(mcc_recorded)) > 5e-5:
         raise RegisterGateError(
             f"{rung}: rebuilt MCC {mcc_rebuilt:.6f} != recorded {mcc_recorded}")
+    if recorded_join == tile_join:
+        return ((arrays["tp"], arrays["tn"], arrays["fp"], arrays["fn"]),
+                recorded, float(mcc_recorded))
+    # Step 2: every analysed value under the requested join.
+    arrays = arrays_under(tile_join)
+    confusion = {k: int(v.sum()) for k, v in arrays.items()}
+    mcc_new = compute_mcc_or_none(**confusion)
+    if mcc_new is None:
+        raise RegisterGateError(f"{rung}: MCC undefined under '{tile_join}'")
     return ((arrays["tp"], arrays["tn"], arrays["fp"], arrays["fn"]),
-            recorded, float(mcc_recorded))
+            confusion, round(float(mcc_new), 4))
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     """Score, tier, and plot the cost-weighted frontier."""
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Cost-weighted Pareto v2.")
+    parser.add_argument("--tile-join", choices=TILE_JOINS_CLASSIFICATION,
+                        default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+                        help="Classification join of the MCC column (Wave 1).")
+    parser.add_argument("--count-table-join", choices=TILE_JOINS_COUNT_TABLE,
+                        default=TILE_JOIN_COUNT_TABLE_DEFAULT,
+                        help="Count-table join of the F1 round-robin (Wave 1).")
+    args = parser.parse_args(argv)
+    stem = "pareto_v2"
+    if args.tile_join != TILE_JOIN_CLASSIFICATION_DEFAULT:
+        stem += f"_{args.tile_join}"
+    if args.count_table_join != TILE_JOIN_COUNT_TABLE_DEFAULT:
+        stem += f"_ct-{args.count_table_join}"
     gdf_ref = load_geojson(GROUND_TRUTH)
     gdf_bounds = load_geojson(BOUNDS)
     tile_order = sorted(gdf_bounds["tile_name"].tolist())
@@ -258,7 +316,8 @@ def main() -> int:
     cells = []
     print("=== rungs (gates vs committed records) ===", flush=True)
     for name, expect, gj, np_, ppc, crops, nvf, cond_ref in RUNGS:
-        tp, fp, fn = consensus_per_tile(Path(gj), gdf_ref, gdf_bounds, tile_order)
+        tp, fp, fn = consensus_per_tile(Path(gj), gdf_ref, gdf_bounds, tile_order,
+                                        args.count_table_join)
         f1 = (2 * tp.sum()) / (2 * tp.sum() + fp.sum() + fn.sum())
         if abs(f1 - expect) > 0.0005:
             sys.exit(f"GATE FAIL {name}: board F1 {f1:.4f} vs record {expect}")
@@ -267,7 +326,8 @@ def main() -> int:
         # committed tile_classification block.
         eval_path, evaluation = resolve_registered_cell(cond_ref, gj)
         cls, confusion, mcc = rung_tile_classification(
-            BASE_DIR / gj, gdf_ref, gdf_bounds, tile_order, evaluation, name)
+            BASE_DIR / gj, gdf_ref, gdf_bounds, tile_order, evaluation, name,
+            args.tile_join)
         cost = np_ * ppc + crops * nvf * VF_CALL_USD
         cost_55 = cost * SCALE_55
         cells.append({"rung": name, "f1": round(float(f1), 4),
@@ -393,9 +453,10 @@ def main() -> int:
     fig.suptitle("Cost-weighted Pareto frontiers — GS 384 px "
                  "proposer-verifier", fontsize=12)
     fig.tight_layout()
-    fig.savefig(OUT_DIR / "pareto_v2.png", dpi=150)
+    fig.savefig(OUT_DIR / f"{stem}.png", dpi=150)
 
-    (OUT_DIR / "pareto_v2.json").write_text(json.dumps({
+    (OUT_DIR / f"{stem}.json").write_text(json.dumps({
+        "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
         "cost_model": {"min_pass_usd": MIN_PASS_USD, "high_pass_usd": HIGH_PASS_USD,
                        "vf_call_usd": VF_CALL_USD,
                        "production_scale": {"tiles_gs": TILES_GS, "tiles_55map": TILES_55,
@@ -444,7 +505,7 @@ def main() -> int:
         "pairwise": pairs}, indent=2) + "\n")
     print(f"Pareto-efficient set (F1):  {eff}", flush=True)
     print(f"Pareto-efficient set (MCC): {eff_mcc}", flush=True)
-    print(f"Wrote {OUT_DIR.relative_to(BASE_DIR)}/pareto_v2.{{json,png}}", flush=True)
+    print(f"Wrote {OUT_DIR.relative_to(BASE_DIR)}/{stem}.{{json,png}}", flush=True)
     return 0
 
 

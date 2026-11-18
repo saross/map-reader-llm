@@ -70,6 +70,21 @@
 #       --expect-b results/.../t10-n10-9of10/evaluation.json \
 #       --output-dir results/e43-matched-temperature/paired-mcc --execute
 #
+# TILE JOINS (Wave 1, PI rulings D72 and D73; 2026-11-18; Astra's audit, C4)
+# ----------------------------------------------------------------------
+# ``--tile-join`` is the classification join of the tested labels (default
+# ``sheet-contains``). Two computations, in order, for every arm:
+#   1. VALIDATE: each gate reference ``evaluation.json`` is reproduced under
+#      the classification join IT recorded
+#      (``lib_advanced_metrics.recorded_tile_joins``: a missing record means
+#      the legacy ``id``; contradictory provenance is refused) through the
+#      same hard gate as before — confusion cells, MCC definedness and value,
+#      feature count — unweakened;
+#   2. COMPUTE: the labels, MCCs, ΔMCC and permutation are built under the
+#      requested join. Each gate record names the join it validated under,
+#      and the output names the join it computed under (``tile_join``). The
+#      test reads no count table, so it takes no count-table join.
+#
 # Zero application programming interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-08-03 | Apache 2.0
@@ -106,7 +121,11 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOINS_CLASSIFICATION,
+    TILE_JOIN_RULINGS,
     compute_per_tile_classification,
+    recorded_tile_joins,
 )
 from pairwise_permutation_test import (  # noqa: E402
     compute_mcc_or_none,
@@ -267,6 +286,7 @@ def aggregate_confusion(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """Aggregate per-tile classifications into a confusion table plus MCC.
 
@@ -278,9 +298,10 @@ def aggregate_confusion(
         gdf_det: Detections with a ``source_tile`` column.
         gdf_ref: Ground-truth references.
         gdf_bounds: Evaluation bounds with a ``tile_name`` column.
+        tile_join: The classification join the labels are built under.
 
     Returns:
-        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``n_tiles`` and
+        Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``n_tiles``, ``tile_join`` and
         ``mcc``, where ``mcc`` is ``None`` when the 2 x 2 table is
         degenerate (erratum E81, 2026-08-18). It used to be 0.0 in two
         places — an empty per-tile frame, and any zero-denominator
@@ -293,12 +314,14 @@ def aggregate_confusion(
         >>> cells["tp"] + cells["tn"] + cells["fp"] + cells["fn"]  # doctest: +SKIP
         487
     """
-    per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    per_tile = compute_per_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+    )
     if per_tile.empty:
         # No tiles at all: the confusion table does not exist, so the
         # coefficient is undefined rather than zero.
         return {"tp": 0, "tn": 0, "fp": 0, "fn": 0, "n_tiles": 0,
-                "mcc": None}
+                "mcc": None, "tile_join": tile_join}
     tp = int(per_tile["tp"].sum())
     tn = int(per_tile["tn"].sum())
     fp = int(per_tile["fp"].sum())
@@ -307,6 +330,7 @@ def aggregate_confusion(
         "tp": tp, "tn": tn, "fp": fp, "fn": fn,
         "n_tiles": int(len(per_tile)),
         "mcc": compute_mcc_or_none(tp, tn, fp, fn),
+        "tile_join": tile_join,
     }
 
 
@@ -319,7 +343,9 @@ def expected_from_evaluation(eval_path: Path) -> dict:
 
     Returns:
         Dict with ``tp``, ``tn``, ``fp``, ``fn``, ``mcc``,
-        ``mcc_recorded`` and ``n_detections``.
+        ``mcc_recorded``, ``n_detections`` and ``tile_join`` — the
+        classification join the evaluation recorded (Wave 1), which the gate
+        must reproduce it under.
 
         ``mcc`` may be ``None`` for two quite different reasons, which
         erratum E81 makes it essential to separate: the evaluation may
@@ -332,6 +358,8 @@ def expected_from_evaluation(eval_path: Path) -> dict:
     Raises:
         ConfusionGateError: if the file carries no tile-classification block,
             which means it was scored without ``--mcc`` and cannot gate.
+        TileJoinProvenanceError: if the file's join provenance contradicts
+            itself (a ``ValueError``).
     """
     with open(eval_path, encoding="utf-8") as handle:
         payload = json.load(handle)
@@ -356,6 +384,7 @@ def expected_from_evaluation(eval_path: Path) -> dict:
         "mcc_recorded": "point" in mcc_block,
         "n_detections": summary.get("n_detections"),
         "source": str(eval_path),
+        "tile_join": recorded_tile_joins(payload)["classification"],
     }
 
 
@@ -456,6 +485,8 @@ def check_confusion_gate(
 
     return {
         "reference": expected.get("source"),
+        # Wave 1: the join the record was reproduced under (its own).
+        "recorded_tile_join": expected.get("tile_join"),
         "confusion_matched": True,
         # ``mcc_matched`` now means "the MCC check ran and passed",
         # which includes the both-undefined case. ``mcc_defined``
@@ -482,8 +513,12 @@ def _gate_arm(
     label: str,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> tuple[gpd.GeoDataFrame, dict, list[dict]]:
-    """Load one arm and run the confusion gate against every reference given.
+    """Load one arm, validate every reference under its own join, then compute.
+
+    Step 1 rebuilds the confusion under each reference's RECORDED join and
+    gates it; step 2 builds the arm's analysed confusion under ``tile_join``.
 
     Args:
         geojson_path: The arm's detection GeoJSON.
@@ -492,10 +527,11 @@ def _gate_arm(
         label: Human-readable arm label.
         gdf_ref: Ground-truth references.
         gdf_bounds: Evaluation bounds.
+        tile_join: The requested classification join (step 2).
 
     Returns:
-        Tuple of (detections GeoDataFrame, observed confusion dict, list of
-        per-reference gate records).
+        Tuple of (detections GeoDataFrame, the confusion under ``tile_join``,
+        list of per-reference gate records).
 
     Raises:
         ConfusionGateError: if no reference was supplied, or any check fails.
@@ -506,15 +542,26 @@ def _gate_arm(
             "mandatory: pass at least one evaluation.json.",
         )
     gdf_det = load_detections(geojson_path, gdf_bounds)
-    observed = aggregate_confusion(gdf_det, gdf_ref, gdf_bounds)
+    by_join: dict[str, dict] = {}
+
+    def confusion_under(join: str) -> dict:
+        if join not in by_join:
+            by_join[join] = aggregate_confusion(
+                gdf_det, gdf_ref, gdf_bounds, tile_join=join)
+        return by_join[join]
+
     records = []
     for expect_path in expect_paths:
         expected = expected_from_evaluation(Path(expect_path))
+        # Step 1: the record, under ITS join; the gate is unchanged.
         records.append(
             check_confusion_gate(
-                observed, expected, label, n_detections=len(gdf_det),
+                confusion_under(expected["tile_join"]), expected, label,
+                n_detections=len(gdf_det),
             ),
         )
+    # Step 2: the analysed confusion, under the requested join.
+    observed = confusion_under(tile_join)
     logger.info(
         "  GATE PASSED %-42s TP/TN/FP/FN %d/%d/%d/%d  MCC %s  "
         "(%d reference%s)",
@@ -532,6 +579,7 @@ def run_pair(
     n_permutations: int = DEFAULT_N_PERMUTATIONS,
     seed: int = DEFAULT_SEED,
     permute: bool = True,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """Gate both arms of a pair, then run the paired ΔMCC permutation test.
 
@@ -547,6 +595,8 @@ def run_pair(
         n_permutations: Permutation iterations.
         seed: Random seed.
         permute: If False, gate and report the observed ΔMCC only (dry-run).
+        tile_join: The classification join the test is computed under; each
+            gate reference is validated under its own recorded join first.
 
     Returns:
         Result dict with the gate records, the observed MCCs and ΔMCC, and —
@@ -564,17 +614,18 @@ def run_pair(
 
     gdf_a, conf_a, gate_a = _gate_arm(
         Path(job["geojson_a"]), _as_paths(job.get("expect_a")),
-        job["label_a"], gdf_ref, gdf_bounds,
+        job["label_a"], gdf_ref, gdf_bounds, tile_join,
     )
     gdf_b, conf_b, gate_b = _gate_arm(
         Path(job["geojson_b"]), _as_paths(job.get("expect_b")),
-        job["label_b"], gdf_ref, gdf_bounds,
+        job["label_b"], gdf_ref, gdf_bounds, tile_join,
     )
 
     result = {
         "pair_id": job["pair_id"],
         "note": job.get("note"),
         "metric": "tile_level_mcc",
+        "tile_join": tile_join,
         "buffer_invariance": (
             "Tile-level MCC is computed from buffer-free tile labels "
             "(tile intersects ground truth? arm emitted a detection in "
@@ -634,7 +685,7 @@ def run_pair(
 
     perm = run_permutation_test_mcc(
         gdf_a, gdf_b, gdf_ref, gdf_bounds,
-        n_permutations=n_permutations, seed=seed,
+        n_permutations=n_permutations, seed=seed, tile_join=tile_join,
     )
     # Cross-check: the kernel's own observed ΔMCC must equal the gated one.
     kernel_diff = perm["permutation_test"]["observed_mcc_diff"]
@@ -756,6 +807,13 @@ def build_parser() -> argparse.ArgumentParser:
             "gates the arms, prints the observed ΔMCC, and writes nothing."
         ),
     )
+    parser.add_argument(
+        "--tile-join", choices=TILE_JOINS_CLASSIFICATION,
+        default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+        help=("Classification join the test is computed under (Wave 1; "
+              f"default {TILE_JOIN_CLASSIFICATION_DEFAULT!r}). Gate references "
+              "are validated under their own recorded joins first."),
+    )
     parser.add_argument("--quiet", action="store_true")
     return parser
 
@@ -796,6 +854,7 @@ def main(argv: list[str] | None = None) -> int:
                 n_permutations=args.n_permutations,
                 seed=args.seed,
                 permute=args.execute,
+                tile_join=args.tile_join,
             ))
         except ConfusionGateError as exc:
             logger.error("GATE FAILURE\n%s", exc)
@@ -812,6 +871,8 @@ def main(argv: list[str] | None = None) -> int:
             "permutations with |ΔMCC| >= |observed ΔMCC|"
         ),
         "kernel": "pairwise_permutation_test.run_permutation_test_mcc",
+        "tile_join": args.tile_join,
+        "tile_join_rulings": TILE_JOIN_RULINGS,
         "n_permutations": args.n_permutations,
         "seed": args.seed,
         "bounds": str(args.bounds),

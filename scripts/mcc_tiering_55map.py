@@ -30,6 +30,23 @@
 #      BCa MCC CIs (summary.json tile_classification.mcc_CI); they are
 #      carried through to the outputs.
 #
+# TILE JOINS (Wave 1, PI rulings D72 and D73; 2026-11-18):
+#   --tile-join  the CLASSIFICATION join of every cell's truth and prediction
+#                vectors (default ``sheet-contains``). Two computations, in
+#                order: each cell's committed confusion is first rebuilt
+#                under the join its record names (Track-2 ``summary.json``
+#                records none: the legacy ``id``; an r2 ``evaluation.json``
+#                is read by ``lib_advanced_metrics.recorded_tile_joins``) and
+#                gated exactly as before; then the vectors, MCC,
+#                sensitivity, specificity and ranks are computed under the
+#                requested join. Where the two differ the committed BCa
+#                interval belongs to the recorded join and is NOT carried
+#                (``mcc_ci`` null, ``mcc_ci_status`` says why), and the
+#                output name gains ``-<join>`` unless the join is the default.
+#   No count-table option: this board reads no per-tile count table (MCC
+#   only; F1 intervals are not recomputed here), and an option that did
+#   nothing would misdescribe the output. ``tile_joins.count_table`` is null.
+#
 # OUTPUTS: results/metric-leaderboards/55map-mcc-tiering.{json,md}
 # COST: $0 (on-disk re-analysis). Run on zbook (sapphire in use, S114).
 #
@@ -55,8 +72,12 @@ sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.build_55map_leaderboard import r2_gt  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
-    TILE_JOIN_DEFAULT,
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_RULINGS,
+    TILE_JOINS_CLASSIFICATION,
     calculate_tile_classification,
+    recorded_tile_joins,
 )
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
     ATTRIBUTION_RESOLUTION_NOTE,
@@ -144,7 +165,7 @@ def tile_vectors(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> tuple[list[str], np.ndarray, np.ndarray]:
     """Per-tile truth and prediction vectors for tile classification.
 
@@ -164,7 +185,7 @@ def tile_vectors(
             ``id`` join only).
         gdf_ref: Reference (ground-truth) points, same CRS as bounds.
         gdf_bounds: Tile boundary polygons with ``tile_name``.
-        tile_join: One of ``lib_advanced_metrics.TILE_JOINS``.
+        tile_join: One of ``lib_advanced_metrics.TILE_JOINS_CLASSIFICATION``.
 
     Returns:
         (tile_names, truth, pred) — names in bounds order, two aligned
@@ -267,6 +288,9 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
 
     Returns:
         (gdf_det reprojected to the engine CRS, tile_classification dict).
+        The dict carries ``recorded_tile_join``: the classification join the
+        committed block was built under (a Track-2 ``summary.json`` records
+        none, so the legacy ``id``).
     """
     if (track2_dir / "summary.json").exists():
         summary = json.loads((track2_dir / "summary.json").read_text())
@@ -275,7 +299,8 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
         # relativise against this repo checkout.
         rel = det_path.split("map-reader-llm/", 1)[1]
         row50 = next(r for r in summary["results"] if r["R_m"] == BUFFER_M)
-        tile = row50["tile_classification"]
+        tile = {**row50["tile_classification"],
+                "recorded_tile_join": TILE_JOIN_LEGACY_CLASSIFICATION}
     else:
         # evaluate_detections.py shape (the r2 chain's single engine): the
         # tile block nests point + BCa interval per metric; flatten it to
@@ -287,7 +312,8 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
                 "mcc": tc["mcc"]["point"],
                 "mcc_CI": [tc["mcc"]["ci_lower"], tc["mcc"]["ci_upper"]],
                 "sensitivity": tc["sensitivity"]["point"],
-                "specificity": tc["specificity"]["point"]}
+                "specificity": tc["specificity"]["point"],
+                "recorded_tile_join": recorded_tile_joins(ev)["classification"]}
     gdf_det = gpd.read_file(BASE_DIR / rel)
     if gdf_det.crs is None:
         gdf_det = gdf_det.set_crs("EPSG:4326")
@@ -406,7 +432,8 @@ def render_md(out: dict) -> str:
 
 
 def main(rebuild_md_only: bool = False, reference: str = "canonical",
-         force_r1: bool = False) -> int:
+         force_r1: bool = False,
+         tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT) -> int:
     """Build the 55-map tile-MCC permutation tiering.
 
     Args:
@@ -419,12 +446,18 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
             read from ``results/55maps-standardised-ref-2026-08-14/``), or
             ``r2`` (reference revision r2; ``-r2`` outputs, cells read from
             ``results/55maps-r2-ref-2026-09-06/``).
+        tile_join: The classification join every analysed value is
+            computed under (see the header's TILE JOINS).
     """
+    if tile_join not in TILE_JOINS_CLASSIFICATION:
+        raise ValueError(f"tile_join must be one of {TILE_JOINS_CLASSIFICATION!r}")
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     standardised = reference == "standardised"
     is_r2 = reference == "r2"
     stem = {"standardised": "55map-mcc-tiering-standardised",
             "r2": "55map-mcc-tiering-r2"}.get(reference, "55map-mcc-tiering")
+    if tile_join != TILE_JOIN_CLASSIFICATION_DEFAULT:
+        stem += f"-{tile_join}"
     if reference != "r2" and not rebuild_md_only and not force_r1 \
             and (OUT_DIR / f"{stem}.json").exists():
         sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/{stem}.json is a committed r1 "
@@ -483,7 +516,28 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
     truth: np.ndarray | None = None
     for name, dirname in CELLS.items():
         gdf_det, committed = _load_cell_inputs(cell_base / dirname)
-        tiles, cell_truth, pred = tile_vectors(gdf_det, gdf_ref, gdf_bounds)
+        recorded_join = committed["recorded_tile_join"]
+        # Step 1: rebuild the committed confusion under ITS join and gate it.
+        tiles, rec_truth, rec_pred = tile_vectors(
+            gdf_det, gdf_ref, gdf_bounds, tile_join=recorded_join)
+        rec_confusion = {
+            "tp": int((rec_pred & rec_truth).sum()),
+            "tn": int((~rec_pred & ~rec_truth).sum()),
+            "fp": int((rec_pred & ~rec_truth).sum()),
+            "fn": int((~rec_pred & rec_truth).sum()),
+        }
+        committed_counts = {k: committed[k] for k in ("tp", "tn", "fp", "fn")}
+        if rec_confusion != committed_counts:
+            sys.exit(f"GATE FAIL: {name} rebuilt confusion under the recorded "
+                     f"join '{recorded_join}' {rec_confusion} != committed "
+                     f"{committed_counts}")
+        # Step 2: every analysed value under the requested join.
+        same_join = recorded_join == tile_join
+        if same_join:
+            cell_truth, pred = rec_truth, rec_pred
+        else:
+            tiles, cell_truth, pred = tile_vectors(
+                gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join)
         if truth is None:
             truth = cell_truth
         elif not np.array_equal(truth, cell_truth):
@@ -492,24 +546,35 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
             "tp": int((pred & truth).sum()), "tn": int((~pred & ~truth).sum()),
             "fp": int((pred & ~truth).sum()), "fn": int((~pred & truth).sum()),
         }
-        committed_counts = {k: committed[k] for k in ("tp", "tn", "fp", "fn")}
-        ok = confusion == committed_counts
-        print(f"  {name:<24} rebuilt {confusion} "
-              f"{'== committed ok' if ok else f'!= committed {committed_counts} GATE FAIL'}",
-              flush=True)
-        if not ok:
-            sys.exit(f"GATE FAIL: {name} rebuilt confusion != committed summary.json")
+        print(f"  {name:<24} rebuilt under '{recorded_join}' == committed ok; "
+              f"under '{tile_join}' {confusion}", flush=True)
         gate_verified.append(name)
-        cells.append({
+        if same_join:
+            mcc, sens, spec = (committed["mcc"], committed["sensitivity"],
+                               committed["specificity"])
+        else:
+            tp_, tn_, fp_, fn_ = (confusion[k] for k in ("tp", "tn", "fp", "fn"))
+            mcc = round(float(mcc_from_confusion(tp_, tn_, fp_, fn_)), 4)
+            sens = round(tp_ / (tp_ + fn_), 4) if tp_ + fn_ else None
+            spec = round(tn_ / (tn_ + fp_), 4) if tn_ + fp_ else None
+        cell = {
             "name": name,
             "condition_dir": str((cell_base / dirname).relative_to(BASE_DIR)),
-            "mcc": committed["mcc"],
-            "mcc_ci": committed.get("mcc_CI"),
-            "sensitivity": committed["sensitivity"],
-            "specificity": committed["specificity"],
+            "mcc": mcc,
+            # The committed interval is the recorded join's; it is never
+            # carried beside values computed under another join.
+            "mcc_ci": committed.get("mcc_CI") if same_join else None,
+            "sensitivity": sens,
+            "specificity": spec,
             "confusion": confusion,
+            "recorded_tile_join": recorded_join,
             "pred": pred,
-        })
+        }
+        if not same_join:
+            cell["mcc_ci_status"] = (
+                f"not carried: the committed interval is under '{recorded_join}', "
+                f"the values here under '{tile_join}'; not recomputed by this board")
+        cells.append(cell)
 
     assert truth is not None
     print(f"\n=== round-robin ({len(cells)} cells, {N_PERMUTATIONS // 1000}k "
@@ -537,6 +602,9 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
                   "r2": "55map-r2"}.get(reference, "55map-canonical"),
         "reference": reference,
         "metric": "tile_mcc", "buffer_m": BUFFER_M,
+        "tile_joins": {"classification": tile_join, "count_table": None,
+                       "count_table_note": "this board reads no count table",
+                       "rulings": TILE_JOIN_RULINGS},
         "n_tiles": int(len(truth)), "n_populated_tiles": int(truth.sum()),
         "n_permutations": N_PERMUTATIONS, "seed": SEED,
         "bh_q": 0.05, "n_significant": n_sig, "n_pairs": len(pairs),
@@ -553,8 +621,8 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
              "(BCa, 10k bootstrap, seed 42 — computed by the engine at scoring time)")
         ),
         "gate": (
-            "rebuilt per-tile confusion == committed summary.json (exact), "
-            f"{len(gate_verified)}/{len(CELLS)}"
+            "rebuilt per-tile confusion, under each cell's recorded join, == "
+            f"committed summary.json (exact), {len(gate_verified)}/{len(CELLS)}"
         ),
         "gate_cells_verified": len(gate_verified),
         "gate_cells_total": len(CELLS),
@@ -592,8 +660,16 @@ if __name__ == "__main__":
         "--force-r1", action="store_true",
         help="Permit rewriting a committed r1 board.",
     )
+    parser.add_argument(
+        "--tile-join", choices=TILE_JOINS_CLASSIFICATION,
+        default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+        help="Classification join every analysed value is computed under "
+             f"(default {TILE_JOIN_CLASSIFICATION_DEFAULT!r}); each committed "
+             "confusion is first gated under its own recorded join. 'id' "
+             "replays the committed boards (output name gains -id).",
+    )
     _args = parser.parse_args()
     raise SystemExit(main(
         rebuild_md_only=_args.rebuild_md, reference=_args.reference,
-        force_r1=_args.force_r1,
+        force_r1=_args.force_r1, tile_join=_args.tile_join,
     ))

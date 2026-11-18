@@ -108,7 +108,10 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 )
 
 from apply_fdr_correction import apply_bh_correction  # noqa: E402
-from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    compute_per_tile_tp_fp_fn,
+)
 from pairwise_permutation_test import assign_source_tiles  # noqa: E402
 
 DEFAULT_GT = BASE_DIR / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
@@ -149,6 +152,7 @@ def consensus_per_tile(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute a consensus cell's per-tile TP/FP/FN from one aggregated set.
 
@@ -165,6 +169,8 @@ def consensus_per_tile(
         gdf_ref: Ground-truth references (projected to TARGET_CRS).
         gdf_bounds: Evaluation tile boundaries (projected to TARGET_CRS).
         tile_order: Fixed list of tile_name values defining array positions.
+        count_table_join: The count-table join (Wave 1; ``"id"`` replays a
+            pre-Wave-1 result).
 
     Returns:
         Tuple ``(tp, fp, fn)`` of float arrays, length ``len(tile_order)``.
@@ -188,7 +194,8 @@ def consensus_per_tile(
     gdf_det = gdf_det.to_crs(TARGET_CRS)
     gdf_det = assign_source_tiles(gdf_det, gdf_bounds)
     tile_metrics = compute_per_tile_tp_fp_fn(
-        gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=HEADLINE_BUFFER_M,
+        tile_join=count_table_join,
     )
 
     tile_index = {name: i for i, name in enumerate(tile_order)}

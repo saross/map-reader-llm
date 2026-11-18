@@ -36,6 +36,17 @@ Guards (all fatal):
    ``per_run`` entry must be byte-identical before and after.
 3. The pass count must match.
 
+**Tile join (Wave 1, 2026-11-18; Astra's consumer audit, C2).** This is a
+HISTORICAL re-emission tool: it must reproduce each cell under the
+classification join the cell itself recorded, never under the scorer's
+current default (``sheet-contains`` since Wave 1). The join is read by
+``lib_advanced_metrics.recorded_tile_joins`` (a missing record means the
+legacy ``id``; contradictory provenance, or a Wave-1 output without
+provenance, is refused) and passed explicitly to both the classification
+and its bootstrap. The re-emitted block records that join as
+``tile_join``, so equal confusion counts can no longer hide different join
+semantics. The tool reads no count table, so it takes no count-table join.
+
 **Recipe recovery.** The re-emission needs each cell's ground truth,
 bounds, and detection inputs. It used to subscript ``_metadata.cli_args``
 directly, which raised a bare ``KeyError`` on the 40 committed
@@ -87,6 +98,7 @@ from scripts.evaluate_detections import (  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_tile_classification_ci,
     calculate_tile_classification,
+    recorded_tile_joins,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -230,7 +242,8 @@ def recompute_cell(
     Returns:
         A dict with keys ``document`` (the updated evaluation document),
         ``summary_before`` / ``summary_after`` (the old and new
-        ``tile_classification`` blocks), and ``n_runs``.
+        ``tile_classification`` blocks), ``n_runs`` and ``tile_join`` (the
+        recorded classification join every block was recomputed under).
 
     Raises:
         ValueError: If the recorded metadata is unusable, the pass count
@@ -240,6 +253,9 @@ def recompute_cell(
     document = json.loads(eval_path.read_text(encoding="utf-8"))
     metadata = document.get("_metadata") or {}
     cli_args = recover_recipe(metadata)
+    # Wave 1 (C2): the cell's OWN classification join, never the scorer's
+    # default. Raises TileJoinProvenanceError on contradictory provenance.
+    tile_join = recorded_tile_joins(document)["classification"]
 
     n_bootstrap = int(cli_args.get("bootstrap") or 1000)
     seed = cli_args.get("seed")
@@ -307,12 +323,15 @@ def recompute_cell(
     new_blocks: list[dict[str, Any]] = []
     for index, det_file in enumerate(det_files):
         gdf_det = load_geojson(det_file)
-        tile_class = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+        tile_class = calculate_tile_classification(
+            gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+        )
         tile_ci = bootstrap_tile_classification_ci(
             gdf_det, gdf_ref, gdf_bounds,
-            n_iterations=n_bootstrap, random_seed=seed,
+            n_iterations=n_bootstrap, random_seed=seed, tile_join=tile_join,
         )
         block = build_tile_classification_block(tile_class, tile_ci)
+        block["tile_join"] = tile_join
 
         # Guard 1: wrong-source tripwire.
         committed_block = (
@@ -360,6 +379,7 @@ def recompute_cell(
         "summary_before": summary_before,
         "summary_after": summary_after,
         "n_runs": len(det_files),
+        "tile_join": tile_join,
     }
 
 

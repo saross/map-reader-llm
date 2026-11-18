@@ -79,6 +79,21 @@ Description:
        the committed unrounded clipped values to 6 dp, and, where the clip
        removed nothing, the clipped tile confusion equals the as-evaluated one.
 
+Tile joins (Wave 1, PI rulings D72 and D73; 2026-11-18):
+    ``prepare`` takes ``--tile-join`` (classification, default
+    ``sheet-contains``) and ``--count-table-join`` (default ``sheet-primary``)
+    and writes BOTH explicitly into every job's argument list, so a clipped
+    cell never inherits a scorer default. The rest of the as-evaluated recipe
+    is replayed as recorded; its own recorded joins (a missing record meaning
+    the legacy ``id``) are kept in ``recorded_recipe`` for validation. The two
+    rules are stored in ``prepare.json`` and drive the tiering file names the
+    later steps read. The report's "nothing clipped, so the confusion equals
+    the as-evaluated one" gate applies only when the clipped cell's
+    classification join is the as-evaluated record's; otherwise it is
+    recorded as not applicable (the rules differ by design), never passed.
+    The F1 gates are join-independent and unchanged. Run the instruments with
+    the same two options.
+
 Usage (sapphire, in a whole-tree copy)::
 
     python scripts/k_ladder_clipped_cells.py prepare
@@ -124,6 +139,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    TILE_JOINS_CLASSIFICATION,
+    TILE_JOINS_COUNT_TABLE,
+    check_tile_joins,
+    recorded_tile_joins,
+    tile_join_provenance,
+)
+from scripts.era1_leaderboard_tiering import tiering_stem  # noqa: E402
 from scripts.lib_assessed_area import (  # noqa: E402
     AREA_CRS,
     COMMON_AREA_CLIP_NAME,
@@ -191,7 +216,7 @@ LABEL_SUFFIX = "-d51clip"
 KNOWN_RECIPE_KEYS = frozenset({
     "detections", "detections_dir", "batch", "glob", "buffers", "ground_truth",
     "bounds", "bootstrap", "seed", "output_dir", "label", "mcc", "workers",
-    "tile_join", "require_clean_inputs",
+    "tile_join", "count_table_join", "require_clean_inputs",
 })
 
 #: Gate tolerances. Committed F1 is recorded to 4 dp (half a unit in the last
@@ -379,7 +404,9 @@ def point_f1(detections: Path, bounds: str, reference: str,
 
 
 def recipe_argv(cli: dict[str, Any], *, detections: str, output_dir: str,
-                label: str) -> list[str]:
+                label: str,
+                tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+                count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT) -> list[str]:
     """``evaluate_detections.py`` arguments replaying a cell's recorded recipe.
 
     Every recorded key is replayed as ``kl_s9_cmds.argv_for`` does; only the
@@ -393,6 +420,10 @@ def recipe_argv(cli: dict[str, Any], *, detections: str, output_dir: str,
         detections: The clipped detection file (repository-relative).
         output_dir: The clipped cell's directory (repository-relative).
         label: The clipped cell's label.
+        tile_join: The classification join the clipped cell is scored under,
+            always written explicitly (Wave 1); the recorded one is NOT
+            replayed, since the scorer's default no longer means it.
+        count_table_join: The count-table join, likewise.
 
     Returns:
         The argument list (without the interpreter or script path).
@@ -422,8 +453,8 @@ def recipe_argv(cli: dict[str, Any], *, detections: str, output_dir: str,
             "--label", label]
     if cli.get("mcc"):
         argv.append("--mcc")
-    if cli.get("tile_join"):
-        argv += ["--tile-join", str(cli["tile_join"])]
+    check_tile_joins(tile_join, count_table_join)
+    argv += ["--tile-join", tile_join, "--count-table-join", count_table_join]
     if cli.get("require_clean_inputs"):
         argv.append("--require-clean-inputs")
     if cli.get("workers") is not None:
@@ -624,7 +655,10 @@ def tier_e_rungs() -> list[dict[str, Any]]:
 
 
 def prepare_rung(rung: dict[str, Any], run_id: str, area: Any,
-                 out_dir: Path) -> dict[str, Any]:
+                 out_dir: Path,
+                 tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+                 count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
+                 ) -> dict[str, Any]:
     """Clip one rung's detections, pre-gate the file, and write its job.
 
     Returns:
@@ -666,8 +700,10 @@ def prepare_rung(rung: dict[str, Any], run_id: str, area: Any,
         raise GateError(f"{where}: written clipped file scores F1@20 {scored['f1']:.6f}, "
                         f"committed clipped {rung['committed_clipped_f1_20']}")
     cell = out_dir / "cells" / cell_dir_name(run_id, label)
-    argv = recipe_argv(cli, detections=_rel(target), output_dir=_rel(cell), label=label)
+    argv = recipe_argv(cli, detections=_rel(target), output_dir=_rel(cell), label=label,
+                       tile_join=tile_join, count_table_join=count_table_join)
     return {**rung, "run_id": run_id, "clipped_label": label,
+            "recorded_tile_joins": recorded_tile_joins(evaluation),
             "condition_id": f"{run_id}::{label}",
             "clipped_detections": _rel(target), "clipped_cell": _rel(cell),
             "clipped_eval_path": _rel(cell / "evaluation.json"),
@@ -731,7 +767,9 @@ def cmd_prepare(args: argparse.Namespace) -> int:
             area_file = out_dir / "areas" / f"{slug}.common-assessed-area.geojson"
             write_area_geojson(comparison.common, area_file, name=COMMON_AREA_CLIP_NAME)
             rungs = phase2_rungs(ladder) if ladder is not None else tier_e_rungs()
-            prepared = [prepare_rung(r, run_id, comparison.common, out_dir) for r in rungs]
+            prepared = [prepare_rung(r, run_id, comparison.common, out_dir,
+                                     args.tile_join, args.count_table_join)
+                        for r in rungs]
             for rung in prepared:
                 jobs.append(rung["clipped_cell"] + "\t" + json.dumps(rung["argv"]))
                 logger.info("  %-44s removed %3d kept %3d  F1@20 %.4f (committed %.4f)",
@@ -764,6 +802,7 @@ def cmd_prepare(args: argparse.Namespace) -> int:
         "script": "scripts/k_ladder_clipped_cells.py",
         "script_version": __version__,
         "status": "PREPARED",
+        "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
         "ruling": "PI ruling D51 (2026-10-07), option 1: detections clipped to the "
                   "area every rung searched; frame (era2-b-487) and reference set kept",
         "area_gate": {
@@ -894,7 +933,20 @@ def mcc_inventory(ladders: list[dict[str, Any]]) -> dict[str, Any]:
             "n_ladders": len(out), "ladders": out}
 
 
-def mcb_registry(ladders: list[dict[str, Any]], out_dir: Path) -> list[dict[str, Any]]:
+def _tiering_file(prepared_or_joins: dict[str, Any]) -> str:
+    """The 20 m tiering file name for the rules ``prepare`` recorded.
+
+    A ``prepare.json`` written before Wave 1 records no rules; its cells and
+    tierings were the legacy ``id`` ones, written under the plain name.
+    """
+    joins = prepared_or_joins.get("tile_joins")
+    if not joins:
+        return "tiering_20m.json"
+    return f"{tiering_stem(20, joins['classification'], joins['count_table'])}.json"
+
+
+def mcb_registry(ladders: list[dict[str, Any]], out_dir: Path,
+                 tiering_file: str = "tiering_20m.json") -> list[dict[str, Any]]:
     """Registry entries for ``k_ladder_mcb.py --registry`` over the clipped ladders.
 
     Each entry reads the analysis row ``k_ladder_mcc_test.py`` writes and is
@@ -912,7 +964,7 @@ def mcb_registry(ladders: list[dict[str, Any]], out_dir: Path) -> list[dict[str,
             "conditions": _rel(out_dir / "tiering-input" / "run-conditions.json"),
             "bounds": BOARD_BOUNDS,
             "buffer_m": 20,
-            "tiering": _rel(out_dir / "mcc-test" / "tiering" / slug / "tiering_20m.json"),
+            "tiering": _rel(out_dir / "mcc-test" / "tiering" / slug / tiering_file),
             "group": "D51 clipped",
             "family": f"{ladder['family']} (D51 clipped)",
             "k_by_label": {r["clipped_label"]: r["K"] for r in ladder["rungs"]},
@@ -949,7 +1001,8 @@ def cmd_collect(args: argparse.Namespace) -> int:
     (out_dir / "ladders-clipped.json").write_text(
         json.dumps(mcc_inventory(prepared["ladders"]), indent=2) + "\n", encoding="utf-8")
     (out_dir / "mcb-registry.json").write_text(
-        json.dumps(mcb_registry(prepared["ladders"], out_dir), indent=2) + "\n",
+        json.dumps(mcb_registry(prepared["ladders"], out_dir, _tiering_file(prepared)),
+                   indent=2) + "\n",
         encoding="utf-8")
     logger.info("evaluation gate PASSED on %d cells; instrument inputs written", len(gates))
     return 0
@@ -976,7 +1029,8 @@ def report_gates(prepared: dict[str, Any], out_dir: Path) -> list[str]:
     """The post-instrument gates; one message per failure."""
     problems: list[str] = []
     for ladder in prepared["ladders"]:
-        tiering = load(out_dir / "mcc-test" / "tiering" / ladder["slug"] / "tiering_20m.json")
+        tiering = load(out_dir / "mcc-test" / "tiering" / ladder["slug"] /
+                       _tiering_file(prepared))
         ranking = {row["ref"]: row for row in tiering["ranking"]}
         cell_gates = tiering["mcc_permutation"]["gates"]
         if tiering.get("n_cells_withheld") or tiering["mcc_permutation"].get("withheld"):
@@ -997,7 +1051,11 @@ def report_gates(prepared: dict[str, Any], out_dir: Path) -> list[str]:
                 if delta > F1_6DP_TOL:
                     problems.append(f"{ref}: micro-F1 {row['observed_micro_f1']} != "
                                     f"committed {rung['committed_full_precision_f1']:.6f}")
-            if rung["clip"]["n_removed"] == 0:
+            same_join = (
+                (rung.get("recorded_tile_joins") or {}).get("classification", "id")
+                == (prepared.get("tile_joins") or {}).get("classification", "id")
+            )
+            if rung["clip"]["n_removed"] == 0 and same_join:
                 clipped = load(rung["clipped_eval_path"])["summary"]["tile_classification"]
                 original = load(rung["as_evaluated_eval_path"])["summary"].get(
                     "tile_classification") or {}
@@ -1066,7 +1124,7 @@ def cmd_report(args: argparse.Namespace) -> int:
     ladders = []
     for ladder in prepared["ladders"]:
         slug = ladder["slug"]
-        tiering = load(out_dir / "mcc-test" / "tiering" / slug / "tiering_20m.json")
+        tiering = load(out_dir / "mcc-test" / "tiering" / slug / _tiering_file(prepared))
         k_of = {r["condition_id"]: r["K"] for r in ladder["rungs"]}
         ranking = {row["ref"]: row for row in tiering["ranking"]}
         rungs = []
@@ -1160,6 +1218,13 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("command", choices=("prepare", "collect", "report"))
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--tile-join", choices=TILE_JOINS_CLASSIFICATION,
+                        default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+                        help="prepare: classification join every clipped cell is "
+                             "scored under (written explicitly into each job).")
+    parser.add_argument("--count-table-join", choices=TILE_JOINS_COUNT_TABLE,
+                        default=TILE_JOIN_COUNT_TABLE_DEFAULT,
+                        help="prepare: count-table join, likewise.")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     return {"prepare": cmd_prepare, "collect": cmd_collect, "report": cmd_report}[

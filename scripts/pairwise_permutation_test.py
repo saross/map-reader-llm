@@ -47,6 +47,15 @@ Usage — GeoJSON mode:
         --label-b "Condition B" \\
         --output-dir results/pairwise/custom
 
+Tile joins (Wave 1, PI rulings D72 and D73; 2026-11-18):
+    The CLI runs the F1 test, which reads per-tile COUNT TABLES only:
+    ``--count-table-join`` (default ``sheet-primary``; every result before
+    Wave 1 used ``id``) is applied to both arms and recorded in
+    ``metadata.count_table_join`` and ``permutation_test.count_table_join``.
+    The library-only MCC kernel, :func:`run_permutation_test_mcc`, takes a
+    ``tile_join`` (classification; default ``sheet-contains``) for both arms
+    and records it in its ``permutation_test`` block.
+
 Output:
     - ``pairwise_permutation_result.json`` — full results with per-tile data
     - Console summary with test statistics
@@ -79,8 +88,12 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    TILE_JOINS_COUNT_TABLE,
     compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
+    tile_join_provenance,
 )
 
 __version__ = "1.0.0"
@@ -318,6 +331,7 @@ def run_permutation_test(
     buffer_metres: int = 20,
     n_permutations: int = 10_000,
     seed: int = 42,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """Run paired tile-swap permutation test comparing two detection sets.
 
@@ -339,17 +353,22 @@ def run_permutation_test(
         buffer_metres: Spatial matching tolerance in metres.
         n_permutations: Number of permutation iterations.
         seed: Random seed for reproducibility.
+        count_table_join: The count-table join both arms' per-tile tables
+            are built under (Wave 1; ``"id"`` replays a pre-Wave-1 result).
 
     Returns:
         Dict with observed difference, p-value, win/loss counts,
-        null distribution statistics, and per-tile details.
+        null distribution statistics, and per-tile details; the
+        ``permutation_test`` block records ``count_table_join``.
     """
-    # Pre-compute per-tile metrics
+    # Pre-compute per-tile metrics, both arms under one rule.
     tm_a = compute_per_tile_tp_fp_fn(
         gdf_a, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+        tile_join=count_table_join,
     )
     tm_b = compute_per_tile_tp_fp_fn(
         gdf_b, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+        tile_join=count_table_join,
     )
 
     # Get all tiles and build aligned arrays of per-tile counts
@@ -485,6 +504,7 @@ def run_permutation_test(
             "fn": total_fn_b,
         },
         "permutation_test": {
+            "count_table_join": count_table_join,
             "observed_f1_diff": round(observed_diff, 6),
             "p_value": round(p_value, 4),
             "n_permutations": n_permutations,
@@ -674,6 +694,7 @@ def run_permutation_test_mcc(
     gdf_bounds: gpd.GeoDataFrame,
     n_permutations: int = 10_000,
     seed: int = 42,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """Tile-classification paired permutation test for MCC.
 
@@ -701,6 +722,8 @@ def run_permutation_test_mcc(
             ``tile_name``).
         n_permutations: Number of permutation iterations.
         seed: Random seed for reproducibility.
+        tile_join: The classification join both arms' per-tile labels are
+            built under (Wave 1), recorded in ``permutation_test``.
 
     Returns:
         Dict with observed MCC for each condition, ΔMCC, two-sided
@@ -712,8 +735,8 @@ def run_permutation_test_mcc(
     # Pre-compute per-tile (TP, TN, FP, FN) one-hot encoding for both
     # conditions. Each tile contributes exactly one 1 to one of the
     # four columns and 0 to the others.
-    pt_a = compute_per_tile_classification(gdf_a, gdf_ref, gdf_bounds)
-    pt_b = compute_per_tile_classification(gdf_b, gdf_ref, gdf_bounds)
+    pt_a = compute_per_tile_classification(gdf_a, gdf_ref, gdf_bounds, tile_join=tile_join)
+    pt_b = compute_per_tile_classification(gdf_b, gdf_ref, gdf_bounds, tile_join=tile_join)
 
     tiles = gdf_bounds["tile_name"].unique()
     n_tiles = len(tiles)
@@ -800,6 +823,7 @@ def run_permutation_test_mcc(
             "tp": tp_b, "tn": tn_b, "fp": fp_b, "fn": fn_b,
         },
         "permutation_test": {
+            "tile_join": tile_join,
             "observed_mcc_diff": observed_diff,
             "p_value": p_value,
             "n_permutations": n_permutations,
@@ -943,6 +967,13 @@ def main() -> None:
     # --- GeoJSON mode arguments ---
     parser.add_argument("--geojson-a", type=Path)
     parser.add_argument("--geojson-b", type=Path)
+    parser.add_argument(
+        "--count-table-join", choices=TILE_JOINS_COUNT_TABLE,
+        default=TILE_JOIN_COUNT_TABLE_DEFAULT,
+        help=("Count-table join of both arms' per-tile tables (Wave 1; "
+              f"default {TILE_JOIN_COUNT_TABLE_DEFAULT!r}; 'id' replays a "
+              "pre-Wave-1 result)."),
+    )
 
     args = parser.parse_args()
 
@@ -1044,6 +1075,7 @@ def main() -> None:
         buffer_metres=args.buffer_metres,
         n_permutations=args.n_permutations,
         seed=args.seed,
+        count_table_join=args.count_table_join,
     )
 
     # Build output
@@ -1056,6 +1088,10 @@ def main() -> None:
             "buffer_metres": args.buffer_metres,
             "n_permutations": args.n_permutations,
             "seed": args.seed,
+            # Wave 1: the F1 test reads count tables only (no classification).
+            "count_table_join": args.count_table_join,
+            "tile_join_rulings": tile_join_provenance(
+                TILE_JOIN_CLASSIFICATION_DEFAULT, args.count_table_join)["rulings"],
         },
         "condition_a": {
             "label": args.label_a,

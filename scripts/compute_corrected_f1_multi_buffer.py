@@ -66,6 +66,18 @@ Usage:
         --output-dir results/.../standardised-scoring \\
         --compute-mcc
 
+Tile joins (Wave 1, PI rulings D72 and D73; 2026-11-18; Astra's audit, C3):
+    ``--count-table-join`` names the rule of the per-tile TP/FP/FN table the
+    F1 / precision / recall intervals resample (default ``sheet-primary``;
+    every output before Wave 1 used the legacy ``id``). ``--tile-join`` names
+    the classification join of the optional MCC block (default
+    ``sheet-contains``; before Wave 1, ``id``). Both are passed explicitly to
+    the library and recorded in this engine's own schema: each result row's
+    ``count_table_join``, each ``tile_classification`` block's ``tile_join``,
+    and ``metadata.tile_joins`` in ``summary.json``; ``corrected-f1.csv``
+    gains no column (its header is consumed downstream), so its provenance is
+    the sibling ``summary.json``. Point estimates are unaffected.
+
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -92,9 +104,15 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402  (import after sys.path tweak)
+    TILE_JOIN_CLASSIFICATION_DEFAULT,
+    TILE_JOIN_COUNT_TABLE_DEFAULT,
+    TILE_JOINS_CLASSIFICATION,
+    TILE_JOINS_COUNT_TABLE,
     bootstrap_tile_classification_ci,
     calculate_tile_classification,
+    check_tile_joins,
     compute_per_tile_tp_fp_fn,
+    tile_join_provenance,
     iter_sheet_scopes,
     match_detections_to_references,
 )
@@ -276,6 +294,10 @@ class BufferResult:
     # Channel-duplicated rescues dropped by build_extended_gt's coincidence
     # de-duplication (W6-E9); 0 whenever the two channels are disjoint.
     n_phantom_duplicates_dropped: int = 0
+    # Wave 1 provenance: the count-table join behind the F1 / P / R CIs, and
+    # the classification join behind the MCC block (None without MCC).
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT
+    tile_join: str | None = None
 
 
 def compute_point_estimate(tp: int, fp: int, fn: int) -> tuple[float, float, float]:
@@ -560,6 +582,7 @@ def bootstrap_tile_level_ci(
     buffer_r: int,
     n_iterations: int,
     seed: int,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict[str, tuple[float, float]]:
     """Tile-level bootstrap CIs (95 %) for precision, recall, F1 at R.
 
@@ -579,6 +602,7 @@ def bootstrap_tile_level_ci(
         buffer_r: Maximum matching distance in metres.
         n_iterations: Number of bootstrap iterations (e.g., 10 000).
         seed: Random seed for reproducibility.
+        count_table_join: The count-table join (``--count-table-join``).
 
     Returns:
         Dict keyed ``precision``, ``recall``, ``f1`` with 95 % (lo, hi) CI.
@@ -586,6 +610,7 @@ def bootstrap_tile_level_ci(
     # Pre-compute per-tile counts ONCE at the extended GT for this R.
     tile_metrics = compute_per_tile_tp_fp_fn(
         gdf_det, gdf_ext_gt, gdf_bounds, buffer_metres=buffer_r,
+        tile_join=count_table_join,
     )
 
     # Align tile ordering to gdf_bounds' unique tile list so bootstrap
@@ -643,6 +668,7 @@ def compute_mcc_block(
     *,
     n_bootstrap: int,
     seed: int,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """Tile-classification MCC block (point estimates + BCa CI) for one GT.
 
@@ -650,12 +676,16 @@ def compute_mcc_block(
     depends only on (detections, extended GT, bounds). Extracted from
     :func:`compute_at_buffer` so extension-mode callers — whose extended
     GT is identical at every R — can compute it once per cell instead of
-    once per buffer.
+    once per buffer. ``tile_join`` is the classification join (passed to
+    both library calls) and is returned in the block, so it travels into
+    :class:`BufferResult` and the written artefact.
     """
-    tile_class = calculate_tile_classification(gdf_det, gdf_ext_gt, gdf_bounds)
+    tile_class = calculate_tile_classification(
+        gdf_det, gdf_ext_gt, gdf_bounds, tile_join=tile_join,
+    )
     tile_ci = bootstrap_tile_classification_ci(
         gdf_det, gdf_ext_gt, gdf_bounds,
-        n_iterations=n_bootstrap, random_seed=seed,
+        n_iterations=n_bootstrap, random_seed=seed, tile_join=tile_join,
     )
     mcc_block = tile_ci.get("mcc", {}) if isinstance(tile_ci, dict) else {}
     mcc_ci = (
@@ -672,6 +702,7 @@ def compute_mcc_block(
         "tile_fn": tile_class.get("fn"),
         "sensitivity": tile_class.get("sensitivity"),
         "specificity": tile_class.get("specificity"),
+        "tile_join": tile_join,
     }
 
 
@@ -688,6 +719,8 @@ def compute_at_buffer(
     extension_gdf: gpd.GeoDataFrame | None = None,
     dedup_tolerance_m: float = 5.0,
     precomputed_mcc: dict | None = None,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> BufferResult:
     """Compute corrected-F1 point estimate and CIs at a single buffer R.
 
@@ -721,10 +754,18 @@ def compute_at_buffer(
             uses the matching radius — is buffer-invariant; callers
             sweeping many buffers compute it once and pass it here
             instead of re-bootstrapping it 14×.
+        tile_join: Classification join of the MCC block.
+        count_table_join: Count-table join of the F1 / P / R CIs.
 
     Returns:
-        :class:`BufferResult` with point estimates, counts, and 95 % CIs.
+        :class:`BufferResult` with point estimates, counts, and 95 % CIs,
+        recording both joins.
+
+    Raises:
+        ValueError: If a precomputed MCC block was built under another
+            classification join.
     """
+    check_tile_joins(tile_join, count_table_join)
     print(f"\n--- Buffer R = {buffer_r} m ---")
 
     # 1. Phantom GT at R and scoped student GT baseline count
@@ -776,7 +817,7 @@ def compute_at_buffer(
     # 5. Tile-level bootstrap CIs
     cis = bootstrap_tile_level_ci(
         gdf_det, gdf_ext_gt, gdf_bounds, buffer_r,
-        n_iterations=n_bootstrap, seed=seed,
+        n_iterations=n_bootstrap, seed=seed, count_table_join=count_table_join,
     )
     print(
         f"  95% CIs — P=[{cis['precision'][0]:.4f}, {cis['precision'][1]:.4f}] "
@@ -788,11 +829,15 @@ def compute_at_buffer(
     mcc_kwargs: dict = {}
     if compute_mcc:
         if precomputed_mcc is not None:
-            mcc_kwargs = precomputed_mcc
+            if precomputed_mcc.get("tile_join", tile_join) != tile_join:
+                raise ValueError(
+                    f"precomputed MCC block is under "
+                    f"'{precomputed_mcc.get('tile_join')}', not '{tile_join}'")
+            mcc_kwargs = {"tile_join": tile_join, **precomputed_mcc}
         else:
             mcc_kwargs = compute_mcc_block(
                 gdf_det, gdf_ext_gt, gdf_bounds,
-                n_bootstrap=n_bootstrap, seed=seed,
+                n_bootstrap=n_bootstrap, seed=seed, tile_join=tile_join,
             )
         mcc_disp = mcc_kwargs.get("mcc")
         mcc_str = f"{mcc_disp:.4f}" if mcc_disp is not None else "n/a"
@@ -818,6 +863,7 @@ def compute_at_buffer(
         recall_ci=cis["recall"],
         f1=f1,
         f1_ci=cis["f1"],
+        count_table_join=count_table_join,
         **mcc_kwargs,
     )
 
@@ -886,8 +932,12 @@ def write_summary_json(
     input_paths: dict[str, str],
     excluded_sentinel_count: int,
     extension_mode: bool = False,
+    tile_joins: dict[str, str] | None = None,
 ) -> None:
     """Serialise the full multi-buffer summary to JSON.
+
+    ``tile_joins`` (Wave 1) is the provenance block of both rules; it is
+    written under ``metadata.tile_joins`` whenever given.
 
     ``extension_mode`` swaps the ring-review exclusions block for a
     standardised-extension note; legacy output is byte-identical when the
@@ -933,6 +983,7 @@ def write_summary_json(
             "bootstrap_n": n_bootstrap,
             "git_commit": git_commit_hash(),
             "input_paths": input_paths,
+            **({"tile_joins": tile_joins} if tile_joins is not None else {}),
         },
         "exclusions": exclusions,
         "obs_272_reference": (
@@ -968,9 +1019,12 @@ def _result_to_dict(r: BufferResult) -> dict:
         "recall_CI": list(r.recall_ci),
         "F1": r.f1,
         "F1_CI": list(r.f1_ci),
+        # Wave 1: the rule of the count table behind the three CIs above.
+        "count_table_join": r.count_table_join,
     }
     if r.mcc is not None or r.tile_tp is not None:
         d["tile_classification"] = {
+            "tile_join": r.tile_join,
             "mcc": r.mcc,
             "mcc_CI": list(r.mcc_ci) if r.mcc_ci else None,
             "tp": r.tile_tp,
@@ -1240,8 +1294,13 @@ def run(
     compute_mcc: bool = False,
     extension_csv: Path | None = None,
     dedup_tolerance_m: float = 5.0,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> None:
     """End-to-end driver: load data, compute per-R, write outputs.
+
+    ``tile_join`` and ``count_table_join`` are the two Wave 1 rules; both
+    are threaded to every computation and recorded in ``summary.json``.
 
     Exactly one phantom source must be supplied: either BOTH review CSVs
     (legacy ring-gated mode, unchanged behaviour) or ``extension_csv``
@@ -1329,7 +1388,7 @@ def run(
         print("  pre-computing buffer-invariant MCC block (extension mode)...")
         precomputed_mcc = compute_mcc_block(
             gdf_det, gdf_ext_gt_static, gdf_bounds,
-            n_bootstrap=n_bootstrap, seed=seed,
+            n_bootstrap=n_bootstrap, seed=seed, tile_join=tile_join,
         )
 
     results: list[BufferResult] = []
@@ -1348,6 +1407,8 @@ def run(
                 extension_gdf=extension_gdf,
                 dedup_tolerance_m=dedup_tolerance_m,
                 precomputed_mcc=precomputed_mcc,
+                tile_join=tile_join,
+                count_table_join=count_table_join,
             )
         )
 
@@ -1377,6 +1438,7 @@ def run(
         seed=seed, n_bootstrap=n_bootstrap,
         input_paths=input_paths, excluded_sentinel_count=excluded,
         extension_mode=not review_mode,
+        tile_joins=tile_join_provenance(tile_join, count_table_join),
     )
     print(f"Wrote {json_path}")
 
@@ -1450,6 +1512,20 @@ def parse_args() -> argparse.Namespace:
             "de-duplication for exact reproduction of pre-fix numbers)."
         ),
     )
+    p.add_argument(
+        "--tile-join", choices=TILE_JOINS_CLASSIFICATION,
+        default=TILE_JOIN_CLASSIFICATION_DEFAULT,
+        help=("Classification join of the MCC block (default "
+              f"{TILE_JOIN_CLASSIFICATION_DEFAULT!r}); 'id' replays an output "
+              "written before Wave 1."),
+    )
+    p.add_argument(
+        "--count-table-join", choices=TILE_JOINS_COUNT_TABLE,
+        default=TILE_JOIN_COUNT_TABLE_DEFAULT,
+        help=("Count-table join of the F1 / P / R intervals (default "
+              f"{TILE_JOIN_COUNT_TABLE_DEFAULT!r}); 'id' replays an output "
+              "written before Wave 1."),
+    )
     return p.parse_args()
 
 
@@ -1469,6 +1545,8 @@ def main() -> None:
         compute_mcc=args.compute_mcc,
         extension_csv=args.extension_csv,
         dedup_tolerance_m=args.dedup_tolerance_m,
+        tile_join=args.tile_join,
+        count_table_join=args.count_table_join,
     )
 
 
