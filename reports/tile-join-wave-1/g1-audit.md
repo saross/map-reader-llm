@@ -1,6 +1,6 @@
 # Tile-join Wave 1: G1 item 9 audit record
 
-> **Last revised**: 2026-11-19 (re-review round: Astra's R2-1 to R2-6 and the Claude re-audit's RA findings, § 8). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (Astra's final re-review, R3-1 and R3-2, § 8.5). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), the agent that finished the Wave 1 audit fix round,
@@ -482,7 +482,84 @@ tile arm now refuses such a frame by name (decision 2; R2-6 closes the
 - **Ruff** passes on every touched Python file; `bash -n` passes on the
   thirteen shell launchers; **markdownlint-cli2** passes on this file.
 
+### 8.5 Final re-review (R3)
+
+Astra (GPT, Codex, Astra lane) re-reviewed `ef18e4e76` against
+`0549672ec` and requested two changes
+(`~/agent-mail/codex/outbox/claude/20261118T154012Z-astra-wave1-final-rereview.md`;
+probes in `~/agent-mail/codex/reviews/wave1-final-review-2026-11-18/`).
+Both were verified by reading the code at `be7f862ca` before they were
+fixed; the probes were read, not run. Fix commit `0d97ab6f9`.
+
+| ID | Finding (short) | Fix | Tests | Mutants |
+|---|---|---|---|---|
+| R3-1 | `compare_present` exempted a field when either the record or the replay held a list, so a recorded count replaced by `[]` in the replay was skipped with no mismatch | The exemption follows the record's shape only; a scalar record facing a list-valued replay is a mismatch | `test_r3_1_a_recorded_count_the_replay_turns_into_a_list_stops` (the real committed Gemini 3.7 refusal block, `detections.n_assigned` 22 replaced by `[]`, `[22]` and `()`, through `validate_recorded_classification`); `test_r3_1_a_recorded_list_is_still_descriptive` (a recorded list is still not compared; a scalar against `[2]` mismatches) | `r3_1_either_shape` |
+| R3-2 | `F1_MEAN_TOL` was a whole unit in the fourth decimal (1e-4 + 1e-9), but the per-pass F1s are rounded to 4 dp before averaging by the writer and the replay alike, so only the mean's own rounding remains; a summary one unit off in its last decimal passed | `F1_MEAN_TOL` is half a unit plus an epsilon (5e-5 + 1e-9), the unrounded replayed mean compared with the published value; the summary is also checked against the mean of its own `per_run` F1s | `TestReplicateMeanReplay::test_a_mean_one_unit_off_in_its_last_decimal_is_caught` (both directions; the fixture's passes 1.0 and 0.5714 have mean 0.7857 on the 4 dp grid, so 0.7858 and 0.7856 are each a whole unit off), `TestReplicateMeanReplay::test_the_summary_must_be_the_mean_of_its_own_per_run` (per-pass tolerance widened so that only the internal check can stop it) | `r3_2_whole_unit`, `r3_2_no_internal` |
+
+The half-unit comparison is applied to the unrounded mean, not by
+rounding and requiring equality: the replay sums the passes in sorted
+order and the writer in `per_run` order, so at an exact half-unit tie
+the two float sums could round to different neighbours. Within half a
+unit, either is accepted.
+
+**Real replicate-mean cells**, re-run read-only on zbook against the
+fixed code (`~/scratch/wave1/g1-r3/real_rep_r3.py`, the § 8.2 script
+pointed at the zbook worktree at `0d97ab6f9`; output
+`real_rep_r3.out`). All three pass, inside the tighter tolerance:
+
+| Cell | Passes | Recorded mean | Replayed mean | Margin |
+|---|---|---|---|---|
+| `results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/` (smoke cell 5) | 3 | 0.6658 | 0.665767 | 3.3e-5 |
+| `results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t1/` | 5 | 0.2816 | 0.28156 | 4.0e-5 |
+| `outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.1/` | 3 | 0.655 | 0.655 | 0 |
+
+**Mutants.** The § 8.2 harness (real-file copies, never symlinks), run
+from the zbook worktree at `0d97ab6f9` over
+`~/scratch/wave1/g1-fix3/mut/r3/muts8.json` (built by `make_muts8.py`
+beside it) on `tests/test_tile_join_wave1_audit.py`; results
+`res8.txt`. Baseline in the copy: 182 passed, 1 skipped. The red
+sentinel first (`F1_RECORD_TOL` set to 1.0) turned
+`test_a_changed_pass_f1_is_caught_with_two_passes` red. Then **three of
+three mutants killed**: `r3_1_either_shape` (the old either-shape
+condition restored) by the four R3-1 tests; `r3_2_whole_unit` (the old
+tolerance) by both directions of the last-decimal test;
+`r3_2_no_internal` (the internal check disabled) by the `per_run`
+consistency test.
+
+**Tier 1** at `0d97ab6f9`, zbook worktree, detached with a pid file
+and a log-staleness watch (`pytest -m tier1 -q`; log
+`~/scratch/wave1/g1-r3/tier1.log`): **4,778 passed, 1 failed**,
+5 skipped, 132 deselected, 1 xfailed, in 341.20 s. The one failure,
+`test_build_generated_file_registry.py::test_committed_registry_matches_a_rebuild`,
+predates this fix and is unrelated to it: three Markdown reports added
+in `5b4d72119` (`reports/tile-join-wave-1/audit/g1-audit-findings.md`,
+`reports/tile-join-wave-1/audit/g1-reaudit-findings.md` and
+`reports/tile-join-wave-1/overnight-log-2026-11-18.md`) are not in
+`reports/verification/generated-file-registry.json`, last rebuilt in
+`0549672ec`. A rebuild to scratch differs from the committed registry's
+file list by exactly those three rows. `0d97ab6f9` touches no Markdown. The
+registry is outside this round's write list, so it was not rebuilt; it
+is left for the main session. Every other tier-1 test passes.
+
+**Lint**: Ruff passes on both touched Python files; markdownlint-cli2
+passes on this file.
+
 ## Changelog
+
+### 2026-11-19 — Final re-review (R3)
+
+Trigger: Astra's final re-review of `ef18e4e76` (changes requested,
+R3-1 and R3-2). Added § 8.5; changed the banner.
+
+| Quantity | Before | After |
+|---|---|---|
+| `F1_MEAN_TOL` | 1e-4 + 1e-9 | 5e-5 + 1e-9 |
+| Tier 1 passed (failed) | 4,772 (0) at `af16ca52a` | 4,778 (1, the pre-existing registry drift from `5b4d72119`) at `0d97ab6f9` |
+| Mutants killed | 99 of 99 | the three new R3 mutants, 3 of 3 (the earlier 99 not re-run) |
+
+Not changed: §§ 1–8.4 as records of the earlier rounds; the three real
+replicate-mean cells still pass. Fix commit `0d97ab6f9`; this entry
+lands with the commit that follows it.
 
 ### 2026-11-19 — Re-review round
 
