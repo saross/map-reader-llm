@@ -366,7 +366,7 @@ def test_label_to_k_covers_every_committed_ranking_label() -> None:
             assert label in k_of, f"{entry['slug']}: no K for {label}"
     withheld = [label for entry in registry
                 if entry["slug"] in WITHHELD_ON_THE_CLIPPED_BASIS
-                for label in mcb.committed_ranking(entry["tiering"])]
+                for label in mcb.committed_ranking(entry["tiering"], "id")]
     assert len(withheld) == 24, "six four-rung ladders"
     assert mcb.unjoined_labels(registry, k_of) == []
 
