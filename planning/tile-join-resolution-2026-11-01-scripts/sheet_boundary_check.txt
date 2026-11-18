@@ -1,0 +1,32 @@
+references: 569 in inputs/vectors/references/mounds-reference.geojson
+  K-35-052-4_32635: 136
+  K-35-053-3_Elenovo: 217
+  K-35-062-2_Rakovski: 196
+  K-35-078-1_Lesovo: 20
+
+check 1: references with a different-sheet reference within
+     50 m: 0
+    100 m: 0
+    200 m: 0
+    500 m: 0
+   1000 m: 0
+  closest cross-sheet pair: 1313.0 m (K-35-052-4_32635 fid 507 / K-35-053-3_Elenovo fid 179)
+
+check 2: 487 tiles in inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
+  fid   45 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y336: col 186.1, row 172.9
+  fid   60 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y672: col 134.4, row 258.4
+  fid   61 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y672: col 196.6, row 220.3
+  fid   79 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1008: col 202.7, row 91.4
+  fid   83 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 298.5, row 190.9
+  fid   84 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 247.1, row 246.2
+  fid   85 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 175.0, row 257.0
+  fid   86 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 181.3, row 275.9
+  fid   87 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 197.6, row 276.1
+  fid   88 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 172.9, row 287.5
+  fid   89 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 187.4, row 296.2
+  fid   90 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 203.7, row 292.9
+  fid   91 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y1680: col 214.5, row 353.1
+  fid   91 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y2016: col 214.5, row 17.1
+  fid   92 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y2016: col 156.6, row 129.3
+  fid  179 (K-35-053-3_Elenovo) in K-35-052-4_32635_x4032_y2016: col 169.1, row 324.7
+  references inside another sheet's tile: 15
