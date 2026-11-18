@@ -3199,9 +3199,47 @@ def _candidate_tiles(
     return out
 
 
+def sheet_join_candidate_tiles(
+    points: gpd.GeoDataFrame,
+    sheet: str,
+    sheet_bounds: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> list[list[str]]:
+    """THE sheet-membership decision of both sheet joins, in one place.
+
+    Given points that symbol matching scores on ``sheet`` (detections the D50
+    scope attributed to it, references whose map column records it), return,
+    per point, the tiles it may be BOOKED to. Today that is exactly the tiles
+    of its own sheet that it intersects (D73 (2)): ``sheet-contains`` books to
+    all of them and ``sheet-primary`` to the nearest centre among them.
+
+    Every sheet-join booking reads this function and nothing else, so a
+    later ruling on seams — for example letting a point count on a
+    neighbouring sheet's tile where two sheets genuinely overlap on map
+    content, or excluding seam tiles a point contacts — is a change here
+    alone (the W1.0 55-map seam finding of 2026-11-18 awaits that ruling).
+    ``sheet`` and ``gdf_bounds`` are unused by today's rule and are part of
+    the signature for that reason. Which sheet a point is MATCHED on is not
+    decided here: that is symbol matching's (:func:`iter_sheet_scopes`), and
+    Wave 1 does not change it.
+
+    Args:
+        points: Points scored on ``sheet``.
+        sheet: The sheet they are scored on.
+        sheet_bounds: That sheet's tiles.
+        gdf_bounds: The whole frame.
+
+    Returns:
+        One sorted list of bookable tile names per point, by position.
+    """
+    del sheet, gdf_bounds  # unused by the D73 (2) rule; see the docstring
+    return _candidate_tiles(points, sheet_bounds)
+
+
 def sheet_primary_tiles(
     points: gpd.GeoDataFrame,
     sheet_bounds: gpd.GeoDataFrame,
+    candidates: list[list[str]] | None = None,
 ) -> list[str | None]:
     """The ``sheet-primary`` tile of each point, among its own sheet's tiles.
 
@@ -3214,21 +3252,31 @@ def sheet_primary_tiles(
     Args:
         points: Points already scoped to one sheet.
         sheet_bounds: That sheet's tile polygons.
+        candidates: Each point's bookable tiles, from
+            :func:`sheet_join_candidate_tiles`; computed from ``sheet_bounds``
+            when ``None``. Every name must be a tile of the frame whose
+            polygons ``sheet_bounds`` holds.
 
     Returns:
-        One tile name per point, by position, or ``None`` for a point that
-        intersects none of the sheet's tiles.
+        One tile name per point, by position, or ``None`` for a point with no
+        candidate.
 
     Example:
         >>> sheet_primary_tiles(points, sheet_bounds)  # doctest: +SKIP
         ['A_x0_y0.png', 'A_x336_y0.png']
     """
-    candidates = _candidate_tiles(points, sheet_bounds)
+    if candidates is None:
+        candidates = _candidate_tiles(points, sheet_bounds)
     if not any(candidates):
         return [None] * len(points)
+    # Centroids of the candidate tiles only: the polygons passed may be the
+    # whole frame (8,541 tiles on the 55-map frame).
+    needed = set().union(*candidates)
+    names_col = sheet_bounds["tile_name"].astype(str)
     centroids = {
-        str(name): geom.centroid
-        for name, geom in zip(sheet_bounds["tile_name"], sheet_bounds.geometry)
+        name: geom.centroid
+        for name, geom in zip(names_col, sheet_bounds.geometry)
+        if name in needed
     }
     out: list[str | None] = []
     for geom, names in zip(points.geometry, candidates):
@@ -3378,7 +3426,7 @@ def sheet_contains_assignments(
             if len(points) == 0:
                 continue
             record = sides[side]
-            own = _candidate_tiles(points, sheet_bounds)
+            own = sheet_join_candidate_tiles(points, sheet, sheet_bounds, gdf_bounds)
             frame = _candidate_tiles(points, gdf_bounds)
             record["n_sheet_scoped"] += len(points)
             for own_names, frame_names in zip(own, frame):
@@ -3781,13 +3829,21 @@ def _per_tile_sheet_primary(
 
     gdf_ref, ref_col = _reference_sheet_frame(gdf_ref)
     det_population = det_booked = ref_unmatched = ref_booked = 0
-    for _sheet, det_scope, ref_scope, sheet_bounds in iter_sheet_scopes(
+    for sheet, det_scope, ref_scope, sheet_bounds in iter_sheet_scopes(
         scope, gdf_ref, gdf_bounds, ref_map_col=ref_col,
     ):
         if det_scope.empty and ref_scope.empty:
             continue
-        det_tiles = sheet_primary_tiles(det_scope, sheet_bounds)
-        ref_tiles = sheet_primary_tiles(ref_scope, sheet_bounds)
+        # Candidates from the one sheet-membership decision; nearest centre
+        # among them. ``sheet_bounds`` supplies the polygons for today's
+        # rule; a seam ruling that widens the candidates must pass polygons
+        # covering them (the whole frame's), which is why it is the frame.
+        det_tiles = sheet_primary_tiles(
+            det_scope, gdf_bounds,
+            sheet_join_candidate_tiles(det_scope, sheet, sheet_bounds, gdf_bounds))
+        ref_tiles = sheet_primary_tiles(
+            ref_scope, gdf_bounds,
+            sheet_join_candidate_tiles(ref_scope, sheet, sheet_bounds, gdf_bounds))
         if det_scope.empty:
             matched_det: list[int] = []
             unmatched_det: list[int] = []
