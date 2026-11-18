@@ -1,6 +1,6 @@
 # Tile-join Wave 1 — dry run, census, and worklist (W1.0)
 
-> **Last revised**: 2026-11-18 (original publication; **INCOMPLETE — the wave is STOPPED at W1.0 step 2**, the 55-map sheet check). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-18 (W1.0 steps 3–8 completed after the stop, by the main session's decision; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), Wave 1 census agent (work item W1.0). Driven from
@@ -12,30 +12,31 @@
 - Every path, count, and number below was read from a file or produced by
   a command in this task.
 
-## 0. Status: STOPPED (spec § 5, "the 55-map GS check finding a cross-sheet contact on map content")
+## 0. Status: STOPPED on the 55-map seam ruling; W1.0's read-only steps completed
 
 The 55-map sheet check (§ 2) found **32 point–tile contacts, from 26
 references, where a reference recorded on one sheet lies on the map
 content of another sheet's tile**, in `inputs/vectors/references/best-available-gt-55maps-r2.geojson`
-(the reference of smoke cell 2). The pixels were measured, not judged, and
-three crops were then viewed: in two of them the point sits on a printed
-burial-mound symbol on the *other* sheet. This is the case the
-specification feared: adjacent sheets print the same mound, only one copy
-is digitised, and sheet-specific scoring would score a correct detection of
-the other sheet's printed copy as a false positive. The specification
-stops the wave on it; this agent stopped its line of work and makes no
-ruling.
+(the reference of smoke cell 2): adjacent sheets print the same mound and
+only one copy is digitised. That is a specification § 5 stop. The main
+session verified it, notified the PI, and recorded the stop in
+`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`. **The wave is
+stopped on the seam ruling.** By the main session's decision (stop
+record § 3), the read-only W1.0 steps that do not depend on the ruling
+continued, together with a measurement for the ruling (§ 2.2). Nothing
+here consumes a seam ruling, and no corrected (sheet-specific) score was
+computed for any cell.
 
 | W1.0 step | State |
 |---|---|
-| 1. The 3.7 eligibility table | **Done**: `reports/tile-join-wave-1/withheld-37.md` (24 rows, all eligible subject to criterion 3, none unresolved; one flagged judgement, note A) |
-| 2. 55-map sheet check | **Done, and it triggers the stop** (§ 2) |
-| 3. Field schema | **Partial**: what was read before the stop is in § 3; not complete |
-| 4. Census and worklist | **Not started** (`worklist.json` not written) |
-| 5. Smoke cells 3–5 | **Not started** |
-| 6. Recipe and input identity | **Not started** |
-| 7. Determinism replays | **Not started** (no replay launched) |
-| 8. Timings | **Not started** |
+| 1. The 3.7 eligibility table | **Done**: `withheld-37.md` (24 rows, all eligible subject to criterion 3, none unresolved; note A flagged, pending the PI) |
+| 2. 55-map sheet check | **Done; it raised the stop** (§ 2); measurement for the ruling added (§ 2.2) |
+| 3. Field schema | **Done** (§ 3) |
+| 4. Census and worklist | **Done** (§ 4; `worklist.json`, 2,829 entries; every paper-cited file resolved) |
+| 5. Smoke cells 3–5 | **Pinned** (§ 5) |
+| 6. Recipe and input identity | **Done** for all eight (§ 6) |
+| 7. Determinism replays | **Done**: all eight reproduce under their recorded rules (§ 7) |
+| 8. Timings | **Recorded** (§ 8); the Wave 2 projection is the main session's and is paused with Wave 2 |
 
 ## 1. The 3.7 eligibility table
 
@@ -256,87 +257,351 @@ best-available file, and the student files carry no `phantom` layer (r2's
 layers are `student` 4,726, `extension` 278, `audit` 14 by `gt_id`
 prefix).
 
-## 3. Field schema (partial; stopped before completion)
+## 3. Field schema
 
-Read before the stop, from `scripts/evaluate_detections.py` and
-`scripts/lib_advanced_metrics.py` at `e92d1c5d7`. Not yet complete:
-the other consumers below were located but not traced, and the other
-drivers' outputs were not read.
+Read from `scripts/evaluate_detections.py` and
+`scripts/lib_advanced_metrics.py` at `e92d1c5d7` (line numbers are
+there). The scorer writes `evaluation.json` (keys `version`, `timestamp`,
+`summary`, `_metadata`, and `per_run` for replicated cells;
+`write_outputs`, `:1847–1894`), `evaluation.csv`, and `evaluation.md`;
+batch mode adds `batch_summary.csv` and `.json`.
 
-**Target set (determined by the classification join or the count table):**
+### 3.1 How the per-tile table and the classification join reach the file
 
-- `summary.tile_classification` (and each `per_run[].tile_classification`):
-  `confusion`, `mcc` / `sensitivity` / `specificity` {`point`, `mean`,
-  `ci_lower`, `ci_upper`, `method`}, `tile_join`, and the withheld form
-  (`withheld`, `withheld_reason`, `withheld_detail`,
-  `withheld_quantities`, `tile_join_diagnostics`); aggregated cells add
-  `n_runs`, `n_runs_defined`, `n_runs_withheld`, `confusion_source`
-  (`evaluate_detections.py:238–396`, `:1423–1461`).
+| Route | Where | What it determines |
+|---|---|---|
+| Pre-flight refusal probe, `describe_tile_join_refusal`, under the **classification** join | `evaluate_detections.py:1183–1187`; library `:4795` (`assign_points_to_tiles`, `check_tile_join_invariant`, `:4869–4873`) | whether every interval, coverage block, and the tile block are computed at all, or the cell is written in the withheld form (`_withheld_buffer_row`, `:947–1023`) |
+| F1/precision/recall bootstrap, `bootstrap_ci` → `compute_per_tile_tp_fp_fn` on its **default** join (no join argument today; spec § 2 item 6) | `:1232–1240`; library `:3489–3655`, `:3563` | `f1_ci_*`, `p_ci_*`, `r_ci_*` and their methods; the `coverage` block via `_compute_coverage` (`:411–537`) |
+| Tile classification, `calculate_tile_classification` and `bootstrap_tile_classification_ci`, under the **classification** join | `:1423–1461`; library `:4916`, `:5107` | the whole `tile_classification` block |
+| Measured method census, `with_measured_bootstrap_method` | `:1803–1844`, called at `:1873` | `_metadata.bootstrap.method`, `methods_measured` |
+| Writers | `:1896–2269` (CSV, Markdown), `write_batch_summary` (`:2343–2523`) | the sibling files |
+
+No other function in `evaluate_detections.py` reads the per-tile table
+or the join (search for `compute_per_tile`, `bootstrap_ci`,
+`calculate_tile_classification`, `bootstrap_tile_classification_ci`,
+`describe_tile_join_refusal`, `tile_join`, `processed_tiles`). In the
+library, the other users of the table are `bootstrap_effect_size_ci`
+(`:3819`, `:3823`), `bootstrap_multi_run_ci` (`:4004`),
+`bootstrap_multi_run_effect_size_ci` (`:4117`, `:4124`),
+`bootstrap_interaction_ci` (`:4339`), `compute_per_tile_classification`
+(`:3170`), `score_detection_set` (`:3305`), and
+`bootstrap_tile_effect_size_ci` (`:5351`, `:5355`). None of them writes
+`evaluation.json`; they feed other artefacts (pairwise effect sizes,
+tiering, permutation tests, the Pareto and leaderboard builders), which
+are Wave 3's, not this schema's. `compute_per_tile_tp_fp_fn` alone is
+called from 28 other scripts and `calculate_tile_classification` from 16,
+`evaluate_detections.py` included (a `grep` of `scripts/*.py`); that list is the downstream reach.
+
+### 3.2 Target set (determined by the classification join or the count table)
+
+In `summary` and in each `per_run[]` entry:
+
+- `tile_classification`, whole: `confusion` {`tp`, `tn`, `fp`, `fn`};
+  `mcc`, `sensitivity`, `specificity`, each {`point`, `mean`,
+  `ci_lower`, `ci_upper`, `method`}; `tile_join`; on aggregates also
+  `n_runs`, `n_runs_defined` per metric, `confusion_source`; in the
+  withheld form `withheld`, `withheld_reason`, `withheld_detail`,
+  `withheld_quantities`, `tile_join_diagnostics`, and on aggregates
+  `n_runs_withheld` (`:238–396`, `:1439–1461`).
+- `tile_join_withheld`, present or absent, whole (and
+  `n_passes_withheld`, `n_passes` on aggregates; `:1419–1420`,
+  `:1724–1733`).
 - Each `buffers[]` row: `f1_ci_lower`, `f1_ci_upper`, `f1_ci_method`,
-  `p_ci_*`, `r_ci_*`, `coverage` {`n_zero_count_tiles`, `zero_fraction`,
-  `coverage_status`; `n_tiles`, `threshold`, `coverage_source`,
-  `n_processed_tiles`, `n_unprocessed_tiles`, `coverage_detail` do not
-  depend on the table except through its presence}, `coverage_status`,
+  `p_ci_lower`, `p_ci_upper`, `p_ci_method`, `r_ci_lower`, `r_ci_upper`,
+  `r_ci_method`; `coverage` {`n_zero_count_tiles`, `zero_fraction`,
+  `coverage_status`; and, only through the block's presence or absence,
+  `n_tiles`, `threshold`, `coverage_source`, `n_processed_tiles`,
+  `n_unprocessed_tiles`, `coverage_detail`}; `coverage_status`,
   `ci_unreliable`, `ci_excludes_point`, `sparse_coverage`,
-  `ci_flag_basis`, and the withheld form `ci_withheld`,
+  `ci_flag_basis`; the withheld form's `ci_withheld`,
   `ci_withheld_reason`, `ci_withheld_detail` (`:947–1023`,
-  `:1232–1352`; `bootstrap_ci`, `lib_advanced_metrics.py:3489–3655`;
-  `_compute_coverage`, `:411–537`).
-- Aggregated rows add `ci_zero_fraction`, `ci_n_tiles`,
+  `:1321–1352`).
+- Aggregated rows also: `ci_zero_fraction`, `ci_n_tiles`,
   `ci_withheld_n_passes` (`:1569–1673`).
-- Summary roll-ups: `ci_unreliable_any_buffer`, `coverage_status`
-  (`:1390–1404`, `:1697–1711`); `tile_join_withheld` (present or absent,
-  with `n_passes_withheld` on aggregates; `:1419–1420`, `:1724–1733`).
-- `_metadata.bootstrap.method` and `methods_measured` (measured from the
-  per-metric methods, which a new table can move between `BCa` and
-  `percentile_fallback`; `:1803–1844`); `_metadata.cli_args.tile_join`
-  and the provenance W1.1 adds (`count_table_join`).
-- Siblings: `evaluation.csv` columns `f1_ci_*`, `p_ci_*`, `r_ci_*`,
-  `mcc*`, `sensitivity`, `specificity`, `*_boot_mean`,
+- Roll-ups: `ci_unreliable_any_buffer`, `coverage_status`
+  (`:1390–1404`, `:1697–1711`).
+- `_metadata.bootstrap.method`, `_metadata.bootstrap.methods_measured`;
+  `_metadata.cli_args.tile_join`; and the provenance W1.1 adds
+  (`count_table_join`, and the D72/D73 pointer).
+- Siblings: in `evaluation.csv` the columns `f1_ci_lower`,
+  `f1_ci_upper`, `p_ci_lower`, `p_ci_upper`, `r_ci_lower`, `r_ci_upper`,
+  `mcc`, `mcc_ci_lower`, `mcc_ci_upper`, `sensitivity`, `specificity`,
+  `mcc_boot_mean`, `sensitivity_boot_mean`, `specificity_boot_mean`,
   `coverage_status`, `ci_unreliable`, `ci_zero_fraction`, `ci_n_tiles`
-  (`:1926–2009`); `evaluation.md` CI cells, MCC columns, and the
-  withheld, partial, sparse, and undefined-MCC footnotes (`:2011–2269`);
-  batch-mode `batch_summary.csv` and `.json` rows (`:2343–2523`).
+  (and the MCC column group's presence; `:1926–2009`); in
+  `evaluation.md` every CI cell, the MCC, MCC CI, Sens, and Spec cells,
+  and the withheld, partial-coverage, sparse-coverage, and undefined-MCC
+  footnotes (`:2011–2269`); in `batch_summary.csv` and `.json` the same
+  interval and MCC columns.
 
-**Non-target set (so far):** `buffer_metres`, `f1`/`f1_point`,
-`precision`/`p_point`, `recall`/`r_point` (the point estimates and
-their aliases), `label`, `n_detections`, `n_runs`, `detection_scope`,
-`version`, and `_metadata` apart from the fields above. **Volatile on
-every run** (to be excluded from any byte comparison, not non-target
-drift): `timestamp`, `_metadata.generated_at_utc`,
-`_metadata.script_git_commit` / `script_git_status` /
-`input_git_state.head`, and the `.md` "Generated" line.
+### 3.3 Non-target set
 
-**Other per-tile-table consumers located, not yet traced:** in
-`lib_advanced_metrics.py`, `compute_per_tile_tp_fp_fn` is called by
-`bootstrap_ci` (`:3563`), `bootstrap_effect_size_ci` (`:3819`,
-`:3823`), `bootstrap_multi_run_ci` (`:4004`),
-`bootstrap_multi_run_effect_size_ci` (`:4117`, `:4124`), and
-`bootstrap_interaction_ci` (`:4339`); `calculate_tile_classification`
-by `compute_per_tile_classification` (`:3170`), `score_detection_set`
-(`:3305`), `bootstrap_tile_classification_ci` (`:5172`), and
-`bootstrap_tile_effect_size_ci` (`:5351`, `:5355`). In
-`evaluate_detections.py` the pre-flight `describe_tile_join_refusal`
-(`:1183–1187`) decides, under the classification join, whether the F1
-intervals are computed at all, so the join reaches the interval fields
-through the refusal as well as through the table.
+`version`; `summary.label`, `n_detections`, `n_runs`,
+`detection_scope` (D50's scope, computed before any join); in each
+buffer row `buffer_metres` and the point estimates and their legacy
+aliases `f1`/`f1_point`, `precision`/`p_point`, `recall`/`r_point`; in
+`coverage`, `n_tiles`, `threshold`, `coverage_source`,
+`n_processed_tiles`, `n_unprocessed_tiles`, `coverage_detail` whenever
+the block exists (they come from the frame and the processed-tile record,
+not the table); in `_metadata`, everything except the fields in § 3.2;
+in the CSV the `label`, `buffer_metres`, `f1`, `precision`, `recall`,
+`coverage_source`, `n_unprocessed_tiles` columns; in the Markdown the
+header lines and the F1, P, R cells.
 
-## 4. Census, worklist, smoke cells, recipes, determinism, timings
+**Changing on every run, excluded from byte comparisons** (not drift):
+`timestamp`; `_metadata.generated_at_utc`, `script_git_commit`,
+`script_git_status`, `input_git_state` (head and states depend on the
+checkout), `cli_args.output_dir`; the Markdown "Generated" line.
 
-Not started: the wave stopped at § 2. Nothing was launched on zbook beyond
-the sheet check.
+### 3.4 Writers other than the scorer
 
-## 5. Stop-list items checked
+Of the 2,829 files, 2,769 record `scripts/evaluate_detections.py` as
+their writer, 5 record `scripts/compute_corrected_f1_multi_buffer.py`
+(all under `results/stride55-2026-08-27/`), and 55 record no writer (24
+under `results/verifier-t-pilot/`, 12 `results/retest/`, 8 each under
+`results/55maps-extended-gt-2026-06-07/` and
+`results/55maps-standardised-ref-2026-08-14/`, 2 under
+`results/gemini37-55map-2026-08-31/`, 1 under
+`results/gemini37-fourth-cell/`). Their schema was not traced field by
+field; Wave 2 must check each writer's output shape before re-scoring
+it.
+
+## 4. Census and worklist
+
+**Scripts** (zbook, 2026-11-18; read-only; the data root
+`~/Code/map-reader-llm` at `e92d1c5d7` supplies gitignored inputs):
+`scripts/census_extract.py` (facts of each file),
+`scripts/census_detections.py` (opens each recorded detection input,
+resolving directories with the scorer's own `resolve_pool_passes`), and
+`scripts/build_worklist.py` (rules in its header; output
+`reports/tile-join-wave-1/worklist.json`, 2,829 entries).
+
+### 4.1 Recount against the specification
+
+| Count | Specification (W1.0) | Recounted (`git ls-files` at `e92d1c5d7`) | Match |
+|---|---:|---:|---|
+| Files named exactly `evaluation.json` | 2,817 | 2,817 | yes |
+| `results/retest/*-evaluation.json` | 12 | 12 | yes |
+| All, by suffix | 2,829 | 2,829 | yes |
+| … containing `tile_classification` | 2,646 | 2,646 by text match; **2,641** with a `summary.tile_classification` block | see note |
+| … of those under `archive/` | 33 | 33 | yes |
+| Files under `archive/` in all | — | 54 | — |
+
+Note: the 5 files that mention `tile_classification` but carry no block
+are `results/pairwise/tile-size-30m/{512px-image-t0, 512px-image-t07,
+512px-text-t0, 512px-text-t07, eval-512-on-384-image-t0}/evaluation.json`.
+They were scored without `--mcc` and name `tile_classification` only in
+`summary.tile_join_withheld.withheld_quantities`: they are withheld cells
+(§ 4.3).
+
+### 4.2 Classification
+
+| Facet | Counts (2,829 files) |
+|---|---|
+| Frame (`bounds`, D22 chain) | 384 px full 1,107; 512 px full 739; 55-map 331 (+1 recorded as an absolute path, `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`); Era-2 B intersection 254; null-exemplar reduced Era-2 153 and Era-1 82; grid common 64; H10 test 40; 256 px full 16; H13 common 3 and arms A/B/C 1 each; **unrecorded 36** |
+| Construction route | merged 2,170; unmerged 433; unknown 226 |
+| Replication | single 2,618; replicated (`per_run` ≥ 2) 211 |
+| Recorded classification join | `id` 1,144 (1,049 in both the tile block and `cli_args`, 95 in `cli_args` only); none 1,685; no sheet-specific join anywhere |
+| Recorded count-table join | none in any file (as § 2 item 3 of the specification says) |
+| Paper-cited | 761: 624 by signed register rows, 322 under directories `docs/paper/` names (overlapping) |
+
+**Route basis** (`build_worklist.py` header): a merge field in the
+detection input (`vote_count`, `cluster_size`, `source_tiles`,
+`origin_tiles`) → merged; exactly the raw detector schema, or an Era-1
+stage-D `-single-` pass → unmerged; no merge field but a path naming a
+merging product → merged, recorded as such; otherwise unknown. Unknowns:
+96 whose input could not be opened, 54 materialisations carrying only
+`source_tile` (older materialisers dropped the lists; spec W1.0) whose
+paths do not name a merging product, 47 Era-1 proposer-verifier accepted
+files (`majority_vote_fraction`, `verifier_votes`), 26 null-exemplar
+cells whose recorded source is one of the latter, and 3 others. Of the
+paper-cited files: merged 547, unmerged 135, unknown 79 (54 `source_tile`
+only, 25 proposer-verifier accepted).
+
+**Paper citation** was determined as follows. The register is
+`results/run-analyses.json` (71 rows; 45 with `signature.status`
+`signed`). Each signed row's `conditions_compared` was resolved to
+`eval_path` through `results/run-conditions.json` (all resolved; 624
+distinct tracked files). `docs/paper/*.md` names 14 existing
+directories; files under 5 of them are evaluations
+(`results/leaderboard/era2/gs-era2-verified-board-2026-09-10` 210,
+`results/55map-final-board-r2-2026-09-06` 59,
+`results/paper-eval/phase2/512px-14buf-mcc` 36,
+`results/55maps-standardised-ref-2026-08-14` 9,
+`results/stride-2026-08-25` 8). No `docs/paper/` file names an
+`evaluation.json` directly.
+
+### 4.3 Worklist status totals
+
+| Status | All | Paper-cited |
+|---|---:|---:|
+| `already-migrated` | 0 | 0 |
+| `reproducible-legacy` | 2,445 | 758 |
+| `known-withheld` | 49 | 3 |
+| `unresolved-recipe` | 281 | **0** |
+| `historical-only` (`archive/`) | 54 | 0 |
+
+**Every paper-cited file has a status other than `unresolved-recipe`.**
+The three paper-cited withheld files are the W1.4 cells.
+
+The 49 `known-withheld` files: the three 3.7 cells, their three
+null-exemplar counterparts, the five `tile-size-30m` cells above, and 38
+under `results/uplift-supplement/` (36 in `k1-gapfill/`, 2 in
+`verifier-pairing/`), all with reason `tile_join_detection_shortfall`
+under `id` where recorded. Only the three 3.7 cells are in W1.4; **the
+other 46 are withheld cells the specification does not mention**
+(open question 5).
+
+The 281 `unresolved-recipe` files: 232 null-exemplar sensitivity cells
+(their detection files are gitignored derivatives, absent on zbook, and
+regenerable from `detections_manifest.json`; regeneration not tried), 24
+`results/verifier-t-pilot/` and 12 `results/retest/` (no recipe at all;
+the retest files carry no `_metadata`), 12
+`results/deployment-oracle-2026-06-06/preverifier-eval/` and 1
+`results/rescore-2026-05-31/` (detection input absent on zbook). None is
+paper-cited.
+
+"Frozen" was taken as `archive/` only. No evaluation file lies under the
+S166 historical-comparison directories (`results/tile-join-audit/`,
+`results/k-ladder-2026-09-12/mcc-join-2026-10-30/`); whether any other
+live directory should count as frozen under D73 (5) is open question 6.
+
+## 5. Smoke cells 3–5, pinned
+
+| # | Cell (evaluation file) | Why it qualifies |
+|---|---|---|
+| 3 | `results/paper-eval/phase2/512px-14buf-mcc/p2c-image-canonical/evaluation.json` | Era-1 512 px frame (`inputs/vectors/bounds/full_evaluation_bounds.geojson`); paper-cited both ways (signed rows `uplift-supplement-flatten`, `null-exemplar-sensitivity-2026-09-13`; directory named in `docs/paper/`); **unmerged** by route (raw detector schema); single; has a tile block and intervals; `reproducible-legacy` |
+| 4 | `results/grid-2026-08-18/conditions/g512_ov064/eval/evaluation.json` (the spec's candidate, `grid-2026-08-18::g512-ov064-k10-c1-k8`, confirmed through `results/run-conditions.json`) | Grid common frame; paper-cited (signed rows `grid-tilesize-overlap-2026-08-18`, `uplift-supplement-flatten`); merged (merge fields present); single; records `id`; one buffer (20 m) |
+| 5 | `results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json` | Replicate-mean, `per_run` 3; paper-cited (signed rows `h6-a06-decision-rule`, `h6-a09-cost-gate`, `uplift-supplement-flatten`); **unmerged** by route; 384 px Era-1 frame, a frame no other smoke cell uses |
+
+The specification's other candidate,
+`outputs/era1-pv-stage-d/512-single-image-t0.0/eval_t0.1/evaluation.json`,
+is not paper-cited by the rule above (no signed row names it and no
+`docs/paper/` directory contains it), so it was not used. Across cells
+1–5, cells 3 and 5 are unmerged by construction route, as required.
+
+## 6. Recipe and input identity (all eight smoke cells)
+
+Recovered with the existing `scripts.rescore_tile_mcc_e81.recover_recipe`
+(D22) and `evaluate_detections.find_detection_files`, by
+`scripts/replay_smoke.py`. Record: `scripts/out/smoke_replay.json` (full
+SHA-256 and git blob of every input; argv; run order). Every cell: seed
+42, 10,000 BCa draws, `scipy.stats.bootstrap`.
+
+| # | Recorded join | Buffers | Detection input(s), run order | Generating commit | Input identity |
+|---|---|---|---|---|---|
+| 1 | none (→ `id`) | 14 | `results/k-ladder-2026-09-12/phase2/materialised/pv-high-image-t0.3-n1-opmax.geojson` | `f724b7a10` | all 3 git blobs equal the recorded `blob_hashes` |
+| 2 | none (→ `id`) | 14 | `results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/detections.geojson` | `7894b5b5a` | no hashes recorded; all 3 blobs equal the blobs at `7894b5b5a` |
+| 3 | none (→ `id`) | 14 | `outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson` (glob `*/detections_*.geojson`) | `349cdd1b6` | none recorded; all 3 equal the blobs at `349cdd1b6` |
+| 4 | `id` | 20 m | `results/grid-2026-08-18/conditions/g512_ov064/detections.geojson` | `unknown` | all 3 equal the recorded `blob_hashes` |
+| 5 | none (→ `id`) | 14 | `outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_{1,2,3}/detections-library_plus-hp-3.1-pro-2026-06-03.geojson`, in that order | `349cdd1b6` | none recorded; all 5 equal the blobs at `349cdd1b6` |
+| 6–8 | `id` | 14 | `results/k-ladder-2026-09-12/phase2/materialised/g37-text-{k1-verified-carried-p0.10-k1, k1-verified-opmax, k3-verified-opmax}.geojson` | `8654d741f` | all equal the recorded `blob_hashes` and the blobs at `8654d741f` |
+
+Environment: zbook, Python 3.13.3, NumPy 2.4.3, SciPy 1.17.1, scorer at
+`e92d1c5d7` (the data root's checkout; `scripts/` and `tests/` identical
+to `fe9d433d7`). D50 scope in every replay: no out-of-frame and no
+unattributed in-frame detection (cells 1–5); cells 2, 3, and 5 carry no
+origin columns and are attributed by `source_tile`.
+
+## 7. Determinism: legacy replays under the recorded rules
+
+Each cell was re-scored by the unchanged scorer under its recorded rules
+(join as recorded, `id` where none is recorded), into
+`~/scratch/wave1/w10/replay/cell<N>/`, and compared field by field with
+the committed file, excluding only the fields that change on every run
+(§ 3.3).
+
+| # | Outcome | Committed intervals and tile block | Differences |
+|---|---|---|---|
+| 1 | **reproduces** | every interval, method, coverage flag, and the tile confusion (TP 204, TN 241, FP 17, FN 25; MCC 0.827) equal | 2, both keys the current scorer adds and the committed file predates: `summary.detection_scope`, `summary.tile_classification.tile_join` |
+| 2 | **reproduces** | equal (TP 2,424, TN 4,847, FP 165, FN 1,105; MCC 0.7006) | the same 2 added keys |
+| 3 | **reproduces** | equal | the same 2 added keys |
+| 4 | **reproduces** | equal | 0 |
+| 5 | **reproduces** | equal, in all three passes and the aggregate | 7: the same added keys in `summary` and each of the 3 `per_run` entries |
+| 6 | **reproduces: the recorded refusal** | `tile_join_detection_shortfall` under `id`, 22 of 526 booked; point estimates equal | 0 |
+| 7 | **reproduces: the recorded refusal** | the same refusal, 21 of 475 | 0 |
+| 8 | **reproduces: the recorded refusal** | the same refusal, 20 of 467 | 0 |
+
+No interval differs in any cell, and `_metadata.bootstrap` (method and
+measured methods) is equal in all eight. **No cell has drifted.** The
+added keys are schema additions (D50's scope block and the tile block's
+join field), not value changes; Wave 2's comparison must treat a
+key absent from an older committed file as "not recorded", not as drift.
+No corrected (sheet-specific) score was computed for any cell.
+
+## 8. Timings for the cost model
+
+Measured on zbook, all eight replays at once (8 of 32 cores busy), each
+the scorer's full recorded recipe (all buffers, 10,000 draws, tile
+block). Per-cell CPU and peak memory from `os.wait4` on the child.
+
+| # | Tiles (frame) | Passes | Buffers | Wall (s) | CPU (s) | Peak RSS (MB) |
+|---|---:|---:|---:|---:|---:|---:|
+| 1 | 487 | 1 | 14 | 19.24 | 20.51 | 295 |
+| **2 (55-map)** | **8,541** | 1 | 14 | **131.33** | **133.86** | **2,095** |
+| 3 | 340 | 1 | 14 | 26.84 | 28.46 | 271 |
+| 4 | 487 | 1 | 1 | 2.68 | 4.19 | 292 |
+| 5 | 487 | 3 | 14 | 56.33 | 57.86 | 296 |
+| 6 | 487 | 1 | 14 (refusal) | 6.56 | 8.64 | 221 |
+| 7 | 487 | 1 | 14 (refusal) | 6.03 | 7.33 | 220 |
+| 8 | 487 | 1 | 14 (refusal) | 6.26 | 9.16 | 224 |
+| all | | | | 131.88 | 270.03 | |
+
+(Frame tile counts are from the parent record § 2.4 for 487, 340, and
+8,541; cell 3's frame is the 512 px full frame of 340 tiles.) These are
+legacy replays with the existing code; the new joins' costs are not yet
+measurable. For the main session's projection: the scorer is
+single-threaded per cell (CPU ≈ wall), a 55-map cell needs about 2.1 GB,
+so 14 concurrent 55-map cells would need about 29 GB of zbook's 31 GB.
+Wave 2 per file will be at least a legacy replay plus a new-rules run
+plus an idempotence rerun.
+
+## 9. Stop-list items checked
 
 | § 5 item | Checked | Result |
 |---|---|---|
 | Unresolved row in the 3.7 eligibility table | yes | none (24 rows resolved) |
-| The 55-map GS check finding a cross-sheet contact on map content | yes | **found: 32 contacts (26 references) in r2; the stop** |
-| A write outside the scratch copy, the Wave 1 branch, or `reports/tile-join-wave-1/` | yes | none: writes were this worktree's `reports/tile-join-wave-1/`, zbook `~/scratch/wave1/w10/`, and the zbook worktree by fast-forward |
-| Any decision this specification does not cover | yes | note A of `withheld-37.md` is a judgement, flagged; not treated as a stop |
-| All others (G1 items, replay, refusals, count sums, tier 1) | no | belong to W1.1–W1.5, not reached |
+| The 55-map GS check finding a cross-sheet contact on map content | yes | **found; the stop** (§ 2; stop record) |
+| A legacy replay mismatch, or an unexpected refusal | yes, for the eight smoke cells | none: all reproduce; the three refusals are the recorded ones |
+| An in-frame detection without an attributable sheet in any smoke cell | yes, from the replays' D50 scope | none (`n_unattributed_in_frame` 0 in all five non-refused cells and the three 3.7 cells) |
+| A write outside the scratch copy, the Wave 1 branch, or `reports/tile-join-wave-1/` | yes | none to files. The replays ran the data root's scorer with `PYTHONDONTWRITEBYTECODE=1` and wrote only to `~/scratch/wave1/w10/`; `git status` of the data root stayed clean. One `git fetch` was run in the data root's checkout, which updates the object store that its worktrees (including this branch's) share |
+| Any decision this specification does not cover | yes | note A of `withheld-37.md` (flagged); the 46 withheld cells outside W1.4 and "frozen" outside `archive/` (open questions 5 and 6) are reported, not decided |
+| G1 items, count sums, tier 1 | no | belong to W1.1–W1.5 |
+
+## 10. Open questions
+
+1. The seam ruling (stop record § 4, item 1).
+2. Note A in `withheld-37.md`.
+3. The 18 ambiguous contacts on r2.
+4. Route `unknown` for 79 paper-cited files (54 `source_tile`-only
+   materialisations, 25 Era-1 proposer-verifier accepted sets): their
+   builders should be checked before Wave 2 relies on the route.
+5. 46 `known-withheld` files outside W1.4 (`results/uplift-supplement/`
+   38, `results/pairwise/tile-size-30m/` 5, null-exemplar counterparts
+   3): does the D73 (4) rule apply to them, or do they simply re-score?
+6. Whether any live directory besides `archive/` counts as frozen under
+   D73 (5).
+7. One evaluation records its bounds as an absolute path.
 
 ## Changelog
+
+### 2026-11-18 — Steps 3–8 completed after the stop; seam measurement added
+
+Trigger: the main session's instruction to resume the read-only W1.0
+steps while the wave stays stopped on the seam ruling (stop record § 3).
+Added § 2.2 (second-copy counts for options (a)–(d)); completed § 3
+(schema); added §§ 4–10 (census and recount, worklist, smoke cells 3–5,
+recipes, determinism, timings, stop list, open questions); rewrote § 0.
+
+| Item | Before | After |
+|---|---|---|
+| Status | stopped at step 2; steps 3–8 not started | stopped on the seam ruling; steps 3–8 done |
+| Census | not started | 2,829 files, matching the specification's 2,817 + 12; 2,646 text matches for `tile_classification` (2,641 blocks) |
+| Worklist | not written | `worklist.json`: 2,445 reproducible-legacy, 49 known-withheld, 281 unresolved-recipe (none paper-cited), 54 historical-only |
+| Determinism | not run | all eight smoke cells reproduce their committed intervals and confusions, or their recorded refusal |
+
+Unchanged: the stop, § 2's sheet-check results, and the eligibility
+table.
 
 ### 2026-11-18 — Original publication
 
