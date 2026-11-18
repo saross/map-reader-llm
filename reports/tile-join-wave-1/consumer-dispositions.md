@@ -1,6 +1,6 @@
 # Tile-join Wave 1: consumer dispositions
 
-> **Last revised**: 2026-11-19 (G1 audit fix round: launchers pinned to history; A-M3). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (shell launchers added, RA-M4; earlier, the G1 audit fix round). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), the Wave 1 code agent (W1.1 and W1.2), on branch
@@ -371,7 +371,33 @@ A launcher that produces NEW work (not a re-score of a committed artefact)
 may select the corrected rules explicitly once Wave 2's specification says
 so, with its own disposition. None is changed to do so in Wave 1.
 
+### Shell launchers (re-audit RA-M4)
+
+The `*.py`-only launcher scan missed thirteen shell scripts that run
+`scripts/evaluate_detections.py` without a join flag, so each would have
+re-scored under the sheet joins. Commit `e44cfaf2d` pins every one to the
+legacy rules (`--tile-join id --count-table-join id`), and the tier-1
+launcher scan now covers `*.sh` as well:
+
+- `55maps-image-recovery.sh`, `55maps-t0.3-recovery.sh`,
+  `55maps-t0.7-recovery.sh`, `55maps-text-min-recovery.sh`;
+- `gs-v2-t0.7-recovery.sh`;
+- `run_phase3a_image_analysis.sh`, `run_phase3a_mcc_sweep.sh`,
+  `run_phase3a_text_analysis.sh`;
+- `run_second_wave_evals.sh`, `run_sweep_promotion_evals.sh`,
+  `run_vr_registration_evals.sh`;
+- `session-78-matrix-overnight.sh`, `session-78-matrix-rerun-phases-bcd.sh`.
+
+Disposition: historical replay path, pinned (the same main-session
+decision as the other launchers, pending the PI). The audit record is
+`g1-audit.md` § 8.1.
+
 ## Changelog
+
+### 2026-11-19 — Shell launchers added (re-audit RA-M4)
+
+The thirteen shell launchers pinned in `e44cfaf2d` are listed under the
+subprocess-launcher section. No earlier disposition changed.
 
 ### 2026-11-19 — G1 audit fix round
 
