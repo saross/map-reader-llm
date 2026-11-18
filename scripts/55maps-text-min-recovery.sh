@@ -146,6 +146,7 @@ python3 scripts/55maps-t0.3-rebuild-verified-geojson.py \
     --output "$OUTDIR/verified/verified_detections.geojson"
 
 python3 scripts/evaluate_detections.py \
+    --tile-join id --count-table-join id \
     --detections "$OUTDIR/verified/verified_detections.geojson" \
     --buffers 20 30 40 50 \
     --bootstrap 10000 --seed 42 \

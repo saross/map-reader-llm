@@ -259,6 +259,7 @@ run_phase_c_cell() {
         --output "$mat_geojson" \
         > "$eval_log" 2>&1 \
     && "$PYTHON" scripts/evaluate_detections.py \
+        --tile-join id --count-table-join id \
         --detections "$mat_geojson" \
         --ground-truth "$GT" \
         --bounds "$BOUNDS" \

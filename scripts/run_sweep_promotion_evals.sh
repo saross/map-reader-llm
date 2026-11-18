@@ -43,6 +43,7 @@ for label in $LABELS; do
     mkdir -p "$out"
     echo "launching $label"
     $PY scripts/evaluate_detections.py \
+        --tile-join id --count-table-join id \
         --detections "$VR/sweep-sets/$label.geojson" --bounds "$B384" \
         --buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150 \
         --mcc --label "$label" --output-dir "$out" \

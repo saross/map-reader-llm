@@ -358,6 +358,7 @@ run_phase_c_cell() {
             --prob-t "$opt_pt" \
             --output "$mat_geojson" \
         && "$PYTHON" scripts/evaluate_detections.py \
+            --tile-join id --count-table-join id \
             --detections "$mat_geojson" \
             --ground-truth "$GT" \
             --bounds "$BOUNDS" \

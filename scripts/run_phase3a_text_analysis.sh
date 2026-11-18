@@ -57,6 +57,7 @@ evaluate_condition() {
     echo "    [$label] Evaluating..."
     mkdir -p "$cond_dir"
     $PYTHON $EVAL \
+        --tile-join id --count-table-join id \
         --detections "$geojson" \
         --buffers $BUFFERS \
         --bootstrap $BOOTSTRAP \

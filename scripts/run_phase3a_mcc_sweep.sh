@@ -50,6 +50,7 @@ run_one() {
     mkdir -p "$outdir"
 
     "$PYTHON" "$EVAL" \
+        --tile-join id --count-table-join id \
         --detections "$geojson" \
         --buffers 20 30 40 50 \
         --bootstrap 1000 \

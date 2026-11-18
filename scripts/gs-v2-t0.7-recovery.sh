@@ -169,6 +169,7 @@ python3 scripts/55maps-t0.3-rebuild-verified-geojson.py \
     --output "$OUTDIR/verified-v1/verified_detections_full-scope.geojson"
 
 python3 scripts/evaluate_detections.py \
+    --tile-join id --count-table-join id \
     --detections "$OUTDIR/verified-v1/verified_detections_full-scope.geojson" \
     --buffers 5 10 15 20 25 30 35 40 45 50 \
     --bootstrap 10000 --seed 42 \
