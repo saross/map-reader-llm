@@ -3,20 +3,37 @@
 Reference-occupancy correlogram by tile lag (design information, not a result).
 
 Wave S's block sizes must relate to plausible spatial dependence
-(``planning/tile-join-wave-s-spec-2026-11-18.md`` § 4). The dependence that
+(``planning/tile-join-wave-s-spec-2026-11-18.md`` § 3.3). The dependence that
 matters is in the paired difference between two conditions' per-tile
 outcomes, which cannot be consulted before the design is frozen. This script
-measures the one dependence that can be read without any model output: where
-the reference mounds themselves are.
+describes the one pattern that can be read without any model output: where
+the reference mounds themselves are. Its output is descriptive design
+evidence, not an estimate of the dependence range of model contrasts.
 
 A tile is reference-occupied if a reference recorded on the tile's own sheet
-lies in it (the sheet-specific containment of D73 (2)). For pairs of tiles in
-the same sheet whose pixel offsets differ by a Chebyshev lag of ``L`` strides,
-it reports the Pearson correlation of occupancy and of reference counts, both
-pooled and *within sheet* (each sheet's mean removed first, so that sheets
-with many mounds and sheets with few do not masquerade as long-range
-correlation). Lag 1 includes tiles that physically overlap; from lag 2 no
-pair shares ground.
+lies in it (the sheet-specific containment of D73 (2)). It takes pairs of
+tiles in the same sheet whose pixel offsets differ by a **Chebyshev lag** of
+``L`` strides, ``max(|di|, |dj|) = L``. A Chebyshev lag pools axial pairs
+(centre distance ``L`` strides) with diagonal ones (up to ``L * sqrt(2)``
+strides), so it is not a single distance. For each lag it reports three
+statistics:
+
+* **occupancy r pooled**: the Pearson correlation of occupancy over the list
+  of pairs (means and variances taken over that list);
+* **occupancy within-sheet cross-product**: NOT a Pearson correlation. Each
+  tile's occupancy is centred on its own sheet's mean; the statistic is the
+  mean, over the lag's pairs, of the product of the two centred values,
+  divided by the whole-frame within-sheet variance (the mean squared
+  centred occupancy over all tiles). Centring by sheet keeps sheets with
+  many mounds and sheets with few from masquerading as long-range
+  dependence, but the normaliser is not the variance of the paired values,
+  so the value is not bounded like a correlation and must not be read as
+  one (Astra, wave S review S3);
+* **count r pooled**: the Pearson correlation of reference counts over the
+  list of pairs.
+
+Lag 1 includes tiles that physically overlap; from lag 2 no pair shares
+ground. Small values at longer lags do not show that dependence ends there.
 
 It reads only the bounds and reference GeoJSON files and imports nothing
 beyond the standard library (D70). It reads every feature in the reference
@@ -29,6 +46,7 @@ Usage::
         > planning/tile-join-wave-s-spec-2026-11-18-scripts/occupancy_correlogram.txt
 
 Created: 2026-11-18 (drafting for S169, amd-tower)
+Revised: 2026-11-18 (Astra's round 1, S3: statistics labelled precisely)
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -121,8 +139,8 @@ def report(frame: str, references: str, column: str) -> None:
     rates = sorted(sum(t["occ"] for t in g.values()) / len(g) for g in by_sheet.values())
     print(f"per-sheet occupancy rate min/median/max {rates[0]:.3f}/"
           f"{rates[len(rates) // 2]:.3f}/{rates[-1]:.3f} over {len(rates)} sheets")
-    print("lag (strides) | centre spacing | pairs | occupancy r pooled | "
-          "occupancy r within sheet | count r pooled")
+    print("lag (Chebyshev, strides) | axial centre spacing | pairs | occupancy r pooled | "
+          "occupancy within-sheet cross-product (not a correlation) | count r pooled")
     for lag in range(1, MAX_LAG + 1):
         occ, cnt, centred = [], [], []
         for grid in by_sheet.values():
@@ -137,6 +155,8 @@ def report(frame: str, references: str, column: str) -> None:
                         occ.append((t["occ"], u["occ"]))
                         cnt.append((t["count"], u["count"]))
                         centred.append((t["occ_c"], u["occ_c"]))
+        # Mean-centred cross-product normalised by the whole-frame
+        # within-sheet variance; not a Pearson correlation (see the header).
         within = (sum(a * b for a, b in centred) / len(centred)) / within_var
         print(f"{lag} | {lag * stride} px | {len(occ)} | {pearson(occ):.3f} | "
               f"{within:.3f} | {pearson(cnt):.3f}")

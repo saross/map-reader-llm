@@ -1,81 +1,98 @@
 Block census for wave S (design information; no detection or reference read).
+'arithmetic routes' is a consistency check of the block arithmetic, not a geometry check; the independent geometry check follows each frame.
 
 ## inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
 tiles 487; sheets 4; tile 384 px; stride 336 px; overlap 48 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 111/121/134
-side 672 px = 2 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
-side 1008 px = 3 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
-side 1344 px = 4 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
-side 2016 px = 6 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
-side 2688 px = 8 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
+side 672 px = 2 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
+side 1008 px = 3 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
+side 1344 px = 4 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
+side 2016 px = 6 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
+side 2688 px = 8 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles_384: tiles checked 487; unclipped 455 (largest edge deviation 9.3e-10 m); clipped 32 (clipped s 32); failures 0
+    clipped tiles whose nominal centre lies outside the clipped polygon 0; whose clipped centroid would fall in another primary block 0 (membership uses the nominal centre)
+red sentinel on K-35-052-4_32635_x0_y0.png (baseline failures 0):
+    footprint moved one stride (1683.4 m) east, name unchanged: geometry-check failures 1 -> RED (caught) [bounds polygon is not the nominal footprint or a clip of it]
+    footprint moved 10 m east, name unchanged: geometry-check failures 1 -> RED (caught) [bounds polygon is not the nominal footprint or a clip of it]
+    map_name changed to K-35-053-3_Elenovo: geometry-check failures 2 -> RED (caught) [name does not carry its map_name; no raster for (map_name, tile_name)]
+    the arithmetic consistency check on the stride-displaced tile: passes (it cannot see geometry)
 
 ## inputs/vectors/bounds/384/full_evaluation_bounds.geojson
 tiles 487; sheets 4; tile 384 px; stride 336 px; overlap 48 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 111/121/134
-side 672 px = 2 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
-side 1008 px = 3 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
-side 1344 px = 4 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
-side 2016 px = 6 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
-side 2688 px = 8 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
+side 672 px = 2 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
+side 1008 px = 3 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
+side 1344 px = 4 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
+side 2016 px = 6 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
+side 2688 px = 8 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles_384: tiles checked 487; unclipped 487 (largest edge deviation 9.3e-10 m); clipped 0 (none); failures 0
 
 ## outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson
 tiles 487; sheets 4; tile 384 px; stride 336 px; overlap 48 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 111/121/134
-side 672 px = 2 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
-side 1008 px = 3 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
-side 1344 px = 4 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
-side 2016 px = 6 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
-side 2688 px = 8 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
+side 672 px = 2 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 155 (per sheet 37-41) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 71 | tiles overlapping another block: same sheet 476 (97.7 %), other sheet 24 (4.9 %)
+side 1008 px = 3 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 74 (per sheet 17-20) | tiles per block min/median/max 1/9/9 | blocks under 4 tiles 23 | tiles overlapping another block: same sheet 373 (76.6 %), other sheet 24 (4.9 %)
+side 1344 px = 4 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/12/16 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 304 (62.4 %), other sheet 24 (4.9 %)
+side 2016 px = 6 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 3/21/36 | blocks under 4 tiles 1 | tiles overlapping another block: same sheet 206 (42.3 %), other sheet 24 (4.9 %)
+side 2688 px = 8 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 6/28.5/56 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 138 (28.3 %), other sheet 24 (4.9 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles_384: tiles checked 487; unclipped 438 (largest edge deviation 9.3e-10 m); clipped 49 (clipped e 5, clipped e+s 1, clipped n 3, clipped s 36, clipped w 1, clipped w+s 3); failures 0
+    clipped tiles whose nominal centre lies outside the clipped polygon 1; whose clipped centroid would fall in another primary block 0 (membership uses the nominal centre)
 
 ## inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
 tiles 8541; sheets 55; tile 384 px; stride 336 px; overlap 48 px; metres per sheet pixel 4.9952-5.0640; every polygon axis-parallel: True
 tiles per sheet min/median/max 143/156/156
-side 672 px = 2 strides = 3.36-3.40 km | routes disagree on 0 tiles | blocks 2310 (per sheet 42-42) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 348 | tiles overlapping another block: same sheet 8434 (98.7 %), other sheet 2816 (33.0 %)
-side 1008 px = 3 strides = 5.04-5.10 km | routes disagree on 0 tiles | blocks 1100 (per sheet 20-20) | tiles per block min/median/max 2/9/9 | blocks under 4 tiles 220 | tiles overlapping another block: same sheet 6906 (80.9 %), other sheet 2816 (33.0 %)
-side 1344 px = 4 strides = 6.71-6.81 km | routes disagree on 0 tiles | blocks 660 (per sheet 12-12) | tiles per block min/median/max 3/16/16 | blocks under 4 tiles 3 | tiles overlapping another block: same sheet 5482 (64.2 %), other sheet 2816 (33.0 %)
-side 2016 px = 6 strides = 10.07-10.21 km | routes disagree on 0 tiles | blocks 330 (per sheet 6-6) | tiles per block min/median/max 5/36/36 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 3618 (42.4 %), other sheet 2816 (33.0 %)
-side 2688 px = 8 strides = 13.43-13.61 km | routes disagree on 0 tiles | blocks 220 (per sheet 4-4) | tiles per block min/median/max 15/36/64 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 2524 (29.6 %), other sheet 2816 (33.0 %)
+side 672 px = 2 strides = 3.36-3.40 km | arithmetic routes disagree on 0 tiles | blocks 2310 (per sheet 42-42) | tiles per block min/median/max 1/4/4 | blocks under 4 tiles 348 | tiles overlapping another block: same sheet 8434 (98.7 %), other sheet 2816 (33.0 %)
+side 1008 px = 3 strides = 5.04-5.10 km | arithmetic routes disagree on 0 tiles | blocks 1100 (per sheet 20-20) | tiles per block min/median/max 2/9/9 | blocks under 4 tiles 220 | tiles overlapping another block: same sheet 6906 (80.9 %), other sheet 2816 (33.0 %)
+side 1344 px = 4 strides = 6.71-6.81 km | arithmetic routes disagree on 0 tiles | blocks 660 (per sheet 12-12) | tiles per block min/median/max 3/16/16 | blocks under 4 tiles 3 | tiles overlapping another block: same sheet 5482 (64.2 %), other sheet 2816 (33.0 %)
+side 2016 px = 6 strides = 10.07-10.21 km | arithmetic routes disagree on 0 tiles | blocks 330 (per sheet 6-6) | tiles per block min/median/max 5/36/36 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 3618 (42.4 %), other sheet 2816 (33.0 %)
+side 2688 px = 8 strides = 13.43-13.61 km | arithmetic routes disagree on 0 tiles | blocks 220 (per sheet 4-4) | tiles per block min/median/max 15/36/64 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 2524 (29.6 %), other sheet 2816 (33.0 %)
 sheet blocks: 55
+independent geometry check: not run here (this frame's rasters are not tracked; S.0 runs it where they are kept)
 
 ## inputs/vectors/bounds/full_evaluation_bounds.geojson
 tiles 340; sheets 4; tile 512 px; stride 448 px; overlap 64 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 85/85/85
-side 672 px = 1.5 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 165 (per sheet 41-42) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 138 | tiles overlapping another block: same sheet 340 (100.0 %), other sheet 18 (5.3 %)
-side 1008 px = 2.25 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 80 (per sheet 20-20) | tiles per block min/median/max 2/4/9 | blocks under 4 tiles 26 | tiles overlapping another block: same sheet 320 (94.1 %), other sheet 18 (5.3 %)
-side 1344 px = 3 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 3/8.5/9 | blocks under 4 tiles 12 | tiles overlapping another block: same sheet 263 (77.4 %), other sheet 18 (5.3 %)
-side 2016 px = 4.5 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/15.5/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 184 (54.1 %), other sheet 18 (5.3 %)
-side 2688 px = 6 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 10/20/35 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 127 (37.4 %), other sheet 18 (5.3 %)
+side 672 px = 1.5 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 165 (per sheet 41-42) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 138 | tiles overlapping another block: same sheet 340 (100.0 %), other sheet 18 (5.3 %)
+side 1008 px = 2.25 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 80 (per sheet 20-20) | tiles per block min/median/max 2/4/9 | blocks under 4 tiles 26 | tiles overlapping another block: same sheet 320 (94.1 %), other sheet 18 (5.3 %)
+side 1344 px = 3 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 3/8.5/9 | blocks under 4 tiles 12 | tiles overlapping another block: same sheet 263 (77.4 %), other sheet 18 (5.3 %)
+side 2016 px = 4.5 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/15.5/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 184 (54.1 %), other sheet 18 (5.3 %)
+side 2688 px = 6 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 10/20/35 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 127 (37.4 %), other sheet 18 (5.3 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles: tiles checked 340; unclipped 340 (largest edge deviation 9.3e-10 m); clipped 0 (none); failures 0
 
 ## outputs/h13/scoring/bounds/h13_common_bounds.geojson
 tiles 340; sheets 4; tile 512 px; stride 448 px; overlap 64 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 85/85/85
-side 672 px = 1.5 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 165 (per sheet 41-42) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 138 | tiles overlapping another block: same sheet 340 (100.0 %), other sheet 18 (5.3 %)
-side 1008 px = 2.25 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 80 (per sheet 20-20) | tiles per block min/median/max 2/4/9 | blocks under 4 tiles 26 | tiles overlapping another block: same sheet 320 (94.1 %), other sheet 18 (5.3 %)
-side 1344 px = 3 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 3/8.5/9 | blocks under 4 tiles 12 | tiles overlapping another block: same sheet 263 (77.4 %), other sheet 18 (5.3 %)
-side 2016 px = 4.5 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/15.5/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 184 (54.1 %), other sheet 18 (5.3 %)
-side 2688 px = 6 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 10/20/35 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 127 (37.4 %), other sheet 18 (5.3 %)
+side 672 px = 1.5 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 165 (per sheet 41-42) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 138 | tiles overlapping another block: same sheet 340 (100.0 %), other sheet 18 (5.3 %)
+side 1008 px = 2.25 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 80 (per sheet 20-20) | tiles per block min/median/max 2/4/9 | blocks under 4 tiles 26 | tiles overlapping another block: same sheet 320 (94.1 %), other sheet 18 (5.3 %)
+side 1344 px = 3 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 3/8.5/9 | blocks under 4 tiles 12 | tiles overlapping another block: same sheet 263 (77.4 %), other sheet 18 (5.3 %)
+side 2016 px = 4.5 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/15.5/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 184 (54.1 %), other sheet 18 (5.3 %)
+side 2688 px = 6 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 10/20/35 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 127 (37.4 %), other sheet 18 (5.3 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles: tiles checked 340; unclipped 278 (largest edge deviation 9.3e-10 m); clipped 62 (clipped e 24, clipped e+s 3, clipped s 35); failures 0
+    clipped tiles whose nominal centre lies outside the clipped polygon 0; whose clipped centroid would fall in another primary block 0 (membership uses the nominal centre)
 
 ## inputs/vectors/bounds/384/h10_test_bounds.geojson
 tiles 327; sheets 4; tile 384 px; stride 336 px; overlap 48 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 71/81/94
-side 672 px = 2 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 148 (per sheet 33-40) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 132 | tiles overlapping another block: same sheet 311 (95.1 %), other sheet 12 (3.7 %)
-side 1008 px = 3 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 72 (per sheet 16-20) | tiles per block min/median/max 1/5/9 | blocks under 4 tiles 27 | tiles overlapping another block: same sheet 240 (73.4 %), other sheet 12 (3.7 %)
-side 1344 px = 4 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/8/15 | blocks under 4 tiles 14 | tiles overlapping another block: same sheet 192 (58.7 %), other sheet 12 (3.7 %)
-side 2016 px = 6 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 2/14.5/27 | blocks under 4 tiles 4 | tiles overlapping another block: same sheet 120 (36.7 %), other sheet 12 (3.7 %)
-side 2688 px = 8 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 4/18.5/41 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 85 (26.0 %), other sheet 12 (3.7 %)
+side 672 px = 2 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 148 (per sheet 33-40) | tiles per block min/median/max 1/2/4 | blocks under 4 tiles 132 | tiles overlapping another block: same sheet 311 (95.1 %), other sheet 12 (3.7 %)
+side 1008 px = 3 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 72 (per sheet 16-20) | tiles per block min/median/max 1/5/9 | blocks under 4 tiles 27 | tiles overlapping another block: same sheet 240 (73.4 %), other sheet 12 (3.7 %)
+side 1344 px = 4 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/8/15 | blocks under 4 tiles 14 | tiles overlapping another block: same sheet 192 (58.7 %), other sheet 12 (3.7 %)
+side 2016 px = 6 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 2/14.5/27 | blocks under 4 tiles 4 | tiles overlapping another block: same sheet 120 (36.7 %), other sheet 12 (3.7 %)
+side 2688 px = 8 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 4/18.5/41 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 85 (26.0 %), other sheet 12 (3.7 %)
 sheet blocks: 4
+independent geometry check against inputs/tiles_384: tiles checked 327; unclipped 327 (largest edge deviation 9.3e-10 m); clipped 0 (none); failures 0
 
 ## inputs/vectors/bounds/256/full_evaluation_bounds.geojson
 tiles 1032; sheets 4; tile 256 px; stride 224 px; overlap 32 px; metres per sheet pixel 5.0100-5.0315; every polygon axis-parallel: True
 tiles per sheet min/median/max 251/255/271
-side 672 px = 3 strides = 3.37-3.38 km | routes disagree on 0 tiles | blocks 152 (per sheet 37-39) | tiles per block min/median/max 1/8/9 | blocks under 4 tiles 33 | tiles overlapping another block: same sheet 851 (82.5 %), other sheet 34 (3.3 %)
-side 1008 px = 4.5 strides = 5.05-5.07 km | routes disagree on 0 tiles | blocks 76 (per sheet 19-19) | tiles per block min/median/max 4/16/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 627 (60.8 %), other sheet 34 (3.3 %)
-side 1344 px = 6 strides = 6.73-6.76 km | routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/25.5/36 | blocks under 4 tiles 2 | tiles overlapping another block: same sheet 474 (45.9 %), other sheet 34 (3.3 %)
-side 2016 px = 9 strides = 10.10-10.14 km | routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/50.5/81 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 313 (30.3 %), other sheet 34 (3.3 %)
-side 2688 px = 12 strides = 13.47-13.52 km | routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 11/57/126 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 208 (20.2 %), other sheet 34 (3.3 %)
+side 672 px = 3 strides = 3.37-3.38 km | arithmetic routes disagree on 0 tiles | blocks 152 (per sheet 37-39) | tiles per block min/median/max 1/8/9 | blocks under 4 tiles 33 | tiles overlapping another block: same sheet 851 (82.5 %), other sheet 34 (3.3 %)
+side 1008 px = 4.5 strides = 5.05-5.07 km | arithmetic routes disagree on 0 tiles | blocks 76 (per sheet 19-19) | tiles per block min/median/max 4/16/25 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 627 (60.8 %), other sheet 34 (3.3 %)
+side 1344 px = 6 strides = 6.73-6.76 km | arithmetic routes disagree on 0 tiles | blocks 48 (per sheet 12-12) | tiles per block min/median/max 1/25.5/36 | blocks under 4 tiles 2 | tiles overlapping another block: same sheet 474 (45.9 %), other sheet 34 (3.3 %)
+side 2016 px = 9 strides = 10.10-10.14 km | arithmetic routes disagree on 0 tiles | blocks 24 (per sheet 6-6) | tiles per block min/median/max 4/50.5/81 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 313 (30.3 %), other sheet 34 (3.3 %)
+side 2688 px = 12 strides = 13.47-13.52 km | arithmetic routes disagree on 0 tiles | blocks 16 (per sheet 4-4) | tiles per block min/median/max 11/57/126 | blocks under 4 tiles 0 | tiles overlapping another block: same sheet 208 (20.2 %), other sheet 34 (3.3 %)
 sheet blocks: 4
+independent geometry check: not run here (this frame's rasters are not tracked; S.0 runs it where they are kept)
