@@ -279,6 +279,28 @@ def permutation_test_mcc(
     }
 
 
+def rank_by_mcc(cells: list[dict]) -> list[dict]:
+    """Cells in descending MCC, an undefined MCC (E81) after every defined one.
+
+    Args:
+        cells: Dicts with an ``mcc`` value (float or ``None``).
+
+    Returns:
+        A new list, best first.
+
+    Example:
+        >>> [c["mcc"] for c in rank_by_mcc([{"mcc": None}, {"mcc": 0.2}, {"mcc": 0.5}])]
+        [0.5, 0.2, None]
+    """
+    return sorted(cells, key=lambda c: (c["mcc"] is None, -(c["mcc"] or 0.0)))
+
+
+#: The first ``compute_corrected_f1_multi_buffer.py`` output version that
+#: records its tile joins (Wave 1); a file at or above it that records none
+#: is refused, never read as the legacy ``id`` (re-audit Low).
+TRACK2_JOINS_VERSION = (1, 1, 0)
+
+
 def _track2_recorded_join(summary: dict, row: dict) -> str:
     """The classification join a Track-2 ``summary.json`` row was built under.
 
@@ -306,6 +328,14 @@ def _track2_recorded_join(summary: dict, row: dict) -> str:
     if len(records) > 1:
         raise ValueError(f"summary.json records contradictory classification joins "
                          f"{sorted(records)}")
+    if not records:
+        try:
+            version = tuple(int(x) for x in str(summary.get("version") or "0").split("."))
+        except ValueError:
+            version = (0,)
+        if version >= TRACK2_JOINS_VERSION:
+            raise ValueError(f"summary.json version {summary.get('version')} must "
+                             f"record its classification join, and records none")
     join = records.pop() if records else TILE_JOIN_LEGACY_CLASSIFICATION
     if join not in TILE_JOINS_CLASSIFICATION:
         raise ValueError(f"summary.json records {join!r}, not a classification join")
@@ -648,8 +678,7 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
         p["significant"] = bool(adj < 0.05)
         significant[frozenset({p["a"], p["b"]})] = p["significant"]
 
-    # An undefined MCC (E81) ranks after every defined one.
-    ordered = sorted(cells, key=lambda c: (c["mcc"] is None, -(c["mcc"] or 0.0)))
+    ordered = rank_by_mcc(cells)
     tiers = greedy_clique_tiers([c["name"] for c in ordered], significant)
     tier_of = {n: t for t, members in enumerate(tiers, 1) for n in members}
     n_sig = sum(1 for p in pairs if p["significant"])

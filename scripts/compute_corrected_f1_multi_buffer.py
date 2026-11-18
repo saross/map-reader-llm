@@ -1005,7 +1005,9 @@ def write_summary_json(
         }
         methodology = "Approach B — extended-GT-at-R Hungarian matching"
     payload = {
-        "version": "1.0.0",
+        # 1.1.0: records its tile joins (Wave 1); readers refuse a 1.1.0+
+        # file that records none (mcc_tiering_55map.TRACK2_JOINS_VERSION).
+        "version": "1.1.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "methodology": methodology,
         "metadata": {
