@@ -63,6 +63,10 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.evaluate_detections import (  # noqa: E402
     _evaluate_condition,
 )
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from scripts.materialise_pv_geojson import materialise  # noqa: E402
 
 # ── Canonical Stage B parameters ─────────────────────────────────────
@@ -214,7 +218,7 @@ def run_one(
             "probabilities_json": str(probs_path.relative_to(REPO_ROOT)),
             "n_materialised": n_kept,
             "stage": "verifier-t-pilot-stage-b",
-        },
+        }, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     summary = _extract_summary(eval_result)
     summary["t_label"] = t_label

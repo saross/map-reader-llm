@@ -48,6 +48,10 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 import geopandas as gpd  # noqa: E402
 
 from evaluate_detections import load_geojson  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     load_geojson_detections,
@@ -388,7 +392,7 @@ def run_paired_test(
     if metric == "mcc":
         result = run_permutation_test_mcc(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
-            n_permutations=N_PERMUTATIONS, seed=SEED,
+            n_permutations=N_PERMUTATIONS, seed=SEED, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
         )
         score_a = result["global_a"]["mcc"]
         score_b = result["global_b"]["mcc"]
@@ -397,7 +401,7 @@ def run_paired_test(
         result = run_permutation_test(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
             buffer_metres=20,
-            n_permutations=N_PERMUTATIONS, seed=SEED,
+            n_permutations=N_PERMUTATIONS, seed=SEED, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
         score_a = result["global_a"]["f1"]
         score_b = result["global_b"]["f1"]

@@ -96,6 +96,10 @@ from era1_leaderboard_tiering import (  # noqa: E402
     resolve_condition,
 )
 from lib_advanced_metrics import TileJoinRefusalError  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from n1_baseline_leaderboard_tiering import (  # noqa: E402
     micro_f1,
     permutation_test_float,
@@ -741,12 +745,13 @@ def per_tile_tables(cli: dict, gdf_ref: gpd.GeoDataFrame,
     """
     out: dict[str, Any] = {}
     tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order,
-                                         HEADLINE_BUFFER)
+                                         HEADLINE_BUFFER,
+                                             count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE)
     out.update({"tp": tp, "fp": fp, "fn": fn, "n_passes": n_passes})
     try:
         gdf_det = cell_detections(cli, gdf_bounds)
         ctp, ctn, cfp, cfn, _diag = cell_per_tile_classification(
-            gdf_det, gdf_ref, gdf_bounds, tile_order)
+            gdf_det, gdf_ref, gdf_bounds, tile_order, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
         out.update({"ctp": ctp, "ctn": ctn, "cfp": cfp, "cfn": cfn})
     except (TileJoinRefusalError, ValueError) as error:
         out["refusal"] = str(error)

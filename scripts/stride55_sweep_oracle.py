@@ -64,6 +64,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     iter_sheet_scopes,
     match_detections_to_references,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -209,7 +210,8 @@ def per_map_tile_confusion(
     """
     from scripts.mcc_tiering_55map import tile_vectors  # noqa: PLC0415
 
-    tiles, truth, pred = tile_vectors(gdf_det, gdf_ext, bounds)
+    tiles, truth, pred = tile_vectors(gdf_det, gdf_ext, bounds,
+        tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     maps = {get_map_name(n) for n in bounds["tile_name"].unique()}
     maps.discard("Unknown")
     per_tile_map = np.array([get_map_name(t) for t in tiles])

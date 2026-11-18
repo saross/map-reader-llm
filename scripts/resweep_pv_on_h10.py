@@ -43,6 +43,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from evaluate_detections import load_geojson, evaluate_single_run  # noqa: E402
 from lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 
 BOUNDS_PATH = ROOT / "inputs/vectors/bounds/384/h10_test_bounds.geojson"
 REF_PATH = ROOT / "inputs/vectors/references/mounds-reference.geojson"
@@ -132,6 +136,8 @@ def main() -> int:
             r = evaluate_single_run(
                 gdf, ref, bounds, buffers=[20],
                 n_bootstrap=50, seed=42, label=c["id"],
+                tile_join=TILE_JOIN_LEGACY_CLASSIFICATION,
+                count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
             )
             b20 = r["buffers"][0]
             best = {

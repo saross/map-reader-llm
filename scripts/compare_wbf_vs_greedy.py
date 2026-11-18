@@ -170,7 +170,7 @@ def main() -> int:
         gdf_bounds=bounds,
         buffer_metres=20,
         n_permutations=10_000,
-        seed=42,
+        seed=42, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     pt = perm["permutation_test"]
     print(f"  observed Δ F1 (greedy − WBF): {pt['observed_f1_diff']:+.4f}")

@@ -125,6 +125,7 @@ from scripts.score_55maps_standardised_reference import (  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.mcc_tiering_55map import (  # noqa: E402
     mcc_from_confusion,
@@ -406,7 +407,7 @@ def tile_confusion(det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
     if det.empty:
         return {"tile_mcc": None, "tile_tp": None, "tile_tn": None,
                 "tile_fp": None, "tile_fn": None}
-    _tiles, truth, pred = tile_vectors(det, ref, bounds)
+    _tiles, truth, pred = tile_vectors(det, ref, bounds, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
     tp_t = int((pred & truth).sum())
     fp_t = int((pred & ~truth).sum())
     fn_t = int((~pred & truth).sum())

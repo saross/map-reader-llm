@@ -72,6 +72,7 @@ from pairwise_permutation_test import (  # noqa: E402
     load_pv_detections,
     run_permutation_test,
 )
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 
 __version__ = "1.0.0"
 
@@ -858,7 +859,7 @@ def main() -> None:
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
             buffer_metres=args.buffer_metres,
             n_permutations=args.n_permutations,
-            seed=args.seed,
+            seed=args.seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         # Log summary

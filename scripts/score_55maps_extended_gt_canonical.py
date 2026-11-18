@@ -68,6 +68,10 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 import compute_corrected_f1_multi_buffer as engine  # noqa: E402
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 
 REPO = SCRIPT_DIR.parent
 
@@ -169,6 +173,7 @@ def score_one_cell(
         n_bootstrap=n_bootstrap,
         seed=seed,
         compute_mcc=True,
+            tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
     return label
 

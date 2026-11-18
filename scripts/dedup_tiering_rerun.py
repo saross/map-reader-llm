@@ -84,6 +84,7 @@ from scripts.consensus_vs_baseline_tiering import (  # noqa: E402
 )
 from scripts.dedup_metric_impact import dedup_with_provenance  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_CLASSIFICATION  # noqa: E402
 from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     FDR_Q,
@@ -434,7 +435,8 @@ def board_55map_mcc(
     cells: list[dict[str, Any]] = []
     for name, dirname in CELLS.items():
         gdf_det, committed = _load_cell_inputs(cell_base / dirname)
-        _, cell_truth, pred_committed = tile_vectors(gdf_det, gdf_ref, gdf_bounds)
+        _, cell_truth, pred_committed = tile_vectors(gdf_det, gdf_ref, gdf_bounds,
+            tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
         if truth is None:
             truth = cell_truth
         elif not np.array_equal(truth, cell_truth):
@@ -459,7 +461,8 @@ def board_55map_mcc(
             gdf_dedup, contributing, stats = dedup_with_provenance(
                 gdf_det, gdf_bounds
             )
-            _, _, pred = tile_vectors(gdf_dedup, gdf_ref, gdf_bounds)
+            _, _, pred = tile_vectors(gdf_dedup, gdf_ref, gdf_bounds,
+                tile_join=TILE_JOIN_LEGACY_CLASSIFICATION)
             n_removed = stats["n_removed"]
             # Membership-preserving control: every contributing tile stays
             # predicted-populated, which by construction reproduces the
@@ -603,6 +606,8 @@ def board_generic_analysis(
             analysis_id,
             None,
             None,
+            tile_join=TILE_JOIN_LEGACY_CLASSIFICATION,
+            count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
     finally:
         era1._per_tile_one_set = original

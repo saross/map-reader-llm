@@ -139,6 +139,10 @@ from evaluate_detections import (  # noqa: E402
     load_geojson,
     slugify,
 )
+from lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_LEGACY_CLASSIFICATION,
+    TILE_JOIN_LEGACY_COUNT_TABLE,
+)
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     load_geojson_detections,
@@ -733,7 +737,8 @@ def _evaluate_single_threshold(
         n_bootstrap=n_bootstrap,
         seed=seed,
         label=label,
-        compute_mcc=True,  # Tile-level MCC at the matching buffer (default 20m)
+        compute_mcc=True,  # Tile-level MCC at the matching buffer (default 20m),
+            tile_join=TILE_JOIN_LEGACY_CLASSIFICATION, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
 
@@ -1239,7 +1244,7 @@ def _pairwise_worker(
     if metric == METRIC_MCC:
         perm_result = run_permutation_test_mcc(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
-            n_permutations=n_permutations, seed=seed,
+            n_permutations=n_permutations, seed=seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
         )
         result = {
             "label_a": label_a,
@@ -1260,7 +1265,7 @@ def _pairwise_worker(
         perm_result = run_permutation_test(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
             buffer_metres=buffer_metres,
-            n_permutations=n_permutations, seed=seed,
+            n_permutations=n_permutations, seed=seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
         result = {
             "label_a": label_a,
@@ -1444,7 +1449,7 @@ def run_all_pairwise_tests(
             perm_result = run_permutation_test_mcc(
                 gdf_a, gdf_b, gdf_ref, gdf_bounds,
                 n_permutations=n_permutations,
-                seed=seed,
+                seed=seed, tile_join=TILE_JOIN_LEGACY_CLASSIFICATION
             )
             result = {
                 "label_a": cond_a.label,
@@ -1472,7 +1477,7 @@ def run_all_pairwise_tests(
             gdf_a, gdf_b, gdf_ref, gdf_bounds,
             buffer_metres=buffer_metres,
             n_permutations=n_permutations,
-            seed=seed,
+            seed=seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
         )
 
         # Build compact result (drop per-tile details for cache)

@@ -37,6 +37,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "scripts"))
 
 from lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from pairwise_permutation_test import run_permutation_test  # noqa: E402
 
 GT_PATH = _PROJECT_ROOT / "inputs/vectors/references/mounds-reference.geojson"
@@ -47,7 +48,9 @@ WBF_CONFIGS = {
     5: {
         "label_a": "greedy_pv",
         "label_b": "wbf_pv",
-        "manifest_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json",
+        "manifest_a": (
+            "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json"
+        ),
         "probs_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json",
         "manifest_b": "outputs/wbf/fh-text-n5/crops/candidate_manifest.json",
         "probs_b": "outputs/wbf/fh-text-n5/verified/probabilities.json",
@@ -60,7 +63,9 @@ WBF_CONFIGS = {
     30: {
         "label_a": "greedy_pv",
         "label_b": "wbf_pv",
-        "manifest_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/candidate_manifest.json",
+        "manifest_a": (
+            "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/candidate_manifest.json"
+        ),
         "probs_a": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/probabilities.json",
         "manifest_b": "outputs/wbf/fh-text-n30/crops/candidate_manifest.json",
         "probs_b": "outputs/wbf/fh-text-n30/verified/probabilities.json",
@@ -188,7 +193,7 @@ def run_comparison(
         gdf_a, gdf_b, gt, bounds,
         buffer_metres=buffer_m,
         n_permutations=n_permutations,
-        seed=seed,
+        seed=seed, count_table_join=TILE_JOIN_LEGACY_COUNT_TABLE
     )
 
     obs_diff = perm_result["permutation_test"]["observed_f1_diff"]
