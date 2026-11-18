@@ -105,6 +105,20 @@ be discarded.
    contact in each reference file, whether a reference on the contacted
    sheet already lies within 50 m. It also counts how many such tiles
    each option would change.
+
+   **Measured (W1.0 agent, 2026-11-18; `dry-run.md` § 2.2).** On r2, no
+   map-content or ambiguous contact has a reference on the contacted sheet
+   within 50 m, so none of the 32 second copies is digitised. On canonical
+   r50, 29 of its 33 map-content contacts already have one, every one a
+   `phantom:*` reference (22 within 20 m), and all 24 of r50's
+   student–phantom pairs within 50 m are map-content contacts: the r50
+   review already did (a) for all but four. Relative to sheet-specific
+   containment on r2, (a) and (b) each turn 11 of the 26 contacted tiles
+   positive (17 of 41 with the ambiguous contacts), (d) removes 52 tiles
+   (41 of them positive), and (c) turns 333 tiles positive, of which only
+   11 are map-content contacts and the rest padding contacts. On canonical
+   r50, (a) and (b) move no tile.
+
 2. **Note A in `withheld-37.md`.** D51's searched-area difference is not
    treated as an exclusion in the as-evaluated K-ladder families. Confirm
    or overrule. Overruling makes rows 13–18 not eligible; no row becomes
@@ -113,6 +127,13 @@ be discarded.
    a rule, or a look at the crops.
 
 ## Changelog
+
+### 2026-11-18 — The read-only measurement for the ruling added (W1.0 agent)
+
+Trigger: the main session's request (§ 4, item 1). Added the measured
+paragraph under § 4, item 1, from `dry-run.md` § 2.2
+(`scripts/seam_second_copy.py`; outputs `scripts/out/seam_second_copy.txt`
+and `.json`). No ruling, decision, or other text in this record changed.
 
 ### 2026-11-18 — Original publication
 

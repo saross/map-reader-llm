@@ -182,6 +182,80 @@ that reading.
 | 49 | `K-35-077-3` `student:04646` | `K-35-077-1_x0_y3360.png` | 20.9, 324.6 | 0.882 | (0, 0, 0) | — | (0, 317) | ambiguous |
 | 50 | `K-35-066-1` `extension:408` | `K-35-066-3_x3360_y0.png` | 326.3, 14.3 | 0.647 | (0, 0, 0) | — | (17, 383) | ambiguous |
 
+### 2.2 Is the second copy already digitised, and what each option would move (for the seam ruling)
+
+Measured after the stop, at the main session's request (stop record
+§ 4, item 1), by `reports/tile-join-wave-1/scripts/seam_second_copy.py`
+(standard library; no scorer code, no model output). It reads the
+contacts and pixel verdicts from `scripts/out/sheet_check_55map_summary.json`
+and writes `scripts/out/seam_second_copy.txt` and `.json` (zbook,
+2026-11-18, at `6cda42d68`). The
+baseline is plain sheet-specific containment: a tile is
+reference-positive if a reference recorded on its own sheet lies inside
+it. The options are those of the stop record § 4: (a) add the second copy
+as a reference on the contacted sheet, at the contact point, wherever no
+contacted-sheet reference lies within 50 m; (b) a seam exception, under
+which the contacted tile is also positive; (c) frame-wide containment;
+(d) remove the contacted tile and the reference's own-sheet tiles from
+classification. Counts only.
+
+**(i) Is a reference on the contacted sheet already within 20 m / 50 m?**
+
+| Reference file | Map-content contacts | … with a contacted-sheet reference ≤ 20 m (phantom) | ≤ 50 m (phantom) | Ambiguous contacts | … ≤ 20 m | ≤ 50 m |
+|---|---:|---:|---:|---:|---:|---:|
+| `best-available-gt-55maps-r2` | 32 | 0 | 0 | 18 | 0 | 0 |
+| `best-available-gt-55maps` | 32 | 0 | 0 | 18 | 0 | 0 |
+| `canonical-gt-55maps-r50` | 33 | **22 (22)** | **29 (29)** | 20 | 1 (0) | 1 (0) |
+| `student-mounds-55maps-reviewed` | 33 | 0 | 0 | 16 | 0 | 0 |
+| `student-mounds-55maps` | 35 | 0 | 0 | 15 | 0 | 0 |
+
+Every second copy found is a `phantom:*` reference (layer
+`phantom_canonical`, provenance `canonical_review_r50`). The four
+canonical map-content contacts without one (`student:02195`,
+`student:02396`, `student:02508`, `student:02793`) have their nearest
+contacted-sheet reference 835.8–1,213.3 m away. Per-contact ids, layers,
+and distances are in the committed `.txt` and `.json`.
+
+**(ii) and (iii) Tiles moved, relative to sheet-specific containment.**
+Baseline positive tiles (of 8,541): r2 3,196; best-available 3,191;
+canonical 3,200; student-reviewed 3,056; student 3,055.
+
+| Reference file | Scope | Contacts | Distinct contacted tiles | (a) references added / tiles turning positive | (b) tiles turning positive | (d) tiles removed (of which positive / negative) |
+|---|---|---:|---:|---|---:|---|
+| r2 | map content | 32 | 26 | 32 / 11 | 11 | 52 (41 / 11) |
+| r2 | + ambiguous | 50 | 41 | 50 / 17 | 17 | 85 (68 / 17) |
+| best-available | map content | 32 | 26 | 32 / 11 | 11 | 52 (41 / 11) |
+| best-available | + ambiguous | 50 | 41 | 50 / 17 | 17 | 85 (68 / 17) |
+| canonical r50 | map content | 33 | 27 | 4 / **0** | **0** | 53 (53 / 0) |
+| canonical r50 | + ambiguous | 53 | 41 | 23 / 4 | 4 | 82 (78 / 4) |
+| student-reviewed | map content | 33 | 27 | 33 / 11 | 11 | 53 (42 / 11) |
+| student-reviewed | + ambiguous | 49 | 39 | 49 / 15 | 15 | 79 (64 / 15) |
+| student | map content | 35 | 27 | 35 / 11 | 11 | 53 (42 / 11) |
+| student | + ambiguous | 50 | 39 | 50 / 15 | 15 | 79 (64 / 15) |
+
+Option (c), frame-wide containment, turns **333** tiles positive on r2
+(333 on best-available, 324 on canonical, 325 on each student file), of
+which only 11 (0 on canonical) are map-content contacted tiles; the rest
+come from references lying in other sheets' padding, the class of error
+D73 (2) removed on the GS.
+
+Reading the table: (a) and (b) move the same tiles here, because a tile
+the contact reaches either already holds one of its own sheet's
+references or does not; they differ in what else they change ((a) adds
+references, so recall's denominator; (b) changes matching). On r2, 15 of
+the 26 contacted tiles are already positive from their own sheet's
+references, so 11 tiles move.
+
+**The canonical r50 lead, checked.** All **24** of canonical r50's
+student–phantom cross-sheet pairs within 50 m are map-content contacts:
+in each, the student reference on one sheet lies on the map content of a
+tile of the phantom's sheet (distances 3.1–39.5 m, listed in the `.txt`).
+So the r50 review already digitised the neighbouring sheet's copy for 29
+of its 33 map-content contacts, which is option (a) in effect; r2, the
+best-available file, and the student files carry no `phantom` layer (r2's
+layers are `student` 4,726, `extension` 278, `audit` 14 by `gt_id`
+prefix).
+
 ## 3. Field schema (partial; stopped before completion)
 
 Read before the stop, from `scripts/evaluate_detections.py` and
