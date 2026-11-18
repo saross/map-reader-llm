@@ -30,7 +30,7 @@ TESTS="tests/test_perfect_detector.py tests/test_tile_join_wave1_audit.py"
 fail() { echo "SENTINEL FAILED: $*"; exit 1; }
 
 rm -rf "$DEST"; mkdir -p "$DEST/inputs"
-cp -r "$SRC/scripts" "$SRC/tests" "$SRC/results" "$DEST/"
+cp -r "$SRC/scripts" "$SRC/tests" "$SRC/results" "$SRC/data" "$SRC/configs" "$DEST/"
 cp -r "$SRC/inputs/vectors" "$DEST/inputs/"
 cp "$SRC/pytest.ini" "$SRC/ruff.toml" "$SRC/config.py" "$DEST/"
 [ "$(find "$DEST" -type l | wc -l)" -eq 0 ] || fail "symlinks in the copy"
