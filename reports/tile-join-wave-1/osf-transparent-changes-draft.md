@@ -1,7 +1,7 @@
 # OSF transparent-changes record: tile-level classification (draft)
 
-> **Last revised**: 2026-11-18 (revised on Astra's cross-model review; the
-> 55-map seam stop added). See [§ Changelog](#changelog) for revision
+> **Last revised**: 2026-11-19 (the 55-map seam bullet made precise on
+> Astra's second review). See [§ Changelog](#changelog) for revision
 > history.
 
 ## Draft status (not part of the postable text)
@@ -115,8 +115,8 @@ no map content at those points. A frame-wide rule would mark those tiles as
 holding mounds that no model was shown. Each reference mound records one
 sheet, and the same sheet attribution is already used to match detections
 to references. This finding is specific to the Era-2 frame: on the larger
-55-map corpus some mounds are printed on both sides of a sheet seam (see
-Limits).
+55-map corpus, at least some mounds are printed on both sides of a sheet
+seam (see Limits).
 
 ### When, and what was known
 
@@ -159,9 +159,13 @@ were found after the third decision, on 18 November 2026.
 
 ### What is and is not affected
 
-- **Not affected**: the point estimates of symbol-level F1, precision, and
-  recall, the registered primary outcome. Mounds are matched to references
-  by location on each map before any tile is consulted.
+- **Not affected by the change of tile rule**: the point estimates of
+  symbol-level F1, precision, and recall, the registered primary outcome,
+  with the reference mounds held fixed. Mounds are matched to references by
+  location on each map before any tile is consulted. If the pending 55-map
+  seam ruling (see Limits) corrects the reference, that correction's effect
+  on these estimates is a separate change, disclosed with its own timing,
+  and the results before and after it are both kept.
 - **Affected**: tile-MCC, tile-F1, sensitivity, and specificity (the
   secondary outcome). The rule used for them is invalid for merged output.
   The numerical effect must be measured for each condition; a condition's
@@ -196,15 +200,27 @@ claims restated or withdrawn, each with its repository path.]
   consistent with digitising each sheet separately, but does not prove
   that no mound is printed on two sheets.
 - On the larger 55-map corpus, the equivalent check, run on 18 November
-  2026 on revision r2 of the 55-map reference (erratum E84), found 32
-  contacts between a reference mound and a neighbouring sheet's tile
-  that fall on that tile's map content rather than its black no-data
-  padding (26 reference mounds, at nine sheet seams). For these, the
-  neighbouring sheet's printed copy of the mound was not digitised, so a
-  correct detection of it would count as a false positive under
-  sheet-specific scoring. The work stopped, and the PI's ruling on how
-  such seams are scored is pending. [TO FILL: the ruling; any change it
-  makes to the 55-map reference or to the estimand; and whether it was made
+  2026 on revision r2 of the 55-map reference (erratum E84), found
+  reference mounds whose positions fall on a neighbouring sheet's map
+  content, rather than its black no-data padding, with no reference on
+  that neighbouring sheet nearby: 32 such contacts (26 reference mounds),
+  at nine sheet seams, none within 50 m of a reference on the contacted
+  sheet. The check detects map content, not mound symbols, and neighbouring
+  sheets are slightly misregistered at these seams. Visual inspection of
+  two examples confirmed a printed mound symbol on the neighbouring sheet
+  in both; the remaining candidates have not been adjudicated. This shows
+  that the padding-only rationale given under "Why this reading" cannot be
+  generalised to the 55-map corpus. The two outcomes are affected
+  differently. At symbol level, a correct detection of a neighbouring
+  sheet's printed copy has no reference on its own sheet to match and
+  could count as a false positive. At tile level, a tile counts as a false
+  positive only if it holds no reference of its own sheet at all: counting
+  these contacts as references would change 11 tile labels, not one per
+  contact. The work stopped. The remaining candidates and any reference
+  correction need adjudication, and the PI's ruling is pending. [TO FILL:
+  the ruling; any change it makes to the 55-map reference or to the
+  estimand, and, for a reference change, its effect on symbol-level F1,
+  precision, and recall as a separate component; and whether each was made
   before or after any sheet-specific 55-map result was computed.]
 
 ### Where the full record is
@@ -231,6 +247,25 @@ In the study's public repository (`saross/map-reader-llm` on GitHub):
 ---
 
 ## Changelog
+
+### 2026-11-19 — Seam bullet made precise, on Astra's second review
+
+Trigger: Astra's review of `652786ae8..87d3dfc47`
+(`~/agent-mail/codex/outbox/claude/20261118T130721Z-astra-e93-seam-paragraph-review.md`),
+which found the earlier corrections addressed and the new seam text in
+need of two distinctions. Checked against
+`reports/tile-join-wave-1/dry-run.md` § 2.2 and the stop record § 2, on
+branch `tile-join-wave-1-w10`.
+
+| Passage | Before | After |
+|---|---|---|
+| Limits, 55-map check | the neighbouring copy "was not digitised" for all 32 contacts, and a correct detection "would count as a false positive" | measured proximity (none within 50 m), two examples confirmed by eye, the rest unadjudicated; symbol-level and tile-level effects stated separately (11 tile labels, not one per contact) |
+| What is and is not affected | symbol-level point estimates "Not affected" | not affected by the change of tile rule, with the reference held fixed; a reference correction would be a separate, separately timed change, with both results kept |
+| Why this reading | "some mounds are printed on both sides" | "at least some mounds are printed on both sides" |
+
+Not changed: E1 to E3 of the first review, the registration excerpt, and
+every other placeholder. Not posted. Commit: this entry's commit on
+`tile-join-wave-1-w13`.
 
 ### 2026-11-18 — Revised on Astra's review; the 55-map seam stop added
 
