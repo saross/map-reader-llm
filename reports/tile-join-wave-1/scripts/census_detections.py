@@ -57,13 +57,41 @@ def detection_files(rec: dict[str, Any], root: Path) -> list[Path]:
     if rec.get("detections_dir"):
         paths.append(rec["detections_dir"])
     files: list[Path] = []
+    declared_dir = bool(rec.get("detections_dir"))
     for p in paths:
         path = Path(p) if Path(p).is_absolute() else root / p
         if path.is_dir():
-            files.extend(sorted(path.rglob("*.geojson"))[:MAX_FILES])
+            files.extend(resolve_dir(path, rec.get("glob") if declared_dir else None))
         elif path.exists():
             files.append(path)
     return files
+
+
+def resolve_dir(path: Path, glob_pattern: str | None) -> list[Path]:
+    """Resolve a detection directory as the scorer does.
+
+    A recorded ``--glob`` wins; otherwise the canonical pass resolver
+    (``scripts.lib_detection_paths.resolve_pool_passes``, the scorer's own,
+    imported read-only) is used, falling back to every GeoJSON if it
+    refuses. This mirrors ``evaluate_detections.find_detection_files`` and
+    the D22 rule that a glob recorded for a recovered source is ignored.
+
+    Args:
+        path: Detection directory.
+        glob_pattern: Recorded glob, or None.
+
+    Returns:
+        Up to :data:`MAX_FILES` files.
+    """
+    if glob_pattern:
+        return sorted(path.glob(glob_pattern))[:MAX_FILES]
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+        from scripts.lib_detection_paths import resolve_pool_passes  # noqa: PLC0415
+        found = resolve_pool_passes(path, allow_multiple=True)
+    except Exception:  # noqa: BLE001 (any refusal falls back to the listing)
+        found = []
+    return (found or sorted(path.rglob("*.geojson")))[:MAX_FILES]
 
 
 def file_facts(path: Path) -> dict[str, Any]:
