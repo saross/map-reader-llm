@@ -356,11 +356,12 @@ worklist, ledger and gates. They were left unpinned because pinning them to
 correct only for a deliberate replay. Wave 2's specification should decide,
 per launcher, whether it becomes the corpus driver, is pinned to replay, or is
 retired; until then none should be run.
-`analyse_null_exemplar_sensitivity.py` launches `evaluate_detections.py`
+`analyse_null_exemplar_sensitivity.py` launched `evaluate_detections.py`
 with no join flag while its output states `"tile_join": "id (name-based),
-the published convention"` (line 1495), which a re-run would now make false;
-it belongs on the same Wave 2 list. Its in-process calls are pinned
-(second-order table).
+the published convention"`, which a re-run would have made false. Its
+command now names `--tile-join id --count-table-join id` (commit after
+`387b4a28f`, with this note), and its in-process calls are pinned
+(second-order table), so it is a pinned deferred site, not a launcher.
 
 ## Changelog
 

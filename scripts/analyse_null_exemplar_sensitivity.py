@@ -674,6 +674,12 @@ def score_command(entry: dict[str, Any], bounds_reduced: str,
         "--bootstrap", str(BOOTSTRAP),
         "--seed", str(SEED),
         "--mcc",
+        # Wave 1 (2026-11-18): this analysis reports its tiles under the
+        # legacy name join (its output says so), and the scorer's defaults
+        # are now the sheet joins, so the legacy rules are named explicitly
+        # until Wave 2/3 migrates it
+        # (reports/tile-join-wave-1/consumer-dispositions.md).
+        "--tile-join", "id", "--count-table-join", "id",
         "--output-dir", str(out_dir),
         "--label", entry["slug"],
     ]
