@@ -1,29 +1,30 @@
 # Tile-join resolution — decision record and execution plan
 
-> **Last revised**: 2026-11-18 (gate R round 1: Astra's review and the
-> PI's rulings D73). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-18 (gate R round 2: Astra accepts the
+> direction; wording fixes; new target). See [§ Changelog](#changelog) for
+> revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), main session S167 on zbook, with the principal
   investigator (PI); revised in S168 on amd-tower. Every figure below was
   re-read from the files named beside it, on `main` at `c33c1463d` (S167)
-  or `73f74e9af` (S168), before it was written here.
+  or `73f74e9af` and `dce74be05` (S168), before it was written here.
 - **Status**: rulings **D72 (1)–(4)**, as revised by **D73 (1)–(7)**
-  (`planning/pi-decisions-2026-09-20.md`). Gate R round 1 is closed:
-  Astra's review is answered in § 7. **Waiting on Astra's round-2 review
-  of this revision and of the Wave 1 specification before Wave 1
-  launches.** Nothing has been re-scored, and no committed result has
-  changed.
-- **Target**: the original target (all data and results settled, and the
-  write-up begun, by 2026-11-08) passed during a pause in the work. The PI
-  has not yet set a new one.
+  (`planning/pi-decisions-2026-09-20.md`). **Gate R is closed**: Astra
+  accepted the revised methodological direction in round 2 (§ 7), and the
+  PI approved this revision. Wave 1 waits only on the PI's approval to
+  launch its specification. Nothing has been re-scored, and no committed
+  result has changed.
+- **Target**: all data and results settled, and the write-up begun, by
+  **Sunday 2026-11-22** (PI, 2026-11-18). The original 2026-11-08 target
+  passed during a pause in the work.
 
 ## 0. The decision in one paragraph
 
 The published tile join (`id`, S153 ruling 6) gives a **perfect** detector
-a tile-level Matthews correlation coefficient (tile-MCC) of **0.8711**
-instead of 1.0, whenever the detector merges duplicates, as every consensus
-and verified cell does. Here is why. A merged point's `source_tile` is the
+whose duplicates are merged, as every consensus and verified cell's are, a
+tile-level Matthews correlation coefficient (tile-MCC) below 1.0. On the
+Era-2 fixture of § 2.1 it is **0.8711**. Here is why. A merged point's `source_tile` is the
 alphabetically first of the tiles it was seen on, while a reference mound
 counts in every tile it lies in. On our overlapping frames, a mound seen
 on two tiles can therefore leave a false-negative tile that the pipeline
@@ -36,23 +37,33 @@ acceptable. The PI ruled (D72, as revised by D73 after Astra's review):
   specificity) moves to **containment within each sheet**: a tile is
   reference-positive if one of *its own sheet's* gold-standard (GS) mounds
   lies in it, and detected if a detection scoped to *its own sheet* lies
-  in it (D72 (1), D73 (2); § 2.6);
+  in it (D72 (1), D73 (2); § 2.6). A reference's sheet is the one the
+  scorer's existing resolver reads (`reference_map_column`: `Map` in the
+  GS, `source_map` in the 55-map ground truth); a detection's is the one
+  D50's `DetectionScope` chose;
 - **(2)** the per-tile count tables behind F1's bootstrap intervals and
   tile-swap permutation tests book each outcome once, to the nearest-centre
-  tile **of the detection's scoped sheet** (references: their recorded
-  sheet), as false negatives already are (D72 (2), D73 (2));
+  tile, among the tiles that contain the point, **of its own sheet** (D72
+  (2), D73 (2)). Matched and false-positive detections already go to a
+  nearest-centre tile under `geometric-primary`, and unmatched references
+  (false negatives) already do under every join
+  (`_assign_refs_to_primary_tiles`), but all of them choose among the
+  whole frame's tiles today (`scripts/lib_advanced_metrics.py:2960–2975`,
+  `:3005–3011`); the correction restricts the candidates of all three to
+  the point's own sheet;
 - **(3)** the paper-cited artefacts are re-scored first, but a run does
   not stop at that subset if it can carry on;
-- **(4)** Astra reviews this record before compute is spent (round 1
-  closed 2026-11-18, § 7; round 2 requested);
+- **(4)** Astra reviews this record before compute is spent (rounds 1
+  and 2 closed 2026-11-18, § 7);
 - **(5)** the change is disclosed as a clarification made after results
   were known, by erratum E93 plus a dated transparent-changes record on
   the Open Science Framework (OSF) project (D73 (1); § 2.2);
 - **(6)** a spatial-block resampling check is required, on both corpora,
   before any affected significance claim is finalised (D73 (3); § 5).
 
-Symbol-level F1, precision and recall, the registered primary outcome, are
-not touched by any of this (§ 2).
+The **point estimates** of symbol-level F1, precision and recall, the
+registered primary outcome, are not touched by any of this. Their
+intervals and tests, and any hypothesis decided on them, are (§ 2.3).
 
 ## 1. The defect, stated once
 
@@ -115,7 +126,7 @@ that the fix simply undid.
 
 | Result | Status | Basis |
 |---|---|---|
-| Symbol-level F1, precision and recall (primary outcome, every hypothesis decided on F1) | **untouched** | matched per map by Hungarian assignment on geometry, "before any tile is consulted" (`lib_advanced_metrics.py:2899`) |
+| Symbol-level F1, precision and recall **point estimates** (primary outcome) | **untouched** | matched per map by Hungarian assignment on geometry, "before any tile is consulted" (`lib_advanced_metrics.py:2899`). Their intervals and tests, and every hypothesis decided on them, are in the next rows |
 | Tile-MCC, tile-F1, sensitivity, specificity (secondary outcome) | **an invalid rule for merged output; each cell's effect must be measured** | § 1. Another detection may already make an overlapping tile positive, so the defect need not move every cell, and 117 multiply contained references do not imply 117 false-negative tiles (Astra, R1) |
 | F1, precision and recall bootstrap intervals and means, tile-swap permutation p-values, tiers, F1 Hsu sets | **unknown** | point estimates exact (each object booked once); the spread of counts over tiles follows the name rule for TP/FP, so the null distributions may move. Reassignment can make tests anti-conservative, not only noisier (Astra, R3; § 5) |
 | Coverage diagnostics and the interval-reliability flags (`coverage`, `coverage_status`, `sparse_coverage`, `ci_unreliable`, `ci_excludes_point`, and their summary roll-ups) | **may flip** | derived from the same per-tile count table (`TILE_JOIN_WITHHELD_QUANTITIES`, `scripts/lib_advanced_metrics.py:178–189`; Astra, R4) |
@@ -178,22 +189,31 @@ GS was made and on what the other sheet's tile shows.
 `sheet_boundary_check.txt`) imports nothing from the scorer and answers
 both, on the Era-2 frame:
 
-- **The GS is digitised per sheet, and no mound appears twice.** Its 569
-  references each carry one `Map` (Elenovo 217, Rakovski 196,
-  K-35-052-4 136, Lesovo 20). No reference has a reference from a
-  different sheet within 1 km; the closest cross-sheet pair is 1,313.0 m
-  apart.
-- **Every cross-sheet contact is no-data padding.** All 15 references that
-  lie inside another sheet's tile are Elenovo mounds in K-35-052-4's last
-  column of tiles (`x4032`), at pixel columns 134–299. Two of those tiles
-  were inspected (`inputs/tiles_384/K-35-052-4_32635/K-35-052-4_32635_x4032_y672.png`,
+- **Each GS reference records one sheet, and no cross-sheet pair lies
+  close together.** Its 569 references each carry one `Map` (Elenovo 217,
+  Rakovski 196, K-35-052-4 136, Lesovo 20). No reference has a reference
+  from a different sheet within 1 km; the closest cross-sheet pair is
+  1,313.0 m apart. This is consistent with per-sheet digitising, but does
+  not by itself prove that no mound is printed on two sheets: a
+  deduplicated geographical catalogue would look the same (Astra, round
+  2). The second finding is what settles the Era-2 frame.
+- **Every cross-sheet contact on the Era-2 frame is no-data padding.** All
+  15 references that lie inside another sheet's tile are Elenovo mounds in
+  K-35-052-4's last column of tiles (`x4032`), at pixel columns 134–299.
+  Two of those tiles were inspected by eye
+  (`inputs/tiles_384/K-35-052-4_32635/K-35-052-4_32635_x4032_y672.png`,
   `…_x4032_y1680.png`): the map ends near column 115 and 105 respectively,
-  and the rest is black.
+  and the rest is black. Astra's independent probe confirmed every
+  contact: 16 point–tile contacts across five tiles (one reference lies in
+  two), and at each one the four pixels around the point are RGB (0, 0, 0)
+  (`~/agent-mail/codex/reviews/tile-join-round-2-2026-11-18/tile-join-round2-probe.json`).
 
 A frame-wide ("mosaic") join therefore makes K-35-052-4's edge tiles
 reference-positive for mounds that no model was shown. That is the same
 class of error D72 removes, so the PI ruled sheet-specific semantics
-(D73 (2)). It also gives tile outcomes and symbol matching one definition
+(D73 (2)). The same probe's independent expectation for the perfect
+detector under sheet-specific containment is 224 reference-positive and
+263 reference-negative tiles, and MCC 1. It also gives tile outcomes and symbol matching one definition
 of where a mound is, since D50 already matches per sheet, and it is immune
 to the misregistration seen on the 55-map frame, where the same ground
 appears on neighbouring sheets about 170 m apart (§ 2.4). It does not add
@@ -290,7 +310,7 @@ calls throughout.
 | **1** | § 4 code and tests; erratum draft; Wave 2 driver dry-run. **Smoke test:** re-score five representative evaluations (an Era-2 board cell, a K-ladder 55-map rung, an Era-1 512 px cell, a grid cell, a replicate-mean cell) plus the three withheld 3.7 cells. Runs unattended from launch to M1, stopping only on a problem (D73 (7)) | G1 (Wave 1 spec § 4): F1/P/R byte-identical; legacy replay reproduces each pass; sheet-specific tile-MCC differs from the historical contains reading only on cross-sheet tiles, each difference explained; tier-1 green | **M1**: PI reviews the smoke results and the 3.7 cells' eligibility outcome |
 | **2** | Corpus re-score. 2,646 committed `evaluation.json` files (exact basename) carry tile tables, 33 of them under `archive/` (`git ls-files`; Astra, S5). Paper-cited first (cited by the register's signed rows or `docs/paper/`), then the rest, in one run, from an explicit worklist with a status and reason per file. Re-emit `tile_classification` **and** every per-tile-table-derived field (F1, precision and recall intervals and means, coverage diagnostics and flags), surgically, on the `scripts/rescore_tile_mcc_e81.py` pattern. Live `results/` files are re-scored in place; `archive/` and frozen historical artefacts get labelled corrected counterparts instead (D73 (5)) | G2: every non-target field byte-identical (the E81 guards); point F1/P/R identical; legacy replay first, under each file's recorded rule; differences from the historical board and K-ladder contains readings confined to cross-sheet tiles; a reconciled success/refusal/skip/failure ledger | **M2**: PI reviews the ledger summary (ΔMCC distribution, any interval or guard failure = stop) |
 | **3** | Regenerate downstream: tierings (F1 permutation on the new count tables, MCC on sheet-specific classification), Hsu sets, boards, K-ladder tables, leaderboards, manifests, register renderings. Families recomputed with the 3.7 cells admitted by the D73 (4) rule, and the fixed-old-family comparison shown beside them | G3: a flip report: every F1 significance, tier or admissible-set change, and every MCC claim's new reading | **M3**: PI reviews the flip report and wave S |
-| **S** (required, D73 (3)) | Spatial-block resampling check on **both** corpora: paired tests and intervals, MCC included, with blocks of contiguous tiles inside one sheet. The block rule (candidate edges, the basis for choosing them, and which size is headlined) is fixed and reviewed before any result is seen; sheet blocks are an extra check on the 55-map corpus. Limits stated: adjacent blocks still touch, and small frames give fewer blocks | its block rule reviewed by Astra before it runs | **M3**: no affected significance claim is finalised until S has reported; a claim it cannot support is qualified or withdrawn |
+| **S** (required, D73 (3)) | Spatial-block resampling check on **both** corpora: paired tests and intervals, MCC included, with blocks of contiguous tiles inside one sheet; sheet blocks are an extra check on the 55-map corpus. Its own reviewed specification freezes, before any result is seen (Astra, round 2): (i) the eligible cells, comparisons, families, buffers, frames, joins, and estimands, including whether each statistic is pooled or averaged over runs; (ii) block construction in physical coordinates (origin, orientation, candidate sizes and their rationale, sheet restriction, partial blocks and holes) and a deterministic tile-to-block map shared across compared conditions; (iii) the primary size and the sensitivity sizes, chosen without consulting significance or interval widths, and related to tile overlap, matching distance, and plausible spatial dependence; (iv) the randomisation and bootstrap units, any sheet stratification, shared draws, interval method, seeds, draw counts, and the handling of selection (repeated inside each resample where selection is part of the procedure) and multiplicity; (v) rules for too few informative blocks, degenerate MCC resamples, attainable permutation resolution, and conflicting sensitivity results, including when a claim is qualified or withdrawn. It reports the actual block counts and sizes per frame. Limits stated: neighbouring blocks still share dependence, adjoining sheets may portray the same ground, and a favourable check shows robustness to the specified design, not that every assumption holds | its specification reviewed by Astra before it runs | **M3**: no affected significance claim is finalised until S has reported; a claim it cannot support is qualified or withdrawn |
 | **4** | Restate claims. The worklist is built by searching the dependency and claim records, not from this list alone (Astra, R4): the 21 signed MCC rows (`frame_census.txt`), Obs 482, Obs 513, R6-18, R3-12, R3-13, R3-14 / R6-17, the K-ladder findings §§ 4.1, 4.3, 7.2, 8.2, 8.4, 8.6, MCC leader identity, modality comparisons (`claims.iv` and `claims.v` in `results/tile-join-audit/era2-board-mcc-tiering-2026-10-30/summary.json`), "no significant rise" statements, uncertainty and coverage claims, selection-aware conclusions, any F1 claim Wave 3 or S flips, and the D71 held items; erratum E93 and the OSF record finalised | G4: drift checks green; markdownlint and tier-1 green; any skipped paper-cited artefact blocks an "all settled" verdict | **M4**: PI re-signs rows; write-up starts |
 
 ## 6. Questions for the review (gate R, round 1, as sent on 2026-11-01)
@@ -315,7 +335,9 @@ Kept as asked, so § 7's answers can be read against them.
 6. Are gates G1–G4 sufficient, and is anything missing from Wave 4's
    claim list?
 
-## 7. Gate R round 1: Astra's review and its dispositions
+## 7. Gate R: Astra's reviews and their dispositions
+
+### Round 1
 
 Astra (GPT, OpenAI Codex, Astra lane) reviewed this record at
 `4b7411c9e` and the Wave 1 specification at `4d3300e9b`, separately and
@@ -335,7 +357,7 @@ requested**. The PI ruled on 2026-11-18 (D73).
 | R5: admit the repaired cells by a fixed eligibility rule | Adopted (D73 (4)); § 4 item 3, Wave 3 |
 | S1–S6 (Wave 1 specification) | Accepted; answered in the specification's revision of 2026-11-18. S1, S3, and S4 corrected errors in the specification |
 
-**Round 2 questions** (for Astra's re-review of this revision):
+**Round 2 questions** (sent 2026-11-18 at `dce74be05`):
 
 1. Does the sheet-specific definition (§ 0 (1)–(2), § 2.6) answer R2? In
    particular, is it right for detections to take their sheet from D50's
@@ -346,7 +368,44 @@ requested**. The PI ruled on 2026-11-18 (D73).
    overstate?
 4. Is anything in round 1 left unanswered?
 
+### Round 2: Astra's review and its dispositions
+
+Review:
+`~/agent-mail/codex/outbox/claude/20261118T050438Z-astra-tile-join-round-2-review.md`;
+independent probe:
+`~/agent-mail/codex/reviews/tile-join-round-2-2026-11-18/`. Verdict on this
+record: **accept the revised methodological direction** (a design verdict,
+not implementation certification or launch approval). Verdict on the Wave
+1 specification: focused changes before unattended launch (answered in its
+§ 10). The PI approved the resulting revision on 2026-11-18. Astra stated
+that no further exchange is needed.
+
+| Finding | Disposition |
+|---|---|
+| Q1: yes, with references read through the existing resolver (`Map` or `source_map`) and the same tile-sheet catalogue as symbol matching | Adopted; § 0 (1) |
+| Wording: 0.8711 belongs to the Era-2 fixture; false negatives are booked frame-wide today; "untouched" means point estimates | Adopted; § 0, § 2.3 |
+| One sheet per reference and no nearby pair do not by themselves prove single printing | Adopted; § 2.6 states the evidence narrowly, and the 55-map check and its stop stay |
+| Q2: wave S is adequate as a required gate, not yet as a resampling specification; five things to freeze | Adopted; wave S row of § 5 |
+| Q3: the disclosure requirement is adequate; the OSF draft must supply the details | Noted; Wave 1 W1.3, PI approval of the text |
+| Q4: nothing left unanswered at record level; implementation obligations remain due in their waves | Noted |
+
 ## Changelog
+
+### 2026-11-18 — Gate R round 2 answered; target reset (S168, amd-tower)
+
+Trigger: Astra's round-2 review (§ 7) and the PI's approval of this
+revision and new target. Wording and scope only; no ruling changed.
+
+| Item | Before | After |
+|---|---|---|
+| Gate R | round 2 requested | closed |
+| § 0's 0.8711 | attached to merged detectors generally | the Era-2 fixture's value |
+| § 0 (2) | "as false negatives already are" | states that all three outcome types choose among the whole frame's tiles today, and that the correction restricts all three |
+| Reference sheet | `Map` | the existing resolver's column (`Map` or `source_map`) |
+| "Untouched" (§ 0, § 2.3) | F1, precision, recall | their point estimates |
+| § 2.6 | "no mound appears twice" | evidence stated narrowly; Astra's 16-contact pixel check added |
+| Wave S | block rule fixed before results | five items frozen in its own reviewed specification |
+| Target | not reset | Sunday 2026-11-22 |
 
 ### 2026-11-18 — Gate R round 1 answered (S168, amd-tower)
 

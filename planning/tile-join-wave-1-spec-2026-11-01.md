@@ -1,7 +1,7 @@
 # Tile-join Wave 1 — specification (code, tests, erratum draft, dry-run, smoke test)
 
-> **Last revised**: 2026-11-18 (revised for Astra's gate R review and the
-> PI's rulings D73). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-18 (gate R round 2: Astra's focused changes
+> applied). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), session S168 on amd-tower. Every path, count, line
@@ -13,11 +13,14 @@
 - **Parent**: `planning/tile-join-resolution-2026-11-01.md` (the decision
   record; this document specifies its § 4 and the Wave 1 row of its § 5).
   Rulings: D72 and D73 in `planning/pi-decisions-2026-09-20.md`.
-- **Status**: **DRAFT, revised after gate R round 1.** Astra's round-1
-  review
-  (`~/agent-mail/codex/outbox/claude/20261101T225231Z-astra-tile-join-record-and-wave1-review.md`)
-  requested changes; every finding is answered in § 10. **Blocked on
-  Astra's round-2 review and then on the PI's approval to launch.**
+- **Status**: **DRAFT, revised after gate R rounds 1 and 2.** Astra's
+  reviews
+  (`~/agent-mail/codex/outbox/claude/20261101T225231Z-astra-tile-join-record-and-wave1-review.md`,
+  `…/20261118T050438Z-astra-tile-join-round-2-review.md`) are answered in
+  § 10; the PI approved this revision on 2026-11-18. **Gate R is closed.
+  Blocked only on the PI's approval to launch (P2).**
+- **Target**: all data and results settled, and the write-up begun, by
+  **Sunday 2026-11-22** (PI, 2026-11-18).
 - **Runs on**: zbook, **unattended from launch to M1, stopping only on a
   problem** (D73 (7); § 5). **Zero API calls.**
 
@@ -39,7 +42,7 @@ the cost of the corpus re-score before anyone commits to it.
 
 | # | Precondition | How it is checked |
 |---|---|---|
-| P1 | Gate R closed: Astra's round-2 review delivered, the PI has ruled on it, this document revised accordingly | the review's path and the PI's ruling recorded in § Changelog |
+| P1 | Gate R closed: Astra's round-2 review delivered, the PI has ruled on it, this document revised accordingly | **met 2026-11-18** (§ 10, § Changelog) |
 | P2 | The PI approves this specification for launch | stated in conversation; recorded in § Changelog |
 | P3 | zbook's `.venv` still matches the reference environment | `uv pip freeze` equals `requirements-lock.txt`; tier 1 passes at the reference count before any change (`docs/agent-guidance.md`, "Reference environment") |
 | P4 | zbook's checkout is on `origin/main`, clean, 0 behind | `git fetch && git status -sb` |
@@ -159,6 +162,13 @@ Read-only. Output: `reports/tile-join-wave-1/dry-run.md` and
   allows. The 55-map cell (8,541 tiles) is timed separately.
 - **Smoke paths.** Select and pin cells 3–5 (§ 6) before the smoke launch,
   recording why each qualifies.
+- **The 3.7 eligibility table** (Astra, round 2). Before any corrected
+  result exists, record one row per (cell, family) pair for the three W1.4
+  cells. Each row cites the family's existing inclusion criteria and the
+  committed exclusion evidence, and gives the verdict the W1.4 rule
+  produces. A missing or ambiguous exclusion record makes the row
+  **unresolved**, which stops the wave (§ 5); it is never resolved by
+  looking at the new score. Output: `reports/tile-join-wave-1/withheld-37.md`.
 
 ### W1.1 Two sheet-specific joins, two defaults, and replay
 
@@ -168,16 +178,50 @@ In `scripts/lib_advanced_metrics.py`:
   unambiguous (the names below are proposed; Astra's round 2 may amend
   them):
   - `sheet-contains`, for classification: a tile is reference-positive if
-    a reference whose `Map` is the tile's sheet lies in it, and detected if
-    a detection scoped to the tile's sheet lies in it;
+    a reference recorded on the tile's sheet lies in it, and detected if a
+    detection scoped to the tile's sheet lies in it;
   - `sheet-primary`, for count tables: each matched or unmatched detection
-    is booked once, to the nearest-centre tile among *its scoped sheet's*
-    tiles; each unmatched reference to the nearest-centre tile among *its
-    recorded sheet's* tiles.
+    is booked once, and each unmatched reference once. The candidates are
+    the tiles **of the point's own sheet that the point intersects**,
+    using the shared scope's `intersects` predicate, so a point on a shared
+    edge is a candidate for both neighbours. Among them the nearest
+    centroid wins, and an exact tie goes to the lexicographically smallest
+    `tile_name`, so the result does not depend on input order (Astra,
+    S2.3). This is the existing `geometric-primary` construction
+    (`lib_advanced_metrics.py:2960–2975`) restricted to one sheet;
+    historical tie behaviour is left untouched for replay.
+- **A reference's sheet is read through the existing resolver,**
+  `reference_map_column` (`lib_advanced_metrics.py:2405–2427`): `Map` in
+  the GS, `source_map` in the 55-map ground truth (Astra, S2.2). Tile
+  sheets come from the same catalogue the per-sheet symbol matching uses
+  (`_attribute_rows`, from `:1936`; the per-sheet loop, from `:2440`).
+  Nothing re-derives a sheet from an alphabetical member or a separate
+  name parser.
 - **A detection's sheet is the one `DetectionScope` already chose for
-  matching** (D50; `lib_advanced_metrics.py:2051`). Do not substitute
-  `assign_primary_tiles_on_origin_sheet` (`:2678`) blindly: its choice
-  among several origins must agree with the scope.
+  matching** (D50; `lib_advanced_metrics.py:2051`), taken from its
+  `detections` and `sheets`, not from the legacy `retained` collection.
+  Do not substitute `assign_primary_tiles_on_origin_sheet` (`:2678`)
+  blindly: its choice among several origins must agree with the scope.
+- **An in-frame detection with no attributable sheet** (Astra, S2.1). Today
+  the classification path scopes with `require_attribution=False` and
+  books `scope.retained` across the whole frame (`:4991–5013`), so a
+  non-empty input without origin columns has frame-wide occupancy and no
+  scoped sheet. Under a sheet join this case gets a **named refusal**
+  (`tile_join_unattributed_detection`), reported with its count and
+  diagnostics, never a silent drop and never a frame-wide booking:
+  - a detection with no `source_tiles` list but a valid `source_tile`
+    keeps D50's existing attribution, and is not refused;
+  - legitimate D50 exclusions and parent-frame exclusions stay distinct,
+    each diagnosed under its own name, and are not counted as missing
+    attribution;
+  - the historical joins keep their historical behaviour, and symbol
+    matching is not changed to make any test pass;
+  - any input needing a different policy is an uncovered decision, which
+    stops the wave (§ 5).
+- **The booking invariant counts the sheet-scoped population,** with
+  exclusions reported beside it. Comparing it with the old frame-wide
+  union count would wrongly reject the intended removal of cross-sheet
+  contacts.
 - **Defaults:** `TILE_JOIN_CLASSIFICATION_DEFAULT = "sheet-contains"` and
   `TILE_JOIN_COUNT_TABLE_DEFAULT = "sheet-primary"`.
   **`TILE_JOIN_DEFAULT` is retired** (D73 (6)): every importer fails until
@@ -201,7 +245,8 @@ In `scripts/lib_advanced_metrics.py`:
      metadata — under the explicitly requested rules.
 
   No output may carry an old committed MCC beside newly computed arrays.
-  Contradictory provenance is rejected.
+  Contradictory provenance is rejected. The missing-provenance fallbacks
+  apply to historical inputs only: every new output records its rules.
 - **Provenance written:** every emitted `tile_classification` block records
   `tile_join`; every block whose intervals or coverage come from a count
   table records `count_table_join`; `_metadata` records both, with a
@@ -215,11 +260,19 @@ in every shape the pipeline produces.
 
 - **Frames:** the real Era-2 frame
   (`inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson`) with
-  the GS references, **each scoped to its own `Map`** (the S167 script's
-  alphabetical-first naming picks a different sheet for 15 references, so
-  it proves the classification defect but is not a valid fixture under
-  D50; Astra, S1). Also synthetic overlapping frames with a seam between
-  two sheets and padding beyond one sheet's edge.
+  the GS references, as two **separately named fixtures** (Astra, round
+  2):
+  - `historical_alphabetical`, the S167 construction, where a merged point
+    is named for the alphabetically first containing tile; it picks a
+    different sheet for 15 references, so it proves the classification
+    defect but is not a valid fixture under D50 (Astra, S1);
+  - `sheet_preserving`, where each reference keeps its own sheet. Astra's
+    independent probe expects 224 reference-positive and 263
+    reference-negative tiles under sheet-specific containment, and MCC 1.
+
+  Also synthetic overlapping frames with a seam between two sheets and
+  padding beyond one sheet's edge, each built twice: once with references
+  recording their sheet in `Map`, once in `source_map` (Astra, S2.2).
 - **Merged** (one point per mound): tile-MCC, sensitivity, specificity,
   and symbol F1, precision, and recall are all 1.0 under the new defaults.
 - **Unmerged** (one point per mound and containing tile): tile
@@ -247,9 +300,28 @@ in every shape the pipeline produces.
   - degenerate MCC (TN + FN = 0);
   - and, as a real-data regression, the K-35-052-4 `x4032` edge tiles,
     which must not become positive for Elenovo mounds.
+- **Unattributed detections** (W1.1; Astra, S2.1), each with its expected
+  outcome stated in the test: no origin columns at all (named refusal
+  under a sheet join; historical behaviour under the historical joins); a
+  missing `source_tiles` list with a valid `source_tile` (scored by D50's
+  attribution, no refusal); a D50 exclusion and a parent-frame exclusion
+  (each diagnosed under its own name, neither a refusal).
+- **Tie-break and boundary** (W1.1; Astra, S2.3): a point equidistant from
+  two candidate centroids goes to the smaller `tile_name` whatever the
+  input order; a point on a shared edge is a candidate for both tiles; a
+  sheet tile that the point does not intersect is never a candidate, even
+  if its centroid is nearer.
+- **Replay and provenance regressions** (Astra, round 2): default calls;
+  explicit historical calls; mixed old and new input files; contradictory
+  metadata (rejected); a new output missing provenance (rejected); and the
+  `selection_aware_intervals.py:891–899` branch, whose default path derives
+  MCC indicators from the F1 count arm and must never be labelled as
+  classification-join MCC.
 - **Legacy sentinel:** the merged Era-2 input under `id` gives tile-MCC
-  0.8711 (TP 196, FN 33; `perfect_detector.txt`), pinned so that the defect
-  stays documented.
+  0.8711 (TP 196, FP 0, FN 33, TN 258; `perfect_detector.txt`), pinned so
+  that the defect stays documented. Astra found the same legacy confusion
+  on both fixtures, because the 15 renamed references do not change it;
+  the test asserts that on both.
 - **Red sentinel:** in a real-file copy of `scripts/` and `tests/` (copied,
   never symlinked), set the classification default back to `id`, then
   separately remove the sheet restriction. Confirm the new tests turn red
@@ -314,10 +386,11 @@ re-run once to confirm the result is idempotent.
 
 1. **F1, precision, and recall point estimates byte-identical** in every
    buffer of every smoke cell.
-2. **Legacy replay reproduces** each pass's committed confusion exactly,
-   under its recorded rules, then the declared aggregation. A W1.4 cell's
-   expected refusal counts as a reproduction; any other refusal or drift
-   is fatal.
+2. **Legacy replay reproduces** each pass's committed confusion **and
+   committed intervals** exactly, under its recorded rules, then the
+   declared aggregation. A W1.4 cell's expected refusal counts as a
+   reproduction; any other refusal or drift is fatal. New intervals may
+   change and are ledgered.
 3. **Against the historical contains readings** (cells 1 and 2):
    `sheet-contains` differs from the frame-wide reading only on tiles that
    another sheet's evidence reaches, and every such tile is listed and
@@ -334,7 +407,9 @@ re-run once to confirm the result is idempotent.
 8. **Tier 1 green** on zbook at the reference count plus the new tests;
    `ruff check` and `npx markdownlint-cli2` clean on touched files.
 9. **A fresh-context `/audit`** of the code change has run, and each of
-   its findings is resolved or carries a written disposition.
+   its findings is resolved or carries a written disposition explaining
+   why it is resolved or not blocking. Recording a known blocker is not a
+   pass.
 
 ## 5. Running unattended, and what stops it
 
@@ -343,8 +418,14 @@ is a problem** (D73 (7)). It proceeds through W1.0–W1.5 without
 consultation. Any of the following is a problem: it **stops the wave**,
 and the session sends the PI a push notification and writes up the stop.
 
+- **the failure of any G1 item** (§ 4), including non-target drift, a
+  failed independent reference count, a failed repeatability check, a
+  lint failure, or an unresolved blocking audit finding;
 - a point F1, precision, or recall change;
 - a legacy replay mismatch, or an unexpected refusal;
+- an in-frame detection without an attributable sheet in any smoke cell
+  (the named refusal of W1.1);
+- an unresolved row in the 3.7 eligibility table (W1.0);
 - a sheet-specific difference from the historical reading on a tile that
   no other sheet's evidence reaches;
 - a count-table sum mismatch, overall or per sheet;
@@ -440,7 +521,42 @@ The PI decides:
 | S6: stronger tests, eight cell cases, expected refusals, per-pass replay, pre-Wave-2 requirements | Adopted. W1.2, W1.4, § 4, § 7 |
 | R2 (record): sheet semantics | Sheet-specific, ruled D73 (2). W1.1, W1.2, § 4 item 3 |
 
+**Round 2** (review at `dce74be05`:
+`~/agent-mail/codex/outbox/claude/20261118T050438Z-astra-tile-join-round-2-review.md`).
+Verdict: focused changes requested before unattended launch; the new join
+names and the two-computation replay are sound; no redesign needed. The PI
+approved the revision below on 2026-11-18.
+
+| Finding | Disposition |
+|---|---|
+| S2.1 (P1): define the outcome for an in-frame detection with no attributable sheet | Named refusal under the sheet joins, historical behaviour kept, D50 and parent-frame exclusions kept distinct, expected-outcome tests; the booking invariant counts the sheet-scoped population. W1.1, W1.2, § 5 |
+| S2.2 (P2): references carry their sheet in `Map` or `source_map` | Read through `reference_map_column` and the shared catalogue; fixtures built with each column. W1.1, W1.2 |
+| S2.3 (P2): candidates must intersect the point; deterministic tie-break | Intersecting tiles of the point's own sheet, nearest centroid, smallest `tile_name` on a tie; historical tie behaviour untouched. W1.1, W1.2 |
+| Eligibility made mechanical | A (cell, family) table recorded in W1.0 before corrected results; an unresolved row stops the wave |
+| Replay regressions, including `selection_aware_intervals.py:891–899` | Explicit tests. W1.2 |
+| Historical fallbacks must not license unrecorded new outputs | Stated. W1.1 |
+| Name the historical and sheet-preserving fixtures separately | Done. W1.2 |
+| Failure of any G1 item stops the wave; an audit disposition must explain itself | Added. § 4 item 9, § 5 |
+| Legacy replay includes the committed intervals | Added. § 4 item 2 |
+
 ## Changelog
+
+### 2026-11-18 — Gate R round 2 answered (S168, amd-tower)
+
+Trigger: Astra's round-2 review (§ 10) and the PI's approval of this
+revision. Contract clarifications only; the design and the rulings are
+unchanged.
+
+| Item | Before | After |
+|---|---|---|
+| Gate R (P1) | round 2 pending | met |
+| Detections with no attributable sheet | unspecified ("missing origins" test) | named refusal under the sheet joins, with defined exceptions |
+| Reference sheet | `Map` | `reference_map_column` (`Map` or `source_map`) |
+| `sheet-primary` candidates | the sheet's tiles | the sheet's tiles the point intersects; tie to smallest `tile_name` |
+| 3.7 eligibility | rule only | rule plus a (cell, family) table fixed in W1.0 |
+| G1 item 2 | confusion | confusion and committed intervals |
+| Stop list | eight conditions | adds any G1 failure, unattributed detections, unresolved eligibility rows |
+| Target | not set | Sunday 2026-11-22 |
 
 ### 2026-11-18 — Revised after gate R round 1 (S168, amd-tower)
 
