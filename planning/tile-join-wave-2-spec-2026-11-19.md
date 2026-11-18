@@ -1,15 +1,15 @@
 # Tile-join Wave 2 — specification (the corpus re-score)
 
-> **Last revised**: 2026-11-19 (revised after Astra's round-2 review,
-> R2-1 to R2-4: atomic manifests, identity anchors, keyed sibling cells,
-> bootstrap census). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (revised after Astra's round-3 review:
+> fresh drift checks before `already-done`, published refusals done,
+> superseded anchors; the 24 native-adapter files re-scored through their
+> own engine). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), drafting for session S169 on amd-tower. Every path,
   count, line number, and timing below was read from the file named beside
   it, at these commits:
-  - `main` at `92064b134` (first draft) and `d9f5d6096` (this revision):
+  - `main` at `92064b134` (first draft) and `d9f5d6096` and `3422ba329` (revisions):
     the decision record, the Wave 1 specification, D72 and D73, and
     `scripts/`;
   - branch `tile-join-wave-1-w10` at `89cab15ee` (W1.0's worklist and
@@ -35,7 +35,9 @@
   (`~/agent-mail/codex/outbox/claude/20261118T133843Z-astra-wave2-spec-review.md`,
   "revise before launch approval"; round 2,
   `…/20261118T135814Z-astra-wave2-round2-review.md`, found W2-1, W2-3, and
-  W2-4 addressed and asked for completion details on W2-2 and W2-5;
+  W2-4 addressed and asked for completion details on W2-2 and W2-5; round
+  3, `…/20261118T140800Z-astra-wave2-round3-native-writers.md`, asked for
+  three lifecycle cases and found the native-adapter writers;
   dispositions in § 13); not approved;
   Wave 1 stopped on the seam ruling (Wave 2 cannot launch until M1).** The
   55-map seam handling is an open parameter (§ 4), and this draft takes no
@@ -107,7 +109,7 @@ P2).
    The eight smoke cells have `_metadata.metadata_version` 1.3 or 1.4
    (`wave2_scope_and_cost.txt` § 5). The files in scope also include
    versions 1.0 (5 files) and 1.1 (27). There are also 24 files with no
-   version, which are the 55-map files not written by the scorer. All 761
+   version: the 55-map native-adapter files (§ 5.2). All 761
    paper-cited files are version 1.3 (520), 1.4 (217), or unversioned
    (24). E81's header warns that a full replay "imports every unrelated
    change made to the scorer since the cell was written", such as the E72
@@ -119,10 +121,9 @@ P2).
    newline (`scripts/evaluate_detections.py:1893`). Of the 2,829 worklist
    files, 2,795 equal `json.dumps(json.loads(text), indent=2)` exactly. A
    further 26 differ only by one trailing newline, and 8 differ in other
-   ways. All 8 are 55-map files not written by the scorer: three with no
-   recorded writer and five written by
-   `scripts/compute_corrected_f1_multi_buffer.py`
-   (`wave2_scope_and_cost.txt` § 4). For the other 2,821 files,
+   ways. All 8 are native-adapter views of 55-map files (§ 5.2): three
+   from `register_gemini37_author.py` and five from
+   `register_pass1_adapt.py` (`wave2_scope_and_cost.txt` § 4). For the other 2,821 files,
    re-serialising the parsed document reproduces the file, so the
    structural splice of W2.1 changes only the text it is meant to change
    (W2-5; § 9 item 1).
@@ -132,17 +133,26 @@ P2).
    `version` is non-target in W1.0's schema (`dry-run.md` § 3.3). A
    surgical re-emission must therefore keep the original `version` and
    `timestamp`. It must not call `write_outputs` on the whole document.
-5. **The non-scorer writers are all 55-map and all paper-cited.** The 24
+5. **The non-scorer files are adapted views of a different engine's
+   output** (Astra's round-3 native-writer audit, verified here). The 24
    live files in scope that `evaluate_detections.py` did not write are
-   five under `results/stride55-2026-08-27/`
-   (`compute_corrected_f1_multi_buffer.py`) and 19 with no recorded writer:
-   `results/55maps-extended-gt-2026-06-07/` 8,
-   `results/55maps-standardised-ref-2026-08-14/` 8,
-   `results/gemini37-55map-2026-08-31/` 2, and
-   `results/gemini37-fourth-cell/` 1. Every one is paper-cited
-   (`wave2_scope_and_cost.txt` § 3, "non-scorer writers"). W1.0 did not
-   trace their schemas (`dry-run.md` § 3.4). They fall in phase B, behind
-   the seam ruling, which leaves time to trace them.
+   all 55-map and all paper-cited. Every one records the adapter that
+   wrote it, in `_metadata.adapter` or `_metadata.adapted_by`, even where
+   `script_path` is absent. Every one also records its source, the
+   corrected-F1 engine's native `summary.json` in the same directory:
+   - `scripts/adapt_track2_evals_for_manifest.py`: 8, under
+     `results/55maps-extended-gt-2026-06-07/`;
+   - `scripts/register_standardised_gt_conditions.py`: 8, under
+     `results/55maps-standardised-ref-2026-08-14/`;
+   - `scripts/register_gemini37_author.py`: 3, under
+     `results/gemini37-55map-2026-08-31/` (2) and
+     `results/gemini37-fourth-cell/` (1);
+   - `scripts/register_pass1_adapt.py`: 5, under
+     `results/stride55-2026-08-27/`. These also record `script_path`
+     `scripts/compute_corrected_f1_multi_buffer.py`.
+
+   They are now a disposition of their own, `rescore-native` (§ 3.1,
+   § 5.2). The first draft's "19 with no recorded writer" was wrong.
 6. **The null-exemplar detections are filtered by the name rule.** The 232
    `unresolved-recipe` null-exemplar cells score leak-filtered copies of
    their detections. The filtered files are gitignored. The committed
@@ -184,7 +194,8 @@ by the rules in `wave2_scope_and_cost.py` `disposition()`:
 
 | Disposition | GS | 55-map | No frame | Of which paper-cited | Basis |
 |---|---:|---:|---:|---:|---|
-| `rescore-in-place` | 2,184 | 309 | — | 761 (608 GS, 153 55-map) | `reproducible-legacy` with a tile block or intervals (2,444), plus all 49 `known-withheld` |
+| `rescore-in-place` | 2,184 | 285 | — | 737 (608 GS, 129 55-map) | `reproducible-legacy` with a tile block or intervals and no native adapter (2,420), plus all 49 `known-withheld` |
+| `rescore-native` | — | 24 | — | 24 | `reproducible-legacy` files that record a native adapter: re-scored through the corrected-F1 engine and their adapter (§ 5.2), never through the scorer |
 | `counterpart` | 43 | 11 | — | 0 | `historical-only` (`archive/`); all 54 carry intervals, and 33 also a tile block |
 | `regenerate-then-rescore` | 232 | — | — | 0 | the null-exemplar `unresolved-recipe` cells (§ 5.1) |
 | `hold:input-absent` | 1 | 12 | — | 0 | `unresolved-recipe`: detection input absent on zbook (§ 5.3) |
@@ -473,8 +484,9 @@ order", W1.1):
    output does. This rule applies only to the 2,821 files that round-trip
    (§ 2 item 3). For those files, re-serialising the unedited parse is
    byte-identical, so this is a token-preserving edit. The 8 files that do
-   not round-trip go through their writer adapter's own token-preserving
-   edit (§ 5.2), or they are held.
+   not round-trip are native-adapter views, which are regenerated by their
+   migration adapter, with its serialisation pinned by the adapter-replay
+   check (§ 5.2).
 5. **Guards** (G2 items 1–6, per file) on the staged bundle, including the
    textual guard of G2 item 1.
 6. **Siblings** (Astra W2-5; § 13, A2). The driver regenerates
@@ -566,9 +578,11 @@ order", W1.1):
   (→ 1.5: still selected), and a scorer-written 1.5 file. In live files
   this matters now for two 1.0 files that Wave 2 re-scores in place
   (`wave2_scope_and_cost.txt` § 5). The 1.0 and 1.1 counterparts are under
-  `archive/`, which the census skips (`:139`). The 24 foreign-writer files
-  carry no version, and their adapters (§ 5.2) state their capability
-  explicitly. Astra's cross-check found that the live 1.2 records are the
+  `archive/`, which the census skips (`:139`). The 24 native-adapter
+  files carry no version, and their percentile intervals are the native
+  engine's intended estimator, not missing BCa metadata (§ 5.2). After
+  migration they fall in `join-migrated-other-vintage`, and no generic
+  writer may fill in a bootstrap method for them. Astra's cross-check found that the live 1.2 records are the
   pre-enumerated missing-input cases (§ 5.3), which Wave 2 does not
   migrate.
 - **`_metadata.tile_join_reemission`**, the re-emission history. It holds
@@ -578,7 +592,9 @@ order", W1.1):
   - the driver path and commit, and the library commit;
   - the date of first publication;
   - the rulings, and for phase B the seam-policy key and value;
-  - the SHA-256 of the committed file it replaced;
+  - `original_bundle[]`: for every pre-migration bundle member, its path,
+    the git commit and blob object it was read from, and its SHA-256
+    (§ 5.6);
   - the prior `metadata_version`;
   - the replaced `cli_args`, `input_files`, and `input_git_state`;
   - the recorded rules it replayed under;
@@ -634,8 +650,8 @@ after each commit.
 
 ### W2.4 Phase B (55-map; after the seam ruling)
 
-The same as W2.3, once P7 holds. It also covers the 24 files from
-non-scorer writers (§ 5.2). If the ruling changes a reference or the
+The same as W2.3, once P7 holds. It also covers the 24 `rescore-native`
+files, through the native engine and their adapters (§ 5.2). If the ruling changes a reference or the
 frame, the separate reference-corrected computation of § 4.3 runs after
 the join-only one, under its own identity and gate items.
 
@@ -653,31 +669,103 @@ policy.
 | `results/retest/*-evaluation.json` | 12 | `skip: no-recipe`. No `_metadata` at all. They carry neither a tile block nor intervals. Left untouched and listed |
 | `results/deployment-oracle-2026-06-06/preverifier-eval/` and `results/rescore-2026-05-31/` | 12 + 1 | § 5.3 |
 
-### 5.2 The 60 files that `evaluate_detections.py` did not write
+### 5.2 The 60 files that `evaluate_detections.py` did not write, and the 24 native-adapter files (Astra round 3)
 
 W1.0 counts 5 written by `compute_corrected_f1_multi_buffer.py` and 55
 with no recorded writer (`dry-run.md` § 3.4). Of the 55, 36 are the
-no-recipe files of § 5.1, which are skipped. The other 19 and the 5 make
-24 live, paper-cited, 55-map files (§ 2 item 5). Before phase B:
+no-recipe files of § 5.1, which are skipped. The other 19, with the 5,
+are the 24 native-adapter files of § 2 item 5. The disposition below was
+verified at `f6f5ffe54` against Astra's evidence
+(`~/agent-mail/codex/reviews/native-writer-audit-2026-11-18/native-writer-schema-audit.json`,
+which reads git objects only).
 
-- **Trace each writer's schema** field by field, as W1.0 § 3 did for the
-  scorer. The output is a target and non-target schema per writer, with
-  its structural target paths, added to `reports/tile-join-wave-2/`.
-- **The five `compute_corrected_f1_multi_buffer.py` files** are re-scored
-  through that engine's own path. Astra's C3 found that the engine does
-  not route through `evaluate_detections.py`. The Wave 1 branch threads
-  both rules through it (`55737337a`). The same two computations, bundle
-  checks, and G2 guards apply, on its native schema.
-- **The 19 files with no recorded writer** are re-scored by the driver only
-  if their key structure matches the scorer's schema. A file that does not
-  match is ledgered `skip`, `held:foreign-schema`, and goes to the PI at
-  M2. Because every one is paper-cited, any such hold blocks G2 (item 8).
-- **The eight files that do not round-trip** (§ 2 item 3) need a
-  token-preserving edit from their adapter. The adapter locates each
-  target value's text span with an offset-recording parser, replaces only
-  those spans, and writes new values under the representation rule of
-  W2.1 step 4. A file the adapter cannot edit this way is held, never
-  reformatted.
+**What these files are.** Each `evaluation.json` is a deterministic
+transform of the corrected-F1 engine's native `summary.json` in the same
+directory. The adapter at `register_gemini37_author.py:1128–1135` calls
+itself "a pure deterministic transform of the engine's `summary.json`".
+Astra's audit found three things for all 24:
+
+- the point metrics and the F1 interval endpoints map exactly to the
+  native summary;
+- the adapted tile confusion maps to the native 50 m row;
+- every adapted interval is percentile.
+
+The engine is a different estimator from the scorer. In 16 of the native
+summaries the reference count varies by buffer. For example,
+`results/55maps-extended-gt-2026-06-07/IM-k3/summary.json` has 4,746
+references at 5 m, 5,160 at 50 m, and 5,508 at 150 m. Its adapter records
+`canonical-gt-55maps-r50.geojson` as the loadable reference but valid at
+50 m only. Rows at other radii were scored against "the composite gated
+at that radius" (`adapt_track2_evals_for_manifest.py:80–95`). The
+extended-GT driver calls the engine with the student reference, the
+bounds, and two review tables (`score_55maps_extended_gt_canonical.py:165–176`).
+The standardised adapter takes a reference vintage, `standardised` or
+`r2` (`register_standardised_gt_conditions.py:204–213`).
+
+**Disposition.** Every one of the 24 is re-scored through **its native
+engine and recipe, then its adapter**. The historical estimator (the
+percentile interval) and the historical reference construction (the
+per-buffer gating, the review tables, and the standardised vintage) are
+preserved. **A matching key structure never selects the scorer.** The
+first draft's rule that "the driver re-scores them if their key structure
+matches" is withdrawn: the adapters produce that structure deliberately,
+and `recover_recipe` would recover only the single `ground_truth` alias,
+which does not reproduce the computation.
+
+**The native recipe and identity.** The effective recipe, and the
+identity's anchor (§ 5.6), capture what the engine actually used: the
+detection layers; the student reference; the bounds; the review tables
+(yesterday's and today's); the gating or standardised mode and the
+reference vintage; the buffers; the bootstrap count; the seed; and
+`compute_mcc`. They are read from the native summary's
+`metadata.input_paths` and parameters, with the absolute-path prefix
+resolved as P14 proposes, and each input is hashed. The seam-policy key
+for these files (§ 4) is (frame, native reference construction), not the
+`ground_truth` alias.
+
+**The two computations, natively.**
+
+1. **Legacy replay.** Run the engine under its recorded rules (the legacy
+   joins, as the extended-GT driver passes them at `f6f5ffe54`). The
+   native summary must reproduce the committed one. Then run the
+   adapter on the committed native summary. It must reproduce the
+   committed `evaluation.json` byte for byte, which pins the adapter's
+   own serialisation. Either mismatch is a replay-guard failure (§ 6).
+2. **New rules.** Run the engine under `sheet-contains` and
+   `sheet-primary` (or the phase B seam policy), then run the **migration
+   adapter**. This is a version of the adapter that also carries both join
+   rules, the refusal state (the withheld form, if the engine refuses),
+   the re-emission history, and the `metadata_version` migration. The
+   existing adapters drop the new join provenance, so they cannot be used
+   unchanged.
+
+**Native output and adapted view are published together.** The native
+`summary.json` stays the claimed current source of its `evaluation.json`.
+The re-scored native outputs that carry join-dependent values
+(`summary.json`, and any sibling such as `corrected-f1.csv` that holds
+those values) and the adapted `evaluation.json` and its siblings form one
+bundle under § 5.6. They are checked, published, and recovered together.
+The native summary carries the same provenance as the adapted view: both
+rules, the refusal state, and the history. A later run of a pure adapter
+therefore regenerates the new values, not the old. The old summary is
+never left in place as the source of a changed view. (The alternative, a
+versioned replacement source that the view points to, is not taken. It
+would leave two summaries in the directory, and a later adapter run could
+read the wrong one.)
+
+**Schema and guards.** Before phase B, each native writer's schema is
+traced field by field, as W1.0 § 3 did for the scorer. The trace covers
+the native `summary.json` and its siblings, and the adapted view. Its
+output is a target and non-target schema with structural target paths for
+both levels, committed in `reports/tile-join-wave-2/`. The join-only
+invariant applies at both levels. Native point F1, true and false
+positives and negatives per radius, reference counts per buffer, and
+every other non-target field must be identical (G2 items 1–2). The
+textual guard of G2 item 1 compares the committed and new
+`evaluation.json`, both as serialised by the adapter, so the eight files
+that do not round-trip (§ 2 item 3) are covered by the adapter-replay
+check rather than by `json.dumps`. The A10 capability check stays in
+force for these files (W2.1).
 
 ### 5.3 The 13 files whose detection input is absent on zbook
 
@@ -702,7 +790,7 @@ leg's outcome is recorded separately (§ 5.5).
 |---|---|
 | **success** | `rescored-in-place`; `counterpart-written`; `withheld-now-scored` (a `known-withheld` file whose replay ended in its recorded refusal and which scores under the new rules); `rescored-superseding` (an intentional re-emission under a new identity, § 5.6) |
 | **expected refusal** | `new-rule-refusal:<reason>`: the new-rule leg ends in a refusal the library names (`tile_join_unattributed_detection`, `no_tiles_in_bounds`, `detections_have_no_source_tile`, or the shortfall reasons), with its diagnostics. The file is re-emitted in the scorer's withheld form, a target-set shape (`dry-run.md` § 3.2). For a `known-withheld` file the reason is `still-withheld:<reason>` |
-| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (§ 5.6: rebuilt identity equal, manifest `committed`, one terminal record, and every bundle member's hash equal to that record's `bundle_after`); `held:seam-ruling`; `held:input-absent` (pre-enumerated files only, P9); `held:foreign-schema`; `held:sibling-review` (an unseen wording change, W2.1 step 6) |
+| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (§ 5.6: rebuilt identity equal, manifest `committed`, one terminal record, and every bundle member's hash equal to that record's `bundle_after`); `held:seam-ruling`; `held:input-absent` (pre-enumerated files only, P9); `held:foreign-schema` (a native writer whose schema trace is not complete, § 5.2); `held:sibling-review` (an unseen wording change, W2.1 step 6) |
 | **failure** | `replay-mismatch:<fields>`; `interval-mismatch:<fields>`; `input-hash-mismatch`; `regeneration-mismatch`; `recipe-error:<message>`; `guard:<item>` (including `guard:sibling-content` and `guard:textual`); `unnamed-refusal`; `unexpected-content` (a bundle member's hash matches neither its before nor its staged hash); `identity-changed` (§ 5.6); `rolled-back` (a staged copy failed verification and the bundle was restored, § 5.6); `exception:<type>` |
 
 A failed file is never published, and a `skip` changes nothing. Under the
@@ -782,11 +870,28 @@ therefore rebuilds the same identity and does not report
 `identity-changed`. A file not yet published has no history, and its
 anchor is computed from its committed bytes.
 
-Resume compares the whole identity, not selected fields. If the anchor or
-the execution context differs, the file is not treated as done. The
-driver stops with `identity-changed`, unless the operator has started an
-explicit new computation (`--supersede <reason>`), which is recorded as
-below.
+**What is frozen, and what is checked afresh** (Astra round 3). The
+anchor freezes the *original artefact*: the pre-migration bundle hashes
+and the original recipe that the historical result was computed from. It
+does not freeze the evidence used to detect a new request or drift. On
+every resume, before a file can be reported `already-done`, the driver
+**recomputes**:
+
+- the hashes of every input the file's recipe references, read from disk
+  now;
+- the recipe, seam policy (with its mask and reference hashes), schema
+  adapter, and worklist that the current run requests for that file.
+
+It then compares each with the anchor's recorded value. A changed input
+file, a changed requested policy or recipe, a different adapter, or a
+different worklist entry is drift. Rebuilding the identity from the
+stored anchor alone would hide it.
+
+Resume compares the whole identity, not selected fields. If the anchor,
+the freshly computed request and input hashes, or the execution context
+differs, the file is not treated as done. The driver stops with
+`identity-changed`, unless the operator has started an explicit new
+computation (`--supersede <reason>`), which is recorded as below.
 
 **Durable, atomic manifest writes** (Astra R2-1). Each file has a manifest
 at `<run-dir>/staging/<sha256 of path>/manifest.json`. Every write of it,
@@ -865,10 +970,19 @@ not in state `committed`:
 - **Any member matching neither its original nor its staged hash**:
   `unexpected-content`, and the run stops.
 
-**`already-done`** requires four things: the rebuilt identity is equal, the
-manifest is `committed`, there is exactly one terminal success record, and
-every bundle member's current hash equals that record's `bundle_after`.
-Checking `evaluation.json` alone is not enough.
+**`already-done`** requires five things:
+
+- the rebuilt identity is equal;
+- the fresh input hashes and current request match the anchor (above);
+- the manifest is `committed`;
+- there is exactly one terminal record for the publication identity, and
+  it is a published outcome: a **success** or an **expected refusal**
+  (Astra round 3), since an expected refusal is published in the scorer's
+  withheld form (§ 5.4);
+- every bundle member's current hash equals that record's `bundle_after`.
+
+So a published expected refusal is neither recomputed nor appended again
+on restart. Checking `evaluation.json` alone is not enough.
 
 **A truncated JSON Lines tail.** On start, the main process reads the
 ledger line by line. A final line without its terminating newline, or one
@@ -914,18 +1028,38 @@ that every line parses and that the record count equals the file count.
 4. a forced recomputation.
 
 After every step, the first history entry must be byte-identical to the
-one written at step 1. The pilot repeats the sibling-replace,
+one written at step 1. Three more lifecycle tests:
+
+- the same sequence for a file whose new-rule leg ends in an **expected
+  refusal**, where step 3 must give `already-done`;
+- **drift**: after step 2, change one referenced input file, and
+  separately the requested seam policy; the restart must stop with
+  `identity-changed`, not report `already-done`;
+- **supersession** (Astra round 3): migration, then `--supersede`, then
+  an ordinary restart, then a forced verification of the latest identity.
+  The verification must take its original from the superseding entry's
+  recorded anchor, not from the merge base. Every earlier history entry
+  must stay byte-identical. The pilot repeats the sibling-replace,
 partial-line, and lifecycle cases on real bundles.
 
 **Idempotence: what a forced recomputation replays.** `--verify-idempotence`
-ignores `already-done`. It replays the **anchor**, never the effective new
-artefact:
+ignores `already-done`. It replays the **anchor of the computation being
+verified**, never the effective new artefact. By default that is the
+latest history entry; an older one can be named. The entry must therefore
+record exactly where its original came from: the git commit and blob
+object of every pre-migration bundle member (`original_bundle[]`: path,
+commit, blob, SHA-256). The first entry's originals are the committed
+files the migration replaced. A superseding entry's originals are the
+bundle it superseded, at the commit that published it. No entry assumes
+the branch's merge base.
 
-1. It takes the original bundle from git at the branch's merge base and
-   verifies it against the anchor's pre-migration hashes.
-2. It takes the original recipe and inputs from the first history entry
-   (the replaced `cli_args`, `input_files`, and recorded rules), and
-   verifies each input against the anchor's hashes.
+1. It takes the original bundle members from the recorded commit and blob
+   objects (`git cat-file`) and verifies them against the entry's
+   SHA-256s.
+2. It takes the original recipe and inputs from the same entry (the
+   replaced `cli_args`, `input_files`, and recorded rules, or for the
+   native writers the native recipe of § 5.2), and verifies each input
+   against the entry's hashes.
 3. It runs both legs again under the anchor's rules and policy, into
    scratch, and compares the resulting bundle byte for byte with the
    committed one.
@@ -939,7 +1073,8 @@ byte identity on its own.
 
 **An intentional, different re-emission** (a new identity, such as a later
 ruling or a corrected input) needs `--supersede <reason>`. Its anchor is
-the current committed bundle. It appends a new history entry carrying
+the current committed bundle, recorded by commit and blob in its own
+history entry. It appends a new history entry carrying
 `supersedes` and the reason, never rewrites an earlier entry, and is
 ledgered `rescored-superseding`.
 
@@ -1091,7 +1226,10 @@ file, well inside each phase.
 
 - the null-exemplar regeneration (its filter stage reads and writes
   GeoJSON);
-- the five `compute_corrected_f1_multi_buffer.py` re-scores;
+- the 24 `rescore-native` files through the corrected-F1 engine. They are
+  included in the 55-map total at the scorer's rate as a placeholder only
+  (1.77 CPU-h: 0.59, 0.59, 0.37, and 0.22 by adapter;
+  `wave2_scope_and_cost.txt` § 3). The engine has not been timed;
 - any reference-corrected computation under § 4.3;
 - the bundle `fsync` calls;
 - contention at 12–14 concurrent jobs (the timings were taken at 8).
@@ -1238,7 +1376,7 @@ From the parent record's § 5 Wave 2 row and Wave 1's G1.
     - every expected refusal;
     - the cross-sheet tile list of G2 item 4;
   - `not-migrated.json` and `downstream-inputs.json` (§ 8);
-  - `foreign-writer-schemas.md` (§ 5.2);
+  - `native-writer-schemas.md`: the native and adapted schemas of the four adapters (§ 5.2);
   - `e93-before-after.json`: the paper-cited before and after values that
     erratum E93's table needs (parent record § 4 item 4), with the join-only
     and any reference-correction effects kept separate (§ 4.3). The
@@ -1385,7 +1523,42 @@ is a technical review, not approval to launch.
 | **R2-3 (A8)**: bind sibling values to their cells | Yes: a multiset of numbers survives two values trading places | Adopted (W2.1 step 6). Markdown and CSV are compared as canonical non-target cells keyed by (section or table, row, buffer, column, metric, unit). Wording outside the cells must match the pilot's approved allowlist. An unseen change holds the file (`held:sibling-review`) for review before publication. The JSON textual guard (G2 item 1) was accepted as specified |
 | **R2-4 (A10)**: schema capability is not bootstrap completion | Yes: `rerun_bca_corpus.py:106–110` at `f6f5ffe54` defines done as "already carry a BCa-requested bootstrap" | Adopted (W2.1, provenance). A 1.5 file is classified by its recorded prior vintage, plus a check of its bootstrap fields. A legacy file upgraded only for joins gets its own census category. Four tests are specified. In live files this concerns two 1.0 files today |
 
+### 13.3 Round 3
+
+Astra's review of the round-2 revision (`6d2729b96`), with an independent
+trace of the alternative writers:
+`~/agent-mail/codex/outbox/claude/20261118T140800Z-astra-wave2-round3-native-writers.md`;
+evidence `~/agent-mail/codex/reviews/native-writer-audit-2026-11-18/`. It
+found that the round-2 requests were addressed in principle. Each item
+below was checked against `6d2729b96` and, for the writers, against
+`f6f5ffe54` and the evidence JSON.
+
+| Finding | Verified | Disposition |
+|---|---|---|
+| **Fresh inputs and requests compared with the anchor** | Yes: § 5.6 rebuilt the identity from the stored anchor plus the execution context only, so a changed input file or requested policy would have passed | Adopted (§ 5.6). Before `already-done`, the driver hashes the referenced inputs afresh and compares the requested recipe, policy, adapter, and worklist with the anchor. Only the original artefact is frozen. A drift test is added |
+| **A published expected refusal is done** | Yes: `already-done` required a terminal *success* record | Adopted (§ 5.6). Success or expected refusal, under the same identity and hash checks. A lifecycle test covers the refusal case |
+| **Superseded computations have their own anchor source** | Yes: forced recomputation read the merge base and the first history entry, while `--supersede` anchors to the current bundle | Adopted (§ 5.6, W2.1). Each history entry records `original_bundle[]` (commit, blob, SHA-256). Verification replays the entry being verified (the latest by default), read by blob, and never assumes the merge base. A supersession lifecycle test is added |
+| **The 24 alternative-writer files are native-adapter views** | Yes. Every file's `_metadata` names its adapter (`adapter` or `adapted_by`) and its source `summary.json`: 8 `adapt_track2_evals_for_manifest.py`, 8 `register_standardised_gt_conditions.py`, 3 `register_gemini37_author.py`, 5 `register_pass1_adapt.py`. The evidence JSON shows the point and F1-interval mappings and the 50 m confusion mapping equal for all 24, percentile intervals throughout, and reference counts varying by buffer in 16 (IM-k3: 4,746 at 5 m, 5,160 at 50 m, 5,508 at 150 m). The adapter source anchors were read at `f6f5ffe54` | Adopted (§ 2 item 5, § 3.1, § 5.2). A new disposition, `rescore-native` (24). Native engine and recipe replay, then the adapter, preserving the percentile estimator and the reference construction; a key match never selects the scorer. Native inputs, review tables, mode and vintage, seeds, and buffers are in the effective recipe and identity. The native outputs and the adapted view are one bundle, with the native summary staying the current source. Migration adapters carry both rules and the refusal state. The A10 capability check stays, and the percentile method is intentional. Scope: `rescore-in-place` 2,469, `rescore-native` 24 (totals unchanged). Cost: the 24 stay in the 55-map total at the scorer's rate as a 1.77 CPU-h placeholder; the engine is untimed (§ 7) |
+
 ## Changelog
+
+### 2026-11-19 — Revised after Astra's round-3 review (S169, amd-tower)
+
+Trigger: Astra's round-3 review and native-writer audit (§ 13.3), and the
+main session's instructions on it. The planning script now reads each
+file's recorded adapter, and its output is regenerated.
+
+| Item | Before | After |
+|---|---|---|
+| `already-done` | rebuilt identity, `committed` manifest, one terminal success | also fresh input hashes and current request compared with the anchor; success **or** expected refusal |
+| Forced verification | merge base and first history entry | the verified entry's `original_bundle[]` by commit and blob; latest entry by default |
+| Lifecycle tests | migration, exit, restart, forced recomputation | adds expected refusal, drift, and supersession sequences |
+| The 24 alternative-writer files | 5 engine-written plus 19 "unknown writers", re-scored by the scorer if the keys match | 24 native-adapter views, `rescore-native`: native engine and recipe, then a migration adapter; native outputs and view published as one bundle |
+| § 3.1 | `rescore-in-place` 2,493 (761 paper-cited) | `rescore-in-place` 2,469 (737), `rescore-native` 24 (24) |
+| § 7 | the 24 at the scorer rate, unremarked | the same 1.77 CPU-h, marked as a placeholder; the native engine untimed |
+
+Unchanged: the totals (2,829 entries; 2,779 re-scored or counterparted),
+phase membership, the seam parameter, the stop rule, and the cost totals.
 
 ### 2026-11-19 — Revised after Astra's round-2 review (S169, amd-tower)
 

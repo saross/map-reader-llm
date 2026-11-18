@@ -95,8 +95,8 @@ def frame_tiles(frame: str | None, cache: dict[str, int | None]) -> int | None:
     return cache[frame]
 
 
-def shape_of(path: str) -> tuple[int, int, str | None]:
-    """Return (passes, buffers, writer) of one committed evaluation file.
+def shape_of(path: str) -> tuple[int, int, str | None, str | None]:
+    """Return (passes, buffers, writer, adapter) of one committed evaluation.
 
     Args:
         path: Repository-relative path of the evaluation file.
@@ -104,17 +104,22 @@ def shape_of(path: str) -> tuple[int, int, str | None]:
     Returns:
         The number of passes (``len(per_run)``, or 1 for a single-run
         file), the number of buffer rows in ``summary.buffers`` (0 when
-        absent), and ``_metadata.script_path`` (``None`` when absent).
+        absent), ``_metadata.script_path`` (``None`` when absent), and the
+        native-output adapter recorded in ``_metadata.adapter`` or
+        ``_metadata.adapted_by`` (``None`` when neither is present; Astra's
+        round-3 native-writer audit).
     """
     doc = json.loads(Path(path).read_text())
     summary = doc.get("summary") or {}
     passes = len(doc.get("per_run") or []) or 1
     buffers = len(summary.get("buffers") or []) if isinstance(summary, dict) else 0
-    writer = (doc.get("_metadata") or {}).get("script_path")
-    return passes, buffers, writer
+    meta = doc.get("_metadata") or {}
+    writer = meta.get("script_path")
+    adapter = meta.get("adapter") or meta.get("adapted_by")
+    return passes, buffers, writer, adapter
 
 
-def disposition(entry: dict[str, Any]) -> str:
+def disposition(entry: dict[str, Any], adapter: str | None = None) -> str:
     """Map one W1.0 worklist entry to its proposed Wave 2 disposition.
 
     The rules are the specification's § 3.1 ("Disposition of every worklist
@@ -122,6 +127,9 @@ def disposition(entry: dict[str, Any]) -> str:
 
     Args:
         entry: One ``entries[]`` item of the W1.0 worklist.
+        adapter: The file's recorded native-output adapter, if any. Such a
+            file is an adapted view of a native engine's output and is
+            re-scored through that engine and adapter, never the scorer.
 
     Returns:
         A short disposition label.
@@ -140,6 +148,8 @@ def disposition(entry: dict[str, Any]) -> str:
         if path.startswith(("results/verifier-t-pilot/", "results/retest/")):
             return "skip:no-recipe"
         return "hold:input-absent"
+    if status in ("known-withheld", "reproducible-legacy") and adapter and bearing:
+        return "rescore-native"
     if status == "known-withheld":
         return "rescore-in-place"
     if status == "reproducible-legacy":
@@ -251,15 +261,16 @@ def main() -> int:
 
     rows = []
     for e in entries:
-        passes, buffers, writer = shape_of(e["path"])
+        passes, buffers, writer, adapter = shape_of(e["path"])
         frame = e["frame"]
         corpus = "none" if frame is None else ("55map" if "55maps" in frame else "gs")
         tiles = frame_tiles(frame, tiles_cache)
-        disp = disposition(e)
+        disp = disposition(e, adapter)
         replay, full = per_file_legacy_cpu(
             passes, buffers, corpus, tiles, e["status"] == "known-withheld", rates,
         )
         rows.append({**e, "passes": passes, "buffers": buffers, "writer": writer,
+                     "adapter": adapter,
                      "corpus": corpus, "tiles": tiles, "disp": disp,
                      "replay_s": replay, "full_s": full})
 
@@ -299,7 +310,8 @@ def main() -> int:
     print()
     print("== 2. Frames (tiles) and references, rescored or counterparted files ==")
     active = [r for r in rows if r["disp"] in
-              ("rescore-in-place", "counterpart", "regenerate-then-rescore")]
+              ("rescore-in-place", "rescore-native", "counterpart",
+               "regenerate-then-rescore")]
     tab = collections.Counter((r["corpus"], r["frame"], r["tiles"]) for r in active)
     for key in sorted(tab, key=str):
         print(f"  {tab[key]:5d}  {key}")
@@ -346,6 +358,14 @@ def main() -> int:
                               if r["writer"] != "scripts/evaluate_detections.py")
     for key in sorted(tab, key=str):
         print(f"    {tab[key]:4d}  {key}")
+    print("  native-adapter files (rescore-native), by adapter (scorer-rate placeholder):")
+    tab = collections.Counter((r["adapter"], r["corpus"], r["paper_cited"]) for r in active
+                              if r["disp"] == "rescore-native")
+    for key in sorted(tab, key=str):
+        group = [r for r in active if r["disp"] == "rescore-native"
+                 and (r["adapter"], r["corpus"], r["paper_cited"]) == key]
+        total = sum(r["replay_s"] + r["full_s"] for r in group) / 3600
+        print(f"    {tab[key]:4d}  {key}  {total:6.2f} CPU-h")
     print(f"  workers: 55-map {w55} (memory: ({ZBOOK_RAM_GB} - {RAM_HEADROOM_GB}) GB / "
           f"{rss_55:.3f} GB, capped at {WORKER_CAP_BRIEF}); GS {wgs_brief} (brief cap), "
           f"or {wgs_cores} (cores, memory {wgs_cores * rss_gs:.1f} GB)")
