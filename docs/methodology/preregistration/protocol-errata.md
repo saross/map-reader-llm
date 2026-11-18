@@ -6135,10 +6135,12 @@ configuration that should have produced it.
 > entry reserves the number E93 and records the framing ruled in D73 (1). It
 > was written on the Wave 1 branch (`tile-join-wave-1-w13`, work item W1.3 of
 > `planning/tile-join-wave-1-spec-2026-11-01.md`) before any evaluation had
-> been re-scored. No value in it is a measured outcome of the change. The
-> before/after table below is a placeholder; Wave 2 fills it, and Wave 4
-> checks every figure, completes the Resolution, and removes this notice.
-> The matching Open Science Framework (OSF) record is drafted in
+> been re-scored under the new sheet-specific joins. No value in it is a
+> measured outcome of the change. The before/after table below is a
+> placeholder; Wave 2 fills it, and Wave 4 checks every figure, completes the
+> Resolution, and removes this notice. The 55-map seam ruling it records as
+> pending is also a placeholder. The matching Open Science Framework (OSF)
+> record is drafted in
 > `reports/tile-join-wave-1/osf-transparent-changes-draft.md` and has not
 > been posted.
 
@@ -6216,9 +6218,16 @@ output `perfect_detector.txt`; decision record § 2.1).
 | per tile: one point per (mound, containing tile) | 1.0000 | 1.0000 | 1.0000 |
 
 A rule that gives a flawless merged pipeline a tile-MCC of 0.8711 measures
-the scorer, not the pipeline. `id` is correct for unmerged per-tile output,
-which is the case the S153 ruling 6 reasoning addressed ("the pipeline's
-decision on the tile the model saw"), and wrong for merged output. Astra
+the scorer, not the pipeline. `id` is wrong for merged output. For unmerged
+per-tile output it is correct only under the per-tile exposure reading, the
+case the S153 ruling 6 reasoning addressed ("the pipeline's decision on the
+tile the model saw"): where each detection's recorded `source_tile`
+identifies the tile the model was actually shown, and the scoring frame is
+that tiling. The September audit states the same restriction ("Well defined
+only when the cell's proposer tiling **is** the scoring frame";
+`reports/tile-mcc-geometric-join-2026-09-12.md:54–56`). Unmerged output
+alone does not validate arbitrary source metadata, mixed tilings, or a
+change of frame. Astra
 (GPT, OpenAI Codex) reproduced 0.8711 independently in JavaScript with no
 project code (D73). The construction above names each merged point for the
 alphabetically first containing tile, which assigns 15 references to a
@@ -6263,9 +6272,28 @@ probe expects the perfect detector under sheet-specific containment to give
 tier-1 test checks this with the project's code. One recorded sheet per
 reference and no cross-sheet pair within 1 km (the closest is 1,313.0 m
 apart) are consistent with per-sheet digitising but do not by themselves
-prove that no mound is printed on two sheets. The equivalent check of the
-55-map GS is owed in Wave 1 (W1.0), and a contact on map content there
-stops the work.
+prove that no mound is printed on two sheets. That finding is specific to
+the Era-2 frame.
+
+**The 55-map seam stop (2026-11-18).** The equivalent check of the 55-map
+reference ran in Wave 1 (W1.0) on 2026-11-18 and found contacts on map
+content. In `best-available-gt-55maps-r2.geojson`, 32 of the 814 point–tile
+contacts with another sheet's tile (26 references) lie on that tile's map
+content, not its padding, all at nine seams involving the reprojected
+`_4326` sheets; the other four tracked 55-map reference files show 32 to 35
+each. No reference on the contacted sheet lies within 50 m of any of the 32
+in r2, so the neighbouring sheet's printed copy is not digitised there;
+the canonical r50 file, by contrast, already carries a `phantom:*`
+reference within 50 m for 29 of its 33.
+Under `sheet-contains`, a correct detection of that copy would score as a
+false positive on the neighbouring sheet. This met the specification's stop
+condition, and the wave stopped; corrected 55-map scoring is paused until
+the PI rules (`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`
+§§ 1, 3, and 4, and `reports/tile-join-wave-1/dry-run.md` §§ 2 and 2.2, on
+branch `tile-join-wave-1-w10`). **[TO FILL: the PI's seam ruling (stop
+record § 4, item 1); any change it makes to the 55-map reference or to the
+estimand; and whether it was made before or after any sheet-specific 55-map
+score was computed.]**
 
 **When the choice was made, and what was known then.** The tile join has
 been chosen three times, each time with results in view:
@@ -6316,7 +6344,9 @@ Results known when D72 and D73 were ruled:
 - the perfect-detector result (2026-11-01) and the frame census.
 
 Known only when D73 was ruled: the Era-2 sheet-boundary check
-(`sheet_boundary_check.txt`, committed in `dce74be05`). Not known at either
+(`sheet_boundary_check.txt`, committed in `dce74be05`). Found after D73 was
+ruled, during Wave 1 (W1.0): the 55-map seam contacts on map content
+described above. Not known at either
 date: any sheet-specific tile-MCC for a real evaluation (none had been
 computed; the joins are implemented in Wave 1), and any F1 interval, mean,
 permutation p-value, or coverage flag under a count-table rule other than
@@ -6333,7 +6363,7 @@ anticipated from values that were already known.
 | Tile-MCC, tile-F1, sensitivity, specificity (secondary outcome) | **An invalid rule for merged output; each cell's effect must be measured.** Another detection may already make an overlapping tile positive, so the defect need not move every cell, and 117 multiply contained references do not imply 117 false-negative tiles |
 | F1, precision, and recall bootstrap intervals and means, tile-swap permutation p-values, tiers, F1 Hsu sets | **Unknown**: the point estimates are exact (each object booked once), but the spread of counts over tiles followed the name rule for true and false positives, so the null distributions may move. Reassignment can make tests anti-conservative, not only noisier; a spatial-block resampling check is required before any affected significance claim is finalised (D73 (3)) |
 | Coverage diagnostics and interval-reliability flags (`coverage`, `coverage_status`, `sparse_coverage`, `ci_unreliable`, `ci_excludes_point`, and their summary roll-ups) | **May flip**: derived from the same per-tile count table |
-| Sheet attribution of tile outcomes | **Wrong under the frame-wide geometric routines**, which book detections and references against all frame tiles rather than the sheet D50 matched on; corrected by the sheet-specific joins |
+| Sheet attribution of tile outcomes | **Wrong under the frame-wide geometric routines**, which book detections and references against all frame tiles rather than the sheet D50 matched on; corrected by the sheet-specific joins. Where a mound is printed on both sides of a 55-map seam but digitised once, the treatment awaits the PI's seam ruling (see above) |
 
 Any hypothesis decided on an affected interval or test is affected with it.
 The three Gemini 3.7 cells withheld under `id` re-enter the families they
@@ -6365,6 +6395,17 @@ boards, and the K-ladder tables; wave S runs the spatial-block resampling
 check on both corpora; Wave 4 restates the affected claims, finalises this
 entry, adds a § 4.2 row to `osf/errata-pointers.md`, and posts the OSF
 transparent-changes record once the PI has approved its exact text.
+
+**Update (2026-11-18 — draft revised on Astra's review).** Revised after
+Astra's cross-model review of the draft at `652786ae8`
+(`~/agent-mail/codex/outbox/claude/20261118T124335Z-astra-e93-osf-draft-review.md`):
+the claim that `id` is correct for unmerged output is bounded to the
+per-tile exposure reading; this notice dates the draft against the new joins
+rather than against all re-scoring; and the owed 55-map check is replaced by
+the stop it raised on 2026-11-18, with the PI's ruling left to fill, and
+the stop's timing and its bearing on sheet attribution are added to the
+timing paragraph and the affected-results table. The cell-specific caveat Astra asked to carry into the OSF text was already
+stated here (Impact field; the affected-results table).
 
 Cross-references: **E81** (undefined tile-MCC published as `0.0`, the
 earlier correction to § 4.2's metric); **E82** (the bootstrap method behind

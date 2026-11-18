@@ -1,6 +1,8 @@
 # OSF transparent-changes record: tile-level classification (draft)
 
-> **Last revised**: 2026-11-18 (original publication: Wave 1 draft, W1.3). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-18 (revised on Astra's cross-model review; the
+> 55-map seam stop added). See [§ Changelog](#changelog) for revision
+> history.
 
 ## Draft status (not part of the postable text)
 
@@ -22,8 +24,9 @@
 >   erratum E93.
 > - **Not final**: the section "What the change does to the reported
 >   results" is a placeholder that Wave 2 fills; Wave 4 finalises the whole
->   text. Bracketed items marked **[TO FILL]** must be completed or removed
->   before posting.
+>   text. The PI's ruling on the 55-map seam stop (see Limits) is pending.
+>   Bracketed items marked **[TO FILL]** must be completed or removed before
+>   posting.
 > - **Decisions for the PI**: approve, amend, or hold the text (Wave 1
 >   specification § 9, decision 3); and choose the OSF form (a registration
 >   update, as for erratum E91, or a project file or wiki page).
@@ -62,17 +65,21 @@ assigned each detection to the single tile recorded in its name field, and
 each reference mound to every tile that contains it. For a merged detection
 (several sightings of one mound combined into one point, as in every
 consensus and verified condition), the name field holds the alphabetically
-first of the tiles it was seen on. A mound seen on two tiles was therefore
-credited to one of them, while its reference counted in both; the other
-tile was scored as a miss that the pipeline did not make.
+first of the tiles it was seen on. A mound seen on two tiles was credited to
+one of them, while its reference counted in both. The other tile could
+therefore be scored as a miss that the merged pipeline did not make, unless
+another detection already made that tile positive.
 
 We tested this by scoring the reference mounds as their own detections. On
 the 487-tile Era-2 frame, where 117 of 435 mounds (26.9 %) lie in two or
 more tiles, a perfect merged detector scored tile-MCC 0.8711 under the
 original rule (196 true positives, 33 false negatives), and 1.0 under rules
 that assign by location. A rule that cannot give a perfect detector a
-perfect score is not a valid measurement for merged output. It remains
-correct for unmerged output, where each tile's own response is scored.
+perfect score is not a valid measurement for merged output. For unmerged
+output it remains correct only as a measure of each tile's own response:
+where the tile recorded for each detection is the tile the model was
+actually shown, and the tiles used for scoring are the tiles the model saw.
+Unmerged output alone is not enough to make it valid.
 
 The same name rule distributed true and false positives over tiles in the
 per-tile count tables from which the F1 bootstrap intervals and tile-swap
@@ -107,7 +114,9 @@ no-data padding at the edge of one sheet (K-35-052-4), on tiles that show
 no map content at those points. A frame-wide rule would mark those tiles as
 holding mounds that no model was shown. Each reference mound records one
 sheet, and the same sheet attribution is already used to match detections
-to references.
+to references. This finding is specific to the Era-2 frame: on the larger
+55-map corpus some mounds are printed on both sides of a sheet seam (see
+Limits).
 
 ### When, and what was known
 
@@ -145,7 +154,8 @@ and any F1 interval or permutation test computed under a count table other
 than the name-based one. The sheet-confined values can differ from the
 already known frame-wide values only on tiles that a neighbouring sheet's
 mounds or detections reach, so much of their effect could be anticipated
-when the choice was made.
+when the choice was made. The 55-map seam contacts described under Limits
+were found after the third decision, on 18 November 2026.
 
 ### What is and is not affected
 
@@ -153,8 +163,9 @@ when the choice was made.
   recall, the registered primary outcome. Mounds are matched to references
   by location on each map before any tile is consulted.
 - **Affected**: tile-MCC, tile-F1, sensitivity, and specificity (the
-  secondary outcome), for every merged condition, by an amount that must be
-  measured condition by condition.
+  secondary outcome). The rule used for them is invalid for merged output.
+  The numerical effect must be measured for each condition; a condition's
+  reported value may remain unchanged.
 - **Possibly affected**: F1, precision, and recall bootstrap intervals,
   tile-swap permutation p-values, the rankings and admissible sets built on
   them, and the diagnostics that flag an interval as unreliable. Any
@@ -184,9 +195,17 @@ claims restated or withdrawn, each with its repository path.]
   different sheets within 1 km of each other on the Era-2 frame, is
   consistent with digitising each sheet separately, but does not prove
   that no mound is printed on two sheets.
-  The equivalent check on the larger 55-map corpus is part of the work and
-  had not been run when this record was drafted. [TO FILL, Wave 4: its
-  outcome.]
+- On the larger 55-map corpus, the equivalent check, run on 18 November
+  2026 on revision r2 of the 55-map reference (erratum E84), found 32
+  contacts between a reference mound and a neighbouring sheet's tile
+  that fall on that tile's map content rather than its black no-data
+  padding (26 reference mounds, at nine sheet seams). For these, the
+  neighbouring sheet's printed copy of the mound was not digitised, so a
+  correct detection of it would count as a false positive under
+  sheet-specific scoring. The work stopped, and the PI's ruling on how
+  such seams are scored is pending. [TO FILL: the ruling; any change it
+  makes to the 55-map reference or to the estimand; and whether it was made
+  before or after any sheet-specific 55-map result was computed.]
 
 ### Where the full record is
 
@@ -202,6 +221,9 @@ In the study's public repository (`saross/map-reader-llm` on GitHub):
 - the October 2026 sensitivity runs:
   `reports/s166-agent-records/mcc-join-tiering.md` and
   `reports/s166-agent-records/k-ladder-mcc-join.md`;
+- the 55-map seam stop:
+  `reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` [TO FILL:
+  confirm the path once it reaches the main branch];
 - the re-scoring ledger: [TO FILL, Wave 2: path].
 
 <!-- POSTABLE TEXT ENDS -->
@@ -210,9 +232,34 @@ In the study's public repository (`saross/map-reader-llm` on GitHub):
 
 ## Changelog
 
+### 2026-11-18 — Revised on Astra's review; the 55-map seam stop added
+
+Trigger: Astra's (GPT, OpenAI Codex) review of the draft at `652786ae8`
+(`~/agent-mail/codex/outbox/claude/20261118T124335Z-astra-e93-osf-draft-review.md`;
+verdict: accept the framing as a working draft, with three text
+corrections), and the 55-map seam stop of the same day
+(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`, on branch
+`tile-join-wave-1-w10`).
+
+| Passage | Before | After |
+|---|---|---|
+| What we found, merged detection | the other tile "was scored as a miss" | it "could therefore be scored as a miss … unless another detection already made that tile positive" |
+| What we found, unmerged output | the rule "remains correct for unmerged output" | correct only where the recorded tile is the tile shown and the scoring tiles are the tiles the model saw (`reports/tile-mcc-geometric-join-2026-09-12.md:54–56`) |
+| What is and is not affected | affected "for every merged condition" | invalid for merged output; measured for each condition; a value may remain unchanged |
+| Limits, 55-map check | not yet run; [TO FILL] its outcome | 32 map-content contacts (26 references) at nine seams; the work stopped; [TO FILL] the PI's ruling, any reference or estimand change, and its timing relative to results |
+
+Also: the Era-2 padding finding is marked as specific to that frame; the
+seam finding's date is placed after the third decision; the original
+publication entry below now dates the draft against the new joins. Not
+changed: the registration excerpt, the three decisions and what was known
+at each, the description of the new joins, and every placeholder other
+than the 55-map one. Not posted. Commit: this entry's commit on
+`tile-join-wave-1-w13`.
+
 ### 2026-11-18 — Original publication
 
 First draft, written in Wave 1 (W1.3) beside the draft of erratum E93,
-before any evaluation was re-scored. The section on the change's effect on
-reported results, the posting date, the re-scoring ledger path, and the
-55-map check outcome are placeholders. Not posted.
+before any evaluation was re-scored under the new sheet-specific joins. The
+section on the change's effect on reported results, the posting date, the
+re-scoring ledger path, and the 55-map check outcome are placeholders. Not
+posted.
