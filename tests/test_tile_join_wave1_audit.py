@@ -404,11 +404,19 @@ class TestWrapperProvenance:
         assert kcc._tiering_file(default) == "tiering_20m.json"
 
     def test_pareto_header_records_both(self):
-        from scripts import build_pareto_v2 as bp
-
-        assert bp.pareto_header("id", "sheet-primary")["tile_joins"] == {
+        """``build_pareto_v2`` reads committed run outputs at import, so its
+        header function is compiled from source alone, and the payload is
+        checked to spread it."""
+        source = (REPO / "scripts/build_pareto_v2.py").read_text()
+        tree = ast.parse(source)
+        fn = next(n for n in tree.body
+                  if isinstance(n, ast.FunctionDef) and n.name == "pareto_header")
+        namespace = {"tile_join_provenance": lam.tile_join_provenance}
+        exec(compile(ast.Module([fn], []), "build_pareto_v2", "exec"), namespace)
+        assert namespace["pareto_header"]("id", "sheet-primary")["tile_joins"] == {
             "classification": "id", "count_table": "sheet-primary",
             "rulings": lam.TILE_JOIN_RULINGS}
+        assert "**pareto_header(args.tile_join, args.count_table_join)" in source
 
     def test_mcc_board_end_to_end_on_a_synthetic_frame(self, tmp_path, monkeypatch):
         """The board validates under the recorded join, computes under the
