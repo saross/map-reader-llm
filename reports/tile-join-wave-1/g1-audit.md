@@ -544,7 +544,18 @@ is left for the main session. Every other tier-1 test passes.
 **Lint**: Ruff passes on both touched Python files; markdownlint-cli2
 passes on this file.
 
+**Final tier 1, after the registry rebuild** (main session, 2026-11-19): at
+`d812e1472` on zbook, `pytest -m tier1 -q`: **4,779 passed, 0 failed**,
+5 skipped, 132 deselected, 1 xfailed (333.6 s; log
+`~/scratch/wave1/g1-r3/tier1-final.log`). The single failure at `0d97ab6f9`
+was registry drift from three reports committed in `5b4d72119`; `d812e1472`
+rebuilt the registry (those three rows only).
+
 ## Changelog
+
+### 2026-11-19 — Final tier-1 count recorded (main session)
+
+Tier 1 at `d812e1472`: 4,779 passed, 0 failed (§ 8.5).
 
 ### 2026-11-19 — Final re-review (R3)
 
