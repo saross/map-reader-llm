@@ -1,7 +1,8 @@
 # Tile-join Wave 2 — specification (the corpus re-score)
 
-> **Last revised**: 2026-11-19 (revised after Astra's review, W2-1 to
-> W2-5; the GS sheet check meets P4; seam counts corrected). See
+> **Last revised**: 2026-11-19 (revised after Astra's round-2 review,
+> R2-1 to R2-4: atomic manifests, identity anchors, keyed sibling cells,
+> bootstrap census). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -32,7 +33,10 @@
   `planning/pi-decisions-2026-09-20.md`.
 - **Status**: **DRAFT, revised after Astra's review
   (`~/agent-mail/codex/outbox/claude/20261118T133843Z-astra-wave2-spec-review.md`,
-  "revise before launch approval"; dispositions in § 13); not approved;
+  "revise before launch approval"; round 2,
+  `…/20261118T135814Z-astra-wave2-round2-review.md`, found W2-1, W2-3, and
+  W2-4 addressed and asked for completion details on W2-2 and W2-5;
+  dispositions in § 13); not approved;
   Wave 1 stopped on the seam ruling (Wave 2 cannot launch until M1).** The
   55-map seam handling is an open parameter (§ 4), and this draft takes no
   position among the options.
@@ -476,19 +480,40 @@ order", W1.1):
 6. **Siblings** (Astra W2-5; § 13, A2). The driver regenerates
    `evaluation.md` and `evaluation.csv` from the spliced document, but only
    where the committed directory has them; it creates no file that did not
-   exist. It then compares old and new siblings for **scientific content**.
-   In the CSV, every non-target column (`dry-run.md` § 3.3) must be
-   value-identical, row for row, over the same row set. In the Markdown,
-   with target cells and target footnotes removed (`dry-run.md` § 3.2),
-   three things must be equal: the row labels; the multiset of numeric
-   tokens in non-target cells; and the set of results reported. A changed
-   non-target number, a changed population (rows, counts, buffers), or a
-   missing result is a guard failure, `guard:sibling-content`. A
-   difference in layout or wording alone is ledgered as
-   `sibling-layout-drift`, with its diff. The pilot reviews every distinct
-   wording change before the corpus run, because a wording change could
-   alter an interpretation. **The JSON and its siblings are one bundle**:
-   they are checked, published, and recovered together (§ 5.6).
+   exist. It then compares old and new siblings for **scientific content**,
+   cell by cell (Astra R2-3):
+   - **Keyed cells.** Both siblings are parsed into canonical non-target
+     cells, each keyed by its scientific identity: (section or table, row
+     label, buffer, column, metric, unit). The CSV's columns come from its
+     header; the Markdown's from each table's header row and its section
+     heading. A cell's canonical value is its parsed number with its unit
+     (so `0.8610` and `0.861` are equal; `86.1 %` and `0.861` are not),
+     or its exact text if it is not a number. Target cells and target
+     footnotes (`dry-run.md` § 3.2) are excluded by key. Every non-target
+     key must exist in both siblings with an equal canonical value. A
+     changed value, a missing or extra key (a changed population of rows,
+     buffers, or results), or two values that trade keys is a guard
+     failure, `guard:sibling-content`. A multiset of numbers is not used,
+     because swapping two values would preserve it.
+   - **Wording outside the cells.** Header lines, notes, and non-target
+     footnotes are compared after normalising whitespace. Every changed
+     passage must match a class on the **wording allowlist**,
+     `reports/tile-join-wave-2/sibling-wording-allowlist.json`. Each entry
+     holds a before pattern, an after pattern, the strata it was seen in,
+     and who approved it. The pilot builds the list: it reviews every
+     distinct wording change it meets and enters only those it approves.
+     During the corpus run, a matching change is ledgered as
+     `sibling-layout-drift`, with its diff. **An unseen wording change is
+     never published automatically.** The bundle is not published, the file
+     is ledgered `skip`, `held:sibling-review`, with its diff, and the run
+     continues. Held files are reviewed before M2: an approved class joins
+     the allowlist, and the file is reprocessed. A paper-cited file still
+     held blocks G2 (item 8). Astra's example shows why: "includes" changed
+     to "excludes" keeps every number and reverses an interval's
+     interpretation.
+
+   **The JSON and its siblings are one bundle**: they are checked,
+   published, and recovered together (§ 5.6).
 7. **Publish** the bundle through the staged manifest (§ 5.6), into the
    target worktree (in-place re-score) or the counterpart tree. Then
    append the ledger record.
@@ -511,10 +536,41 @@ order", W1.1):
   migration claims nothing else: the history entry records the prior
   version and states that only tile-join provenance was migrated. Other
   legacy schema fields are not upgraded, and keys the file lacked stay
-  absent. One other reader keys on the version. `rerun_bca_corpus.py`
-  treats `"1.3"` and `"1.4"` as done vintages (`:106–110`, `:146–150`), so
-  a migrated file would fall into its `other_vintage` census. Wave 2's code
-  adds `"1.5"` to `DONE_VINTAGES`, with a test.
+  absent.
+- **The bootstrap-migration census** (Astra R2-4, A10). One other script
+  reads the version. `rerun_bca_corpus.py` selects vintages `"1.1"` and
+  `"1.2"` for its bootstrap re-emission. It treats `"1.3"` and `"1.4"` as
+  done, because they "already carry a BCa-requested bootstrap"
+  (`:106–110` at `f6f5ffe54`; read at `:146–150`). "Done" there means
+  bootstrap completion. A file migrated to 1.5 by Wave 2 has only its
+  tile-join provenance migrated, so 1.5 alone does not mean done. The
+  census must not infer one from the other. Wave 2's code therefore
+  classifies a 1.5 file by its **recorded prior vintage**: the
+  `prior_metadata_version` of the first entry in
+  `_metadata.tile_join_reemission`.
+  - A prior vintage in the done set (`"1.3"`, `"1.4"`) counts as done, but
+    only after the census also confirms that the file's
+    `_metadata.bootstrap` records a BCa-requested bootstrap.
+  - A prior vintage in the selected set (`"1.1"`, `"1.2"`) is still
+    selected.
+  - Anything else goes into its own census category,
+    `join-migrated-other-vintage`, reported with its prior vintage. That
+    covers 1.0, an unversioned file, or a 1.5 file with no history.
+  - A 1.5 file written by the Wave 1 scorer itself (no re-emission
+    history, both rules recorded) counts as done only after the same
+    bootstrap-field check. This draft has not verified what that writer
+    requests.
+
+  Tests cover a prior-done file (1.3 → 1.5: done), a legacy file upgraded
+  only for joins (1.0 → 1.5: not done, own category), a 1.1 file
+  (→ 1.5: still selected), and a scorer-written 1.5 file. In live files
+  this matters now for two 1.0 files that Wave 2 re-scores in place
+  (`wave2_scope_and_cost.txt` § 5). The 1.0 and 1.1 counterparts are under
+  `archive/`, which the census skips (`:139`). The 24 foreign-writer files
+  carry no version, and their adapters (§ 5.2) state their capability
+  explicitly. Astra's cross-check found that the live 1.2 records are the
+  pre-enumerated missing-input cases (§ 5.3), which Wave 2 does not
+  migrate.
 - **`_metadata.tile_join_reemission`**, the re-emission history. It holds
   a list of entries, one per distinct computation identity, in order. Each
   entry records:
@@ -562,7 +618,9 @@ null-exemplar cell, and a batch root. The pilot:
 - runs the interruption tests of § 5.6 on real bundles;
 - runs the full driver twice, forcing recomputation on the second run
   (§ 5.6), and shows byte-identical bundles and a reproduced ledger;
-- reviews every distinct `sibling-layout-drift` class (W2.1 step 6).
+- reviews every distinct sibling wording change it meets, and enters the
+  approved classes in the wording allowlist the corpus run uses (W2.1
+  step 6).
 
 It passes only if every G2 item holds on every pilot file. Its timings
 replace § 7's projection before phase A launches.
@@ -644,20 +702,25 @@ leg's outcome is recorded separately (§ 5.5).
 |---|---|
 | **success** | `rescored-in-place`; `counterpart-written`; `withheld-now-scored` (a `known-withheld` file whose replay ended in its recorded refusal and which scores under the new rules); `rescored-superseding` (an intentional re-emission under a new identity, § 5.6) |
 | **expected refusal** | `new-rule-refusal:<reason>`: the new-rule leg ends in a refusal the library names (`tile_join_unattributed_detection`, `no_tiles_in_bounds`, `detections_have_no_source_tile`, or the shortfall reasons), with its diagnostics. The file is re-emitted in the scorer's withheld form, a target-set shape (`dry-run.md` § 3.2). For a `known-withheld` file the reason is `still-withheld:<reason>` |
-| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (§ 5.6: identity equal and every bundle member's hash equal to the ledger's published hash); `held:seam-ruling`; `held:input-absent` (pre-enumerated files only, P9); `held:foreign-schema` |
-| **failure** | `replay-mismatch:<fields>`; `interval-mismatch:<fields>`; `input-hash-mismatch`; `regeneration-mismatch`; `recipe-error:<message>`; `guard:<item>` (including `guard:sibling-content` and `guard:textual`); `unnamed-refusal`; `unexpected-content` (a bundle member's hash matches neither its before nor its staged hash); `identity-changed` (§ 5.6); `exception:<type>` |
+| **skip** | `not-tile-bearing`; `no-recipe`; `already-done` (§ 5.6: rebuilt identity equal, manifest `committed`, one terminal record, and every bundle member's hash equal to that record's `bundle_after`); `held:seam-ruling`; `held:input-absent` (pre-enumerated files only, P9); `held:foreign-schema`; `held:sibling-review` (an unseen wording change, W2.1 step 6) |
+| **failure** | `replay-mismatch:<fields>`; `interval-mismatch:<fields>`; `input-hash-mismatch`; `regeneration-mismatch`; `recipe-error:<message>`; `guard:<item>` (including `guard:sibling-content` and `guard:textual`); `unnamed-refusal`; `unexpected-content` (a bundle member's hash matches neither its before nor its staged hash); `identity-changed` (§ 5.6); `rolled-back` (a staged copy failed verification and the bundle was restored, § 5.6); `exception:<type>` |
 
 A failed file is never published, and a `skip` changes nothing. Under the
 current stop rule, almost every failure also stops the run (§ 6).
 
 ### 5.5 Ledger schema
 
-The ledger is append-only JSON Lines (JSONL), one record per file per
-attempt, at `~/scratch/wave2/<run-id>/ledger.jsonl`. It is copied to
+The ledger is append-only JSON Lines (JSONL), at
+`~/scratch/wave2/<run-id>/ledger.jsonl`. It holds one terminal record per
+file per publication, plus `verification` records (§ 5.6), and only the
+driver's main process writes it. It is copied to
 `reports/tile-join-wave-2/ledger.jsonl` at each commit. Fields:
 
-- **identity**: `ledger_version`, `run_id`, `host`, and the file's
-  `computation_identity` (its hash and every component, § 5.6);
+- **identity**: `ledger_version`, `record_kind` (`terminal` or
+  `verification`), `run_id`, `host`, the file's `computation_identity`
+  (its hash, its anchor, and its execution context, § 5.6), and the
+  `publication_identity` (the computation identity plus the
+  `bundle_after` hashes);
 - **worklist facts**: `path`, `worklist_status`, `disposition`,
   `paper_cited`, `corpus`, `frame`, `reference`, `construction_route`,
   `passes`, `buffers`, `metadata_version`;
@@ -685,68 +748,134 @@ attempt, at `~/scratch/wave2/<run-id>/ledger.jsonl`. It is copied to
 record per worklist path, and counts by status and reason that sum to
 2,829.
 
-### 5.6 Computation identity, bundle publication, recovery, and idempotence (Astra W2-2)
+### 5.6 Computation identity, bundle publication, recovery, and idempotence (Astra W2-2, R2-1, R2-2)
 
 **Computation identity.** Each file's identity is the SHA-256 of a
-canonical JSON object that holds:
+canonical JSON object with two parts.
 
-- the committed artefact: the SHA-256 of every bundle member before
-  re-emission;
+The **anchor** is frozen when the file is first processed and recorded in
+its first re-emission history entry. It holds:
+
+- the pre-migration bundle: the SHA-256 of every member (JSON, `.md`,
+  `.csv`) as committed before re-emission;
 - the worklist: its commit and SHA-256;
-- the replay leg's input hashes, and the compute leg's input hashes;
-- the recipe: buffers, passes and their order, seed, and iteration count;
-- the code: driver, library, and scorer commits, each from a clean tree;
-- the environment: Python version, and the SHA-256 of the
-  `uv pip freeze` output;
+- the original recipe: buffers, passes and their order, seed, and
+  iteration count, and the recorded rules the replay uses;
+- the replay leg's input hashes (the original inputs) and the compute
+  leg's input hashes;
 - the schema adapter: its identifier, version, and target-paths SHA-256;
 - the seam policy: key, value, and the hashes of any mask and reference
   it introduces.
 
-Resume compares the whole identity, not selected fields. If any component
-differs, the file is not treated as done. The driver stops with
-`identity-changed`, unless the operator has started an explicit new
-computation (`--supersede <reason>`), which is recorded as below.
+The **execution context** is the code (driver, library, and scorer
+commits, each from a clean tree) and the environment (Python version, and
+the SHA-256 of the `uv pip freeze` output).
 
-**Bundle publication** through a durable staged manifest, at
-`<run-dir>/staging/<sha256 of path>/manifest.json`. The steps are:
+**The identity is never derived from a re-emitted file's current bytes**
+(Astra R2-2). After publication the file has new hashes and new effective
+join arguments. On restart, a published file's identity is rebuilt from
+two things: the anchor in its verified manifest (or, after commit, in its
+history entry), and the current run's execution context. The current
+bundle bytes are compared separately with the ledger's `bundle_after`.
+An ordinary restart, with the same code, environment, and policy,
+therefore rebuilds the same identity and does not report
+`identity-changed`. A file not yet published has no history, and its
+anchor is computed from its committed bytes.
 
-1. Write every new member, and a copy of every original member, into the
-   staging directory. Call `fsync` on each file and on the directory.
-   Write the manifest with state `staged`, listing each member's path,
-   original hash, and staged hash, and `fsync` it.
-2. Set the state to `publishing` (`fsync`).
-3. Replace each target member by `os.replace`: siblings first, then
-   `evaluation.json`. Then `fsync` each target directory.
-4. Set the state to `published` (`fsync`).
-5. Append the ledger record, ending in a newline, and `fsync` the ledger.
-6. Set the state to `committed` (`fsync`).
+Resume compares the whole identity, not selected fields. If the anchor or
+the execution context differs, the file is not treated as done. The
+driver stops with `identity-changed`, unless the operator has started an
+explicit new computation (`--supersede <reason>`), which is recorded as
+below.
+
+**Durable, atomic manifest writes** (Astra R2-1). Each file has a manifest
+at `<run-dir>/staging/<sha256 of path>/manifest.json`. Every write of it,
+whether creation or a state transition, goes the same way:
+
+1. Write the full new manifest to a temporary file in the same directory.
+2. `fsync` the temporary file.
+3. `os.replace` it onto `manifest.json`.
+4. `fsync` the directory.
+
+A kill during any of these steps leaves the previous manifest whole. A
+torn manifest therefore never erases the only record that recovery needs.
+Stray temporary files are moved to `<run-dir>/abandoned/` at the next
+start.
+
+**Immutable recovery copies.** Staging holds two copies of every member:
+the original (from the committed bundle) and the staged new version. Both
+are written, `fsync`ed, and made read-only. Their hashes are recorded in
+the manifest and verified before every use. Both are kept until the
+bundle is `committed`, and after that in scratch until M2. **A staged copy
+is never consumed by `os.replace`.** Publication copies it to a temporary
+file in the target member's own directory, on the target file system,
+`fsync`s that file, replaces the target with it, and `fsync`s the target
+directory. Restoration uses the original copy in the same way.
+
+**States and steps of publication:**
+
+1. **`staged`**: write and `fsync` both copies of every member and the
+   staging directory, then write the manifest.
+2. **`publishing`**: replace the target members, siblings first and
+   `evaluation.json` last, each as above.
+3. **`published`**: the main process appends the ledger record and
+   `fsync`s the ledger.
+4. **`committed`**.
+
+Rollback has two states of its own, **`rolling-back`** and
+**`rolled-back`**, and each is a recoverable transition.
+
+**One ledger writer.** Workers never write the ledger. They return each
+result to the driver's main process, which alone appends records and makes
+the `published` → `committed` transition. The main process holds an
+exclusive `flock` on `<run-dir>/ledger.lock` for the whole run, so a second
+driver on the same run directory refuses to start. Parallel workers
+therefore cannot interleave JSON Lines records.
 
 **Recovery**, at every start and before any new work. For each manifest
 not in state `committed`:
 
+- **No manifest, or only a stray temporary file**: nothing was published.
+  Every target must hash to its committed original, and the file is
+  reprocessed.
 - **`staged`**: every target must still hash to its original. The staging
-  directory is set aside under `<run-dir>/abandoned/` (archive, not
-  delete) and the file is reprocessed.
+  directory is moved to `<run-dir>/abandoned/`, and the file is
+  reprocessed.
 - **`publishing`**: every member must hash either to its original or to
-  its staged version. The driver completes the publication from the
-  verified staged copies. If a staged copy fails verification, it restores
-  every member from the original copies instead. The whole bundle ends in
-  one state or the other, never mixed.
-- **`published`, no durable ledger record**: verify every member against
-  its staged hash, then append the record and commit.
-- **Any member matching neither hash**: `unexpected-content`, and the run
-  stops.
+  its staged version.
+  - If every staged copy verifies, the driver completes the publication
+    and moves to `published`.
+  - If a staged copy fails verification, the driver first verifies every
+    original copy. If they all verify, it writes `rolling-back`, restores
+    every member from its original, and writes `rolled-back`.
+  - If an original copy also fails, nothing is written, and the run stops
+    with `unexpected-content`.
+- **`rolling-back`**: every member must hash to its original or its staged
+  version. The driver finishes restoring from the verified originals,
+  then writes `rolled-back`.
+- **`rolled-back`**: the main process appends a `failure`, `rolled-back`
+  record (unless an identical one is already durable), and the run stops
+  (§ 6).
+- **`published`**: verify every member against its staged hash. The
+  ledger is then searched for a terminal record with the same
+  **publication identity**: the computation identity plus the
+  `bundle_after` hashes. If one exists, the driver writes `committed` and
+  appends nothing. If none exists, it appends the record and then writes
+  `committed`. Either way, there is exactly one terminal record.
+- **Any member matching neither its original nor its staged hash**:
+  `unexpected-content`, and the run stops.
 
-**`already-done`** requires an equal identity, a `committed` manifest, and
-every bundle member's current hash equal to the ledger's `bundle_after`.
+**`already-done`** requires four things: the rebuilt identity is equal, the
+manifest is `committed`, there is exactly one terminal success record, and
+every bundle member's current hash equals that record's `bundle_after`.
 Checking `evaluation.json` alone is not enough.
 
-**A truncated JSONL tail.** On start, the driver reads the ledger line by
-line. A final line without its terminating newline, or one that does not
-parse, is copied to `ledger.jsonl.torn-<UTC timestamp>`, and the ledger is
-cut back to its last complete line. The file it described is then
-recovered through its manifest, as above. A malformed line anywhere but
-the end is corruption and stops the run.
+**A truncated JSON Lines tail.** On start, the main process reads the
+ledger line by line. A final line without its terminating newline, or one
+that does not parse, is copied to `ledger.jsonl.torn-<UTC timestamp>`, and
+the ledger is cut back to its last complete line. The bundle it described
+is then recovered through its manifest, as above. A malformed line
+anywhere but the end is corruption and stops the run.
 
 **Durability claimed.** The design claims consistency after the process
 is killed at any point, and the tests below show it. It also claims
@@ -756,31 +885,63 @@ loss itself is not tested.
 
 **Interruption tests** (tier 1, by a fault-injection hook that ends the
 process at a named point). Each test asserts that recovery reaches the
-same final bytes for every bundle member, and a reconciled ledger:
+same final bytes for every bundle member, exactly one terminal ledger
+record per file, and intact recovery copies:
 
-- after staging, before publishing;
-- after each sibling replace;
+- **during a manifest write**, for every transition: after a partial
+  temporary file, and after the temporary file's `fsync` but before its
+  replace;
+- **after staging**, before publishing;
+- **during publication**: during the copy to a target temporary file, and
+  after each sibling replace;
 - after the JSON replace;
-- during the ledger append, leaving a partial line;
-- after the durable ledger record, before `committed`;
+- **during the ledger append**, leaving a partial line;
+- **after the durable ledger record**, before `committed`; recovery must
+  append no second terminal record;
+- **during rollback**, after the first restored member, with a staged copy
+  deliberately corrupted to force the rollback;
 - after `committed`.
 
-The pilot repeats the "after each sibling replace" and "partial line"
-cases on real bundles.
+A concurrency test runs several workers against one ledger and checks
+that every line parses and that the record count equals the file count.
 
-**Idempotence.** The idempotence check forces recomputation
-(`--verify-idempotence`). It ignores `already-done`, recomputes from the
-artefact's effective recipe into scratch, and compares bytes with the
-committed bundle. An unchanged rerun, under the same identity, reuses the
-existing history entry verbatim: its first-publication date, its replaced
-`cli_args` and other inputs, and its original-file hash. The output is
-therefore byte-identical. Fresh provenance would otherwise break byte
-identity on its own.
+**The migration lifecycle test** (Astra R2-2) runs, in order:
+
+1. a successful in-place migration;
+2. a complete process exit;
+3. an ordinary restart, which gives `already-done`, no `identity-changed`,
+   and no new terminal record;
+4. a forced recomputation.
+
+After every step, the first history entry must be byte-identical to the
+one written at step 1. The pilot repeats the sibling-replace,
+partial-line, and lifecycle cases on real bundles.
+
+**Idempotence: what a forced recomputation replays.** `--verify-idempotence`
+ignores `already-done`. It replays the **anchor**, never the effective new
+artefact:
+
+1. It takes the original bundle from git at the branch's merge base and
+   verifies it against the anchor's pre-migration hashes.
+2. It takes the original recipe and inputs from the first history entry
+   (the replaced `cli_args`, `input_files`, and recorded rules), and
+   verifies each input against the anchor's hashes.
+3. It runs both legs again under the anchor's rules and policy, into
+   scratch, and compares the resulting bundle byte for byte with the
+   committed one.
+
+It writes no bundle, manifest, or history, and its ledger record has kind
+`verification`, which never counts as a terminal record. Because the
+history entry is part of the output, an unchanged rerun reuses it
+verbatim: its first-publication date, its replaced `cli_args` and other
+inputs, and its original-file hash. Fresh provenance would otherwise break
+byte identity on its own.
 
 **An intentional, different re-emission** (a new identity, such as a later
-ruling or a corrected input) needs `--supersede <reason>`. It appends a new
-history entry carrying `supersedes` and the reason, never rewrites an
-earlier entry, and is ledgered `rescored-superseding`.
+ruling or a corrected input) needs `--supersede <reason>`. Its anchor is
+the current committed bundle. It appends a new history entry carrying
+`supersedes` and the reason, never rewrites an earlier entry, and is
+ledgered `rescored-superseding`.
 
 **The idempotence sample** during the corpus run (§ 13, A7): 5 % of each
 stratum, rounded up, so every populated stratum has at least one file.
@@ -834,6 +995,7 @@ of these stops the run**, in any file, cited or not:
 - a sheet-specific difference from a historical contains reading on a tile
   that no other sheet's evidence reaches (item 4);
 - an idempotence-sample mismatch (item 7);
+- a `rolled-back` bundle (§ 5.6);
 - `identity-changed` without `--supersede`, `unexpected-content`, a
   malformed ledger line that is not the last, an `unnamed-refusal`, or a
   write outside the target worktree, the counterpart and
@@ -1035,7 +1197,8 @@ From the parent record's § 5 Wave 2 row and Wave 1's G1.
    for every buffer and every pass.
 6. **Reference-positive tiles** equal W2.0's independent recount for the
    file's (frame, reference) pair.
-7. **Idempotent**: the forced-recomputation sample (§ 5.6) and the pilot's
+7. **Idempotent**: the migration lifecycle test (§ 5.6), the
+   forced-recomputation sample, and the pilot's
    full double run give byte-identical bundles, and every interruption
    test recovers to the same bytes. A resumed run reproduces the ledger.
 8. **A reconciled ledger**: exactly one terminal record per worklist entry
@@ -1064,7 +1227,7 @@ From the parent record's § 5 Wave 2 row and Wave 1's G1.
   - `target-paths.json` (W2.1 step 4), `missing-inputs.json` (P9), and
     `seam-policy.json` with the policy specification it encodes (§ 4);
   - `pilot.md` and `pilot-ledger.jsonl` (W2.2), with the re-measured cost
-    and the reviewed layout-drift classes;
+    and the sibling wording allowlist with its approvals;
   - `ledger.jsonl`, `ledger-summary.json`, and `diffs/`;
   - `ledger-summary.md`, containing:
     - counts by status and reason;
@@ -1179,23 +1342,11 @@ The PI decides:
 
 ### 12.2 For Astra
 
-The first draft's A1–A7 are answered and closed (§ 13). Three new
-questions arise from the revision:
-
-- **A8.** Is the textual guard of G2 item 1 sound? It allows changed lines
-  only inside target spans, plus the adjacent-comma delimiter change, for
-  the 2,821 round-tripping files. The 8 others use an offset-based
-  token-preserving edit (§ 5.2).
-- **A9.** Do the bundle states, the recovery rules, and the interruption
-  points of § 5.6 cover W2-2? This includes completing a `publishing`
-  bundle from verified staged copies, and restoring it from originals
-  otherwise.
-- **A10.** The migration to `metadata_version` 1.5 also moves migrated
-  files out of `rerun_bca_corpus.py`'s done vintages unless `"1.5"` is
-  added there (W2.1). Is adding it, with a test, the right handling, and
-  is any other reader of the version known to you?
+None open. A1–A7 were closed in round 1 and A8–A10 in round 2 (§ 13).
 
 ## 13. Review dispositions
+
+### 13.1 Round 1
 
 Astra's review of the first draft (`f5f3824bb`):
 `~/agent-mail/codex/outbox/claude/20261118T133843Z-astra-wave2-spec-review.md`.
@@ -1213,13 +1364,50 @@ adopted.
 | **A1** additional scope | Astra recounted 149, 21, and 5 | Closed: in scope. Scoring a withheld file does not admit it to a family (§ 2 item 1, P12) |
 | **A2** regenerated Markdown | — | Closed: acceptable with the scientific-content guard and the bundle checks (W2-5) |
 | **A3** seam hook | — | Closed: not sufficient; see W2-1 |
-| **A4** `metadata_version` | Writer and reader at `f6f5ffe54` (`evaluate_detections.py:820`; `lib_advanced_metrics.py:513–514`; `rerun_bca_corpus.py:106–110`) | Closed: a documented migration to 1.5, added to the target schema, with the prior version kept in the history and no claim that other fields were upgraded (W2.1). The `rerun_bca_corpus.py` consequence is open question A10 |
+| **A4** `metadata_version` | Writer and reader at `f6f5ffe54` (`evaluate_detections.py:820`; `lib_advanced_metrics.py:513–514`; `rerun_bca_corpus.py:106–110`) | Closed: a documented migration to 1.5, added to the target schema, with the prior version kept in the history and no claim that other fields were upgraded (W2.1). The `rerun_bca_corpus.py` consequence was A10, closed in § 13.2 |
 | **A5** absent legacy keys | — | Closed: they stay absent; only the specified provenance, effective-recipe, and migration fields are added (W2.1 step 4) |
 | **A6** stop list | — | Closed: see W2-4 |
 | **A7** idempotence sample | — | Closed as Astra states: a reasonable regression check, not proof for every file, conditional on forced recomputation, the identity and bundle checks, and the interruption tests. Rounding is up, with at least one file per populated stratum (§ 5.6) |
 | Seam counting correction (Astra, `20261118T130529Z`; W1.0 `21cd6ef97`) | Read in `dry-run.md` § 2.2 at `568a80689` | Adopted: on r2, 26 references (40 with the ambiguous contacts); option (c)'s 333 tiles split into 11 map content, 6 ambiguous, and 316 padding (§ 4.4) |
 
+### 13.2 Round 2
+
+Astra's review of the revision (`1883c9611`):
+`~/agent-mail/codex/outbox/claude/20261118T135814Z-astra-wave2-round2-review.md`.
+W2-1, W2-3, and W2-4 were found addressed at specification level, and W2-2
+and W2-5 substantially improved, with the details below still needed. It
+is a technical review, not approval to launch.
+
+| Finding | Verified | Disposition |
+|---|---|---|
+| **R2-1 (A9)**: recovery complete at every transition | Yes, against § 5.6 as revised. The manifest was rewritten in place; `os.replace` of the staged copy would consume the only recovery copy; there was no rule for `published` with a durable record, and no rollback state; workers could write the ledger | Adopted (§ 5.6). Every manifest write goes to a temporary file, `fsync`, replace, directory `fsync`. Original and staged copies are immutable, hash-verified, and kept until commit, and publication copies through a temporary file on the target file system. `published` with a durable record finds it by publication identity and appends nothing. Rollback verifies the originals first and has its own `rolling-back` and `rolled-back` states. One main process owns the ledger, under a `flock`. New interruption points cover the manifest write, the target copy, and rollback; a concurrency test covers the ledger |
+| **R2-2**: freeze the identity anchor | Yes: an identity hashed from current bundle bytes would change after publication, so every ordinary restart would report `identity-changed` | Adopted (§ 5.6). The identity is an anchor (pre-migration bundle, original recipe and inputs, adapter, policy), frozen in the first history entry, plus the execution context. On restart it is rebuilt from the manifest or history, never from current bytes. Current bytes are compared separately with `bundle_after`. `--verify-idempotence` replays the anchor (the original bundle from git at the merge base, and the history's original recipe and inputs), writes nothing, and records `verification`. A migration lifecycle test checks that the history entry stays verbatim through a restart and a forced recomputation |
+| **R2-3 (A8)**: bind sibling values to their cells | Yes: a multiset of numbers survives two values trading places | Adopted (W2.1 step 6). Markdown and CSV are compared as canonical non-target cells keyed by (section or table, row, buffer, column, metric, unit). Wording outside the cells must match the pilot's approved allowlist. An unseen change holds the file (`held:sibling-review`) for review before publication. The JSON textual guard (G2 item 1) was accepted as specified |
+| **R2-4 (A10)**: schema capability is not bootstrap completion | Yes: `rerun_bca_corpus.py:106–110` at `f6f5ffe54` defines done as "already carry a BCa-requested bootstrap" | Adopted (W2.1, provenance). A 1.5 file is classified by its recorded prior vintage, plus a check of its bootstrap fields. A legacy file upgraded only for joins gets its own census category. Four tests are specified. In live files this concerns two 1.0 files today |
+
 ## Changelog
+
+### 2026-11-19 — Revised after Astra's round-2 review (S169, amd-tower)
+
+Trigger: Astra's round-2 review (§ 13.2) and the main session's
+instructions on it. Each finding was checked against this document at
+`1883c9611` and, for A10, against `rerun_bca_corpus.py` at `f6f5ffe54`.
+
+| Item | Before | After |
+|---|---|---|
+| Manifest writes | rewritten in place, with `fsync` | temporary file, `fsync`, atomic replace, directory `fsync`; kill tested during the write |
+| Recovery copies | the staged copy consumed by `os.replace` | immutable original and staged copies, verified, kept until commit; publication through a target-side temporary file |
+| `published` recovery | no ledger record only | also with a durable record: matched by publication identity, no second record |
+| Rollback | inside `publishing` recovery | its own `rolling-back` and `rolled-back` states, originals verified first |
+| Ledger writers | unspecified | one main process, under a `flock` |
+| Identity | hashed from the bundle's current bytes | a frozen anchor plus the execution context, rebuilt from the manifest or history |
+| Forced recomputation | from the effective recipe | replays the anchor; writes nothing |
+| Markdown check | row labels plus a multiset of numbers | keyed canonical cells; a wording allowlist; `held:sibling-review` |
+| `rerun_bca_corpus.py` | add `"1.5"` to the done vintages | classify by the recorded prior vintage, plus a bootstrap-field check, with a separate category |
+| Open questions for Astra | A8–A10 | none open |
+
+Unchanged: the scope, the order, the seam parameter, the stop rule, the
+cost projection, and the downstream dispositions.
 
 ### 2026-11-19 — Revised after Astra's review (S169, amd-tower)
 
