@@ -77,6 +77,24 @@ rule before any 55-map score); (2) split M1 so the GS smoke cells and Wave
 - The `tile-join-wave-1` branch has no pull request yet; the spec opens it
   at M1.
 
+**S169 final-sync note (2026-11-20, from amd-tower).**
+
+- zbook `~/Code/map-reader-llm` is at `620598ab1` on `main`, and the Wave 1
+  worktree at `3c65f96b1`, both clean and 0 behind before this note. A
+  file-level comparison found no gitignored data file that exists only on
+  amd-tower.
+- **Agent-mail snapshot on zbook** (read-only, not a live mailbox):
+  `~/amd-tower-snapshots/agent-mail-2026-11-20/agent-mail/`, with the
+  tarball beside it and a README (sha256 `f9f2dfff…31c60`). Read cited
+  `~/agent-mail/codex/reviews/…` paths there. The seam adjudication index:
+  `~/amd-tower-snapshots/agent-mail-2026-11-20/agent-mail/codex/reviews/seam-paired-views-2026-11-18/visual-review-index.html`.
+  A second copy is at rpi-server
+  `/mnt/qnap/shawn/Backups/amd-tower-agent-mail-2026-11-20.tar.gz`.
+- **Full git bundle** (every ref, including old local-only agent branches
+  and stashes) at rpi-server
+  `/mnt/qnap/shawn/Backups/amd-tower-git-bundles-2026-11/Code_map-reader-llm-2026-11-20.bundle`,
+  beside the 2026-11-19 one.
+
 ## 🔍 S168 CLOSE (2026-11-01 to 11-18, Opus, amd-tower) — START HERE: THE PI APPROVES THE WAVE 1 LAUNCH (P2), THEN WAVE 1 RUNS UNATTENDED ON ZBOOK TO M1
 
 **Machine.** Wave 1 runs on **zbook**: amd-tower's venv is still not
