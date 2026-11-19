@@ -1,8 +1,7 @@
 # OSF transparent-changes record: tile-level classification (draft)
 
-> **Last revised**: 2026-11-19 (the 55-map seam bullet made precise on
-> Astra's second review). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-11-19 (corrected seam pixels and own-sheet
+> attribution evidence). See [§ Changelog](#changelog) for revision history.
 
 ## Draft status (not part of the postable text)
 
@@ -114,9 +113,9 @@ no-data padding at the edge of one sheet (K-35-052-4), on tiles that show
 no map content at those points. A frame-wide rule would mark those tiles as
 holding mounds that no model was shown. Each reference mound records one
 sheet, and the same sheet attribution is already used to match detections
-to references. This finding is specific to the Era-2 frame: on the larger
-55-map corpus, at least some mounds are printed on both sides of a sheet
-seam (see Limits).
+to references. This finding is specific to the Era-2 frame. On the larger
+55-map corpus, reference projections reach neighbouring map content, and
+source-sheet attribution needs adjudication (see Limits).
 
 ### When, and what was known
 
@@ -199,29 +198,37 @@ claims restated or withdrawn, each with its repository path.]
   different sheets within 1 km of each other on the Era-2 frame, is
   consistent with digitising each sheet separately, but does not prove
   that no mound is printed on two sheets.
-- On the larger 55-map corpus, the equivalent check, run on 18 November
-  2026 on revision r2 of the 55-map reference (erratum E84), found
-  reference mounds whose positions fall on a neighbouring sheet's map
-  content, rather than its black no-data padding, with no reference on
-  that neighbouring sheet nearby: 32 such contacts (26 reference mounds),
-  at nine sheet seams, none within 50 m of a reference on the contacted
-  sheet. The check detects map content, not mound symbols, and neighbouring
-  sheets are slightly misregistered at these seams. Visual inspection of
-  two examples confirmed a printed mound symbol on the neighbouring sheet
-  in both; the remaining candidates have not been adjudicated. This shows
-  that the padding-only rationale given under "Why this reading" cannot be
-  generalised to the 55-map corpus. The two outcomes are affected
-  differently. At symbol level, a correct detection of a neighbouring
-  sheet's printed copy has no reference on its own sheet to match and
-  could count as a false positive. At tile level, a tile counts as a false
-  positive only if it holds no reference of its own sheet at all: counting
-  these contacts as references would change 11 tile labels, not one per
-  contact. The work stopped. The remaining candidates and any reference
-  correction need adjudication, and the PI's ruling is pending. [TO FILL:
-  the ruling; any change it makes to the 55-map reference or to the
-  estimand, and, for a reference change, its effect on symbol-level F1,
-  precision, and recall as a separate component; and whether each was made
-  before or after any sheet-specific 55-map result was computed.]
+- On the larger 55-map corpus, the equivalent check ran on 18 November
+  2026 on revision r2 of the reference (erratum E84). With the pixel
+  convention corrected on 19 November, it finds 34 contacts from 27
+  references on neighbouring map content: 32 contacts at nine seams and
+  two at a further seam. None has a reference on the contacted sheet
+  within 50 m. The check detects map content, not mound symbols. Visual
+  inspection of two examples confirmed a mound symbol on the neighbouring
+  sheet, but does not establish a corresponding symbol on the recorded
+  sheet. The remaining candidate identities are unadjudicated. The
+  padding-only rationale under "Why this reading" therefore cannot be
+  generalised to this corpus. Adding references at all these map-content
+  contacts would turn 11 of the 28 contacted tiles positive; other
+  references already make the remaining tiles positive. This is an
+  option-specific exposure calculation, not an observed scoring effect.
+- The follow-up on each reference's recorded sheet raises an additional
+  ground-truth question. Many candidate coordinates lie in that sheet's
+  black padding, including at their original reviewed positions. This
+  can reflect an incorrect sheet label or a displaced counterpart that
+  needs its own centre; the evidence does not decide between them or
+  establish double printing. Adding a copy could preserve a spurious
+  reference on the wrong sheet. Because symbol matching was already
+  confined to one sheet, attribution errors can leave references or
+  correct detections unmatched in existing scores under any tile rule.
+  These are possible effects, dependent on the detections and matching
+  radius; no false-positive or false-negative total, or F1 change, has
+  been measured. The work stopped, and the PI's ruling remains pending.
+  [TO FILL: the adjudication and ruling; any change to sheet labels,
+  sheet-specific centres, copies, exclusions, or the estimand; a reference
+  correction's separate effect on symbol-level F1, precision, and recall;
+  and whether each change preceded or followed any sheet-specific 55-map
+  result.]
 
 ### Where the full record is
 
@@ -247,6 +254,26 @@ In the study's public repository (`saross/map-reader-llm` on GitHub):
 ---
 
 ## Changelog
+
+### 2026-11-19 — Pixel correction and own-sheet attribution evidence
+
+Trigger: the corrected seam stop at
+`834c705a2aa8ab95cbe6487645585da4c09bd9c9`, §§ 1 and 5, following Astra's
+pixel-convention and own-sheet reviews. The earlier disclosure text had
+not yet incorporated that evidence.
+
+| Passage | Before | After |
+|---|---|---|
+| Limits, r2 map-content contacts and references | 32; 26 | 34; 27 |
+| Limits, contacted tiles in the addition scenario | 26; 11 become positive | 28; 11 become positive |
+| Why this reading | some mounds asserted to be printed on both sheets | map-content contacts and unresolved source-sheet attribution |
+| Limits, symbol-level concern | missing nearby recipient annotation | attribution or centres may also affect existing scores; impact unmeasured |
+
+Unchanged: the lodged registration, the timing of the PI's decisions, the
+fixed-reference point-estimate invariant, the pending ruling, and all
+results and posting placeholders. Not posted. Drafted by Astra (GPT,
+OpenAI Codex) as a proposed patch; adopted by the Claude main session
+after checking its counts against `dry-run.md` at `b0ca49834`.
 
 ### 2026-11-19 — Seam bullet made precise, on Astra's second review
 

@@ -6275,50 +6275,72 @@ apart) are consistent with per-sheet digitising but do not by themselves
 prove that no mound is printed on two sheets. That finding is specific to
 the Era-2 frame.
 
-**The 55-map seam stop (2026-11-18).** The equivalent check of the 55-map
-reference ran in Wave 1 (W1.0) on 2026-11-18 and found reference
-projections on a neighbouring sheet's map content. Three kinds of evidence
-are kept apart:
+**The 55-map seam stop (2026-11-18; measurements corrected 2026-11-19).**
+The equivalent check of the 55-map reference ran in Wave 1 (W1.0) on
+2026-11-18 and found reference projections on a neighbouring sheet's map
+content. A later review corrected a half-pixel error in the shared
+coordinate-to-pixel helper and examined the recorded sheet as well as the
+recipient sheet. Four kinds of evidence are kept apart:
 
-- **Measured.** In `best-available-gt-55maps-r2.geojson`, 32 of the 814
-  point–tile contacts with another sheet's tile (26 references) fall where
-  the pixel test classes that tile as map content, not padding, all at nine
-  seams involving the reprojected `_4326` sheets; the other four tracked
-  55-map reference files show 32 to 35 each. No reference on the contacted
-  sheet lies within 50 m of any of r2's 32. That is evidence of missing
-  local annotation, not proof that each contact is a second printed mound
-  left undigitised: the test detects map content, not mound symbols, and
-  neighbouring sheets are misregistered at these seams (`dry-run.md` § 2,
-  "Where").
-- **Confirmed by eye.** Two crops, inspected by the main session
-  (`student:01862` on the Chirpan sheet, `student:02387` on K-35-075-1),
-  each show the point on a printed burial-mound symbol on the neighbouring
-  sheet's map face (stop record § 2).
-- **Not adjudicated.** The remaining map-content contacts and r2's 18
-  ambiguous ones (points on the black edge of the map face). Canonical r50
-  carries a `phantom:*` reference on the contacted sheet within 50 m of 29
-  of its 33 map-content contacts; that is a lead to second copies, not
-  independent confirmation of each feature's identity.
+- **Measured on the recipient sheet.** In
+  `best-available-gt-55maps-r2.geojson`, 34 of the 814 point–tile contacts
+  with another sheet's tile (27 references) fall where the corrected pixel
+  test classes that tile as map content, not padding. Of these, 32 lie at
+  nine seams involving reprojected `_4326` sheets; two contacts from
+  `student:04282` lie at the K-35-076-1/K-35-076-2 seam. The other four
+  tracked 55-map reference files show 34 to 37 each. No reference on the
+  contacted sheet lies within 50 m of any of r2's 34 contacts. This
+  establishes missing nearby annotation on that sheet, not a second
+  printing: the test detects map content, not mound symbols, and the
+  neighbouring sheets are misregistered (`dry-run.md` §§ 2 and 2.2).
+- **Confirmed by eye on the recipient sheet.** Two crops inspected by
+  the main session (`student:01862` on Chirpan, `student:02387` on
+  K-35-075-1) show a printed burial-mound symbol at the projected point
+  (stop record § 2). This does not establish a corresponding printed
+  instance on the recorded sheet.
+- **Measured on the recorded sheet.** Of the 27 references with recipient
+  map-content contacts, 25 lie in padding on their own labelled sheet,
+  one is ambiguous at its map edge, and one has map-content windows on
+  both sheets. That last case, `student:04282`, is close to the pixel
+  rule's boundary and remains unadjudicated. Padding excludes a printed
+  instance at the recorded coordinate, but not a displaced counterpart
+  elsewhere on that sheet. The attribution concern predates centre
+  marking and traces to the original import; retained sheet metadata does
+  not prove a printed instance on that sheet (stop record § 5).
+- **Not adjudicated.** Symbol identity, whether a displaced counterpart
+  exists, and any needed reference correction. The other recipient
+  map-content contacts and r2's 16 ambiguous contacts remain candidates.
+  Canonical r50 carries a `phantom:*` reference on the contacted sheet
+  within 50 m of 29 of its 35 map-content contacts. This is an annotation
+  lead, not independent confirmation of identity or double printing.
 
-Such a contact bears on two outcomes, differently. At symbol level, a
-correct detection of the neighbouring sheet's printed copy has no
-reference on its own sheet to match under the D50 matcher, and can score
-as a false positive. At tile level, under `sheet-contains`, a tile becomes
-a false positive only if it holds no reference of its own sheet at all: 15
-of the 26 distinct r2 tiles that the map-content contacts reach already
-hold one, so counting the contacts as references would change 11 tile
-labels, not one per contact (`dry-run.md` § 2.2). The padding-only
-rationale above therefore cannot be generalised to the 55-map corpus. The
-finding met the specification's stop condition, and the wave stopped;
-corrected 55-map scoring is paused until the PI rules
-(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` §§ 1–4, and
-`reports/tile-join-wave-1/dry-run.md` §§ 2 and 2.2, on branch
-`tile-join-wave-1-w10`). The remaining candidates, and any reference
-correction, need adjudication. **[TO FILL: the PI's seam ruling (stop
-record § 4, items 1 and 3); any change it makes to the 55-map reference or
-to the estimand, and, for a reference change, its effect on symbol-level
-F1, precision, and recall as a separate component; and whether each was
-made before or after any sheet-specific 55-map score was computed.]**
+These observations expose two distinct issues. First, the padding-only
+rationale for the Era-2 sheet rule cannot be generalised to the 55-map
+corpus. Second, a reference may have the wrong source-sheet label or need
+a sheet-specific centre. Adding a copy is not automatically the right
+correction: it could retain a spurious reference in padding on the wrong
+sheet. These alternatives need adjudication.
+
+The possible scoring effects also differ. A correct detection of a real
+recipient-sheet symbol can be a symbol-level false positive if that
+sheet has no qualifying reference to match under D50. An incorrectly
+attributed reference can remain unmatched on its labelled sheet. These
+are possible pre-existing effects under any tile join; no observed false
+positive or false negative count, or F1 change, has been measured. At
+tile level, the specific counterfactual of adding references at all r2
+map-content contacts turns 11 of the 28 contacted tiles positive; the
+other 17 already hold an own-sheet reference. That exposure calculation
+is not the measured effect of an adjudicated reference correction
+(`dry-run.md` § 2.2; stop record §§ 1 and 5).
+
+The finding met the specification's stop condition, and the wave stopped.
+Corrected 55-map scoring remains paused until the PI rules
+(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` §§ 1–5).
+**[TO FILL: the PI's seam ruling; any change it makes to source-sheet
+attribution, sheet-specific centres, reference copies, exclusions, or the
+estimand; the effect of a reference correction on symbol-level F1,
+precision, and recall as a separate component; and whether each change
+was made before or after any sheet-specific 55-map score was computed.]**
 
 **When the choice was made, and what was known then.** The tile join has
 been chosen three times, each time with results in view:
@@ -6388,7 +6410,7 @@ anticipated from values that were already known.
 | Tile-MCC, tile-F1, sensitivity, specificity (secondary outcome) | **An invalid rule for merged output; each cell's effect must be measured.** Another detection may already make an overlapping tile positive, so the defect need not move every cell, and 117 multiply contained references do not imply 117 false-negative tiles |
 | F1, precision, and recall bootstrap intervals and means, tile-swap permutation p-values, tiers, F1 Hsu sets | **Unknown**: the point estimates are exact (each object booked once), but the spread of counts over tiles followed the name rule for true and false positives, so the null distributions may move. Reassignment can make tests anti-conservative, not only noisier; a spatial-block resampling check is required before any affected significance claim is finalised (D73 (3)) |
 | Coverage diagnostics and interval-reliability flags (`coverage`, `coverage_status`, `sparse_coverage`, `ci_unreliable`, `ci_excludes_point`, and their summary roll-ups) | **May flip**: derived from the same per-tile count table |
-| Sheet attribution of tile outcomes | **Wrong under the frame-wide geometric routines**, which book detections and references against all frame tiles rather than the sheet D50 matched on; corrected by the sheet-specific joins. Where a mound is printed on both sides of a 55-map seam but digitised once, the treatment awaits the PI's seam ruling (see above) |
+| Sheet attribution of tile outcomes | **Wrong under the frame-wide geometric routines**, which book detections and references against all frame tiles rather than the sheet D50 matched on; corrected by the sheet-specific joins. The 55-map reference-attribution, centre, and possible-copy questions await the PI's seam ruling; any reference correction is separate from the tile-join change (see above) |
 
 Any hypothesis decided on an affected interval or test is affected with it.
 The three Gemini 3.7 cells withheld under `id` re-enter the families they
@@ -6444,6 +6466,22 @@ copy "would score as a false positive". The symbol-level point-estimate
 invariant, in the Impact field and the affected-results table, is now
 conditional on fixed reference inputs; a reference correction would be a
 separate component with its own timing.
+
+**Update (2026-11-19 — corrected seam measurements and attribution
+uncertainty).** Refreshed against the corrected stop record at
+`834c705a2aa8ab95cbe6487645585da4c09bd9c9`, §§ 1 and 5. The pixel fix
+changes r2's map-content contacts from 32 to 34, references from 26 to 27,
+ambiguous contacts from 18 to 16, and contacted tiles from 26 to 28; the
+addition counterfactual still turns 11 tiles positive. The other tracked
+files' map-content range changes from 32–35 to 34–37, and r50's nearby
+phantom count is 29 of 35 rather than 29 of 33. The own-sheet findings
+introduce an attribution/centre question and do not establish or rule
+out double printing. Potential effects on existing symbol-level scores
+are explicitly unmeasured. The registered text, fixed-reference
+point-estimate invariant, pending PI ruling, and results placeholders
+are unchanged. Drafted by Astra (GPT, OpenAI Codex) as a proposed patch
+and adopted by the Claude main session after checking its counts against
+`dry-run.md` at `b0ca49834`; this is not an approval to post or launch.
 
 Cross-references: **E81** (undefined tile-MCC published as `0.0`, the
 earlier correction to § 4.2's metric); **E82** (the bootstrap method behind
