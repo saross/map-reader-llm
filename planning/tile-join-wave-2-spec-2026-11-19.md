@@ -836,6 +836,36 @@ listed as not migrated (§ 8). A missing input that is not on the list is a
 § 6 stop. Sapphire is unreachable and is not searched (Wave 1
 specification, changelog of 2026-11-18).
 
+**Recovery leads (Astra, read-only audit, 2026-11-19;
+`~/agent-mail/codex/reviews/missing-input-provenance-2026-11-18/input-provenance-audit.json`
+and `generator-static-comparison.json`).** W2.0 starts from these, and
+verifies each one rather than taking it as settled:
+
+- **The GS file** (`results/rescore-2026-05-31/`, e47 `run05`): its input
+  was moved to `archive/reorg-artifacts/e47-propose-brief-run5-zero-duration-copy/`;
+  the Git blob is identical at the evaluation's recorded scorer commit
+  `785710942` (`9f27b150d`). Read that archive's README through its
+  **Correction (2026-10-05)**: it was a real batch run, superseded by the
+  dated flex pass, not a spurious one. The original bytes allow a
+  historical replay; they do not admit the superseded run to a family, and
+  substituting the kept flex file would change the input identity. No
+  original input hash was recorded, so Git equality is corroboration and
+  the full replay remains the check.
+- **The twelve 55-map files:** `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`
+  § 8 (lines 181–189, and its changelog at 201–211) records that
+  `consensus-sweep/` was discarded as regenerable, by
+  `scripts/merge_passes.py --sweep` over four proposer pools (image
+  `library_plus-hp`; three text runs `detect_brief-text`). Four complete
+  sweeps supply all twelve thresholds. The 20 tracked pool GeoJSONs match
+  between the recorded scorer commit `dfce9520d` and today, but
+  `merge_passes.py` itself differs between them, and no intermediate hash
+  was recorded: **pin the merging recipe before regenerating**, then
+  require the full legacy replay. Astra's static comparison finds the
+  clustering and threshold code unchanged, with input selection and
+  provenance changed; that narrows, but does not establish, replay
+  equivalence. Existing consensus files are not substitutes merely
+  because their names or counts look compatible.
+
 ### 5.4 Statuses
 
 Every file ends with exactly one file-level status and one reason. Each
@@ -1602,6 +1632,13 @@ accepts the design, not an implementation, G1 or G2 evidence, a scientific
 ruling, or launch. Its three implementation notes are recorded in § 5.2.
 
 ## Changelog
+
+### 2026-11-19 — Missing-input recovery leads (§ 5.3)
+
+Astra's read-only provenance audit of the 13 missing inputs is recorded
+in § 5.3 as leads for W2.0: archived bytes for the GS file, and a
+documented regeneration route, with a recipe-pinning requirement, for
+the twelve 55-map files. No disposition or gate changed.
 
 ### 2026-11-19 — Seam-evidence refresh (Astra's patch, adopted)
 
