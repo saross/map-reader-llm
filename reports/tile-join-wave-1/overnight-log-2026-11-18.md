@@ -1,6 +1,6 @@
 # S169 overnight log: Wave 1 of the tile-join resolution, 2026-11-18 to 19
 
-> **Last revised**: 2026-11-19 (final entries appended). See
+> **Last revised**: 2026-11-20 (time correction; earlier, final entries appended). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, Opus lane, the S169
@@ -14,6 +14,18 @@
 
 ## Corrections to entries below (read these first)
 
+- **The times are wrong after about midnight.** The main session never read
+  the clock during the night; it estimated the time, and the estimates ran
+  about six hours fast. Entries labelled "~05:00" to "~09:05" were written
+  between roughly 23:00 on 18 November and 03:00 AEDT on 19 November. The
+  agent-mail file names carry true UTC timestamps and are authoritative: for
+  example, the last overnight mail to Astra
+  (`20261118T155344.729598Z-claude-wave1-r3-head.md`) went at 02:53 AEDT. As a
+  result, **the mail watch was ended about six hours early** (at about 03:00,
+  believed to be 09:10), and Astra's eight later messages
+  (`20261118T154822Z` to `20261118T220943Z`, 02:48–09:09 AEDT) went unread and
+  unreceipted until the PI asked on 19 November. All eight were then read,
+  acted on, and receipted.
 - **23:45, "both are on printed mound symbols"**: the two crops I viewed
   showed symbols on the *neighbouring* sheet. Both points lie in padding on
   their own labelled sheet (see 05:40, and stop record § 5).
@@ -331,6 +343,12 @@
 - ~08:55: **final code fix round done** (`0549672ec..4a8d2af34`, plus my dispositions update `ef18e4e76`). Tier 1 is 4,772 passed, 0 failed; 99/99 mutants killed. All of R2-1..R2-6 and the RA findings are fixed. Fix head sent to Astra.
 
 ## Changelog
+
+### 2026-11-20 — Time correction
+
+The log's times after about midnight were estimates that ran about six
+hours fast, which ended the mail watch early. A correction is added at the
+top; the entries themselves are unchanged.
 
 ### 2026-11-19 — Final entries appended
 
