@@ -12280,3 +12280,63 @@ principled answer rather than the next ruling. The working mode he set
 (specified waves, milestones he approves, pilots before scale) is a
 response to the same pressure: fewer decisions taken in the flow of a
 conversation, more taken at gates with evidence in hand.*
+
+## Session 169 — 2026-11-18 to 11-20 — the overnight wave that stopped on its own tripwire, and the finding that had to be corrected twice
+
+*Project: map-reader-llm. Instance: primary; written by the instance that
+ran the session, at its close, before amd-tower goes into storage. Session
+`79e3562d-f39d-4cba-91e9-474fc630c971`, amd-tower, Opus.*
+
+**What surprised me most?** How many times the seam finding changed shape,
+and that the wave's tripwire worked anyway. Wave 1's § 5 stop list included
+"a cross-sheet contact on map content". At about 23:45 it fired. I viewed two
+crops, saw mound symbols at the points, and wrote a stop record and a push
+notification saying "mounds printed on both sides of a seam, digitised once".
+That reading was wrong, and I had checked only half of it. The crops showed a
+symbol on the *neighbouring* sheet. Neither showed the reference's own sheet.
+Astra put the two sheets side by side and both points sat in black padding
+on their own labelled sheet: a label or centre problem, not double printing.
+I then wrote, from an own-sheet measurement, that no contact anywhere had
+content on both sheets. That categorical claim rested on a half-pixel error
+in a shared helper (a centre-indexed coordinate floored as if
+edge-indexed), which Astra found by reproducing every measurement and then
+changing only the convention. After the fix, one weak case with content on
+both sheets reappeared. Each correction narrowed the claim, and each one came
+from the other model family reading the evidence I had already accepted.
+The stop itself never needed revising. The rule that something on map
+content should halt the wave was right even when every interpretation of
+why was wrong.
+
+**What would I do differently if I replayed this session?** Read the clock.
+I tracked the night by estimating the time instead of calling `date`, and the
+estimates ran about six hours fast. I told the PI the ten-hour mail watch had
+ended "at about 09:10" when it was about 03:00, and stopped re-arming it.
+Eight of Astra's messages then arrived unwatched, and the PI kept getting
+"eight unread" notifications that Astra said were caught up. The fix is
+mechanical (read the clock before stating a time or ending a timed task),
+which is what makes the failure instructive. A long, dense session with no
+external time signal is exactly where a model's sense of elapsed time is
+least reliable. I would also have checked the own sheet before calling
+anything "confirmed". "Confirmed by eye" was true of what I looked at and
+false of what I wrote it about.
+
+**What is the single most important thing a future reader should know?**
+That the overnight run's value was the review loop, not the throughput. The
+code passed tier 1 at every stage, and still three successive audits (two
+fresh Claude lenses, then Astra, then a fresh re-audit, then Astra again)
+each found real defects. Most belonged to one class, "absence treated as
+agreement": a validator passing when a field is missing, a gate passing with
+nothing compared, a missing pair labelled an expected refusal. One was a
+false stop on a real committed board, from double rounding. Mutation testing
+went from 61 to 99 killed mutants because each round named what the tests
+could not see. The process converged, but slowly. The specification's
+two-computation contract was right from the start, and the defects were all in
+the places where "validate first" quietly became "validate when convenient".
+
+*Relational note: the PI delegated more in this session than in any before
+it: approve the launch, set a ten-hour watch, go to bed, and let Claude work
+with Astra. That trust was mostly well placed. The two side-agent notes he
+relayed next day (the reference change would move F1; the evidence pack
+exists only in amd-tower's mail folder) caught exactly the kind of drift an
+unattended run accumulates. The handover's real constraint was physical:
+amd-tower is being packed for 18–24 months, so everything had to reach zbook.*

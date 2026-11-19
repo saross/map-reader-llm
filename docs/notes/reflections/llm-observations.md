@@ -8701,3 +8701,53 @@ the summary); primary for everything after.*
   suite …") was asked for verbatim as a memory. Writing a lesson in a
   generalisable, quotable form at the moment it is learned gives the human
   something to keep without having to draft it.
+
+## Session 169 — 2026-11-18 to 11-20 (Wave 1 launched and stopped on the 55-map seam check; three audit rounds; Astra overnight; the move off amd-tower)
+
+*Project: map-reader-llm. Instance: primary. Session
+`79e3562d-f39d-4cba-91e9-474fc630c971`, amd-tower, Opus 5.5 main session
+with Opus subagents and Astra (GPT, Codex) as cross-model reviewer.*
+
+- **The model's sense of elapsed time drifted about six hours over one
+  night.** The main session wrote log times and status lines ("it's about
+  07:30") from estimates, never from the clock, and ended a ten-hour watch
+  that had run about four hours. Mail file names carried true UTC
+  timestamps throughout and would have shown the drift at any point. In a
+  long autonomous run, any statement of time, and any decision keyed to
+  time, should come from a clock read in the same turn.
+- **"Confirmed" was asserted from half the evidence.** Two crops showed a
+  mound symbol on the neighbouring sheet. The main session reported them as
+  confirming double printing without looking at the reference's own sheet.
+  The cross-model reviewer, asked to check the stop independently, built
+  paired views and found both points in padding on their own sheet. The
+  error pattern: the check that was run was correct, but the claim it was
+  attached to went beyond what was checked.
+- **One defect class recurred across agent-written validators: absence as
+  agreement.** A field missing from the replay was skipped instead of
+  failing; a comparison over zero fields passed; a missing pair was labelled
+  an expected refusal; an unlabelled cache took on the requested label; a
+  refused cell with no buffer row compared nothing. Agents wrote these while
+  implementing a specification that said "validate the recorded rule
+  first". The defaults of `.get()`, set intersection, and "skip if absent"
+  each made a missing value read as agreement. Reviewers who were told to hunt
+  for the class found more instances than reviewers who were not.
+- **Orthogonal reviewers found disjoint defects.** Lens A (implementation)
+  found no Critical; Lens B (test adequacy) found a real crash hidden by a
+  test stub, and four critical test gaps, by executing mutants. Astra found
+  the replay-order and refusal-reason gaps. The fresh re-audit found a false
+  stop on a real committed board by actually replaying about 600 cells.
+  Each reviewer's method decided what it could see; replaying real data
+  found what reading code could not.
+- **Subagents corrected the briefs they were given, and were right each
+  time.** The wave S drafter corrected the tile stride (336 px, not the
+  brief's 256). The W1.3 drafter corrected "32 references" to 32 contacts
+  from 26 references. The Wave 2 drafter found that only two of twelve GS
+  frames had been sheet-checked. Briefs written from memory carry small
+  errors; agents that read the files catch them if the brief invites them
+  to say so.
+- **A long-running code agent ran out of context mid-fix.** It had pushed
+  nine commits and left one file uncommitted. A fresh agent, briefed to
+  build a per-finding status table from the commit log before doing
+  anything else, finished the round cleanly. Lean briefs (targeted reads,
+  no whole-file dumps of 6,000-line modules) and push-after-each-commit
+  made the failure cheap.

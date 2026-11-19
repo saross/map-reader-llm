@@ -9462,3 +9462,71 @@ Before comparing measurement options, give each one the perfect input. It
 is the cheapest test there is, it is independent of every finding built on
 the metric, and it would have caught this defect at the moment the merged
 pipelines first appeared.
+
+## Entry — 2026-11-19 (Session 169, map-reader-llm): The mounds that were not printed twice
+
+**Session:** 79e3562d-f39d-4cba-91e9-474fc630c971
+**Instance:** primary
+
+### Surprising fact
+
+Wave 1's 55-map sheet check found 32 reference points lying on the map
+content of a *neighbouring* sheet's tile, at nine seams, with no reference on
+that neighbouring sheet within 200 m. On the gold standard, every such
+cross-sheet contact had been black padding. Two crops showed a printed mound
+symbol at the point. The obvious explanation was double printing:
+neighbouring sheets print the same mound, and only one copy was digitised.
+Under sheet-specific scoring, a correct detection of the second copy would be
+a false positive.
+
+### Probe
+
+1. Astra (the cross-model reviewer) rendered paired views: each point on its
+   own labelled sheet and on the neighbouring one. For `student:01862` and
+   `student:02387`, the point lay in black padding on its own sheet.
+2. A systematic own-sheet measurement over all five 55-map reference files:
+   every map-content contact lay in padding on its own sheet; none showed
+   content on both. Astra's independent full-scan diagnostic agreed for r2.
+3. Astra traced the lineage: 24 of 26 r2 labels match the original import
+   unchanged (`301b51128`); the marking tool saves the queue's sheet name, not
+   the raster displayed.
+4. Astra reproduced every pixel verdict, then changed only the
+   coordinate-to-pixel convention (the containing pixel is
+   `floor(centre_index + 0.5)`, not `floor(centre_index)`). One feature
+   (`student:04282`) moved to content on both sheets, weakly, at the
+   threshold.
+
+### Belief revision
+
+From "mounds printed twice, digitised once" to "references whose sheet
+attribution needs adjudication". Each is a wrong label, or a counterpart
+printed elsewhere on its own sheet that needs its own centre, or a rare case
+with content on both sheets. The candidate remedy changed with it: adding
+copies (option (a)) would keep a phantom reference in padding on the wrong
+sheet. The real choice is a versioned reference correction, disclosed
+separately, which also moves symbol-level F1. The intermediate belief, "no
+contact has content on both sheets", was itself an artefact of a half-pixel
+error and was withdrawn.
+
+### What would change this belief
+
+Adjudication against both sheets' imagery showing that most of the 27
+references are displaced counterparts (case 3) rather than label errors
+would keep the reference-correction framing but change its form: new
+centres, not relabelling. Finding genuine double printing at several
+points would revive option (a) for those points only.
+
+### Implications for practice
+
+A pixel test at one point answers "what is here", not "which sheet is this
+mound on". A claim about a cross-sheet relation needs both sheets measured.
+And a categorical conclusion drawn from a classifier boundary (no "content on
+both") deserves a sensitivity check of the classifier's own conventions
+before it is written.
+
+### What this is not
+
+Not a finding that the 55-map reference is unreliable at large. A whole-file
+audit of all 5,018 r2 references found 33 in own-sheet padding: 27 are the
+seam set, 6 more are graded `out_of_scope`. The problem is concentrated at
+the reprojected seams.

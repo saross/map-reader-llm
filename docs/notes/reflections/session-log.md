@@ -10389,3 +10389,81 @@ matched to it on 2026-10-30, stands in. amd-tower, where the review gate
 runs, had been absent for 167 h and its venv is unmatched. The one-week
 target follows from the PI's wish to start the write-up with every result
 settled.
+
+## Session 169
+
+**2026-11-18 to 11-20, amd-tower, Opus 5.5 (session
+`79e3562d-f39d-4cba-91e9-474fc630c971`). Project: map-reader-llm.** Wave 1
+of the tile-join resolution launched, stopped on its § 5, and every task
+that did not depend on the stop was completed and cross-reviewed overnight.
+The session closed with the move off amd-tower.
+
+**Launch.** The PI approved P2; P3 met (zbook's venv equals the lockfile;
+tier 1 4,525 passed); P4 met (`e92d1c5d7`). The PI's operating choices: drive
+zbook from amd-tower over SSH, keep code on branch `tile-join-wave-1`, and
+draft Wave 2 and wave S in parallel. A ten-hour overnight run was authorised,
+with Astra on watch.
+
+**The stop.** W1.0's 55-map sheet check found reference points on a
+neighbouring sheet's map content (stop record
+`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md`). It was refined
+overnight:
+
+- counts corrected to contacts versus references;
+- an own-sheet measurement showed every map-content contact in padding on its
+  own labelled sheet, so the problem is sheet attribution, not double
+  printing;
+- the pixel convention was corrected, giving r2 34 contacts from 27
+  references, 16 ambiguous contacts, and one weak case with content on both
+  sheets;
+- a whole-file padding audit (PI-approved, Astra's script) found 33 of
+  5,018 r2 references in own-sheet padding, 27 of them the seam set.
+
+All 12 GS frames were clean (237 padding contacts).
+
+**W1.0 complete.** Census of 2,829 evaluation files (matching the spec); no
+paper-cited file unresolved; smoke cells 3–5 pinned; all eight smoke cells'
+legacy replays reproduce their committed results; timings measured.
+
+**W1.1–W1.2 code, through three audit rounds.** Branch `tile-join-wave-1`:
+
+- the sheet joins, two defaults, the named refusals, threading through every
+  wrapper, legacy pinning of about 85 call sites and every re-scoring
+  launcher (`.py` and `.sh`), and a 68-test perfect-detector suite;
+- G1 item 9 audit (two Opus lenses), a fix round, a fresh re-audit, Astra's
+  W1-C1–C4, R2-1–R2-6, and R3-1–R3-2;
+- final: tier 1 4,779 passed, 0 failed at `d812e1472`; 99 + 3 mutants
+  killed; Astra closed the code review;
+- record `reports/tile-join-wave-1/g1-audit.md`, dispositions
+  `consumer-dispositions.md`.
+
+**Drafts and specifications.**
+
+- E93 (DRAFT) and the OSF transparent-changes draft were accepted by Astra
+  and refreshed with the corrected seam evidence (`b2e00ec36`); nothing
+  posted.
+- Wave S specification: three review rounds closed (`main`).
+- Wave 2 specification: three rounds closed (design only), including a
+  `rescore-native` route for 24 native-adapter files; refreshed (`bce3e86c7`);
+  missing-input leads in § 5.3 (`295b8e727`).
+
+**Decisions pending.** Recorded at `planning/s169-pending-decisions-2026-11-20.md`
+(`9255eeef0`): the seam ruling (recommended: a separate, adjudicated reference
+correction), splitting M1, three overnight main-session decisions, note A, and
+the Wave 2 and wave S questions.
+
+**Incidents.**
+
+- eCryptfs page-read interruptions on amd-tower twice left stale git index
+  entries (content verified identical; refreshed).
+- amd-tower's `/home` reached 99 % full.
+- The main session's time estimates ran about six hours fast, so the
+  overnight mail watch ended early and eight of Astra's messages waited
+  until the PI asked. All were then read, acted on, and receipted.
+  Correction in the overnight log (`3c65f96b1`).
+
+**Contextual assumptions.** amd-tower goes into storage for 18–24 months
+from 2026-11-20; work resumes on zbook, which is the reference environment
+while sapphire is unreachable. Agent mail lives on amd-tower and moves to
+zbook as the last teardown step; a snapshot of its review evidence was copied
+to zbook at this close. Target remains 2026-11-29.

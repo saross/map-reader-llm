@@ -3660,3 +3660,59 @@ next move is Shawn's, it adds noise and carries no information.
 once that it is off, and that the session-start hook will surface any
 mail. (Raised as a 4c question at the S168 handoff, for the mail-watch
 skill.)
+
+## claude-obs 179 — 2026-11-19: I estimated the time overnight instead of reading the clock, and ended a ten-hour watch after about four
+
+**Pattern.** Shawn authorised a ten-hour overnight run and asked for my mail
+watch to match Astra's. I wrote times into the log and the briefing from my
+own estimates ("about 07:30", "the watch has ended, about 09:10") and never
+called `date`. The estimates ran about six hours fast, so I stopped
+re-arming the watch at about 03:00. Eight of Astra's messages then arrived
+unwatched, and Shawn kept seeing "eight unread" notifications that Astra
+said were caught up. Shawn asked "can you see what's happening?"; the answer
+was in the mail files' UTC timestamps.
+
+**Lesson.** A model's sense of elapsed time is least reliable in exactly
+the long, autonomous runs where the user is not there to correct it, and
+an error in it propagates silently into any decision keyed to time.
+
+**How to apply.** Read the clock in the same turn as any stated time, and
+before ending a timed task such as a watch, an idle stop, or a deadline.
+In a log, record times from the clock, or label them as estimates.
+
+## claude-obs 180 — 2026-11-18: "Confirmed by eye" was true of one sheet and written about two
+
+**Pattern.** At the seam stop I viewed two crops, saw mound symbols on the
+neighbouring sheet, and reported the finding as mounds printed on both
+sides of the seam. I never looked at the reference's own sheet. Astra did,
+and both points were in padding there. The finding turned into a sheet-label
+question, and three documents needed correcting. Shawn had been
+push-notified with the wrong reading.
+
+**Lesson.** A check supports exactly the claim it measured. Here the claim
+(a relation between two sheets) needed two measurements, and I made one.
+
+**How to apply.** Before writing "confirmed", restate the claim and list
+what each part of it needs to be true; check each part. For a cross-sheet or
+cross-source relation, inspect both sides. When a push notification carries
+an interpretation, word it as a finding, not as the explanation.
+
+## claude-obs 181 — 2026-11-19: Shawn's relayed side-agent notes caught drift that the unattended run accumulated
+
+**Pattern.** Twice on 19 November Shawn passed on a side agent's note. One
+said a reference correction would move 55-map F1, which the drafts promised
+untouched. The other said Astra's evidence pack lived only in amd-tower's
+mail folder. Both were right. Both were things the overnight run had
+created or left behind (stale wording; evidence outside the repository)
+while the main session focused on the next review. Shawn relayed them
+without comment and let me work out the action.
+
+**Lesson.** A long unattended run leaves drift at its edges: documents that
+fell behind a later finding, and artefacts in places the handoff does not
+reach. A reader without the run's momentum sees them at once.
+
+**How to apply.** At the end of an autonomous run, before reporting done,
+sweep for two things: every document that states a figure or interpretation
+since revised, and every artefact cited by a committed document that lives
+outside the repository. Treat a relayed side note as a pointer to that
+class, not just to the one instance.
