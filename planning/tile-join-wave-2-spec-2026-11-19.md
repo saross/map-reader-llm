@@ -1,7 +1,8 @@
 # Tile-join Wave 2 — specification (the corpus re-score)
 
-> **Last revised**: 2026-11-19 (Astra's technical review closed at
-> `16354b73a`; its implementation notes recorded in § 5.2). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (seam-evidence refresh, Astra's patch adopted;
+> technical review closed at `16354b73a`, with implementation notes in § 5.2).
+> See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), drafting for session S169 on amd-tower. Every path,
@@ -251,49 +252,72 @@ ones (§ 8; open question P4).
 
 ### 4.1 What is measured, what has been seen, and what is not adjudicated
 
-This follows the distinctions that the revised E93 draft adopted and Astra
-accepted
-(`~/agent-mail/codex/outbox/claude/20261118T132653Z-astra-e93-seam-revision-accepted.md`).
+This section follows the corrected pixel-convention and own-sheet
+measurements in `reports/tile-join-wave-1/dry-run.md` §§ 2–2.4 and
+`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` §§ 1–5, read at
+`b0ca4983409bd63526cc15a6e6dc46619c03b1ff`. The earlier evidence summary
+predated those corrections; the original counts and interpretations remain
+in the source records' changelogs.
 
 - **Measured: projections onto map content.** On the 55-map frame, some
   references recorded on one sheet project onto the map content of an
   adjacent sheet's tile. The pixel test is a padding or content
   diagnostic, not a mound detector. In `best-available-gt-55maps-r2.geojson`
-  there are 32 such contacts, from 26 distinct (reference, recipient sheet)
-  pairs. With the 18 ambiguous contacts, there are 50 contacts from 40
-  pairs. Each of the other four tracked 55-map reference files shows 32–35
-  map-content contacts (`dry-run.md` §§ 2 and 2.2 at `568a80689`,
-  corrected at `21cd6ef97`). No reference on the recipient sheet lies
-  within 50 m of any r2 non-padding contact. That shows there is no local
-  annotation on the recipient sheet. It does not show what is printed
-  there, because the seams are misregistered (`dry-run.md` § 2).
-- **Seen: confirmed examples.** In crops of r2 `student:01862` and
-  `student:02387`, a printed mound symbol lies at the projected point. The
-  W1.0 agent and the main session both viewed these two. The W1.0 agent
-  also viewed `student:02782`, where the point lies on a symbol beside a
-  printed mound symbol (`dry-run.md` § 2; stop record § 2). Astra viewed
-  one crop for each of the 26 r2 map-content pairs. It found "no
-  counterexample to the *map-content* classification", and said this "is
-  not a completed adjudication of symbol identity"
-  (`~/agent-mail/codex/outbox/claude/20261118T132837Z-astra-55map-seam-stop-review.md`).
-- **Not adjudicated: the candidates.** The 26 (or 40) r2 pairs, and their
-  counterparts in the other files, are candidate second printed instances.
-  They still await adjudication of symbol identity, completeness, and
-  correspondence between the two sheets. The two ambiguous contacts of
-  `student:04282` change verdict under a nearest-pixel-centre sensitivity
-  test and are held for manual judgement (`dry-run.md` § 2.2). The
-  canonical r50 file's `phantom:*` references sit beside 29 of its 33
-  map-content contacts. That is a lead, not independent confirmation.
+  there are 34 such contacts, from 27 distinct (reference, recipient sheet)
+  pairs. With the 16 ambiguous contacts, there are 50 contacts from 40
+  pairs. Each of the other four tracked reference files shows 34–37
+  map-content contacts. No reference on the recipient sheet lies within
+  50 m of any r2 non-padding contact. That establishes the absence of a
+  local annotation, not the identity of anything printed there.
+- **Seen: recipient-sheet examples.** In the inspected crops of r2
+  `student:01862` and `student:02387`, a printed mound symbol lies at
+  the projected point on the recipient sheet. The paired views show both
+  recorded points in padding on their own labelled sheets. The recipient
+  crops therefore establish a printed symbol there, not a second copy
+  across the seam (stop record § 2).
+- **Measured: own-sheet attribution concern.** Of the 27 r2 references
+  with recipient map content, 25 have padding at the recorded coordinate
+  on their own labelled sheet, `student:02194` is ambiguous, and
+  `student:04282` has weak map-content verdicts on both sheets. The
+  corrected containing-pixel convention moves the latter's two recipient
+  contacts from ambiguous to map content. Its own and recipient windows
+  are just below the classifier's near-black threshold; neither verdict
+  establishes a complete mound symbol or its identity (stop record § 5).
+- **Not adjudicated: source and identity.** A wrong sheet label and a
+  displaced counterpart needing its own sheet-specific centre remain
+  distinct possibilities. Padding at the recorded point excludes a copy
+  there, but does not exclude a displaced copy elsewhere. The attribution
+  concern predates centre marking and traces back to the imported labels;
+  the import's exact assignment method is not recovered. The canonical
+  r50 file's `phantom:*` references lie within 50 m of 29 of its 35
+  recipient map-content contacts. Proximity is a lead, not confirmation of
+  identity. No candidate is adjudicated by these measurements alone.
 
-Where a candidate is a second printed instance, a correct detection of it,
-attributed by D50 to the sheet whose tile showed it, has no reference on
-that sheet. At symbol level it can be scored as a false positive. At tile
-level, a tile changes only if it holds none of its own sheet's references
-(`dry-run.md` § 2). The stop record § 4 lists four options. **This
-document takes no position among them.** Astra's stop review prefers (a)
-conditionally, as a recommendation and not a ruling (same message). The
-sections below say what any ruling must specify (§ 4.2), what a reference
-or frame change adds (§ 4.3), and the measured facts (§ 4.4).
+**The scientific question now includes reference attribution.** Correcting
+an erroneous sheet label, assigning a displaced counterpart its own centre,
+and adding a genuine second printed copy are different interventions.
+Adding a copy indiscriminately can retain a false instance in padding on
+the wrong sheet. Any reference correction needs paired-image adjudication
+and the separate correction leg in § 4.3.
+
+A wrong attribution can already affect symbol matching under D50, whatever
+the tile join: an own-sheet reference may be unmatched, and a correct
+recipient-sheet detection may lack a reference. These are possible effects,
+not measured false positives, false negatives, or F1 changes; the actual
+result also depends on detections and the matching radius. At tile level,
+the original addition counterfactual changes only a contacted tile that
+holds none of its own sheet's references. It turns 11 of 28 contacted r2
+tiles positive. It does not measure the effect of correcting labels or
+centres (`dry-run.md` § 2.2; stop record §§ 1 and 5).
+
+The stop record § 4 preserves the original four join/copy options, and § 5
+explains how the own-sheet evidence changes their interpretation. **This
+document takes no position among them and does not select a reference
+correction.** Astra's original conditional preference for adding confirmed
+copies was not a ruling or authority to retain incorrectly attributed
+instances. The sections below state what an implementable policy must
+specify (§ 4.2), what a reference or frame change adds (§ 4.3), and the
+original counterfactual measurements (§ 4.4).
 
 **The parameter is keyed by (frame, reference file),** because the
 contacts are measured per reference file and differ between them. The
@@ -332,9 +356,11 @@ check (G2 item 5). Each of those then becomes a target field under the
 schema amendment of § 4.3. The current D73 implementation does not
 acquire any speculative exception in advance.
 
-What each option implies for the five components, as it is worded today.
-The ruling's specification fixes every cell, including those marked "to
-state":
+The table below describes the four originally framed options. A sheet-label
+correction or a sheet-specific centre correction also needs all five
+components specified; it must not inherit the addition counts or effects
+from option (a). The ruling's specification fixes every cell, including
+those marked "to state":
 
 | Component | (a) second-copy references | (b) seam exception | (c) frame-wide on the 55-map frame | (d) seam-tile exclusion |
 |---|---|---|---|---|
@@ -346,9 +372,10 @@ state":
 
 ### 4.3 A reference or frame change needs a schema amendment (Astra W2-3)
 
-Options (a), (b) read as a matching change, and (d) if its mask enters
-matching or the count tables, change what the evaluation measures, not
-only how tiles are joined. The policy then also states:
+A sheet-label or centre correction, option (a), option (b) read as a
+matching change, and option (d) if its mask enters matching or the count
+tables change what the evaluation measures, not only how tiles are joined.
+The policy then also states:
 
 - **The affected targets.** Beyond W1.0's target set, these include
   everything that symbol matching determines: the point F1, precision, and
@@ -383,18 +410,20 @@ only how tiles are joined. The policy then also states:
 
 ### 4.4 Measured facts that bear on the options
 
-| Option | Measured on r2, relative to sheet-specific containment (`dry-run.md` § 2.2 at `568a80689`) |
+| Option | Original counterfactual on r2, relative to sheet-specific containment (`dry-run.md` § 2.2 at `b0ca4983409bd63526cc15a6e6dc46619c03b1ff`) |
 |---|---|
-| (a) | 26 references would be added for the map-content contacts, turning 11 tiles positive; 40 references and 17 tiles if the ambiguous contacts are included. Canonical r50 already carries a `phantom:*` reference beside 29 of its 33 map-content contacts, so it would gain 4 references and no tile would move |
+| (a) | 27 references would be added for the map-content contacts, turning 11 of 28 contacted tiles positive; 40 references and 17 tiles if the ambiguous contacts are included. Canonical r50 already carries a `phantom:*` reference within 50 m of 29 of its 35 map-content contacts, so this counterfactual would add 5 references and no tile would move |
 | (b), tile-only | the same tiles as (a): 11, or 17 with the ambiguous contacts |
 | (c) | 333 tiles turn positive: 11 hold map-content contacts, 6 hold only ambiguous contacts, and 316 hold only padding contacts, with no remainder |
-| (d) | 52 tiles removed (41 positive, 11 negative), or 85 (68 and 17) with the ambiguous contacts |
+| (d) | 55 tiles removed (44 positive, 11 negative), or 85 (68 and 17) with the ambiguous contacts |
 
-These are measurements of hypothetical rules, not approved reference
-additions (Astra's stop review).
+These are measurements of the originally proposed hypothetical rules, not
+approved reference additions. They are not predictions for correcting
+sheet labels or centres: those interventions have not been adjudicated or
+measured.
 
 **Sub-parameter, whichever option is chosen:** whether the ambiguous
-contacts (18 on r2, points on the black edge of the map face) count with
+contacts (16 on r2, points on the black edge of the map face) count with
 the map-content contacts (stop record § 4, item 3).
 
 **Interim:** phase A runs, and phase B waits (§ 3.2). The driver refuses
@@ -1573,6 +1602,20 @@ accepts the design, not an implementation, G1 or G2 evidence, a scientific
 ruling, or launch. Its three implementation notes are recorded in § 5.2.
 
 ## Changelog
+
+### 2026-11-19 — Seam-evidence refresh (Astra's patch, adopted)
+
+Prepared after reading the corrected seam and own-sheet records at
+`b0ca4983409bd63526cc15a6e6dc46619c03b1ff`. §§ 4.1 and 4.4 use the
+containing-pixel counts and distinguish recipient content, own-sheet
+attribution, and unadjudicated symbol identity. §§ 4.2 and 4.3 explicitly
+cover sheet-label and centre corrections as well as the original options.
+The original addition/exclusion counterfactuals are retained as such; they
+are not estimates for a reference correction. No corrected score is
+computed, no option selected, and no launch gate or review verdict changed.
+Drafted by Astra (GPT, OpenAI Codex) as a proposed patch; adopted by the
+Claude main session after checking every count against `dry-run.md` at
+`b0ca49834` (r2 34 / 27 / 28 / 11; (d) 55 (44 / 11); r50 29 of 35).
 
 ### 2026-11-19 — Astra's closing review recorded (S169, amd-tower)
 

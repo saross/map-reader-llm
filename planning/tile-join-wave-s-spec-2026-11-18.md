@@ -1,6 +1,7 @@
 # Tile-join wave S — specification (spatial-block resampling check)
 
-> **Last revised**: 2026-11-19 (Astra's round-3 wording correction). See
+> **Last revised**: 2026-11-19 (seam-evidence refresh, Astra's patch adopted,
+> following the round-3 wording correction). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -865,16 +866,29 @@ requests and is assumed, not shown, for others.
 one (Pst) answer different questions (§ 3.5); the paper names which one an
 interval comes from, and neither is described as evidence about new sheets.
 
-**The 55-map seams.** Wave 1 stopped on 2026-11-18 because, on the r2
-reference behind smoke cell 2 (`best-available-gt-55maps-r2.geojson`), 32
-point–tile contacts (26 references) lie on map content of a neighbouring
-sheet's tile, all at nine seams involving the reprojected `_4326` sheets;
-the PI is asked how sheet-specific scoring treats a mound printed on both
-sides of a seam but digitised once
-(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` on branch
-`tile-join-wave-1-w10`, § 1 and § 4). The designs above do not test
-shared-ground dependence across sheets, and a favourable within-sheet or
-sheet-block result cannot validate that omitted dependence. So:
+**The 55-map seams.** Wave 1 stopped on 2026-11-18. After correction of
+its pixel convention, the r2 reference behind smoke cell 2
+(`best-available-gt-55maps-r2.geojson`) has 34 point–tile contacts from
+27 references on neighbouring-sheet map content, plus 16 ambiguous
+contacts. Of the map-content contacts, 32 lie at nine seams involving
+reprojected `_4326` sheets, and two are at the K-35-076-1/K-35-076-2
+seam. Of the 27 references, 25 lie in padding at their recorded own-sheet
+coordinate, one is ambiguous there, and one has weak map-content verdicts
+on both sheets. These pixel classes do not adjudicate printed-symbol
+identity. A wrong sheet label and a displaced counterpart needing its own
+centre remain possible; a recipient symbol is not by itself evidence of
+printing on both sheets. The principal investigator's question therefore
+includes reference attribution as well as the join policy
+(`reports/tile-join-wave-1/stop-2026-11-18-55map-seams.md` §§ 1–5 and
+`reports/tile-join-wave-1/dry-run.md` §§ 2–2.4, read at
+`b0ca4983409bd63526cc15a6e6dc46619c03b1ff`).
+
+The designs above do not test shared-ground dependence across sheets.
+That limitation does not require proof that a particular mound is printed
+twice, and a favourable within-sheet or sheet-block result cannot validate
+omitted cross-sheet dependence. A reference correction is also distinct
+from a tile-join change and must reach wave S through the separately
+labelled and reviewed correction leg in Wave 2. So:
 
 - **Until the PI's seam ruling,** wave S's 55-map scope is explicitly
   qualified, and no 55-map block statistic runs (P7). The ruling may also
@@ -1413,6 +1427,18 @@ hand.
 **Round 3** (review of `4a75615cb`: `~/agent-mail/codex/outbox/claude/20261118T133934Z-astra-wave-s-round3-review.md`). S6 and S7 closed; both declared choices (the conservative resolution floor as an interpretation policy; the inherited zero convention kept for BH, with union bounds as an unreliability flag) accepted. One wording correction applied: the floor policy's claimed guarantee narrowed to the known exact-group lower bound (§ 3.6 (c)).
 
 ## Changelog
+
+### 2026-11-19 — Seam-evidence refresh (Astra's patch, adopted)
+
+Prepared after reading the corrected seam and own-sheet records at
+`b0ca4983409bd63526cc15a6e6dc46619c03b1ff`. § 3.8 now gives the
+containing-pixel counts and the unresolved reference-attribution question;
+it no longer assumes that a recipient-sheet symbol establishes double
+printing. The cross-sheet dependence limitation, seam-design requirement,
+statistical design, and principal investigator's launch decisions stay
+unchanged. Drafted by Astra (GPT, OpenAI Codex) as a proposed patch; adopted by the
+Claude main session after checking every count against `dry-run.md` at
+`b0ca49834` (r2 34 / 27 / 28 / 11; (d) 55 (44 / 11); r50 29 of 35).
 
 ### 2026-11-19 — Astra's round-3 wording correction (S169, amd-tower)
 
