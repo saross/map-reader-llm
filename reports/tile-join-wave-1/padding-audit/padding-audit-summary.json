@@ -1,0 +1,476 @@
+{
+ "what": "Whole-file own-sheet padding audit of best-available-gt-55maps-r2.geojson: references whose 9x9 window on their own labelled sheet's scan is entirely near-black (RGB<=8). Compact record; the full per-reference output is regenerable in about 10 s.",
+ "script": "Astra's inspect-reference-padding.py (~/agent-mail/codex/reviews/reference-sheet-padding-2026-11-18/), run unmodified except the CPU ceiling raised 25 -> 900 s, on zbook 2026-11-19 at the PI's approval",
+ "anchors": {
+  "script_sha256": "2e6ceacee385f85925c83f55edc53834e78a6c8b110416f64c9c2b21ca499d5b",
+  "manifest_sha256": "6a1d73cafa4d69dddcb3f0f85b6307b2b323aa3353f0263775f67bb774f83485",
+  "reference_commit": "ef18e4e7676ce6dda5347ef6a1b9028cd5eb7947",
+  "reference_path": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+  "reference_sha256": "4993b84dd8e6d1242d451998d8f3dadd9843427455c12230148efe105aab3614"
+ },
+ "cpu_seconds": 12.127388173,
+ "wall_seconds": 10.053244221955538,
+ "summary": [
+  {
+   "confidence_grade": "directly_reviewed",
+   "status": "entire_9px_window_near_black",
+   "count": 24
+  },
+  {
+   "confidence_grade": "directly_reviewed",
+   "status": "inside_scan",
+   "count": 795
+  },
+  {
+   "confidence_grade": "out_of_scope",
+   "status": "entire_9px_window_near_black",
+   "count": 9
+  },
+  {
+   "confidence_grade": "out_of_scope",
+   "status": "inside_scan",
+   "count": 4076
+  },
+  {
+   "confidence_grade": "proxy_confirmed",
+   "status": "inside_scan",
+   "count": 114
+  }
+ ],
+ "n_references": 5018,
+ "n_sheets": 55,
+ "all_black_9px": [
+  {
+   "gt_id": "student:01862",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    355758.679,
+    4683816.212
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01863",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    355901.32,
+    4683609.553
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01876",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    347510.787,
+    4669798.737
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01878",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    349041.67,
+    4669614.27
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01879",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    351901.417,
+    4669737.304
+   ],
+   "near_black_fraction_31px": 0.8147762747138397,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01882",
+   "source_map": "K-35-063-1_Granit_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    353144.395,
+    4669429.574
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02190",
+   "source_map": "K-35-063-2_Chirpan_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    376554.3831932184,
+    4687654.831066305
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02191",
+   "source_map": "K-35-063-2_Chirpan_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    376347.74,
+    4686313.859
+   ],
+   "near_black_fraction_31px": 0.9958376690946931,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02194",
+   "source_map": "K-35-063-2_Chirpan_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    376211.013,
+    4681571.487
+   ],
+   "near_black_fraction_31px": 0.6534859521331946,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02195",
+   "source_map": "K-35-063-2_Chirpan_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    376283.474,
+    4681244.573
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02196",
+   "source_map": "K-35-063-2_Chirpan_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    376304.941,
+    4680723.436
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02391",
+   "source_map": "K-35-063-4_Skobelevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    365769.331,
+    4650878.782
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02392",
+   "source_map": "K-35-063-4_Skobelevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    370788.799,
+    4650577.385
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02393",
+   "source_map": "K-35-063-4_Skobelevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    375861.309,
+    4659316.518
+   ],
+   "near_black_fraction_31px": 0.931321540062435,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02394",
+   "source_map": "K-35-063-4_Skobelevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    375861.01,
+    4659191.155
+   ],
+   "near_black_fraction_31px": 0.9105098855359001,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02387",
+   "source_map": "K-35-063-3_Tatarevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    342397.797,
+    4651399.323
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02388",
+   "source_map": "K-35-063-3_Tatarevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    345830.387,
+    4651124.526
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02389",
+   "source_map": "K-35-063-3_Tatarevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    350146.462,
+    4651153.579
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02390",
+   "source_map": "K-35-063-3_Tatarevo_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    352395.331,
+    4651222.589
+   ],
+   "near_black_fraction_31px": 0.7741935483870968,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02861",
+   "source_map": "K-35-065-1_Radetski_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    424335.2721546077,
+    4687329.196689443
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  },
+  {
+   "gt_id": "student:02862",
+   "source_map": "K-35-065-1_Radetski_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    431516.96869730874,
+    4687265.386252403
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  },
+  {
+   "gt_id": "student:02686",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    396588.001,
+    4662683.558
+   ],
+   "near_black_fraction_31px": 0.8730489073881373,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02687",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    396608.181,
+    4651147.715
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02781",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    377508.085,
+    4650620.908
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02782",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    383404.196,
+    4650369.003
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02783",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    386891.524,
+    4650409.986
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02784",
+   "source_map": "K-35-064-3_Dimitrovgrad_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    392745.52440938045,
+    4650364.169756111
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01822",
+   "source_map": "K-35-062-4_Asenovgrad_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    334642.4645493902,
+    4670667.010941438
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:01823",
+   "source_map": "K-35-062-4_Asenovgrad_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    334404.21661155403,
+    4670688.7387820445
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  },
+  {
+   "gt_id": "student:01824",
+   "source_map": "K-35-062-4_Asenovgrad_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    318123.0814134607,
+    4670753.557897512
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  },
+  {
+   "gt_id": "student:03135",
+   "source_map": "K-35-065-3_Glavan_4326",
+   "confidence_grade": "directly_reviewed",
+   "layer": "student_standardised",
+   "position_source": "own_mark",
+   "coordinate_utm35n": [
+    435370.983,
+    4649868.519
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": true
+  },
+  {
+   "gt_id": "student:02684",
+   "source_map": "K-35-064-2_Radnevo_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    408648.3594953906,
+    4687461.911408466
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  },
+  {
+   "gt_id": "student:02685",
+   "source_map": "K-35-064-2_Radnevo_4326",
+   "confidence_grade": "out_of_scope",
+   "layer": "student_standardised",
+   "position_source": "as_digitised",
+   "coordinate_utm35n": [
+    414261.29977862944,
+    4687355.541644306
+   ],
+   "near_black_fraction_31px": 1.0,
+   "in_seam_contact_set": false
+  }
+ ],
+ "n_all_black_9px": 33,
+ "n_in_seam_set": 27,
+ "n_new": 6
+}
